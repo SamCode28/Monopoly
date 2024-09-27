@@ -51,7 +51,6 @@ pieceSelectionButton.forEach(icon => {
 
 })
 
-
 function whosTurnSetup (){
     if (playerTurnTicker === 1){
         playerTurnTicker++
@@ -136,7 +135,6 @@ function updateMiddleScreenPlayerLocation (){
     document.getElementById('float-screen-game-middle-currentLocation').innerHTML = `Current Location:<br>${propertyArray[currentPlayerTurn.position].name}`
 }
 
-
 //Game Interactions
 //Game Interactions
 //Game Interactions
@@ -189,7 +187,11 @@ function clearDiceRollOutput(){
     if (spaceLandedOn().isProperty === true){
         if (spaceLandedOn().hasOwner === true){
             if (spaceLandedOn().owner.name != currentPlayerTurn.name){
+                //Pay rent
                 if(spaceLandedOn().owner.isInJail === false && spaceLandedOn().mortgageOpen === false){
+                    if(spaceLandedOn().type === 'utility'){
+                        spaceLandedOn().updateRent()
+                    }
                     updatePlayerTotalAssets()
                     if (currentPlayerTurn.totalAssets < spaceLandedOn().rent){
                         informBankrupt()
@@ -197,6 +199,7 @@ function clearDiceRollOutput(){
                     }
                     addPropertyCard()
                     addPayRentContainer()
+                    addPayRentTutorial()
                     document.getElementById('payRentLabelId').innerHTML = `You owe ${spaceLandedOn().owner.name} $${spaceLandedOn().rent}.`
 
                 }
@@ -223,6 +226,7 @@ function clearDiceRollOutput(){
                 addEndTurnButton()
             }
         }
+        //Buy property
         else if (spaceLandedOn().hasOwner === false){
                 addPropertyBuySellButtons()
                 addPropertyCard()
@@ -350,8 +354,6 @@ function endTurn(){
     hasRolled = false
     if (currentPlayerTurn.isBankrupt === true){endTurn()}
 }
-
-
 
 function removeDice (){
     document.getElementById('rollBtnIdDiv').classList.add('hidden')
@@ -911,7 +913,6 @@ buyPropertyYesBtn.addEventListener('click', function(e){
     spaceLandedOn().hasOwner = true
     currentPlayerTurn.cash -= spaceLandedOn().price
     currentPlayerTurn.updateTotalAssets()
-    console.log(currentPlayerTurn.totalAssets)
     updateRent()
     updatePlayerCashTotalDisplay()
     document.getElementById(spaceLandedOn().id).style.backgroundColor = currentPlayerTurn.color;
@@ -975,7 +976,7 @@ sellToPayRentBtn.addEventListener('click', function(e){
 function addPayRentTutorial(){
     document.getElementById('payRentTutorialId').classList.add('pay-rent-tutorial')
     document.getElementById('payRentTutorialId').classList.remove('hidden')
-    document.getElementById('payRentTutorialId').innerText = "Click sell to mortgage property or sell houses to pay rent"
+    document.getElementById('payRentTutorialId').innerText = `You can use the "sell" button to mortgage property or sell houses to pay rent if you're short on cash or declare bankruptcy if you've had enough`
 }
 
 function removePayRentTutorial(){
@@ -987,11 +988,20 @@ bankruptBtn.addEventListener('click', function(){
     removePropertyCard()
     addBankruptWarning()
     removePayRentTutorial()
+    removePayRentContainer()
     removeHouseHotelMortgageScreen()
-    bankruptBtn.disabled = true
-    payRentBtn.disabled = true
-    sellToPayRentBtn.disabled = true
     document.getElementById('bankruptWarningTextId').innerHTML = `Pressing "Yes" will remove you from the game and give all your cash and properties to ${spaceLandedOn().owner.name}`
+})
+
+bankruptYesBtn.addEventListener('click', function(){
+    bankrupt()
+})
+
+bankruptNoBtn.addEventListener('click', function(){
+    addPayRentContainer()
+    addPayRentTutorial()
+    removeBankruptWarning()
+    addHouseHotelMortgageScreen()
 })
 
 function addBankruptWarning(){
@@ -1004,30 +1014,27 @@ function removeBankruptWarning(){
     document.getElementById('bankruptWarningContainerId').classList.add('hidden')
 }
 
-bankruptYesBtn.addEventListener('click', function(){
-    bankrupt()
-})
-
-bankruptNoBtn.addEventListener('click', function(){
-    addPayRentContainer()
-    removeBankruptWarning()
-    addHouseHotelMortgageScreen()
-})
-
 function bankrupt(){
     removeInformBankruptScreen()
     removeBankruptWarning()
     currentLocation.currentOccupants--
     playerPiece().remove()
+    let playerOwed = currentLocation.owner
+    let playerIndebted = currentPlayerTurn
     currentPlayerTurn.isBankrupt = true
+    playerOwed.cash += playerIndebted.cash
+    playerIndebted.cash = 0
+    updatePlayerCashTotalDisplay()
+    //Change owner of property and move to owed players property array
     currentPlayerTurn.properties.forEach(property => {
-        let playerOwed = currentLocation.owner
-        let playerIndebted = currentPlayerTurn
         playerOwed.properties.push(property)
+        property.owner = playerOwed
+        document.getElementById(property.id).style.backgroundColor = playerOwed.color
         playerOwed.housesOwned += playerIndebted.housesOwned
         playerOwed.hotelsOwned += playerIndebted.hotelsOwned
-        playerOwed.cash += playerIndebted.cash
+        
     })
+    //End game if only 1 player remaining
     let bankruptPlayers = 0
     for (let i = 0; i < totalPlayers; i++){
         if (activePlayers[i].isBankrupt === true){
@@ -1112,8 +1119,8 @@ function checkJailStatusNextPlayer(){
 }
 
 attemptDoublesBtn.addEventListener('click', function (e){
-    rollDiceOne()
-    rollDiceTwo()
+    dicTwoValue = rollDiceTwo()
+    diceOneValue = rollDiceOne()
     displayJailRollOutput(diceOneValue, diceTwoValue)
     if (diceOneValue === diceTwoValue){
         hasRolled = true
@@ -1125,6 +1132,7 @@ attemptDoublesBtn.addEventListener('click', function (e){
         currentPlayerTurn.position = (diceOneValue + diceTwoValue +10)
         placePiece()
         currentLocationInteraction()
+        removeHouseHotelMortgageScreen()
     }
     else{
         currentPlayerTurn.jailRollAttempts--
@@ -1261,10 +1269,17 @@ function updateRentUtility(){
     utilityProperties = ownedPropertyArray.filter(function(property){return property.type === currentLocation.type})
     utilityProperties.forEach(utility =>{
         if (utilityProperties.length === 1){
-            utility.rent =  (diceOneValue + diceTwoValue) * 4
+            utility.updateRent = function() {
+                utility.rent = 0
+                utility.rent += (diceOneValue + diceTwoValue) * 4
+                }
         }
+
         else if (utilityProperties.length === 2){
-            utility.rent =  (diceOneValue + diceTwoValue) * 10
+            utility.updateRent = function() {
+                utility.rent = 0
+                utility.rent += (diceOneValue + diceTwoValue) * 10
+                }        
         }
     })
 }
@@ -1582,7 +1597,7 @@ finishBuyHouseBtn.addEventListener('click', function(e){
             addDice()
         }
         //Prevent user from ending turn before paying rent
-        if(document.getElementById.getElementById('payRentTutorialId').classList.contains('hidden') === false){
+        if(document.getElementById('payRentTutorialId').classList.contains('hidden') === false){
             removeEndTurnButton()
         }
     
@@ -1750,7 +1765,7 @@ finishSellHouseHotelBtn.addEventListener('click', function(e){
         addDice()
     }    
     //Prevent user from ending turn before paying rent
-    if(document.getElementById.getElementById('payRentTutorialId').classList.contains('hidden') === false){
+    if(document.getElementById('payRentTutorialId').classList.contains('hidden') === false){
         removeEndTurnButton()
     }
     
@@ -1925,7 +1940,7 @@ finishOpenMortgageBtn.addEventListener('click', function(e){
         addDice()
     }
      //Prevent user from ending turn before paying rent
-     if(document.getElementById.getElementById('payRentTutorialId').classList.contains('hidden') === false){
+     if(document.getElementById('payRentTutorialId').classList.contains('hidden') === false){
          removeEndTurnButton()
      }
 })
@@ -2075,7 +2090,7 @@ finishCloseMortgageBtn.addEventListener('click', function(e){
         addDice()
     }
     //Prevent user from ending turn before paying rent
-    if(document.getElementById.getElementById('payRentTutorialId').classList.contains('hidden') === false){
+    if(document.getElementById('payRentTutorialId').classList.contains('hidden') === false){
         removeEndTurnButton()
     }
 })

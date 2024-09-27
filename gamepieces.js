@@ -64,7 +64,7 @@ let activePlayers = [
         position: 0,
         gamePiece: "",
         pieceId: "",
-        cash: 0,
+        cash: 1500,
         totalAssets: 0,
         updateTotalAssets: function (){
             this.totalAssets = 0
@@ -286,10 +286,10 @@ let canCloseMortgageArray = []
 
 
 //Function Variables
-let rollDiceOne = () => {return 10}
-let rollDiceTwo = () => {return 2}
-//let rollDiceOne = () =>{return(Math.floor(Math.random() * 6) + 1)}
-//let rollDiceTwo = () =>{return(Math.floor(Math.random() * 6) + 1)}
+//let rollDiceOne = () => {return 10}
+//let rollDiceTwo = () => {return 2}
+let rollDiceOne = () =>{return(Math.floor(Math.random() * 6) + 1)}
+let rollDiceTwo = () =>{return(Math.floor(Math.random() * 6) + 1)}
 let diceOneValue;
 let diceTwoValue = rollDiceTwo();
 let chanceDice = () => {return(Math.floor(Math.random() * 16) + 1)}
@@ -509,6 +509,7 @@ let propertyArray = [
        owner:  "",
        price: 150,
        rent: "", 
+       updateRent: "",
        mortgage: 75,
        mortgageOpen: false, 
        type: "utility",
@@ -812,6 +813,7 @@ let propertyArray = [
        owner: "",
        price: 150,
        rent: "",
+       updateRent: "",
        mortgage: 75,
        mortgageOpen: false,
        type: "utility",
