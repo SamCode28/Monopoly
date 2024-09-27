@@ -1,6 +1,6 @@
 This is a minimally viable product.
 I will be using this as practice to save previous versions of my code to default to when I break my program. 
-The current version operates as you would expect a regular game of would, but it does not have a condition to end the game.
+The current version operates as you would expect a regular game of Monopoly would, but it does not have a condition to end the game.
 I will be working to add new features in the near future.
 
 To play:
