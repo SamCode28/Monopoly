@@ -11,6 +11,8 @@ const musicNotePiece = '<div class="game-pieces" id="musicNoteId"><svg class = "
 const housePiece = '<svg id="housePieceId" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="#055719" d="M575.8 255.5c0 18-15 32.1-32 32.1l-32 0 .7 160.2c0 2.7-.2 5.4-.5 8.1l0 16.2c0 22.1-17.9 40-40 40l-16 0c-1.1 0-2.2 0-3.3-.1c-1.4 .1-2.8 .1-4.2 .1L416 512l-24 0c-22.1 0-40-17.9-40-40l0-24 0-64c0-17.7-14.3-32-32-32l-64 0c-17.7 0-32 14.3-32 32l0 64 0 24c0 22.1-17.9 40-40 40l-24 0-31.9 0c-1.5 0-3-.1-4.5-.2c-1.2 .1-2.4 .2-3.6 .2l-16 0c-22.1 0-40-17.9-40-40l0-112c0-.9 0-1.9 .1-2.8l0-69.7-32 0c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z"/></svg>'
 const hotelPiece = '<svg id="hotelPieceId" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#7f0202" d="M0 32C0 14.3 14.3 0 32 0L480 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l0 384c17.7 0 32 14.3 32 32s-14.3 32-32 32l-176 0 0-48c0-26.5-21.5-48-48-48s-48 21.5-48 48l0 48L32 512c-17.7 0-32-14.3-32-32s14.3-32 32-32L32 64C14.3 64 0 49.7 0 32zm96 80l0 32c0 8.8 7.2 16 16 16l32 0c8.8 0 16-7.2 16-16l0-32c0-8.8-7.2-16-16-16l-32 0c-8.8 0-16 7.2-16 16zM240 96c-8.8 0-16 7.2-16 16l0 32c0 8.8 7.2 16 16 16l32 0c8.8 0 16-7.2 16-16l0-32c0-8.8-7.2-16-16-16l-32 0zm112 16l0 32c0 8.8 7.2 16 16 16l32 0c8.8 0 16-7.2 16-16l0-32c0-8.8-7.2-16-16-16l-32 0c-8.8 0-16 7.2-16 16zM112 192c-8.8 0-16 7.2-16 16l0 32c0 8.8 7.2 16 16 16l32 0c8.8 0 16-7.2 16-16l0-32c0-8.8-7.2-16-16-16l-32 0zm112 16l0 32c0 8.8 7.2 16 16 16l32 0c8.8 0 16-7.2 16-16l0-32c0-8.8-7.2-16-16-16l-32 0c-8.8 0-16 7.2-16 16zm144-16c-8.8 0-16 7.2-16 16l0 32c0 8.8 7.2 16 16 16l32 0c8.8 0 16-7.2 16-16l0-32c0-8.8-7.2-16-16-16l-32 0zM328 384c13.3 0 24.3-10.9 21-23.8c-10.6-41.5-48.2-72.2-93-72.2s-82.5 30.7-93 72.2c-3.3 12.8 7.8 23.8 21 23.8l144 0z"/></svg>'
 
+
+
 let activePlayers = [
     {
         name: "Player One",
@@ -19,14 +21,42 @@ let activePlayers = [
         gamePiece: "",
         pieceId: "",
         cash: 1500,
-        cashDisplayId: "playerOneCashId",
+        totalAssets: 0,
+        updateTotalAssets: function (){
+            this.totalAssets = 0
+            this.updateMortgageAssets()
+            this.updateHouseAssets()
+            this.totalAssets += (this.mortgageAssets + this.houseAssets + this.cash)
+        },
+        mortgageAssets: 0,
+        updateMortgageAssets: function(){
+            this.mortgageAssets = 0
+            for (let i = 0; i < this.properties.length; i++){
+                if (this.properties[i].mortgageOpen === false){
+                    this.mortgageAssets += this.properties[i].mortgage
+                }
+        }
+            },
+        houseAssets: 0,
+        updateHouseAssets: function(){
+            this.assets = 0
+            for (let i = 0; i < this.properties.length;){
+                if(this.properties[i].type === 'color'){
+                    this.houseAssets += (this.properties[i].totalHouses * this.properties[i].buildingCost)
+                }
+                i++
+                
+            }
+        },
         properties: [],
+        housesOwned: 0,
+        hotelsOwned: 0,
+        cashDisplayId: "playerOneCashId",
         getOutOfJailCard: 0,
         isInJail: false,
         jailRollAttempts: 3,
         doublesCounter: 0,
-        housesOwned: 0,
-        hotelsOwned: 0,
+        isBankrupt: true,
     },
     {
         name: "Player Two",
@@ -34,15 +64,43 @@ let activePlayers = [
         position: 0,
         gamePiece: "",
         pieceId: "",
-        cash: 1500,
-        cashDisplayId: "playerTwoCashId",
+        cash: 0,
+        totalAssets: 0,
+        updateTotalAssets: function (){
+            this.totalAssets = 0
+            this.updateMortgageAssets()
+            this.updateHouseAssets()
+            this.totalAssets += (this.mortgageAssets + this.houseAssets + this.cash)
+        },
+        mortgageAssets: 0,
+        updateMortgageAssets: function(){
+            this.mortgageAssets = 0
+            for (let i = 0; i < this.properties.length; i++){
+                if (this.properties[i].mortgageOpen === false){
+                    this.mortgageAssets += this.properties[i].mortgage
+                }
+        }
+            },
+        houseAssets: 0,
+        updateHouseAssets: function(){
+            this.assets = 0
+            for (let i = 0; i < this.properties.length;){
+                if(this.properties[i].type === 'color'){
+                    this.houseAssets += (this.properties[i].totalHouses * this.properties[i].buildingCost)
+                }
+                i++
+                
+            }
+        },
         properties: [],
+        housesOwned: 0,
+        hotelsOwned: 0,
+        cashDisplayId: "playerTwoCashId",
         getOutOfJailCard: 0,
         isInJail: false,
         jailRollAttempts: 3,
         doublesCounter: 0,
-        housesOwned: 0,
-        hotelsOwned: 0,
+        isBankrupt: true,
     },
 
     {
@@ -52,13 +110,42 @@ let activePlayers = [
         gamePiece: "",
         pieceId: "",
         cash: 1500,
+        totalAssets: 0,
+        updateTotalAssets: function (){
+            this.totalAssets = 0
+            this.updateMortgageAssets()
+            this.updateHouseAssets()
+            this.totalAssets += (this.mortgageAssets + this.houseAssets + this.cash)
+        },
+        mortgageAssets: 0,
+        updateMortgageAssets: function(){
+            this.mortgageAssets = 0
+            for (let i = 0; i < this.properties.length; i++){
+                if (this.properties[i].mortgageOpen === false){
+                    this.mortgageAssets += this.properties[i].mortgage
+                }
+        }
+            },
+        houseAssets: 0,
+        updateHouseAssets: function(){
+            this.assets = 0
+            for (let i = 0; i < this.properties.length;){
+                if(this.properties[i].type === 'color'){
+                    this.houseAssets += (this.properties[i].totalHouses * this.properties[i].buildingCost)
+                }
+                i++
+                
+            }
+        },
+        properties: [],
+        housesOwned: 0,
+        hotelsOwned: 0,
         cashDisplayId: "playerThreeCashId",
         getOutOfJailCard: 0,
         isInJail: false,
         jailRollAttempts: 3,
         doublesCounter: 0,
-        housesOwned: 0,
-        hotelsOwned: 0,
+        isBankrupt: true,
     },
     {
         name: "Player Four",
@@ -67,13 +154,42 @@ let activePlayers = [
         gamePiece: "",
         pieceId: "",
         cash: 1500,
+        totalAssets: 0,
+        updateTotalAssets: function (){
+            this.totalAssets = 0
+            this.updateMortgageAssets()
+            this.updateHouseAssets()
+            this.totalAssets += (this.mortgageAssets + this.houseAssets + this.cash)
+        },
+        mortgageAssets: 0,
+        updateMortgageAssets: function(){
+            this.mortgageAssets = 0
+            for (let i = 0; i < this.properties.length; i++){
+                if (this.properties[i].mortgageOpen === false){
+                    this.mortgageAssets += this.properties[i].mortgage
+                }
+        }
+            },
+        houseAssets: 0,
+        updateHouseAssets: function(){
+            this.assets = 0
+            for (let i = 0; i < this.properties.length;){
+                if(this.properties[i].type === 'color'){
+                    this.houseAssets += (this.properties[i].totalHouses * this.properties[i].buildingCost)
+                }
+                i++
+                
+            }
+        },
+        properties: [],
+        housesOwned: 0,
+        hotelsOwned: 0,
         cashDisplayId: "playerFourCashId",
         getOutOfJailCard: 0,
         isInJail: false,
         jailRollAttempts: 3,
         doublesCounter: 0,
-        housesOwned: 0,
-        hotelsOwned: 0,
+        isBankrupt: true,
     },
 
 ]
@@ -103,6 +219,7 @@ let playersSelected = 0;
 let playerTurnTicker = 1;
 let turnInteractionDescription = document.getElementById('turnInteractionDescriptionId')
 let hasRolled = false
+let gameWinner
 
 //Game Setup Total Player Buttons
 const playerTotalButtons = [
@@ -122,16 +239,20 @@ const playBtn = document.getElementById('playBtnId');
 const rollBtn = document.getElementById('rollBtnId');
 const endTurnBtn = document.getElementById('endTurnBtnId');
 
-
-//House Hotel Mortgage Variables
-//House Hotel Mortgage Variables
-
-//Buy / Sell / Rent / Property 
+/// Rent / Property 
+/// Rent / Property 
 let ownedPropertyArray = []
 const payRentBtn = document.getElementById('payRentBtnId')
 const sellToPayRentBtn = document.getElementById('sellToPayRentBtnId')
+const bankruptBtn = document.getElementById('bankruptBtnId')
+const bankruptYesBtn = document.getElementById('bankruptYesBtnId')
+const bankruptNoBtn = document.getElementById('bankruptNoBtnId')
+const goodbyeBtn = document.getElementById('goodbyeBtnId')
 const buyPropertyYesBtn = document.getElementById('buyPropertyYesBtn')
 const buyPropertyNoBtn = document.getElementById('buyPropertyNoBtn')
+
+//House Hotel Mortgage Variables
+//House Hotel Mortgage Variables
 
 //Buy House / Hotel
 const buyHouseHotelBtn = document.getElementById('buyHouseHotelBtnId')
@@ -165,10 +286,10 @@ let canCloseMortgageArray = []
 
 
 //Function Variables
-//let rollDiceOne = () => {return 10}
-//let rollDiceTwo = () => {return 2}
-let rollDiceOne = () =>{return(Math.floor(Math.random() * 6) + 1)}
-let rollDiceTwo = () =>{return(Math.floor(Math.random() * 6) + 1)}
+let rollDiceOne = () => {return 10}
+let rollDiceTwo = () => {return 2}
+//let rollDiceOne = () =>{return(Math.floor(Math.random() * 6) + 1)}
+//let rollDiceTwo = () =>{return(Math.floor(Math.random() * 6) + 1)}
 let diceOneValue;
 let diceTwoValue = rollDiceTwo();
 let chanceDice = () => {return(Math.floor(Math.random() * 16) + 1)}
