@@ -1,0 +1,980 @@
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    box-sizing: border-box;
+    text-align: center;
+    position: relative;
+}
+
+div {
+    font-size: 17px;
+}
+
+button {
+    display: inline;
+    text-align: center;
+    cursor: pointer;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px; 
+    background-color: rgb(25, 154, 198);
+    color: antiquewhite;
+    transition: background-color 0.3s ease;
+    font-size:24px;
+    height: 100px;
+    width: 150px;
+
+}
+
+
+button:hover{
+    opacity: .7;
+}
+
+button:active
+{
+    background-color: rgb(4, 52, 68); 
+}
+
+
+#gameboard {
+    justify-content: center;
+    padding-top: 25px;
+    padding-bottom: 25px;;
+}
+
+
+.top-bottom-grid{
+    margin: auto;
+    display: grid;
+    align-items: center;    
+    justify-content: center;
+    grid-template-columns: 150px 100px 100px 100px 100px 100px 100px 100px 100px 100px 150px;
+
+}
+
+
+.middle-grid{
+    margin: auto;
+    display:grid;
+    grid-template-columns: repeat(8, 150px) ;
+    grid-template-rows: repeat(9, 100px);    
+    justify-content: center;
+    align-items: flex-end;
+
+}
+
+.top-contents{
+    display: grid;
+}
+
+.bottom-name-alignment{
+    display: grid;
+    align-self: flex-start;
+}
+
+.bottom-name-padding{
+    padding-top: 10px;
+}
+
+
+.square-top-bottom {
+    display: grid;
+    justify-content: center; 
+    align-items: end;
+    height: 150px;
+    width: 100%;
+}
+
+.square-top-bottom-three {
+    display: grid;
+    justify-content: center; 
+    align-items: end;
+    height: 150px;
+    width: 100%;
+    grid-template-rows: auto 1fr 1fr;
+}
+
+.left-middle-square-two{
+    display: grid;
+    justify-content: center;
+    height: 100px;
+    width: 150px;
+    grid-template-columns: auto 1fr;
+}
+
+.right-middle-square-two{
+    display: grid;
+    justify-content: center;
+    height: 100px;
+    width: 150px;
+    grid-template-columns: auto 1fr;
+}
+
+.left-middle-square-three {
+    display: grid;
+    justify-content: center;
+    height: 100px;
+    width: 150px;
+    grid-template-columns: auto 1fr 1fr;
+}
+
+.right-middle-square-three {
+    display: grid;
+    justify-content: center;
+    height: 100px;
+    width: 150px;
+    grid-template-columns: auto 1fr 1fr;
+}
+
+.left-middle-property{
+    display: grid;
+    height: 98.4px;
+    writing-mode: vertical-rl;
+    justify-self: flex-end;
+}
+
+.right-middle-property{
+    display: grid;
+    height: 98.4px;
+    writing-mode: vertical-lr;
+    transform: rotate(180deg);
+}
+
+.left-middle-svg{
+    display: grid;
+    height: 98.4px;
+    justify-content: center;
+    align-items: center; 
+   
+}
+
+.right-middle-svg{
+    display: grid;
+    height: 98.4px;
+    justify-content: center;
+    align-items: center; 
+}
+
+.left-middle-description{
+    display: grid;
+    height: 98.4px;
+    writing-mode: vertical-lr;
+    justify-content: center;
+    align-items: flex-end;
+    padding-left: 20px;
+}
+
+.right-middle-description{
+    display: grid;
+    height: 98.4px;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    justify-content: center;
+    align-items: flex-end;
+    padding-left: 20px;
+}
+
+.left-svg-rotate{
+    transform: rotate(90deg);
+}
+
+.right-svg-rotate{
+    transform: rotate(90deg);
+}
+
+.right-svg-rotate-special{
+    transform: rotate(270deg);
+    padding-top: 20px;
+}
+
+
+/* Board Spaces By Location */
+
+.top-board-border{
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    position: relative;
+}
+
+.top-square-description, .top-square-name {
+    transform: rotate(180deg);
+}
+
+
+.top-name-utility-padding{
+    padding-top: 10px;
+}
+
+.top-name-utility-padding-special{
+    padding-top: 8px;
+}
+
+.top-name-utility-padding-special-again{
+    padding-bottom: 10px;
+}
+
+.description-utility-padding{
+    padding-bottom: 20px;
+}
+
+.top-description-property-padding{
+    align-self: flex-start;
+    padding-bottom: 20px;
+}
+
+
+.left-name-utility-padding{
+    padding-right: 10px;
+}
+
+.right-name-utility-padding{
+    padding-right: 10px;
+}
+
+
+.middle-board-border{
+    position: relative;
+    border-top: 1px solid black;
+    border-right: 2px solid black;
+    border-left: 2px solid black;
+    border-bottom: 1px solid black;
+}
+
+
+.right-chance-description-padding{
+    padding-left: 35px;
+}
+
+.bottom-property-description{
+    display: grid;
+    align-self: end;
+    padding-bottom: 20px;
+}
+
+.bottom-special{
+    align-self: flex-start;
+}
+
+
+/* Board Spaces By Color */
+.brown-property{
+    display: grid;
+    width: 98.4px;
+    border-top: 20px solid #5f2256;
+}
+
+.light-blue-property{
+    border-top: 20px solid #add8e6;
+    width: 98.4px;
+}
+
+.purple-property{
+    border-right: 20px solid #b420b4;
+}
+.orange-property {
+    border-right: 20px solid #ffa500;
+}
+
+.red-property {
+    border-top: 20px solid #f76969;
+    transform: rotate(180deg);
+}
+
+.yellow-property {
+    border-top: 20px solid #ffff00;
+    transform: rotate(180deg);
+}
+
+.green-property {
+    border-right: 20px solid #4a6f4a;
+}
+
+.dark-blue-property{
+    border-right: 20px solid #232388;
+}
+
+
+/* Corner Square ID's */
+#freeParkingId{
+    width: 150px;
+    height: 150px;
+    border-top: 2px solid black;
+    border-left: 2px solid black;
+    border-bottom: 1px solid black;
+    border-right: 1px solid black;
+    position: relative;
+    flex-wrap: wrap;
+}
+
+.free-parking-span{
+    text-align: center;
+    display: grid;
+    transform: rotate(135deg);
+}
+
+#goJailId{  
+    width: 150px;
+    height: 150px;
+    border-top: 2px solid black;
+    border-left: 1px solid black;
+    border-bottom: 1px solid black;
+    border-right: 2px solid black;
+    position: relative;
+}
+
+.go-jail-span{
+    text-align: center;
+    display: grid;
+    transform: rotate(225deg);
+}
+
+#inJailId{
+    width: 95.94px;
+    height: 95.94px;
+}
+
+#justVisitingId{
+    display: flex;
+    flex-wrap: wrap;
+    width: 150px;
+    height: 150px;
+    border-top: 1px solid black;
+    border-left: 2px solid black;
+    border-bottom: 2px solid black;
+    border-right: 1px solid black;
+    position: relative;
+}
+
+.just-space{
+    display: flex;
+    flex-wrap: wrap;
+    writing-mode: vertical-lr;
+    align-items: flex-end;
+    padding-top: 29.295px;
+    width: 35%;
+    height: 65%;
+    font-size: 24px; 
+}
+
+.just-padding{
+    padding-right:12.225px;
+}
+
+.in-jail-space{
+    display: flex;
+    width: 65%;
+    height: 65%;
+    background-color: rgb(255, 193, 77);
+}
+
+.in-jail-rotate{
+    font-size:24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 95.94px;
+    height: 95.94px;
+    transform: rotate(45deg);
+}
+
+.visiting-space{
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 10.015px;
+    width: 100%;
+    height: 35%;
+    font-size: 24px;
+}
+
+.visiting-padding{
+    display: inline;
+    padding-top: 12.225px;
+}
+
+#startId{
+    display: flex;
+    width: 150px;
+    height: 150px;
+    flex-direction: column;
+    border-top: 1px solid black;
+    border-left: 1px solid black;
+    border-bottom: 2px solid black;
+    border-right: 2px solid black;
+    align-items: flex-start;
+    justify-content: flex-start;
+    position: relative;
+}
+
+.start-span{
+    margin-top: 10px;
+    margin-left: 10px;
+    width: 75px;
+    height: 75px;
+    display:block;
+    transform: rotate(315deg);
+}
+
+.go-span{
+    display: block;
+    font-size: 40px;
+    font-weight:bolder;
+    
+}
+
+
+/* SVG Classes*/
+svg{
+  
+    justify-self: center;
+}
+
+.free-parking-svg{
+    height: 100px;
+}
+
+.top-chance-svg{
+    height: 90px;
+}
+
+.middle-chance-svg{
+    width: 57px;
+    height: 90px;
+}
+
+.top-train-svg{
+    height: 35px;
+    width: 40px;
+
+}
+
+.middle-train-svg{
+    height: 45px;
+    width: 40px;
+   
+}
+
+.faucet-svg{
+    height: 55px;
+}
+
+.go-jail-svg{
+    height: 100px;
+}
+
+.light-svg{
+    height: 50px;
+}
+
+.community-chest-svg{
+    width: 60px;
+    
+}
+
+.jewel-svg{
+    height: 40px;
+}
+
+.diamond-svg{
+    height: 15px; 
+}
+
+.prisoner-svg{
+    width: 140px;
+    height: auto;
+}
+
+.diamond-center{
+    display: flex;
+    justify-self: center;
+    align-self: center;
+    padding-top: 25px;
+}
+
+.arrow-svg{
+    height: 40px;
+}
+
+.arrow-container{
+    display: flex;
+    bottom: -35px;
+    align-self: flex-end;
+    justify-self: flex-end;
+    padding-left: 5px;
+    padding-bottom: 10px;
+    position: relative;
+}
+
+.arrow-line{
+    width: 89px;
+    position: relative;
+    left:-30.5px;
+    border-top: 5px solid red;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+}
+
+.arrow-line::before{
+    content: "";
+    display: block;
+    background-color: red;
+    width: 30%;
+    height: 5px;
+    position: absolute;
+    left: -4px;
+    bottom: 8.5px;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    transform: rotate(135deg);
+}
+
+.arrow-line::after{
+    content: "";
+    display: block;
+    background-color: red;
+    width: 32%;
+    height: 5px;
+    position: absolute;
+    left: -5px;
+    bottom: -9px;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    transform: rotate(45deg);
+}
+
+.game-pieces{
+    position: absolute;
+    z-index: 1;
+    justify-self: flex-start;
+    align-self: flex-start;
+    width: 40px;
+    height: 40px;
+}
+
+.svg-game-pieces{
+    height: 40px;
+}
+
+#hotelPieceId{
+    position: absolute;
+    z-index: 1;
+    justify-self: flex-start;
+    align-self: flex-start;
+    width: 40px;
+    height: 20px;
+}
+
+#housePieceId{
+    position: absolute;
+    z-index: 1;
+    justify-self: flex-start;
+    align-self: flex-start;
+    width: 20px;
+    height: 20px;
+}
+
+/* Floating Screen Classes*/
+/* Floating Screen Classes*/
+/* Floating Screen Classes*/
+
+.hidden {
+    display: none;
+}
+
+.action-display-screen{
+    display: flex;
+    grid-column: 2/8;
+    grid-row: 3/8;
+    width: 760px;
+    height: 375px;
+    justify-content: center ;
+    align-items: center;
+}
+
+.float-screen-title{
+    display: grid;
+    position: fixed;
+    justify-self: center;
+    align-self: center;
+    align-items: center;
+    justify-content: center;
+    width: 760px;
+    height: 375px;
+    left:50%;
+    right: 50%;
+    top: 50%;
+    bottom: 50%;
+}
+
+#playBtnId{
+    display: inline;
+    width: 450px;
+    height: 30%;   
+    color: antiquewhite;
+    font-size: 28px;
+    text-decoration: none;
+}
+
+
+.float-screen-players{
+    display: grid;
+    position: fixed;
+    justify-self: center;
+    align-self: center;
+    justify-items: center;
+    align-items: center;
+    width: 50%;
+    height: 375px;
+    left:50%;
+    right: 50%;
+    top: 50%;
+    bottom: 50%;
+    flex-direction: column;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 3fr;
+}
+
+.amount-players-prompt{
+    grid-column: 1/5;
+}
+
+
+.float-screen-piece-selection{
+    display: grid;
+    position: fixed;
+    justify-self: center;
+    align-self: center;
+    justify-items: center;
+    align-items: center;
+    width: 50%;
+    height: 375px;
+    left:50%;
+    right: 50%;
+    top: 50%;
+    bottom: 50%;
+    flex-direction: column;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 2fr 2fr;
+}
+
+.choose-piece-h1{
+    grid-column: 1/5;
+}
+
+.piece-selection-svg{
+    height: 50%;
+    width: 50%;
+}
+
+.choose-piece-button{
+    background-color: whitesmoke;
+}
+
+.float-screen-game{
+    display: grid;
+    position: fixed;
+    justify-self: center;
+    align-self: center;
+    width: 760px;
+    height: 375px;
+    left:50%;
+    right: 50%;
+    top: 50%;
+    bottom: 50%;
+    flex-direction: column;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+
+.float-screen-game-left, .float-screen-game-middle, .float-screen-game-right{
+    height: 375px;
+}
+
+.float-screen-game-left{
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    justify-content: center;
+}
+
+.float-screen-game-left-top{
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    width: 253.2px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.player-total-cash{
+    display: flex;
+    width: 253.2px;
+    font-size: 25px;
+}
+
+.float-screen-game-left-bottom{
+    display: flex;
+    padding-bottom: 20px;
+}
+
+.house-hotel-mortgage-screen{
+    display: grid;
+    width: 253.2px;
+    height: min-content;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    justify-content: center;
+}
+
+#houseHotelBtnLabelId, #mortgageBtnLabelId{
+    grid-column: 1/3;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.house-hotel-mortgage-btns{
+    align-self: center;
+    justify-self: center;
+    width: 70px;
+    height: 55px;
+}
+
+.house-hotel-mortgage-btns-container{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+}
+
+.house-hotel-mortgage-btns-label{
+    font-size: 1.5em;
+    display: flex;
+    grid-column: 1/3;
+}
+
+.color-property-card{
+    display: grid;
+    width: 200px;
+    align-content: center;
+    justify-content: center;
+    grid-template-rows: auto repeat(1fr, 9);
+    border: 2px solid black;
+    justify-self: center;
+    align-self: center;
+
+}
+
+#colorPropertyName{
+    width: 196.8px;
+    font-size: 1.25em;
+    font-weight:bold;
+}
+
+.railroad-property-card{
+    display: grid;
+    width: 200px;
+    justify-content: center;
+    align-items: flex-start;
+    grid-template-rows: auto repeat(1fr, 5);
+    border: 2px solid black;
+    justify-self: center;
+    align-self: center;
+}
+
+#railroadPropertyName{
+    width: 196.8px;
+    font-size: 1.25em;
+    font-weight:bold;
+}
+
+.utility-property-card{
+    display: grid;
+    width: 200px;
+    justify-content: center;
+    align-items: flex-start;
+    grid-template-rows: auto 1fr 1fr auto; 
+    border: 2px solid black;
+    justify-self: center;
+    align-self: center;
+}
+
+#utilityPropertyName{
+    width: 196.8px;
+    font-size: 1.25em;
+    font-weight:bold;
+}
+
+#utilityPropertyOneOwned, #utilityPropertyTwoOwned{
+    text-wrap: wrap;
+}
+
+
+.float-screen-game-middle{
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    grid-template-rows: 1fr 2fr;
+}
+
+.float-screen-game-middle-playerTurn{
+    width: 253.2px;
+    height: min-content;
+}
+
+.float-screen-game-middle-top-contents{
+    display: grid;
+    width: 253.2px;
+    height: 125px;
+    grid-template-rows: 1fr 2fr;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.float-screen-game-middle-bottom-contents{
+    display: grid;
+    width: 253.2px;
+    height: 250px;
+    grid-template-rows: 1fr 2fr;
+    justify-content: center;
+    align-items: center;
+}
+
+.property-for-purchase-grid{
+    display: grid;
+    width: 253.2px;
+    grid-template-rows: 1fr 1fr;
+    justify-content: center;
+    align-items: center;
+}
+
+.purchase-property-button{
+    width: min-content;
+    height: min-content;
+    padding: 10px 25px;
+    margin-top: 5px;
+}
+
+#wouldYouLikeToBuyId{
+    display: flex;
+    font-size: 1.5em;
+}
+
+.turn-interaction-description{
+    display: inline-block;
+    align-self:center;
+    justify-self: center;
+    width: 253.2px;
+    height: 1875.px;
+    font-size: 28px;
+    padding: 0 20px;
+}
+
+.purchase-property-container{
+    display: flex;
+    justify-content: space-around;
+}
+
+.float-screen-game-right{
+    display: grid;
+    width: 253.2px;
+    flex-direction: column;
+    grid-template-rows: 1fr 2fr; 
+    align-items: center;
+    justify-content: center;  
+}
+
+.right-top-screen{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 253.2px;
+    height: 125px;
+}
+
+.right-bottom-screen{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 253.2px;
+    height: 250px;
+}
+
+.pay-rent-container{
+    display: inline;
+    width: 253.5px;
+}
+
+#payRentLabelId{
+    font-size: 24px;
+    padding-bottom: 20px;
+}
+
+.roll-button{
+    align-self:center;
+    justify-self: center;
+    width: 50%;
+    height: 30%;
+    font-size: 28px;
+    text-decoration: none;
+}
+
+.in-jail-options-screen{
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+    row-gap: 10px;
+}
+
+.jail-buttons{
+    width: 100%;
+    padding: 10px 20px;
+    height: 52.5px;
+}
+
+.end-turn-button{
+    align-self:center;
+    justify-self: center;
+    height: 55px;
+    font-size: 28px;
+    text-decoration: none;
+    text-wrap: nowrap;
+    margin: 15px 10px;
+}
+
+.enlarge-font-span{
+    font-size: 1.5em ;
+}
+
+.bold-font-span{
+    font-weight: bold;
+}
+
+.test-div{
+    color: #7f0202
+}
+
+.can-open-mortgage, .can-close-mortgage, .can-buy-house, .can-sell-house{
+    color: black;
+}
+
+.can-open-mortgage:hover, .can-close-mortgage:hover, .can-buy-house:hover, .can-sell-house:hover {
+    cursor: pointer;
+}
+
+.can-open-mortgage:active, .can-close-mortgage:active, .can-buy-house:active, .can-sell-house:active{
+    opacity: .7;
+}
+
+.mortgaged{
+    opacity: .3;
+}
+
+.disable-clicks{
+    pointer-events: none;
+}
