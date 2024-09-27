@@ -929,6 +929,10 @@ svg{
     grid-template-rows: 100px 60px 60px;
 }
 
+.pay-rent-tutorial{
+    font-size: 1.25em;
+}
+
 #payRentLabelId{
     font-size: 24px;
     padding-bottom: 20px;
