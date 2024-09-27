@@ -37,6 +37,7 @@ pieceSelectionButton.forEach(icon => {
         currentPlayerTurn.gamePiece = iconPiece
         currentPlayerTurn.pieceId = iconIdname
         currentPlayerTurn.color = iconColor
+        currentPlayerTurn.isBankrupt = false
         playersSelected++
         document.querySelector(`${iconIdname}Btn`).disabled = true;
         document.querySelector(`${iconIdname}Btn`).style.opacity = "0";
@@ -49,6 +50,7 @@ pieceSelectionButton.forEach(icon => {
 
 
 })
+
 
 function whosTurnSetup (){
     if (playerTurnTicker === 1){
@@ -105,6 +107,12 @@ function updatePlayerCashTotalDisplay(){
     }
 }
 
+function updatePlayerTotalAssets(){
+    for (let i = 0; i < totalPlayers; i++){
+        activePlayers[i].updateTotalAssets()
+    }
+}
+
 function startGame (){
     if (totalPlayers === playersSelected){
         document.getElementById('floatScreenPieceSelectionId').classList.add('hidden')
@@ -118,8 +126,9 @@ function startGame (){
 }
 
 function updateMiddleScreenPlayerTurn (){
-    document.getElementById('float-screen-game-middle-playerTurn').innerHTML = `<span class="enlarge-font-span">${currentPlayerTurn.name}</span>`
+    document.getElementById('float-screen-game-middle-playerTurn').innerHTML = `${currentPlayerTurn.name}`
     document.getElementById('float-screen-game-middle-playerTurn').style.color = currentPlayerTurn.color
+    document.getElementById('float-screen-game-middle-playerTurn').style.fontSize = "2em"
 
 }
 
@@ -181,6 +190,11 @@ function clearDiceRollOutput(){
         if (spaceLandedOn().hasOwner === true){
             if (spaceLandedOn().owner.name != currentPlayerTurn.name){
                 if(spaceLandedOn().owner.isInJail === false && spaceLandedOn().mortgageOpen === false){
+                    updatePlayerTotalAssets()
+                    if (currentPlayerTurn.totalAssets < spaceLandedOn().rent){
+                        informBankrupt()
+                        return
+                    }
                     addPropertyCard()
                     addPayRentContainer()
                     document.getElementById('payRentLabelId').innerHTML = `You owe ${spaceLandedOn().owner.name} $${spaceLandedOn().rent}.`
@@ -286,7 +300,9 @@ function addPropertyBuySellButtons(){
  }
 
 //End Turn
-endTurnBtn.addEventListener ('click', function (e){
+endTurnBtn.addEventListener ('click', endTurn)
+
+function endTurn(){
     if (diceOneValue === diceTwoValue  && currentPlayerTurn.isInJail === false){      
     }
     else if (playerTurnTicker === 1){
@@ -332,7 +348,9 @@ endTurnBtn.addEventListener ('click', function (e){
     addHouseHotelMortgageScreen()
     checkJailStatusNextPlayer()
     hasRolled = false
-})
+    if (currentPlayerTurn.isBankrupt === true){endTurn()}
+}
+
 
 
 function removeDice (){
@@ -810,40 +828,6 @@ function placePieceRight(){
 
 //Property Cards
 //Property Cards
-payRentBtn.addEventListener('click', function (e){
-    if ((currentPlayerTurn.cash - spaceLandedOn().rent) < 0){
-        console.log('success')
-        return
-    }
-    currentPlayerTurn.cash -= spaceLandedOn().rent
-    spaceLandedOn().owner.cash += spaceLandedOn().rent
-    addEndTurnButton()
-    removePayRentContainer()
-    updatePlayerCashTotalDisplay()
-
-    if (document.getElementById('propertyCardId').classList.contains('hidden') === false){
-        removePropertyCard()
-    }
-    addHouseHotelMortgageScreen()
-    sellToPayRentBtn.disabled = false
-    addEndTurnButton()
- })
-
- sellToPayRentBtn.addEventListener('click', function(e){
-    removePropertyCard()
-    addHouseHotelMortgageScreen()
-    this.disabled = true
- })
-
-function addPayRentContainer(){
-    document.getElementById('payRentContainerId').classList.add('pay-rent-container')
-    document.getElementById('payRentContainerId').classList.remove('hidden')
- }
-
-function removePayRentContainer(){
-    document.getElementById('payRentContainerId').classList.add('hidden')
-    document.getElementById('payRentContainerId').classList.remove('pay-rent-container')
- }
 
 function addPropertyCard (){
     if (currentLocation.type === "color"){
@@ -922,9 +906,12 @@ function removeUtilityCard(){
 }
 
 buyPropertyYesBtn.addEventListener('click', function(e){
+    currentPlayerTurn.properties.push(spaceLandedOn())
     spaceLandedOn().owner = currentPlayerTurn
     spaceLandedOn().hasOwner = true
     currentPlayerTurn.cash -= spaceLandedOn().price
+    currentPlayerTurn.updateTotalAssets()
+    console.log(currentPlayerTurn.totalAssets)
     updateRent()
     updatePlayerCashTotalDisplay()
     document.getElementById(spaceLandedOn().id).style.backgroundColor = currentPlayerTurn.color;
@@ -942,6 +929,153 @@ buyPropertyNoBtn.addEventListener('click', function(e){
     removePropertyCard()
     addHouseHotelMortgageScreen()
 })
+
+//Pay Rent / Bankrupt
+//Pay Rent / Bankrupt
+
+function addPayRentContainer(){
+    document.getElementById('payRentContainerId').classList.add('pay-rent-container')
+    document.getElementById('payRentContainerId').classList.remove('hidden')
+}
+
+function removePayRentContainer(){
+    document.getElementById('payRentContainerId').classList.add('hidden')
+    document.getElementById('payRentContainerId').classList.remove('pay-rent-container')
+}
+
+payRentBtn.addEventListener('click', function (e){
+    if ((currentPlayerTurn.cash - spaceLandedOn().rent) < 0){
+        document.getElementById('payRentTutorialId').innerText = "You do not have enough cash to pay rent.  Sell houses, mortgage property, or bankrupt to quit game"
+        removePropertyCard()
+        addHouseHotelMortgageScreen()
+        this.disabled = true
+        return
+    }
+    currentPlayerTurn.cash -= spaceLandedOn().rent
+    spaceLandedOn().owner.cash += spaceLandedOn().rent
+    addEndTurnButton()
+    removePayRentContainer()
+    updatePlayerCashTotalDisplay()
+
+    if (document.getElementById('propertyCardId').classList.contains('hidden') === false){
+        removePropertyCard()
+    }
+    addHouseHotelMortgageScreen()
+    sellToPayRentBtn.disabled = false
+    removePayRentTutorial()
+    addEndTurnButton()
+})
+
+sellToPayRentBtn.addEventListener('click', function(e){
+    removePropertyCard()
+    addHouseHotelMortgageScreen()
+    this.disabled = true
+})
+
+function addPayRentTutorial(){
+    document.getElementById('payRentTutorialId').classList.add('pay-rent-tutorial')
+    document.getElementById('payRentTutorialId').classList.remove('hidden')
+    document.getElementById('payRentTutorialId').innerText = "Click sell to mortgage property or sell houses to pay rent"
+}
+
+function removePayRentTutorial(){
+    document.getElementById('payRentTutorialId').classList.add('hidden')
+    document.getElementById('payRentTutorialId').classList.remove('pay-rent-tutorial')
+}
+
+bankruptBtn.addEventListener('click', function(){
+    removePropertyCard()
+    addBankruptWarning()
+    removePayRentTutorial()
+    removeHouseHotelMortgageScreen()
+    bankruptBtn.disabled = true
+    payRentBtn.disabled = true
+    sellToPayRentBtn.disabled = true
+    document.getElementById('bankruptWarningTextId').innerHTML = `Pressing "Yes" will remove you from the game and give all your cash and properties to ${spaceLandedOn().owner.name}`
+})
+
+function addBankruptWarning(){
+    document.getElementById('bankruptWarningContainerId').classList.add('bankrupt-warning-container')
+    document.getElementById('bankruptWarningContainerId').classList.remove('hidden')
+}
+
+function removeBankruptWarning(){
+    document.getElementById('bankruptWarningContainerId').classList.remove('bankrupt-warning-container')
+    document.getElementById('bankruptWarningContainerId').classList.add('hidden')
+}
+
+bankruptYesBtn.addEventListener('click', function(){
+    bankrupt()
+})
+
+bankruptNoBtn.addEventListener('click', function(){
+    addPayRentContainer()
+    removeBankruptWarning()
+    addHouseHotelMortgageScreen()
+})
+
+function bankrupt(){
+    removeInformBankruptScreen()
+    removeBankruptWarning()
+    currentLocation.currentOccupants--
+    playerPiece().remove()
+    currentPlayerTurn.isBankrupt = true
+    currentPlayerTurn.properties.forEach(property => {
+        let playerOwed = currentLocation.owner
+        let playerIndebted = currentPlayerTurn
+        playerOwed.properties.push(property)
+        playerOwed.housesOwned += playerIndebted.housesOwned
+        playerOwed.hotelsOwned += playerIndebted.hotelsOwned
+        playerOwed.cash += playerIndebted.cash
+    })
+    let bankruptPlayers = 0
+    for (let i = 0; i < totalPlayers; i++){
+        if (activePlayers[i].isBankrupt === true){
+            bankruptPlayers++
+        }
+        if (bankruptPlayers === totalPlayers - 1){
+            gameOver()
+            return
+        }
+        
+    }
+    endTurn()
+}
+
+function gameOver(){
+    for (let i = 0; i < totalPlayers; i++){
+        if (activePlayers[i].isBankrupt === false){
+            gameWinner = activePlayers[i].name
+        }
+    }
+    document.getElementById('floatScreenGameId').classList.remove('float-screen-game')
+    document.getElementById('floatScreenGameId').classList.add('hidden')
+    document.getElementById('gameOverScreenId').classList.add('game-over-screen')
+    document.getElementById('gameOverScreenId').classList.remove('hidden') 
+    document.getElementById('gameOverText').innerHTML = `<span class="enlarge-font-span">Game Over</span><br>${gameWinner} may have lost a friend or two, but they have won the game of Monopoly `  
+}
+
+function informBankrupt(){
+    removePayRentContainer()
+    removeHouseHotelMortgageScreen()
+    addInformBankruptScreen()
+    document.getElementById('goodbyeTextId').innerHTML = `You do not have enough assets to pay off your debt.  This is your end.`
+}
+
+goodbyeBtn.addEventListener('click', function(){
+    bankrupt()
+})
+
+function addInformBankruptScreen(){
+    document.getElementById('bankruptGoodbyeContainer').classList.add('bankrupt-inform-container')
+    document.getElementById('bankruptGoodbyeContainer').classList.remove('hidden')
+}
+
+function removeInformBankruptScreen(){
+    document.getElementById('bankruptGoodbyeContainer').classList.add('hidden')
+    document.getElementById('bankruptGoodbyeContainer').classList.remove('bankrupt-inform-container')
+}
+
 
 
 //Jail Functions
@@ -1134,7 +1268,6 @@ function updateRentUtility(){
         }
     })
 }
-
 
 function generatePlayerPropertyArray(){
     ownedPropertyArray = []
@@ -1443,9 +1576,14 @@ finishBuyHouseBtn.addEventListener('click', function(e){
     removeBuyHouseTutorial()
     removeFinishBuyHouseBtn()
     addEndTurnButton()
+        //Prevent user from skipping turn
         if (hasRolled === false){
             removeEndTurnButton()
             addDice()
+        }
+        //Prevent user from ending turn before paying rent
+        if(document.getElementById.getElementById('payRentTutorialId').classList.contains('hidden') === false){
+            removeEndTurnButton()
         }
     
 })
@@ -1610,7 +1748,12 @@ finishSellHouseHotelBtn.addEventListener('click', function(e){
     if (hasRolled === false){
         removeEndTurnButton()
         addDice()
+    }    
+    //Prevent user from ending turn before paying rent
+    if(document.getElementById.getElementById('payRentTutorialId').classList.contains('hidden') === false){
+        removeEndTurnButton()
     }
+    
 })
 
 function removeHouseHotel(property){
@@ -1781,6 +1924,10 @@ finishOpenMortgageBtn.addEventListener('click', function(e){
         removeEndTurnButton()
         addDice()
     }
+     //Prevent user from ending turn before paying rent
+     if(document.getElementById.getElementById('payRentTutorialId').classList.contains('hidden') === false){
+         removeEndTurnButton()
+     }
 })
 
 function addOpenMortgageYesNoButtons (){
@@ -1926,6 +2073,10 @@ finishCloseMortgageBtn.addEventListener('click', function(e){
     if (hasRolled === false){
         removeEndTurnButton()
         addDice()
+    }
+    //Prevent user from ending turn before paying rent
+    if(document.getElementById.getElementById('payRentTutorialId').classList.contains('hidden') === false){
+        removeEndTurnButton()
     }
 })
 
