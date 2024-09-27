@@ -126,15 +126,20 @@
         <!--Main Start Screen-->
         <!--Main Start Screen-->
         <div class="action-display-screen">
-            
+            <!--Play Button Screen-->
             <div class="float-screen-title" id="floatScreenTitleId">
                 <button id="playBtnId">Play</button>
             </div>
 
+            <!--Game Over Screen-->
+            <container class="hidden" id="gameOverScreenId">
+                <h1 id="gameOverText"></h1>
+            </container>
+
             <!--Main Player Select Screen-->
             <!--Main Player Select Screen-->
             <div class="hidden" id="floatScreenPlayersId">
-                <h1 class="amount-players-prompt">How Many Players?</h1>
+                <h1 class="amount-players-prompt" id="whichPlayChoosePieceId">How Many Players?</h1>
                 <button id="twoPlayerBtnId">2</button>
                 <button id="threePlayerBtnId">3</button>
                 <button id="fourPlayerBtnId">4</button>
@@ -228,12 +233,34 @@
                         <h2 id="float-screen-game-middle-playerTurn"></h2>
                     </div>
                     <div class="float-screen-game-middle-bottom-contents">
+                        <!--Update Player locations-->
                         <h2 id="float-screen-game-middle-currentLocation"></h2>
+
+                        <!--Pay Rent Insructions-->
+                        <h2 class="hidden" id="payRentTutorialId"></h2>
+
+                        <!--Bankrupt Warning Message-->
+                        <container class="hidden" id="bankruptWarningContainerId">
+                            <div class="bankrupt-warning-text" id="bankruptWarningTextId"></div>
+                            <button class="house-hotel-mortgage-btns" id="bankruptYesBtnId">Yes</button>
+                            <button class="house-hotel-mortgage-btns" id="bankruptNoBtnId">No</button>
+                        </container>
+
+                        <!--Bankrupt Final Goodbye-->
+                        <container class="hidden" id="bankruptGoodbyeContainer">
+                            <div id="goodbyeTextId"></div>
+                            <button id="goodbyeBtnId">Goodbye</button>
+                        </container>
+
+                        <!--End Turn Button-->
                         <button class="hidden" id="endTurnBtnId">End Turn</button>
+
+                        <!--Buy Sell House, Open Close Mortgage Finish Buttons-->
                         <button class="hidden" id="finishBuyHouseBtnId">Finish</button>
                         <button class="hidden" id="finishSellHouseHotelBtnId">Finish</button>
                         <button class="hidden" id="finishOpenMortgageBtnId">Finish</button>
                         <button class="hidden" id="finishCloseMortgageBtnId">Finish</button>
+
                         <!--property-for-purchase-grid-->
                         <!-- Show Location Property For Purchase -->
                         <div class="hidden" id="propertyForPurchaseId">
@@ -266,6 +293,7 @@
                         <div id="payRentLabelId"></div>
                         <button class="house-hotel-mortgage-btns" id="payRentBtnId">Pay</button>
                         <button class="house-hotel-mortgage-btns" id="sellToPayRentBtnId">Sell</button>
+                        <button id="bankruptBtnId">Bankrupt</button>
                     </container>
 
                     <!--in-jail-options-screen-->
