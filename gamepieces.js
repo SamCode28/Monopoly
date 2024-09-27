@@ -106,7 +106,6 @@ let hasRolled = false
 
 //Game Setup Total Player Buttons
 const playerTotalButtons = [
-    {button: document.getElementById('onePlayerBtnId'), value: 1},
     {button: document.getElementById('twoPlayerBtnId'), value: 2},
     {button: document.getElementById('threePlayerBtnId'), value: 3},
     {button: document.getElementById('fourPlayerBtnId'), value: 4},
