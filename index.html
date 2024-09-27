@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monopoly</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+ <div id="gameboard">
+
+    <!-- Top Board Pieces -->
+    <!-- Top Board Pieces -->
+    <!-- Top Board Pieces -->
+    <!-- Top Board Pieces -->
+
+    <container class="top-bottom-grid">
+
+        <div class="square-top-bottom" id="freeParkingId">
+            <div class="top-contents"><span class="free-parking-span">Free<svg class="free-parking-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M135.2 117.4L109.1 192l293.8 0-26.1-74.6C372.3 104.6 360.2 96 346.6 96L165.4 96c-13.6 0-25.7 8.6-30.2 21.4zM39.6 196.8L74.8 96.3C88.3 57.8 124.6 32 165.4 32l181.2 0c40.8 0 77.1 25.8 90.6 64.3l35.2 100.5c23.2 9.6 39.6 32.5 39.6 59.2l0 144 0 48c0 17.7-14.3 32-32 32l-32 0c-17.7 0-32-14.3-32-32l0-48L96 400l0 48c0 17.7-14.3 32-32 32l-32 0c-17.7 0-32-14.3-32-32l0-48L0 256c0-26.7 16.4-49.6 39.6-59.2zM128 288a32 32 0 1 0 -64 0 32 32 0 1 0 64 0zm288 32a32 32 0 1 0 0-64 32 32 0 1 0 0 64z"/></svg>Parking</span></div>
+        </div>
+        <div class="square-top-bottom top-board-border" id="kentuckyAvId">
+            <div class="top-contents top-square-description top-description-property-padding">$220</div> 
+            <div class="top-contents top-square-name red-property">Kentucky Avenue</div>
+        </div>
+        <div class="square-top-bottom top-board-border" id="chanceTopId">
+            <div class="top-contents top-square-description top-description-property-padding"><svg class="top-chance-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M80 160c0-35.3 28.7-64 64-64l32 0c35.3 0 64 28.7 64 64l0 3.6c0 21.8-11.1 42.1-29.4 53.8l-42.2 27.1c-25.2 16.2-40.4 44.1-40.4 74l0 1.4c0 17.7 14.3 32 32 32s32-14.3 32-32l0-1.4c0-8.2 4.2-15.8 11-20.2l42.2-27.1c36.6-23.6 58.8-64.1 58.8-107.7l0-3.6c0-70.7-57.3-128-128-128l-32 0C73.3 32 16 89.3 16 160c0 17.7 14.3 32 32 32s32-14.3 32-32zm80 320a40 40 0 1 0 0-80 40 40 0 1 0 0 80z"/></svg></div>
+            <div class="top-contents top-square-name top-name-utility-padding">Chance</div>
+        </div>
+        <div class="square-top-bottom top-board-border" id="indianaAvId">
+            <div class="top-contents top-square-description top-description-property-padding">$220</div>
+            <div class="top-contents top-square-name red-property">Indiana Avenue</div>
+        </div>
+        <div class="square-top-bottom top-board-border" id="illinoisAvId">
+            <div class="top-contents top-square-description top-description-property-padding">$240</div>
+            <div class="top-contents top-square-name red-property">Illinois Avenue</div>
+        </div>
+        <div class="square-top-bottom-three top-board-border" id="boRailroadId">
+            <div class="top-contents top-square-description top-description-property-padding">$200</div>
+            <div class="top-contents top-square-description top-name-utility-padding-special "><svg class="top-train-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M96 0C43 0 0 43 0 96L0 352c0 48 35.2 87.7 81.1 94.9l-46 46C28.1 499.9 33.1 512 43 512l39.7 0c8.5 0 16.6-3.4 22.6-9.4L160 448l128 0 54.6 54.6c6 6 14.1 9.4 22.6 9.4l39.7 0c10 0 15-12.1 7.9-19.1l-46-46c46-7.1 81.1-46.9 81.1-94.9l0-256c0-53-43-96-96-96L96 0zM64 96c0-17.7 14.3-32 32-32l256 0c17.7 0 32 14.3 32 32l0 96c0 17.7-14.3 32-32 32L96 224c-17.7 0-32-14.3-32-32l0-96zM224 288a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"/></svg></div>
+            <div class="top-contents top-square-name top-name-utility-padding">B&O Railroad</div>
+        </div>
+        <div class="square-top-bottom top-board-border" id="atlanticAvId">
+            <div class="top-contents top-square-description top-description-property-padding">$260</div>
+            <div class="top-contents top-square-name yellow-property">Atlantic Avenue</div>
+        </div>
+        <div class="square-top-bottom top-board-border" id="ventorAvId">
+            <div class="top-contents top-square-description top-description-property-padding">$260</div>
+            <div class="top-contents top-square-name yellow-property">Ventor Avenue</div>
+        </div>
+        <div class="square-top-bottom-three top-board-border" id="waterWorksId">
+            <div class="top-contents top-square-description top-description-property-padding">$150</div>
+            <div class="top-contents top-square-description top-name-utility-padding-special-again "><svg class="faucet-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M192 96l0 12L96 96c-17.7 0-32 14.3-32 32s14.3 32 32 32l96-12 31-3.9 1-.1 1 .1 31 3.9 96 12c17.7 0 32-14.3 32-32s-14.3-32-32-32l-96 12 0-12c0-17.7-14.3-32-32-32s-32 14.3-32 32zM32 256c-17.7 0-32 14.3-32 32l0 64c0 17.7 14.3 32 32 32l100.1 0c20.2 29 53.9 48 91.9 48s71.7-19 91.9-48l36.1 0c17.7 0 32 14.3 32 32s14.3 32 32 32l64 0c17.7 0 32-14.3 32-32c0-88.4-71.6-160-160-160l-32 0-22.6-22.6c-6-6-14.1-9.4-22.6-9.4L256 224l0-43.8-32-4-32 4 0 43.8-18.7 0c-8.5 0-16.6 3.4-22.6 9.4L128 256l-96 0z"/></svg></div>
+            <div class="top-contents top-square-name top-name-utility-padding">Water Works</div>
+        </div>
+        <div class="square-top-bottom top-board-border" id="marvinGardensId">
+            <div class="top-contents top-square-description top-description-property-padding">$280</div>
+            <div class="top-contents top-square-name yellow-property">Marvin Gardens</div>
+        </div>
+        <div class="square-top-bottom" id="goJailId">
+            <div class="top-contents"><span class="go-jail-span">Go To<svg class="go-jail-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M240 32a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zM192 48a32 32 0 1 1 0 64 32 32 0 1 1 0-64zm-32 80c17.7 0 32 14.3 32 32l8 0c13.3 0 24 10.7 24 24l0 16c0 1.7-.2 3.4-.5 5.1C280.3 229.6 320 286.2 320 352c0 88.4-71.6 160-160 160S0 440.4 0 352c0-65.8 39.7-122.4 96.5-146.9c-.4-1.6-.5-3.3-.5-5.1l0-16c0-13.3 10.7-24 24-24l8 0c0-17.7 14.3-32 32-32zm0 320a96 96 0 1 0 0-192 96 96 0 1 0 0 192zm192-96c0-25.9-5.1-50.5-14.4-73.1c16.9-32.9 44.8-59.1 78.9-73.9c-.4-1.6-.5-3.3-.5-5.1l0-16c0-13.3 10.7-24 24-24l8 0c0-17.7 14.3-32 32-32s32 14.3 32 32l8 0c13.3 0 24 10.7 24 24l0 16c0 1.7-.2 3.4-.5 5.1C600.3 229.6 640 286.2 640 352c0 88.4-71.6 160-160 160c-62 0-115.8-35.3-142.4-86.9c9.3-22.5 14.4-47.2 14.4-73.1zm224 0a96 96 0 1 0 -192 0 96 96 0 1 0 192 0zM368 0a32 32 0 1 1 0 64 32 32 0 1 1 0-64zm80 48a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"/></svg>Jail</span></div>
+        </div>
+
+    </container>
+
+    <!-- Middle Board Pieces -->
+    <!-- Middle Board Pieces -->
+    <!-- Middle Board Pieces -->
+    <!-- Middle Board Pieces -->
+
+
+    <container class="middle-grid ">
+
+        <div class="left-middle-square-two middle-board-border" id="newYorkAvId">
+            <div class="left-middle-description">$200</div>
+            <div class="left-middle-property orange-property">New York Avenue</div>
+        </div>
+        <div class="square-middle">
+        </div>
+        <div class="square-middle">
+        </div>
+        <div class="square-middle">
+        </div>
+        <div class="square-middle">
+        </div>
+        <div class="square-middle">
+        </div>
+        <div class="square-middle">
+        </div>    
+        <div class="right-middle-square-two middle-board-border" id="pacificAvId">
+            <div class="right-middle-property green-property">Avenue Pacific</div>
+            <div class="right-middle-description">$300</div>
+        </div>
+        <div class="left-middle-square-two middle-board-border" id="tennAvId">
+            <div class="left-middle-description">$180</div>
+            <div class="left-middle-property orange-property">Tennessee Avenue</div>
+        </div>
+        <div class="square-middle">
+        </div>
+        <div class="square-middle">
+        </div>
+        <div class="square-middle">
+        </div>
+        <div class="square-middle">
+        </div>
+        <div class="square-middle">
+        </div>
+        <div class="square-middle">
+        </div>
+        <div class="right-middle-square-two middle-board-border" id="northCarolinaId">
+            <div class="right-middle-property green-property"><span class="right-square-rotate-span">Avenue Carolina North</span></div>
+            <div class="right-middle-description"><span class="right-square-rotate-span">$300</span></div>
+        </div>
+        <div class="left-middle-square-two middle-board-border" id="commChestLeftId">
+            <div class="left-middle-description"><span class="left-svg-rotate"><svg class="community-chest-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M176 88l0 40 160 0 0-40c0-4.4-3.6-8-8-8L184 80c-4.4 0-8 3.6-8 8zm-48 40l0-40c0-30.9 25.1-56 56-56l144 0c30.9 0 56 25.1 56 56l0 40 28.1 0c12.7 0 24.9 5.1 33.9 14.1l51.9 51.9c9 9 14.1 21.2 14.1 33.9l0 92.1-128 0 0-32c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 32-128 0 0-32c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 32L0 320l0-92.1c0-12.7 5.1-24.9 14.1-33.9l51.9-51.9c9-9 21.2-14.1 33.9-14.1l28.1 0zM0 416l0-64 128 0c0 17.7 14.3 32 32 32s32-14.3 32-32l128 0c0 17.7 14.3 32 32 32s32-14.3 32-32l128 0 0 64c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64z"/></svg></span></div>
+            <div class="left-middle-property left-name-utility-padding"><span class="left-square-rotate-name">Community Chest</span></div>
+        </div>
+
+
+ <!--Middle Floating Screen-->
+ <!--Middle Floating Screen-->   
+ <!--Middle Floating Screen-->   
+ <!--Middle Floating Screen-->      
+
+        <!--Main Start Screen-->
+        <!--Main Start Screen-->
+        <div class="action-display-screen">
+            
+            <div class="float-screen-title" id="floatScreenTitleId">
+                <button id="playBtnId">Play</button>
+            </div>
+
+            <!--Main Player Select Screen-->
+            <!--Main Player Select Screen-->
+            <div class="hidden" id="floatScreenPlayersId">
+                <h1 class="amount-players-prompt">How Many Players?</h1>
+                <button id="onePlayerBtnId">1</button>
+                <button id="twoPlayerBtnId">2</button>
+                <button id="threePlayerBtnId">3</button>
+                <button id="fourPlayerBtnId">4</button>
+            </div>
+
+            <!--Main Piece Select Screen-->
+            <!--Main Piece Select Screen-->
+            <div class="hidden" id="floatScreenPieceSelectionId">
+                <h1 class="choose-piece-h1">Choose Your Piece</h1>
+                <button class="choose-piece-button" id="dogPieceIdBtn"><svg class="piece-selection-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="#5e2222" d="M309.6 158.5L332.7 19.8C334.6 8.4 344.5 0 356.1 0c7.5 0 14.5 3.5 19 9.5L392 32l52.1 0c12.7 0 24.9 5.1 33.9 14.1L496 64l56 0c13.3 0 24 10.7 24 24l0 24c0 44.2-35.8 80-80 80l-32 0-16 0-21.3 0-5.1 30.5-112-64zM416 256.1L416 480c0 17.7-14.3 32-32 32l-32 0c-17.7 0-32-14.3-32-32l0-115.2c-24 12.3-51.2 19.2-80 19.2s-56-6.9-80-19.2L160 480c0 17.7-14.3 32-32 32l-32 0c-17.7 0-32-14.3-32-32l0-230.2c-28.8-10.9-51.4-35.3-59.2-66.5L1 167.8c-4.3-17.1 6.1-34.5 23.3-38.8s34.5 6.1 38.8 23.3l3.9 15.5C70.5 182 83.3 192 98 192l30 0 16 0 159.8 0L416 256.1zM464 80a16 16 0 1 0 -32 0 16 16 0 1 0 32 0z"/></svg></button>
+                <button class="choose-piece-button" id="catPieceIdBtn"><svg class="piece-selection-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="#000000" d="M320 192l17.1 0c22.1 38.3 63.5 64 110.9 64c11 0 21.8-1.4 32-4l0 4 0 32 0 192c0 17.7-14.3 32-32 32s-32-14.3-32-32l0-140.8L280 448l56 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-144 0c-53 0-96-43-96-96l0-223.5c0-16.1-12-29.8-28-31.8l-7.9-1c-17.5-2.2-30-18.2-27.8-35.7s18.2-30 35.7-27.8l7.9 1c48 6 84.1 46.8 84.1 95.3l0 85.3c34.4-51.7 93.2-85.8 160-85.8zm160 26.5s0 0 0 0c-10 3.5-20.8 5.5-32 5.5c-28.4 0-54-12.4-71.6-32c0 0 0 0 0 0c-3.7-4.1-7-8.5-9.9-13.2C357.3 164 352 146.6 352 128c0 0 0 0 0 0l0-96 0-20 0-1.3C352 4.8 356.7 .1 362.6 0l.2 0c3.3 0 6.4 1.6 8.4 4.2c0 0 0 0 0 .1L384 21.3l27.2 36.3L416 64l64 0 4.8-6.4L512 21.3 524.8 4.3c0 0 0 0 0-.1c2-2.6 5.1-4.2 8.4-4.2l.2 0C539.3 .1 544 4.8 544 10.7l0 1.3 0 20 0 96c0 17.3-4.6 33.6-12.6 47.6c-11.3 19.8-29.6 35.2-51.4 42.9zM432 128a16 16 0 1 0 -32 0 16 16 0 1 0 32 0zm48 16a16 16 0 1 0 0-32 16 16 0 1 0 0 32z"/></svg></button>
+                <button class="choose-piece-button" id="ghostPieceIdBtn"><svg class="piece-selection-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="#f7fb32" d="M40.1 467.1l-11.2 9c-3.2 2.5-7.1 3.9-11.1 3.9C8 480 0 472 0 462.2L0 192C0 86 86 0 192 0S384 86 384 192l0 270.2c0 9.8-8 17.8-17.8 17.8c-4 0-7.9-1.4-11.1-3.9l-11.2-9c-13.4-10.7-32.8-9-44.1 3.9L269.3 506c-3.3 3.8-8.2 6-13.3 6s-9.9-2.2-13.3-6l-26.6-30.5c-12.7-14.6-35.4-14.6-48.2 0L141.3 506c-3.3 3.8-8.2 6-13.3 6s-9.9-2.2-13.3-6L84.2 471c-11.3-12.9-30.7-14.6-44.1-3.9zM160 192a32 32 0 1 0 -64 0 32 32 0 1 0 64 0zm96 32a32 32 0 1 0 0-64 32 32 0 1 0 0 64z"/></svg></button>
+                <button class="choose-piece-button" id="moonPieceIdBtn"><svg class="piece-selection-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="#124973" d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z"/></svg></button>
+                <button class="choose-piece-button" id="astronautPieceIdBtn"><svg class="piece-selection-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="#9172ee" d="M370.7 96.1C346.1 39.5 289.7 0 224 0S101.9 39.5 77.3 96.1C60.9 97.5 48 111.2 48 128l0 64c0 16.8 12.9 30.5 29.3 31.9C101.9 280.5 158.3 320 224 320s122.1-39.5 146.7-96.1c16.4-1.4 29.3-15.1 29.3-31.9l0-64c0-16.8-12.9-30.5-29.3-31.9zM336 144l0 16c0 53-43 96-96 96l-32 0c-53 0-96-43-96-96l0-16c0-26.5 21.5-48 48-48l128 0c26.5 0 48 21.5 48 48zM189.3 162.7l-6-21.2c-.9-3.3-3.9-5.5-7.3-5.5s-6.4 2.2-7.3 5.5l-6 21.2-21.2 6c-3.3 .9-5.5 3.9-5.5 7.3s2.2 6.4 5.5 7.3l21.2 6 6 21.2c.9 3.3 3.9 5.5 7.3 5.5s6.4-2.2 7.3-5.5l6-21.2 21.2-6c3.3-.9 5.5-3.9 5.5-7.3s-2.2-6.4-5.5-7.3l-21.2-6zM112.7 316.5C46.7 342.6 0 407 0 482.3C0 498.7 13.3 512 29.7 512l98.3 0 0-64c0-17.7 14.3-32 32-32l128 0c17.7 0 32 14.3 32 32l0 64 98.3 0c16.4 0 29.7-13.3 29.7-29.7c0-75.3-46.7-139.7-112.7-165.8C303.9 338.8 265.5 352 224 352s-79.9-13.2-111.3-35.5zM176 448c-8.8 0-16 7.2-16 16l0 48 32 0 0-48c0-8.8-7.2-16-16-16zm96 32a16 16 0 1 0 0-32 16 16 0 1 0 0 32z"/></svg></button>
+                <button class="choose-piece-button" id="winePieceIdBtn"><svg class="piece-selection-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="#ab1c1c" d="M32.1 29.3C33.5 12.8 47.4 0 64 0L256 0c16.6 0 30.5 12.8 31.9 29.3l14 168.4c6 72-42.5 135.2-109.9 150.6l0 99.6 48 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-80 0-80 0c-17.7 0-32-14.3-32-32s14.3-32 32-32l48 0 0-99.6C60.6 333 12.1 269.8 18.1 197.8l14-168.4zm56 98.7l143.8 0-5.3-64L93.4 64l-5.3 64z"/></svg></button>
+                <button class="choose-piece-button" id="weedPieceIdBtn"><svg class="piece-selection-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#1b8d41" d="M256 0c5.3 0 10.3 2.7 13.3 7.1c15.8 23.5 36.7 63.7 49.2 109c7.2 26.4 11.8 55.2 10.4 84c11.5-8.8 23.7-16.7 35.8-23.6c41-23.3 84.4-36.9 112.2-42.5c5.2-1 10.7 .6 14.4 4.4s5.4 9.2 4.4 14.5c-5.6 27.7-19.3 70.9-42.7 111.7c-9.1 15.9-19.9 31.7-32.4 46.3c27.8 6.6 52.4 17.3 67.2 25.5c5.1 2.8 8.2 8.2 8.2 14s-3.2 11.2-8.2 14c-15.2 8.4-40.9 19.5-69.8 26.1c-20.2 4.6-42.9 7.2-65.2 4.6l8.3 33.1c1.5 6.1-.6 12.4-5.5 16.4s-11.6 4.6-17.2 1.9L280 417.2l0 70.8c0 13.3-10.7 24-24 24s-24-10.7-24-24l0-70.8-58.5 29.1c-5.6 2.8-12.3 2.1-17.2-1.9s-7-10.3-5.5-16.4l8.3-33.1c-22.2 2.6-45 0-65.2-4.6c-28.9-6.6-54.6-17.6-69.8-26.1c-5.1-2.8-8.2-8.2-8.2-14s3.2-11.2 8.2-14c14.8-8.2 39.4-18.8 67.2-25.5C78.9 296.3 68.1 280.5 59 264.6c-23.4-40.8-37.1-84-42.7-111.7c-1.1-5.2 .6-10.7 4.4-14.5s9.2-5.4 14.4-4.4c27.9 5.5 71.2 19.2 112.2 42.5c12.1 6.9 24.3 14.7 35.8 23.6c-1.4-28.7 3.1-57.6 10.4-84c12.5-45.3 33.4-85.5 49.2-109c3-4.4 8-7.1 13.3-7.1z"/></svg></button>
+                <button class="choose-piece-button" id="musicNoteIdBtn"><svg class="piece-selection-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#f4991a" d="M499.1 6.3c8.1 6 12.9 15.6 12.9 25.7l0 72 0 264c0 44.2-43 80-96 80s-96-35.8-96-80s43-80 96-80c11.2 0 22 1.6 32 4.6L448 147 192 223.8 192 432c0 44.2-43 80-96 80s-96-35.8-96-80s43-80 96-80c11.2 0 22 1.6 32 4.6L128 200l0-72c0-14.1 9.3-26.6 22.8-30.7l320-96c9.7-2.9 20.2-1.1 28.3 5z"/></svg></button>
+            </div>
+            <!--Main Game Screen-->
+            <!--Main Game Screen-->
+            <div class="hidden" id="floatScreenGameId">
+
+                <!--Left Game Screen-->
+                <div class="float-screen-game-left">
+                    <!--Left Game Screen Top-->
+                    <div class="float-screen-game-left-top">
+                        <div class="player-total-cash" id="playerOneCashId"></div>
+                        <div class="player-total-cash" id="playerTwoCashId"></div>
+                        <div class="player-total-cash" id="playerThreeCashId"></div>
+                        <div class="player-total-cash" id="playerFourCashId"></div>
+                    </div>
+                    <!--Left Game Screen Bottom-->
+                    <div class="float-screen-game-left-bottom" id="floatScreenGameLeftBottomId">
+                        <!--ADD PROPERTY CLASS-->
+                        <div class="hidden" id="propertyCardId"></div>
+                        <!--House Hotel Mortgage Start Screen-->
+                        <div class="house-hotel-mortgage-screen" id="houseHotelMortgageScreenId">
+                            <div id="houseHotelBtnLabelId">House & Hotel</div>
+                            <button class="house-hotel-mortgage-btns" id="buyHouseHotelBtnId">Buy</button><button class="house-hotel-mortgage-btns" id="sellHouseHotelBtn">Sell</button>
+                            <div id="mortgageBtnLabelId">Mortgage Property</div>
+                            <button class="house-hotel-mortgage-btns" id="openMortgageBtnId">Open</button><button class="house-hotel-mortgage-btns" id="closeMortgageBtnId">Close</button>
+                        </div>
+
+                     <!--Buy House Tutorial-->
+                     <container class="hidden" id="buyHouseTutorialId">Choose eligible property to buy house</container>
+
+                    <!--Buy House Display-->
+                     <container class="hidden" id="buyHouseBtnsId">
+                        <div class="house-hotel-mortgage-btns-label" id="buyHouseLabel"></div>
+                        <button class="house-hotel-mortgage-btns" id="buyHouseYesBtnId">Yes</button> 
+                        <button class="house-hotel-mortgage-btns" id="buyHouseNoBtnId">No</button>
+                    </container>
+
+                    <!--Sell House Tutorial-->
+                     <container class="hidden" id="sellHouseHotelTutorialId">Choose eligible property to sell house</container>
+
+                    <!--Sell House Display-->
+                     <container class="hidden" id="sellHouseHotelBtnsId">
+                        <div class="house-hotel-mortgage-btns-label" id="sellHouseHotelLabel"></div>
+                        <button class="house-hotel-mortgage-btns" id="sellHouseHotelYesBtnId">Yes</button> 
+                        <button class="house-hotel-mortgage-btns" id="sellHouseHotelNoBtnId">No</button>
+                    </container>
+
+                     <!--Mortgage Open Tutorial-->
+                     <container class="hidden" id="openMortgageTutorialId">Choose eligible property to open mortgage</container>
+
+                    <!--Mortgage Open Display-->
+                    <container class="hidden" id="openMortgageBtnsId">
+                        <div class="house-hotel-mortgage-btns-label" id="openMortgageLabel"></div>
+                        <button class="house-hotel-mortgage-btns" id="openMortgageYesBtnId">Yes</button> 
+                        <button class="house-hotel-mortgage-btns" id="openMortgageNoBtnId">No</button>
+                    </container>
+
+                     <!--Mortgage Close Tutorial-->
+                     <container class="hidden" id="closeMortgageTutorialId">Choose eligible property to close mortgage</container>
+
+                    <!--Mortgage Close Display-->
+                    <container class="hidden" id="closeMortgageBtnsId">
+                        <div class="house-hotel-mortgage-btns-label" id="closeMortgageLabel"></div>
+                        <button class="house-hotel-mortgage-btns" id="closeMortgageYesBtnId">Yes</button> 
+                        <button class="house-hotel-mortgage-btns" id="closeMortgageNoBtnId">No</button>
+                    </container>
+
+                    </div>
+                </div>
+                <!--Middle Game Screen-->
+                <!--Middle Game Screen-->
+                <div class="float-screen-game-middle">
+                    <div class="float-screen-game-middle-top-contents">
+                        <h2 style="padding-top: 15px;">Current Turn:</h2>
+                        <h2 id="float-screen-game-middle-playerTurn"></h2>
+                    </div>
+                    <div class="float-screen-game-middle-bottom-contents">
+                        <h2 id="float-screen-game-middle-currentLocation"></h2>
+                        <button class="hidden" id="endTurnBtnId">End Turn</button>
+                        <button class="hidden" id="finishBuyHouseBtnId">Finish</button>
+                        <button class="hidden" id="finishSellHouseHotelBtnId">Finish</button>
+                        <button class="hidden" id="finishOpenMortgageBtnId">Finish</button>
+                        <button class="hidden" id="finishCloseMortgageBtnId">Finish</button>
+                        <!--property-for-purchase-grid-->
+                        <!-- Show Location Property For Purchase -->
+                        <div class="hidden" id="propertyForPurchaseId">
+                            <div id="wouldYouLikeToBuyId"></div>
+                            <div class="purchase-property-container">
+                                <button class="purchase-property-button" id="buyPropertyYesBtn">Yes</button>
+                                <button class="purchase-property-button" id="buyPropertyNoBtn">No</button>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="hidden"></div>
+
+                </div>
+
+                <!--Right Game Screen-->
+                <!--Right Game Screen-->
+                <div class="float-screen-game-right">
+                    <!--Right Game Screen Top-->
+                    <div class="right-top-screen "><h2 id="rollCounterDisplay"></h2></div>
+                    
+                    <!--Right Game Screen Bottom-->
+                    <div class="right-bottom-screen" id="rollBtnIdDiv"><button class="roll-button" id="rollBtnId">Roll</button></div>
+
+                    <!--turn-interaction-description-->
+                    <div class="hidden" id="turnInteractionDescriptionId"></div>
+
+                    <!--pay-rent-container-->
+                    <container class="hidden" id="payRentContainerId">
+                        <div id="payRentLabelId"></div>
+                        <button class="house-hotel-mortgage-btns" id="payRentBtnId">Pay</button>
+                        <button class="house-hotel-mortgage-btns" id="sellToPayRentBtnId">Sell</button>
+                    </container>
+
+                    <!--in-jail-options-screen-->
+                    <div class="hidden" id="inJailOptionsId">
+                        <button class="jail-buttons" id="attemptDoublesBtnId">Roll To Escape</button>
+                        <button class="jail-buttons" id="payFeeBtnId">Pay $50</button>
+                        <button class="jail-buttons" id="getOutJailCardBtnId">Use Card</button>
+                    </div>
+                </div>
+                
+            </div> 
+
+        </div>
+
+    <!-- Middle Board Pieces -->
+    <!-- Middle Board Pieces -->
+    <!-- Middle Board Pieces -->
+    <!-- Middle Board Pieces -->        
+
+        <div class="right-middle-square-two middle-board-border" id="commChestRightId">
+            <div class="right-middle-property right-name-utility-padding">Chest Community</div>
+            <div class="right-middle-description"><svg class="community-chest-svg right-svg-rotate" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M176 88l0 40 160 0 0-40c0-4.4-3.6-8-8-8L184 80c-4.4 0-8 3.6-8 8zm-48 40l0-40c0-30.9 25.1-56 56-56l144 0c30.9 0 56 25.1 56 56l0 40 28.1 0c12.7 0 24.9 5.1 33.9 14.1l51.9 51.9c9 9 14.1 21.2 14.1 33.9l0 92.1-128 0 0-32c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 32-128 0 0-32c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 32L0 320l0-92.1c0-12.7 5.1-24.9 14.1-33.9l51.9-51.9c9-9 21.2-14.1 33.9-14.1l28.1 0zM0 416l0-64 128 0c0 17.7 14.3 32 32 32s32-14.3 32-32l128 0c0 17.7 14.3 32 32 32s32-14.3 32-32l128 0 0 64c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64z"/></svg></span></div>
+        </div>
+        <div class="left-middle-square-two middle-board-border" id="stJamesPlId">
+            <div class="left-middle-description">$180</span></div>
+            <div class="left-middle-property orange-property">St. James Place</span></div>
+        </div>
+
+        <div class="right-middle-square-two middle-board-border" id="pennAvId">
+            <div class="right-middle-property green-property"><span class="right-square-rotate-span">Avenue Pennsylvania</span></div>
+            <div class="right-middle-description"><span class="right-square-rotate-span">$320</span></div>
+        </div>
+        <div class="left-middle-square-three middle-board-border" id="pennRailroadId">
+            <div class="left-middle-description">$200</div>
+            <div class="left-middle-svg"><span class="left-svg-rotate"><svg class="middle-train-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M96 0C43 0 0 43 0 96L0 352c0 48 35.2 87.7 81.1 94.9l-46 46C28.1 499.9 33.1 512 43 512l39.7 0c8.5 0 16.6-3.4 22.6-9.4L160 448l128 0 54.6 54.6c6 6 14.1 9.4 22.6 9.4l39.7 0c10 0 15-12.1 7.9-19.1l-46-46c46-7.1 81.1-46.9 81.1-94.9l0-256c0-53-43-96-96-96L96 0zM64 96c0-17.7 14.3-32 32-32l256 0c17.7 0 32 14.3 32 32l0 96c0 17.7-14.3 32-32 32L96 224c-17.7 0-32-14.3-32-32l0-96zM224 288a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"/></svg></span></div>
+            <div class="left-middle-property left-name-utility-padding">Pennsylvania Railroad</span></div>
+        </div>
+
+        <div class="right-middle-square-three middle-board-border" id="shortLineId">
+            <div class="right-middle-property right-name-utility-padding">Short Line</div>
+            <div class="right-middle-svg"><span class="right-svg-rotate-special"><svg class="middle-train-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M96 0C43 0 0 43 0 96L0 352c0 48 35.2 87.7 81.1 94.9l-46 46C28.1 499.9 33.1 512 43 512l39.7 0c8.5 0 16.6-3.4 22.6-9.4L160 448l128 0 54.6 54.6c6 6 14.1 9.4 22.6 9.4l39.7 0c10 0 15-12.1 7.9-19.1l-46-46c46-7.1 81.1-46.9 81.1-94.9l0-256c0-53-43-96-96-96L96 0zM64 96c0-17.7 14.3-32 32-32l256 0c17.7 0 32 14.3 32 32l0 96c0 17.7-14.3 32-32 32L96 224c-17.7 0-32-14.3-32-32l0-96zM224 288a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"/></svg></span></div>
+            <div class="right-middle-description">$200</div>
+        </div>
+        <div class="left-middle-square-two middle-board-border" id="virginiaAvId">
+            <div class="left-middle-description">$160</span></div>
+            <div class="left-middle-property purple-property">Virginia Avenue</span></div>
+        </div>
+
+        <div class="right-middle-square-two middle-board-border" id="chanceRightId">
+            <div class="right-middle-property right-name-utility-padding">Chance</div>
+            <div class="right-middle-description right-chance-description-padding"><span class="right-svg-rotate"><svg class="middle-chance-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M80 160c0-35.3 28.7-64 64-64l32 0c35.3 0 64 28.7 64 64l0 3.6c0 21.8-11.1 42.1-29.4 53.8l-42.2 27.1c-25.2 16.2-40.4 44.1-40.4 74l0 1.4c0 17.7 14.3 32 32 32s32-14.3 32-32l0-1.4c0-8.2 4.2-15.8 11-20.2l42.2-27.1c36.6-23.6 58.8-64.1 58.8-107.7l0-3.6c0-70.7-57.3-128-128-128l-32 0C73.3 32 16 89.3 16 160c0 17.7 14.3 32 32 32s32-14.3 32-32zm80 320a40 40 0 1 0 0-80 40 40 0 1 0 0 80z"/></svg></span></div>
+        </div>
+        <div class="left-middle-square-two middle-board-border" id="statesAvId">
+            <div class="left-middle-description">$140</span></div>
+            <div class="left-middle-property purple-property">States Avenue</span></div>
+        </div>
+
+        <div class="right-middle-square-two middle-board-border" id="parkPlaceId">
+            <div class="right-middle-property dark-blue-property">Park Place</div>
+            <div class="right-middle-description">$350</div>
+        </div>
+        <div class="left-middle-square-three middle-board-border" id="electricCompanyId">
+            <div class="left-middle-description">$150</div>
+            <div class="left-middle-svg"><svg class="light-svg left-svg-rotate" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M297.2 248.9C311.6 228.3 320 203.2 320 176c0-70.7-57.3-128-128-128S64 105.3 64 176c0 27.2 8.4 52.3 22.8 72.9c3.7 5.3 8.1 11.3 12.8 17.7c0 0 0 0 0 0c12.9 17.7 28.3 38.9 39.8 59.8c10.4 19 15.7 38.8 18.3 57.5L109 384c-2.2-12-5.9-23.7-11.8-34.5c-9.9-18-22.2-34.9-34.5-51.8c0 0 0 0 0 0s0 0 0 0c-5.2-7.1-10.4-14.2-15.4-21.4C27.6 247.9 16 213.3 16 176C16 78.8 94.8 0 192 0s176 78.8 176 176c0 37.3-11.6 71.9-31.4 100.3c-5 7.2-10.2 14.3-15.4 21.4c0 0 0 0 0 0s0 0 0 0c-12.3 16.8-24.6 33.7-34.5 51.8c-5.9 10.8-9.6 22.5-11.8 34.5l-48.6 0c2.6-18.7 7.9-38.6 18.3-57.5c11.5-20.9 26.9-42.1 39.8-59.8c0 0 0 0 0 0s0 0 0 0s0 0 0 0c4.7-6.4 9-12.4 12.7-17.7zM192 128c-26.5 0-48 21.5-48 48c0 8.8-7.2 16-16 16s-16-7.2-16-16c0-44.2 35.8-80 80-80c8.8 0 16 7.2 16 16s-7.2 16-16 16zm0 384c-44.2 0-80-35.8-80-80l0-16 160 0 0 16c0 44.2-35.8 80-80 80z"/></svg></span></div>
+            <div class="left-middle-property left-name-utility-padding">Electric Company</div>
+        </div>
+        <div class="square">
+        </div>
+        <div class="square">
+        </div>
+        <div class="square">
+        </div>
+        <div class="square">
+        </div>
+        <div class="square">
+        </div>
+        <div class="square">
+        </div>
+        <div class="right-middle-square-three middle-board-border" id="luxTaxId">
+            <div class="right-middle-property right-name-utility-padding">Luxury Tax</div>
+            <div class="right-middle-svg"><span class="right-svg-rotate-special"><svg class="jewel-svg" xlmns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M168.5 72L256 165l87.5-93-175 0zM383.9 99.1L311.5 176l129 0L383.9 99.1zm50 124.9L256 224 78.1 224 256 420.3 433.9 224zM71.5 176l129 0L128.1 99.1 71.5 176zm434.3 40.1l-232 256c-4.5 5-11 7.9-17.8 7.9s-13.2-2.9-17.8-7.9l-232-256c-7.7-8.5-8.3-21.2-1.5-30.4l112-152c4.5-6.1 11.7-9.8 19.3-9.8l240 0c7.6 0 14.8 3.6 19.3 9.8l112 152c6.8 9.2 6.1 21.9-1.5 30.4z"/></svg></span></div>
+            <div class="right-middle-description">Pay $100</div> 
+        </div>
+        <div class="left-middle-square-two middle-board-border"id="stCharlesPlaceId">
+            <div class="left-middle-description">$140</span></div>
+            <div class="left-middle-property purple-property">St. Charles Place</span></div>
+        </div>
+        <div class="square">
+        </div>
+        <div class="square">
+        </div>
+        <div class="square">
+        </div>
+        <div class="square">
+        </div>
+        <div class="square">
+        </div>
+        <div class="square">
+        </div>
+        <div class="right-middle-square-two middle-board-border" id="boardwalkId">
+            <div class="right-middle-property dark-blue-property">Boardwalk</div>
+            <div class="right-middle-description">$400</div>
+        </div>
+
+    </container>
+
+    <!-- Bottom Board Pieces -->
+    <!-- Bottom Board Pieces -->
+    <!-- Bottom Board Pieces -->
+    <!-- Bottom Board Pieces -->
+
+    <container class="top-bottom-grid">
+
+    <div id="justVisitingId">
+        <div class="just-space"><span class="just-padding">Just</span></div>
+        <div class="in-jail-space">
+            <div class="in-jail-color" id="inJailId"><span class="in-jail-rotate">In<svg class="pisoner-svg" version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="110px" height="110px" viewBox="-51.2 -51.2 614.40 614.40" xml:space="preserve" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"><rect x="-51.2" y="-51.2" width="614.40" height="614.40" rx="0" fill="#7ed0ec" strokewidth="0"></rect></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="102.4"> <style type="text/css">  .st0{fill:#000000;}  </style> <g> <path class="st0" d="M406.344,336.641c-1.766,0-3.953,0-6.344,0V0h-32v336.844c-18.141,1.063-25,13.641-25,25.125 c0,1.547,0,6.031,0,11.906c-4.875-29.281-17.125-55.906-32.422-75.766c19.953-16.016,32.766-40.547,32.766-68.109 c0-39.906-26.797-73.5-63.344-83.922v25.328c23.063,9.484,39.344,32.156,39.344,58.594c0,26.422-16.281,49.094-39.344,58.563v48.75 h26.531c4.594,9.703,8.266,20.016,10.781,30.594H280v68.156h41.344v29.172H280V512h65.344c0,0,0-27.375,0-79.094 c3.453,7.031,10.719,10.406,21,10.406c0.469,0,1.094,0,1.656,0V512h32v-68.688c0.109,0,0.219,0,0.344,0 c14,0,19.188-7.281,23.344-12.672c6.656-8.672,15.313-41.328,11.313-68C433.609,353.313,423.688,336.641,406.344,336.641z M410.969,420.906l-0.344,0.438c-3.406,4.469-4.563,5.969-10.281,5.969h-34c-7.344,0-7.344-1.031-7.344-5.344v-60 c0-8.266,6.063-9.328,11.344-9.328h36c7.688,0,12.406,9.391,12.844,12.375C422.75,388.813,414.406,416.172,410.969,420.906z"></path> <rect x="480" class="st0" width="32" height="512"></rect> <rect class="st0" width="32" height="512"></rect> <path class="st0" d="M168.672,230c0,27.563,12.797,52.094,32.75,68.094c-15.297,19.875-27.547,46.5-32.422,75.766 c0-5.859,0-10.344,0-11.891c0-11.484-6.859-24.063-25-25.125V0h-32v336.641c-2.391,0-4.578,0-6.344,0 c-17.328,0-27.266,16.672-28.656,26c-4,26.672,4.656,59.328,11.328,68c4.141,5.391,9.328,12.672,23.328,12.672 c0.125,0,0.234,0,0.344,0V512h32v-68.688c0.563,0,1.188,0,1.656,0c10.297,0,17.563-3.375,21.016-10.406c0,51.719,0,79.094,0,79.094 H232v-46.766h-41.328v-29.172H232v-68.156h-37.297c2.5-10.578,6.172-20.906,10.766-30.594H232v-48.75 c-23.047-9.469-39.328-32.141-39.328-58.563c0-26.438,16.281-49.109,39.328-58.594v-25.344 C195.453,156.5,168.672,190.094,168.672,230z M153,421.969c0,4.313,0,5.344-7.344,5.344h-34c-5.719,0-6.875-1.5-10.281-5.969 l-0.344-0.438c-3.422-4.734-11.781-32.094-8.219-55.891c0.453-2.984,5.172-12.375,12.844-12.375h36 c5.281,0,11.344,1.063,11.344,9.328V421.969z"></path> <rect x="240" class="st0" width="32" height="512"></rect> </g> </g><g id="SVGRepo_iconCarrier"> <style type="text/css">  .st0{fill:#000000;}  </style> <g> <path class="st0" d="M406.344,336.641c-1.766,0-3.953,0-6.344,0V0h-32v336.844c-18.141,1.063-25,13.641-25,25.125 c0,1.547,0,6.031,0,11.906c-4.875-29.281-17.125-55.906-32.422-75.766c19.953-16.016,32.766-40.547,32.766-68.109 c0-39.906-26.797-73.5-63.344-83.922v25.328c23.063,9.484,39.344,32.156,39.344,58.594c0,26.422-16.281,49.094-39.344,58.563v48.75 h26.531c4.594,9.703,8.266,20.016,10.781,30.594H280v68.156h41.344v29.172H280V512h65.344c0,0,0-27.375,0-79.094 c3.453,7.031,10.719,10.406,21,10.406c0.469,0,1.094,0,1.656,0V512h32v-68.688c0.109,0,0.219,0,0.344,0 c14,0,19.188-7.281,23.344-12.672c6.656-8.672,15.313-41.328,11.313-68C433.609,353.313,423.688,336.641,406.344,336.641z M410.969,420.906l-0.344,0.438c-3.406,4.469-4.563,5.969-10.281,5.969h-34c-7.344,0-7.344-1.031-7.344-5.344v-60 c0-8.266,6.063-9.328,11.344-9.328h36c7.688,0,12.406,9.391,12.844,12.375C422.75,388.813,414.406,416.172,410.969,420.906z"></path> <rect x="480" class="st0" width="32" height="512"></rect> <rect class="st0" width="32" height="512"></rect> <path class="st0" d="M168.672,230c0,27.563,12.797,52.094,32.75,68.094c-15.297,19.875-27.547,46.5-32.422,75.766 c0-5.859,0-10.344,0-11.891c0-11.484-6.859-24.063-25-25.125V0h-32v336.641c-2.391,0-4.578,0-6.344,0 c-17.328,0-27.266,16.672-28.656,26c-4,26.672,4.656,59.328,11.328,68c4.141,5.391,9.328,12.672,23.328,12.672 c0.125,0,0.234,0,0.344,0V512h32v-68.688c0.563,0,1.188,0,1.656,0c10.297,0,17.563-3.375,21.016-10.406c0,51.719,0,79.094,0,79.094 H232v-46.766h-41.328v-29.172H232v-68.156h-37.297c2.5-10.578,6.172-20.906,10.766-30.594H232v-48.75 c-23.047-9.469-39.328-32.141-39.328-58.563c0-26.438,16.281-49.109,39.328-58.594v-25.344 C195.453,156.5,168.672,190.094,168.672,230z M153,421.969c0,4.313,0,5.344-7.344,5.344h-34c-5.719,0-6.875-1.5-10.281-5.969 l-0.344-0.438c-3.422-4.734-11.781-32.094-8.219-55.891c0.453-2.984,5.172-12.375,12.844-12.375h36 c5.281,0,11.344,1.063,11.344,9.328V421.969z"></path> <rect x="240" class="st0" width="32" height="512"></rect> </g> </g></svg>Jail</span></div>
+        </div>
+        <div class="visiting-space"><span class="visiting-padding">Visiting</span></div>
+    </div>
+    <div class="square-top-bottom top-board-border" id="connecticutAvId">
+        <div class="bottom-name-alignment light-blue-property">Connecticut Avevnue</div>
+        <div class="top-contents bottom-property-description">$120</div>
+    </div>
+    <div class="square-top-bottom top-board-border" id="vermontAvId">
+        <div class="bottom-name-alignment light-blue-property">Vermont Avenue</div>
+        <div class="top-contents bottom-property-description">$100</div>
+    </div>
+    <div class="square-top-bottom top-board-border" id="chanceBotId">
+        <div class="bottom-name-alignment bottom-name-padding">Chance</div>
+        <div class="top-contents bottom-property-description"><svg class="chance-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M80 160c0-35.3 28.7-64 64-64l32 0c35.3 0 64 28.7 64 64l0 3.6c0 21.8-11.1 42.1-29.4 53.8l-42.2 27.1c-25.2 16.2-40.4 44.1-40.4 74l0 1.4c0 17.7 14.3 32 32 32s32-14.3 32-32l0-1.4c0-8.2 4.2-15.8 11-20.2l42.2-27.1c36.6-23.6 58.8-64.1 58.8-107.7l0-3.6c0-70.7-57.3-128-128-128l-32 0C73.3 32 16 89.3 16 160c0 17.7 14.3 32 32 32s32-14.3 32-32zm80 320a40 40 0 1 0 0-80 40 40 0 1 0 0 80z"/></svg></div>
+    </div>  
+    <div class="square-top-bottom top-board-border can-be-mortgaged" id="orientalAvId">
+        <div class="bottom-name-alignment light-blue-property">Oriental Avenue</div>
+        <div class="top-contents bottom-property-description">$100</div>
+    </div>
+    <div class="square-top-bottom-three top-board-border" id="readingRailroadId">
+        <div class="bottom-name-alignment bottom-name-padding">Reading Railroad</div>
+        <div><svg class="top-train-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M96 0C43 0 0 43 0 96L0 352c0 48 35.2 87.7 81.1 94.9l-46 46C28.1 499.9 33.1 512 43 512l39.7 0c8.5 0 16.6-3.4 22.6-9.4L160 448l128 0 54.6 54.6c6 6 14.1 9.4 22.6 9.4l39.7 0c10 0 15-12.1 7.9-19.1l-46-46c46-7.1 81.1-46.9 81.1-94.9l0-256c0-53-43-96-96-96L96 0zM64 96c0-17.7 14.3-32 32-32l256 0c17.7 0 32 14.3 32 32l0 96c0 17.7-14.3 32-32 32L96 224c-17.7 0-32-14.3-32-32l0-96zM224 288a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"/></svg></div>
+        <div class="top-contents bottom-property-description">$200</div>
+    </div>
+    <div class="square-top-bottom-three top-board-border" id="incomeTaxId">
+        <div class="bottom-name-alignment bottom-name-padding">Income Tax</div>
+        <div class="diamond-center"><svg class="diamond-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M284.3 11.7c-15.6-15.6-40.9-15.6-56.6 0l-216 216c-15.6 15.6-15.6 40.9 0 56.6l216 216c15.6 15.6 40.9 15.6 56.6 0l216-216c15.6-15.6 15.6-40.9 0-56.6l-216-216z"/></svg></div>
+        <div class="top-contents bottom-property-description">Pay $200</div>
+    </div>
+    <div class="square-top-bottom top-board-border" id="balticAvId">
+        <div class="bottom-name-alignment brown-property">Baltic Avenue</div>
+        <div class="top-contents bottom-property-description">$60</div>
+    </div>
+    <div class="square-top-bottom top-board-border" id="commChestBotId">
+        <div class="bottom-name-alignment bottom-name-padding">Community Chest</div>
+        <div class="top-contents bottom-property-description"><svg class="community-chest-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M176 88l0 40 160 0 0-40c0-4.4-3.6-8-8-8L184 80c-4.4 0-8 3.6-8 8zm-48 40l0-40c0-30.9 25.1-56 56-56l144 0c30.9 0 56 25.1 56 56l0 40 28.1 0c12.7 0 24.9 5.1 33.9 14.1l51.9 51.9c9 9 14.1 21.2 14.1 33.9l0 92.1-128 0 0-32c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 32-128 0 0-32c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 32L0 320l0-92.1c0-12.7 5.1-24.9 14.1-33.9l51.9-51.9c9-9 21.2-14.1 33.9-14.1l28.1 0zM0 416l0-64 128 0c0 17.7 14.3 32 32 32s32-14.3 32-32l128 0c0 17.7 14.3 32 32 32s32-14.3 32-32l128 0 0 64c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64z"/></svg></div>
+    </div>
+    <div class="square-top-bottom top-board-border" id="mediterranianId">
+        <div class="bottom-name-alignment brown-property">Mediterranian Avenue</div>
+        <div class="top-contents bottom-property-description">$60</div>
+    </div>
+    <div id="startId">
+        <div class="start-span">Collect $200 If You Pass<span class="go-span">GO</span></div>
+        <div class="arrow-container">
+            <div class="arrow-line"></div>
+            <div class="arrow-top"></div>
+            <div class="arrow-bottom"></div>
+        </div>
+    </div>
+ 
+    </container>
+    <script src="gamepieces.js"></script>
+    <script src="myscript.js"></script>
+
+    
+</body>
+    
