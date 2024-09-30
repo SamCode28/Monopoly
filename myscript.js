@@ -24,7 +24,15 @@ playerTotalButtons.forEach(item =>{
         document.getElementById('floatScreenPieceSelectionId').classList.add('float-screen-piece-selection')
         totalPlayers = playerTotal;
     })
+    updateChoosePieceName()      
 })
+
+function updateChoosePieceName(){
+    if (playersSelected != totalPlayers){
+        document.getElementById('choosePieceTextId').innerHTML = `${activePlayers[playersSelected].name}:<br>Choose your game piece`
+    }
+
+}
 
 
 //Set each player icon
@@ -39,6 +47,7 @@ pieceSelectionButton.forEach(icon => {
         currentPlayerTurn.color = iconColor
         currentPlayerTurn.isBankrupt = false
         playersSelected++
+        updateChoosePieceName()
         document.getElementById(`${iconIdname}Btn`).disabled = true;
         document.getElementById(`${iconIdname}Btn`).style.opacity = "0";
         whosTurnSetup();
