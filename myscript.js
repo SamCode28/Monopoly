@@ -11,6 +11,7 @@ playBtn.addEventListener('click', function (e){
     document.getElementById('floatScreenPlayersId').classList.remove('hidden')
 })
 
+//These are some changed
 
 //set player total
 //Transition from # player screen to select piece screen
