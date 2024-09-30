@@ -13,7 +13,6 @@ playBtn.addEventListener('click', function (e){
     document.getElementById('floatScreenPlayersId').classList.remove('hidden')
 })
 
-//I made a change
 
 //set player total
 //Transition from # player screen to select piece screen
@@ -29,7 +28,6 @@ playerTotalButtons.forEach(item =>{
     })
 })
 
-//This is another new line
 
 //Set each player icon
 pieceSelectionButton.forEach(icon => {
