@@ -291,7 +291,7 @@ let canCloseMortgageArray = []
 const rollDiceOne = () =>{return(Math.floor(Math.random() * 6) + 1)}
 const rollDiceTwo = () =>{return(Math.floor(Math.random() * 6) + 1)}
 let diceOneValue;
-let diceTwoValue = rollDiceTwo();
+let diceTwoValue;
 let chanceDice = () => {return(Math.floor(Math.random() * 16) + 1)}
 let communityChestDice = () => {return(Math.floor(Math.random() * 16) + 1)}
 let spaceLandedOn = () => {return propertyArray[currentPlayerTurn.position]}
