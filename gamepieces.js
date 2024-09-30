@@ -201,14 +201,14 @@ const getOutJailCardBtn = document.getElementById('getOutJailCardBtnId')
 
 //Game Piece Buttons
 const pieceSelectionButton = [
-    {button: document.getElementById('dogPieceIdBtn'), gamePiece: dogPiece, gamePieceId: '#dogPieceId', color: '#866b44'},
-    {button: document.getElementById('catPieceIdBtn'), gamePiece: catPiece, gamePieceId: '#catPieceId', color: '#555555'},
-    {button: document.getElementById('ghostPieceIdBtn'), gamePiece: ghostPiece, gamePieceId: '#ghostPieceId', color: '#fdff7f'},
-    {button: document.getElementById('moonPieceIdBtn'), gamePiece: moonPiece, gamePieceId: '#moonPieceId', color: '#3e586c'},
-    {button: document.getElementById('astronautPieceIdBtn'), gamePiece: astronautPiece, gamePieceId: '#astronautPieceId', color: '#b2a0eb'},
-    {button: document.getElementById('winePieceIdBtn'), gamePiece: winePiece, gamePieceId: '#winePieceId', color: '#a84848'},
-    {button: document.getElementById('weedPieceIdBtn'), gamePiece: weedPiece, gamePieceId:'#weedPieceId', color: '#4f9968'},
-    {button: document.getElementById('musicNoteIdBtn'), gamePiece: musicNotePiece, gamePieceId: '#musicNoteId', color: '#ecb363'},
+    {button: document.getElementById('dogPieceIdBtn'), gamePiece: dogPiece, gamePieceId: 'dogPieceId', color: '#866b44'},
+    {button: document.getElementById('catPieceIdBtn'), gamePiece: catPiece, gamePieceId: 'catPieceId', color: '#555555'},
+    {button: document.getElementById('ghostPieceIdBtn'), gamePiece: ghostPiece, gamePieceId: 'ghostPieceId', color: '#fdff7f'},
+    {button: document.getElementById('moonPieceIdBtn'), gamePiece: moonPiece, gamePieceId: 'moonPieceId', color: '#3e586c'},
+    {button: document.getElementById('astronautPieceIdBtn'), gamePiece: astronautPiece, gamePieceId: 'astronautPieceId', color: '#b2a0eb'},
+    {button: document.getElementById('winePieceIdBtn'), gamePiece: winePiece, gamePieceId: 'winePieceId', color: '#a84848'},
+    {button: document.getElementById('weedPieceIdBtn'), gamePiece: weedPiece, gamePieceId:'weedPieceId', color: '#4f9968'},
+    {button: document.getElementById('musicNoteIdBtn'), gamePiece: musicNotePiece, gamePieceId: 'musicNoteId', color: '#ecb363'},
 ]
 
 //Game Setup Variables
@@ -242,6 +242,7 @@ const endTurnBtn = document.getElementById('endTurnBtnId');
 /// Rent / Property 
 /// Rent / Property 
 let ownedPropertyArray = []
+let ownedColorPropertyArray = []
 const payRentBtn = document.getElementById('payRentBtnId')
 const sellToPayRentBtn = document.getElementById('sellToPayRentBtnId')
 const bankruptBtn = document.getElementById('bankruptBtnId')
@@ -288,14 +289,14 @@ let canCloseMortgageArray = []
 //Function Variables
 //let rollDiceOne = () => {return 10}
 //let rollDiceTwo = () => {return 2}
-let rollDiceOne = () =>{return(Math.floor(Math.random() * 6) + 1)}
-let rollDiceTwo = () =>{return(Math.floor(Math.random() * 6) + 1)}
+const rollDiceOne = () =>{return(Math.floor(Math.random() * 6) + 1)}
+const rollDiceTwo = () =>{return(Math.floor(Math.random() * 6) + 1)}
 let diceOneValue;
 let diceTwoValue = rollDiceTwo();
 let chanceDice = () => {return(Math.floor(Math.random() * 16) + 1)}
 let communityChestDice = () => {return(Math.floor(Math.random() * 16) + 1)}
 let spaceLandedOn = () => {return propertyArray[currentPlayerTurn.position]}
-let playerPiece = () => {return document.querySelector(currentPlayerTurn.pieceId)};
+let playerPiece = () => {return document.getElementById(currentPlayerTurn.pieceId)};
 
 
 //Properties Array
