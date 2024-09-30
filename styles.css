@@ -19,13 +19,12 @@ button {
     border-bottom-right-radius: 15px;
     border-top-left-radius: 15px;
     border-bottom-left-radius: 15px; 
-    background-color: rgb(25, 154, 198);
+    background-color: rgb(29, 143, 181);
     color: antiquewhite;
     transition: background-color 0.3s ease;
     font-size:24px;
     height: 100px;
     width: 150px;
-
 }
 
 
@@ -1047,4 +1046,18 @@ svg{
 
 .disable-clicks{
     pointer-events: none;
+}
+
+.button-inactive{
+    cursor: default;
+    background-color: #75abbd;
+}
+
+.button-inactive:hover{
+    opacity: 1;
+    background-color: #75abbd;
+}
+
+.button-inactive{
+    background-color: #75abbd;
 }

@@ -31,7 +31,6 @@ function updateChoosePieceName(){
     if (playersSelected != totalPlayers){
         document.getElementById('choosePieceTextId').innerHTML = `${activePlayers[playersSelected].name}:<br>Choose your game piece`
     }
-
 }
 
 
@@ -949,20 +948,33 @@ buyPropertyNoBtn.addEventListener('click', function(e){
 //Pay Rent / Bankrupt
 
 function addPayRentContainer(){
+    //Add rent container and prompt user to pay or sell based on existing cash availible
     document.getElementById('payRentContainerId').classList.add('pay-rent-container')
     document.getElementById('payRentContainerId').classList.remove('hidden')
+    if ((currentPlayerTurn.cash - spaceLandedOn().rent) < 0){
+        payRentBtn.classList.add('button-inactive')
+        payRentBtn.disabled = true
+        document.getElementById('payRentTutorialId').innerHTML = `You do not have enough cash to pay rent.  Click the "Sell" button to sell houses, mortgage property, or click "Bankrupt" to quit game.`
+        sellToPayRentBtn.classList.remove('button-inactive')
+        sellToPayRentBtn.disabled = false
+    }
+    else {
+        sellToPayRentBtn.classList.add('button-inactive')
+        sellToPayRentBtn.disabled = true
+        document.getElementById('payRentTutorialId').innerHTML = `Pay rent or click "Bankrupt" to quit the game.`
+        payRentBtn.classList.remove('button-inactive')
+        payRentBtn.disabled = false
+    }
 }
 
 function removePayRentContainer(){
     document.getElementById('payRentContainerId').classList.add('hidden')
     document.getElementById('payRentContainerId').classList.remove('pay-rent-container')
+    payRentBtn.classList.remove('button-inactive')
+    payRentBtn.disabled = false
 }
 
 payRentBtn.addEventListener('click', function (e){
-    if ((currentPlayerTurn.cash - spaceLandedOn().rent) < 0){
-        document.getElementById('payRentTutorialId').innerHTML = `You do not have enough cash to pay rent.  Click the "Sell" button to sell houses, mortgage property, or click "Bankrupt" to quit game`
-        return
-    }
     currentPlayerTurn.cash -= spaceLandedOn().rent
     spaceLandedOn().owner.cash += spaceLandedOn().rent
     addEndTurnButton()
@@ -973,7 +985,6 @@ payRentBtn.addEventListener('click', function (e){
         removePropertyCard()
     }
     addHouseHotelMortgageScreen()
-    sellToPayRentBtn.disabled = false
     removePayRentTutorial()
     addEndTurnButton()
 })
@@ -981,13 +992,13 @@ payRentBtn.addEventListener('click', function (e){
 sellToPayRentBtn.addEventListener('click', function(e){
     removePropertyCard()
     addHouseHotelMortgageScreen()
-    this.disabled = true
+    removePayRentContainer()
+    document.getElementById('payRentTutorialId').innerHTML = `Sell houses or open mortgage to pay rent.  Click "finish" to pay rent.`
 })
 
 function addPayRentTutorial(){
     document.getElementById('payRentTutorialId').classList.add('pay-rent-tutorial')
     document.getElementById('payRentTutorialId').classList.remove('hidden')
-    document.getElementById('payRentTutorialId').innerText = `You can use the "sell" button to mortgage property or sell houses to pay rent if you're short on cash or declare bankruptcy if you've had enough`
 }
 
 function removePayRentTutorial(){
@@ -1012,7 +1023,6 @@ bankruptNoBtn.addEventListener('click', function(){
     addPayRentContainer()
     addPayRentTutorial()
     removeBankruptWarning()
-    addHouseHotelMortgageScreen()
 })
 
 function addBankruptWarning(){
@@ -1609,6 +1619,14 @@ function placeHouseHotelRight(property){
 
 }
 
+function checkRentPaid(){
+    //Return user to pay rent screen
+    if (document.getElementById('payRentTutorialId').classList.contains('hidden') === false){
+        addPayRentContainer()
+        removeHouseHotelMortgageScreen()
+    }
+}
+
 finishBuyHouseBtn.addEventListener('click', function(e){ 
     addHouseHotelMortgageScreen()
     removeBuyHouseTutorial()
@@ -1623,7 +1641,7 @@ finishBuyHouseBtn.addEventListener('click', function(e){
         if(document.getElementById('payRentTutorialId').classList.contains('hidden') === false){
             removeEndTurnButton()
         }
-    
+        checkRentPaid()
 })
 
 function addBuyHouseYesNoButtons (){
@@ -1791,7 +1809,7 @@ finishSellHouseHotelBtn.addEventListener('click', function(e){
     if(document.getElementById('payRentTutorialId').classList.contains('hidden') === false){
         removeEndTurnButton()
     }
-    
+    checkRentPaid()
 })
 
 function removeHouseHotel(property){
@@ -1966,6 +1984,7 @@ finishOpenMortgageBtn.addEventListener('click', function(e){
      if(document.getElementById('payRentTutorialId').classList.contains('hidden') === false){
          removeEndTurnButton()
      }
+     checkRentPaid()
 })
 
 function addOpenMortgageYesNoButtons (){
@@ -2116,6 +2135,7 @@ finishCloseMortgageBtn.addEventListener('click', function(e){
     if(document.getElementById('payRentTutorialId').classList.contains('hidden') === false){
         removeEndTurnButton()
     }
+    checkRentPaid()
 })
 
 function addCloseMortgageTutorial (){
