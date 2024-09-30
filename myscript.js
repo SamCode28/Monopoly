@@ -39,8 +39,8 @@ pieceSelectionButton.forEach(icon => {
         currentPlayerTurn.color = iconColor
         currentPlayerTurn.isBankrupt = false
         playersSelected++
-        document.querySelector(`${iconIdname}Btn`).disabled = true;
-        document.querySelector(`${iconIdname}Btn`).style.opacity = "0";
+        document.getElementById(`${iconIdname}Btn`).disabled = true;
+        document.getElementById(`${iconIdname}Btn`).style.opacity = "0";
         whosTurnSetup();
 
         if (playersSelected === totalPlayers){
@@ -143,10 +143,12 @@ function updateMiddleScreenPlayerLocation (){
 //Player Turn Dice Roll
 rollBtn.addEventListener('click', function (e){
     hasRolled = true
-    dicTwoValue = rollDiceTwo()
+    diceTwoValue = rollDiceTwo()
     diceOneValue = rollDiceOne()
+    //Check for doubles
     if(diceOneValue === diceTwoValue){
         currentPlayerTurn.doublesCounter++
+        //Send to jail if roll doubles 3x
         if (currentPlayerTurn.doublesCounter > 2){
             removeHouseHotelMortgageScreen()
             displayDiceRollOutput(diceOneValue, diceTwoValue);
@@ -156,6 +158,7 @@ rollBtn.addEventListener('click', function (e){
             return;
         }
     }
+    //Collect $200 if make it back to go
     propertyArray[currentPlayerTurn.position].currentOccupants -= 1;
     currentPlayerTurn.position += (diceOneValue + diceTwoValue)
        if (currentPlayerTurn.position > 39){
@@ -183,6 +186,7 @@ function clearDiceRollOutput(){
     document.getElementById('rollCounterDisplay').innerHTML = ""
  }
 
+//Logic for space landed on
  function currentLocationInteraction (){
     if (spaceLandedOn().isProperty === true){
         if (spaceLandedOn().hasOwner === true){
@@ -307,6 +311,7 @@ function addPropertyBuySellButtons(){
 endTurnBtn.addEventListener ('click', endTurn)
 
 function endTurn(){
+    //Prevent player turn from changing if doubles are rolled
     if (diceOneValue === diceTwoValue  && currentPlayerTurn.isInJail === false){      
     }
     else if (playerTurnTicker === 1){
@@ -648,25 +653,25 @@ function placePiece(){
         currentLocation = propertyArray[(currentPlayerTurn.position)]
         if (currentLocation.currentOccupants === 0){
             document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece);
-            document.querySelector(currentPlayerTurn.pieceId).style.top = "5px";
-            document.querySelector(currentPlayerTurn.pieceId).style.left = "5.5px";
+            document.getElementById(currentPlayerTurn.pieceId).style.top = "5px";
+            document.getElementById(currentPlayerTurn.pieceId).style.left = "5.5px";
         }
         else if(currentLocation.currentOccupants === 1)
             {
             document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece)
-            document.querySelector(currentPlayerTurn.pieceId).style.top = "50px";
-            document.querySelector(currentPlayerTurn.pieceId).style.left = "5.5px";
+            document.getElementById(currentPlayerTurn.pieceId).style.top = "50px";
+            document.getElementById(currentPlayerTurn.pieceId).style.left = "5.5px";
         }
         else if (currentLocation.currentOccupants === 2){
             document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece)
-            document.querySelector(currentPlayerTurn.pieceId).style.bottom = "5px";
-            document.querySelector(currentPlayerTurn.pieceId).style.left = "5.5px";
+            document.getElementById(currentPlayerTurn.pieceId).style.bottom = "5px";
+            document.getElementById(currentPlayerTurn.pieceId).style.left = "5.5px";
     
         }
         else if (currentLocation.currentOccupants === 3){
             document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece)
-            document.querySelector(currentPlayerTurn.pieceId).style.bottom = "5px";
-            document.querySelector(currentPlayerTurn.pieceId).style.left = "50px";
+            document.getElementById(currentPlayerTurn.pieceId).style.bottom = "5px";
+            document.getElementById(currentPlayerTurn.pieceId).style.left = "50px";
     
         }  
     }
@@ -682,25 +687,25 @@ function placePiece(){
         currentLocation = propertyArray[(currentPlayerTurn.position)]
         if (currentLocation.currentOccupants === 0){
             document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece);
-            document.querySelector(currentPlayerTurn.pieceId).style.top = "5px";
-            document.querySelector(currentPlayerTurn.pieceId).style.left = "5x";
+            document.getElementById(currentPlayerTurn.pieceId).style.top = "5px";
+            document.getElementById(currentPlayerTurn.pieceId).style.left = "5x";
         }
         else if(currentLocation.currentOccupants === 1)
             {
             document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece)
-            document.querySelector(currentPlayerTurn.pieceId).style.top = "5px";
-            document.querySelector(currentPlayerTurn.pieceId).style.right = "5px";
+            document.getElementById(currentPlayerTurn.pieceId).style.top = "5px";
+            document.getElementById(currentPlayerTurn.pieceId).style.right = "5px";
         }
         else if (currentLocation.currentOccupants === 2){
             document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece)
-            document.querySelector(currentPlayerTurn.pieceId).style.bottom = "5px";
-            document.querySelector(currentPlayerTurn.pieceId).style.left = "5px";
+            document.getElementById(currentPlayerTurn.pieceId).style.bottom = "5px";
+            document.getElementById(currentPlayerTurn.pieceId).style.left = "5px";
     
         }
         else if (currentLocation.currentOccupants === 3){
             document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece)
-            document.querySelector(currentPlayerTurn.pieceId).style.bottom = "5px";
-            document.querySelector(currentPlayerTurn.pieceId).style.right = "5px";
+            document.getElementById(currentPlayerTurn.pieceId).style.bottom = "5px";
+            document.getElementById(currentPlayerTurn.pieceId).style.right = "5px";
     
         }
     }
@@ -713,25 +718,25 @@ function placePiece(){
     currentLocation = propertyArray[(currentPlayerTurn.position)]
     if (currentLocation.currentOccupants === 0){
         document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece);
-        document.querySelector(currentPlayerTurn.pieceId).style.top = "15%";
-        document.querySelector(currentPlayerTurn.pieceId).style.left = "5%";
+        document.getElementById(currentPlayerTurn.pieceId).style.top = "15%";
+        document.getElementById(currentPlayerTurn.pieceId).style.left = "5%";
     }
     else if(currentLocation.currentOccupants === 1)
         {
         document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece)
-        document.querySelector(currentPlayerTurn.pieceId).style.top = "45%";
-        document.querySelector(currentPlayerTurn.pieceId).style.left = "5%";
+        document.getElementById(currentPlayerTurn.pieceId).style.top = "45%";
+        document.getElementById(currentPlayerTurn.pieceId).style.left = "5%";
     }
     else if (currentLocation.currentOccupants === 2){
         document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece)
-        document.querySelector(currentPlayerTurn.pieceId).style.top = "15%";
-        document.querySelector(currentPlayerTurn.pieceId).style.right = "5%";
+        document.getElementById(currentPlayerTurn.pieceId).style.top = "15%";
+        document.getElementById(currentPlayerTurn.pieceId).style.right = "5%";
 
     }
     else if (currentLocation.currentOccupants === 3){
         document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece)
-        document.querySelector(currentPlayerTurn.pieceId).style.top = "45%";
-        document.querySelector(currentPlayerTurn.pieceId).style.right = "5%";
+        document.getElementById(currentPlayerTurn.pieceId).style.top = "45%";
+        document.getElementById(currentPlayerTurn.pieceId).style.right = "5%";
 
     }
 
@@ -741,28 +746,28 @@ function placePieceLeft(){
     currentLocation = propertyArray[(currentPlayerTurn.position)]
     if (currentLocation.currentOccupants === 0){
         document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece);
-        document.querySelector(currentPlayerTurn.pieceId).style.right = "15%"
-        document.querySelector(currentPlayerTurn.pieceId).style.top = "5%";
-        document.querySelector(currentPlayerTurn.pieceId).style.transform = "rotate(90deg)";
+        document.getElementById(currentPlayerTurn.pieceId).style.right = "15%"
+        document.getElementById(currentPlayerTurn.pieceId).style.top = "5%";
+        document.getElementById(currentPlayerTurn.pieceId).style.transform = "rotate(90deg)";
     }
     else if(currentLocation.currentOccupants === 1)
         {
         document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece)
-        document.querySelector(currentPlayerTurn.pieceId).style.right = "45%";
-        document.querySelector(currentPlayerTurn.pieceId).style.top = "5%";
-        document.querySelector(currentPlayerTurn.pieceId).style.transform = "rotate(90deg)";
+        document.getElementById(currentPlayerTurn.pieceId).style.right = "45%";
+        document.getElementById(currentPlayerTurn.pieceId).style.top = "5%";
+        document.getElementById(currentPlayerTurn.pieceId).style.transform = "rotate(90deg)";
     }
     else if (currentLocation.currentOccupants === 2){
         document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece)
-        document.querySelector(currentPlayerTurn.pieceId).style.right = "15%";
-        document.querySelector(currentPlayerTurn.pieceId).style.bottom = "5%";
-        document.querySelector(currentPlayerTurn.pieceId).style.transform = "rotate(90deg)";
+        document.getElementById(currentPlayerTurn.pieceId).style.right = "15%";
+        document.getElementById(currentPlayerTurn.pieceId).style.bottom = "5%";
+        document.getElementById(currentPlayerTurn.pieceId).style.transform = "rotate(90deg)";
     }
     else if (currentLocation.currentOccupants === 3){
         document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece)
-        document.querySelector(currentPlayerTurn.pieceId).style.right = "45%";
-        document.querySelector(currentPlayerTurn.pieceId).style.bottom = "5%";
-        document.querySelector(currentPlayerTurn.pieceId).style.transform = "rotate(90deg)";
+        document.getElementById(currentPlayerTurn.pieceId).style.right = "45%";
+        document.getElementById(currentPlayerTurn.pieceId).style.bottom = "5%";
+        document.getElementById(currentPlayerTurn.pieceId).style.transform = "rotate(90deg)";
     }
 
 }
@@ -770,29 +775,29 @@ function placePieceLeft(){
 function placePieceTop(){
     currentLocation = propertyArray[(currentPlayerTurn.position)]
     if (currentLocation.currentOccupants === 0){
-        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece);
-        document.querySelector(currentPlayerTurn.pieceId).style.bottom = "15%"
-        document.querySelector(currentPlayerTurn.pieceId).style.right = "5%";
-        document.querySelector(currentPlayerTurn.pieceId).style.transform = "rotate(180deg)";
+        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece)
+        document.getElementById(currentPlayerTurn.pieceId).style.bottom = "15%"
+        document.getElementById(currentPlayerTurn.pieceId).style.right = "5%";
+        document.getElementById(currentPlayerTurn.pieceId).style.transform = "rotate(180deg)";
     }
     else if(currentLocation.currentOccupants === 1)
         {
         document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece)
-        document.querySelector(currentPlayerTurn.pieceId).style.bottom = "45%";
-        document.querySelector(currentPlayerTurn.pieceId).style.right = "5%";
-        document.querySelector(currentPlayerTurn.pieceId).style.transform = "rotate(180deg)";
+        document.getElementById(currentPlayerTurn.pieceId).style.bottom = "45%";
+        document.getElementById(currentPlayerTurn.pieceId).style.right = "5%";
+        document.getElementById(currentPlayerTurn.pieceId).style.transform = "rotate(180deg)";
     }
     else if (currentLocation.currentOccupants === 2){
         document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece)
-        document.querySelector(currentPlayerTurn.pieceId).style.bottom = "15%";
-        document.querySelector(currentPlayerTurn.pieceId).style.left = "5%";
-        document.querySelector(currentPlayerTurn.pieceId).style.transform = "rotate(180deg)";
+        document.getElementById(currentPlayerTurn.pieceId).style.bottom = "15%";
+        document.getElementById(currentPlayerTurn.pieceId).style.left = "5%";
+        document.getElementById(currentPlayerTurn.pieceId).style.transform = "rotate(180deg)";
     }
     else if (currentLocation.currentOccupants === 3){
         document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece)
-        document.querySelector(currentPlayerTurn.pieceId).style.bottom = "45%";
-        document.querySelector(currentPlayerTurn.pieceId).style.left = "5%";
-        document.querySelector(currentPlayerTurn.pieceId).style.transform = "rotate(180deg)";
+        document.getElementById(currentPlayerTurn.pieceId).style.bottom = "45%";
+        document.getElementById(currentPlayerTurn.pieceId).style.left = "5%";
+        document.getElementById(currentPlayerTurn.pieceId).style.transform = "rotate(180deg)";
     }
 
 }
@@ -801,28 +806,28 @@ function placePieceRight(){
     currentLocation = propertyArray[(currentPlayerTurn.position)]
     if (currentLocation.currentOccupants === 0){
         document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece);
-        document.querySelector(currentPlayerTurn.pieceId).style.bottom = "5%"
-        document.querySelector(currentPlayerTurn.pieceId).style.left = "15%";
-        document.querySelector(currentPlayerTurn.pieceId).style.transform = "rotate(270deg)";
+        document.getElementById(currentPlayerTurn.pieceId).style.bottom = "5%"
+        document.getElementById(currentPlayerTurn.pieceId).style.left = "15%";
+        document.getElementById(currentPlayerTurn.pieceId).style.transform = "rotate(270deg)";
     }
     else if(currentLocation.currentOccupants === 1)
         {
         document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece)
-        document.querySelector(currentPlayerTurn.pieceId).style.bottom = "5%";
-        document.querySelector(currentPlayerTurn.pieceId).style.left = "45%";
-        document.querySelector(currentPlayerTurn.pieceId).style.transform = "rotate(270deg)";
+        document.getElementById(currentPlayerTurn.pieceId).style.bottom = "5%";
+        document.getElementById(currentPlayerTurn.pieceId).style.left = "45%";
+        document.getElementById(currentPlayerTurn.pieceId).style.transform = "rotate(270deg)";
     }
     else if (currentLocation.currentOccupants === 2){
         document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece)
-        document.querySelector(currentPlayerTurn.pieceId).style.top = "5%";
-        document.querySelector(currentPlayerTurn.pieceId).style.left = "15%";
-        document.querySelector(currentPlayerTurn.pieceId).style.transform = "rotate(270deg)";
+        document.getElementById(currentPlayerTurn.pieceId).style.top = "5%";
+        document.getElementById(currentPlayerTurn.pieceId).style.left = "15%";
+        document.getElementById(currentPlayerTurn.pieceId).style.transform = "rotate(270deg)";
     }
     else if (currentLocation.currentOccupants === 3){
         document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece)
-        document.querySelector(currentPlayerTurn.pieceId).style.top = "5%";
-        document.querySelector(currentPlayerTurn.pieceId).style.left = "45%";
-        document.querySelector(currentPlayerTurn.pieceId).style.transform = "rotate(270deg)";
+        document.getElementById(currentPlayerTurn.pieceId).style.top = "5%";
+        document.getElementById(currentPlayerTurn.pieceId).style.left = "45%";
+        document.getElementById(currentPlayerTurn.pieceId).style.transform = "rotate(270deg)";
     }
 
 }
@@ -946,10 +951,7 @@ function removePayRentContainer(){
 
 payRentBtn.addEventListener('click', function (e){
     if ((currentPlayerTurn.cash - spaceLandedOn().rent) < 0){
-        document.getElementById('payRentTutorialId').innerText = "You do not have enough cash to pay rent.  Sell houses, mortgage property, or bankrupt to quit game"
-        removePropertyCard()
-        addHouseHotelMortgageScreen()
-        this.disabled = true
+        document.getElementById('payRentTutorialId').innerHTML = `You do not have enough cash to pay rent.  Click the "Sell" button to sell houses, mortgage property, or click "Bankrupt" to quit game`
         return
     }
     currentPlayerTurn.cash -= spaceLandedOn().rent
@@ -1020,18 +1022,18 @@ function bankrupt(){
     currentLocation.currentOccupants--
     playerPiece().remove()
     let playerOwed = currentLocation.owner
-    let playerIndebted = currentPlayerTurn
-    currentPlayerTurn.isBankrupt = true
-    playerOwed.cash += playerIndebted.cash
-    playerIndebted.cash = 0
+    let playerBankrupt = currentPlayerTurn
+    playerBankrupt.isBankrupt = true
+    playerOwed.cash += playerBankrupt.cash
+    playerBankrupt.cash = 0
+    playerOwed.housesOwned += playerBankrupt.housesOwned
+    playerOwed.hotelsOwned += playerBankrupt.hotelsOwned
     updatePlayerCashTotalDisplay()
     //Change owner of property and move to owed players property array
-    currentPlayerTurn.properties.forEach(property => {
+    playerBankrupt.properties.forEach(property => {
         playerOwed.properties.push(property)
         property.owner = playerOwed
         document.getElementById(property.id).style.backgroundColor = playerOwed.color
-        playerOwed.housesOwned += playerIndebted.housesOwned
-        playerOwed.hotelsOwned += playerIndebted.hotelsOwned
         
     })
     //End game if only 1 player remaining
@@ -1119,7 +1121,7 @@ function checkJailStatusNextPlayer(){
 }
 
 attemptDoublesBtn.addEventListener('click', function (e){
-    dicTwoValue = rollDiceTwo()
+    diceTwoValue = rollDiceTwo()
     diceOneValue = rollDiceOne()
     displayJailRollOutput(diceOneValue, diceTwoValue)
     if (diceOneValue === diceTwoValue){
@@ -1128,11 +1130,13 @@ attemptDoublesBtn.addEventListener('click', function (e){
         currentPlayerTurn.jailRollAttempts = 3
         currentPlayerTurn.isInJail = false
         playerPiece().remove()
+        currentLocation = (propertyArray[currentPlayerTurn.position])
         currentLocation.currentOccupants--
-        currentPlayerTurn.position = (diceOneValue + diceTwoValue +10)
+        currentPlayerTurn.position = (diceOneValue + diceTwoValue + 10)
         placePiece()
-        currentLocationInteraction()
         removeHouseHotelMortgageScreen()
+        currentLocationInteraction()
+        
     }
     else{
         currentPlayerTurn.jailRollAttempts--
@@ -1294,6 +1298,16 @@ function generatePlayerPropertyArray(){
     }
 }
 
+function generatePlayerColorPropertyArray(){
+    ownedColorPropertyArray = []
+
+    for (let i = 0; i < 40; i++){
+        if (propertyArray[i].owner === currentPlayerTurn && propertyArray[i].type === 'color'){
+            ownedColorPropertyArray.push(propertyArray[i])
+        }
+    }
+}
+
 function addHouseHotelMortgageScreen (){
     document.getElementById('houseHotelMortgageScreenId').classList.add('house-hotel-mortgage-screen');
     document.getElementById('houseHotelMortgageScreenId').classList.remove('hidden');
@@ -1308,7 +1322,7 @@ function addHouseHotelMortgageScreen (){
 //Buy House Functions
 buyHouseHotelBtn.addEventListener('click', function(e){
     removeDice()
-    generatePlayerPropertyArray()
+    generatePlayerColorPropertyArray()
     removeHouseHotelMortgageScreen()
     removeEndTurnButton()
     addFinishBuyHouseBtn()
@@ -1316,22 +1330,22 @@ buyHouseHotelBtn.addEventListener('click', function(e){
     canBuyHouseHotelArray = []
 
     //Sort owned property into array of full color set matches
-    for (let i = 0; i < ownedPropertyArray.length;){
-        if (ownedPropertyArray[i].type === 'color' && ownedPropertyArray[i].setTotal === 2 && (i + 1) < ownedPropertyArray.length){
-                if(ownedPropertyArray[i].color === ownedPropertyArray[i+1].color){
-                    canBuyHouseHotelArray.push(ownedPropertyArray[i])
-                    canBuyHouseHotelArray.push(ownedPropertyArray[i+1])
+    for (let i = 0; i < ownedColorPropertyArray.length;){
+        if (ownedColorPropertyArray[i].type === 'color' && ownedColorPropertyArray[i].setTotal === 2 && (i + 1) < ownedColorPropertyArray.length){
+                if(ownedColorPropertyArray[i].color === ownedColorPropertyArray[i+1].color){
+                    canBuyHouseHotelArray.push(ownedColorPropertyArray[i])
+                    canBuyHouseHotelArray.push(ownedColorPropertyArray[i+1])
                     i += 2
                 } 
                 else{
                     i++
                 }        
         }
-        else if(ownedPropertyArray[i].type === 'color' && ownedPropertyArray[i].setTotal === 3 && (i + 2) < ownedPropertyArray.length){
-            if (ownedPropertyArray[i].color === ownedPropertyArray[i+1].color && ownedPropertyArray[i].color === ownedPropertyArray[i+2].color){
-                canBuyHouseHotelArray.push(ownedPropertyArray[i])
-                canBuyHouseHotelArray.push(ownedPropertyArray[i+1])
-                canBuyHouseHotelArray.push(ownedPropertyArray[i+2])
+        else if(ownedColorPropertyArray[i].type === 'color' && ownedColorPropertyArray[i].setTotal === 3 && (i + 2) < ownedColorPropertyArray.length){
+            if (ownedColorPropertyArray[i].color === ownedColorPropertyArray[i+1].color && ownedColorPropertyArray[i].color === ownedColorPropertyArray[i+2].color){
+                canBuyHouseHotelArray.push(ownedColorPropertyArray[i])
+                canBuyHouseHotelArray.push(ownedColorPropertyArray[i+1])
+                canBuyHouseHotelArray.push(ownedColorPropertyArray[i+2])
                 i += 3
             }
             else{
@@ -1646,22 +1660,22 @@ sellHouseHotelBtn.addEventListener('click', function(e){
     canSellHouseHotelArray = []
 
     //Sort owned property into array of full color set matches
-    for (let i = 0; i < ownedPropertyArray.length;){
-        if (ownedPropertyArray[i].type === 'color' && ownedPropertyArray[i].setTotal === 2 && (i + 1) < ownedPropertyArray.length){
-                if(ownedPropertyArray[i].color === ownedPropertyArray[i+1].color){
-                    canSellHouseHotelArray.push(ownedPropertyArray[i])
-                    canSellHouseHotelArray.push(ownedPropertyArray[i+1])
+    for (let i = 0; i < ownedColorPropertyArray.length;){
+        if (ownedColorPropertyArray[i].type === 'color' && ownedColorPropertyArray[i].setTotal === 2 && (i + 1) < ownedColorPropertyArray.length){
+                if(ownedColorPropertyArray[i].color === ownedColorPropertyArray[i+1].color){
+                    canSellHouseHotelArray.push(ownedColorPropertyArray[i])
+                    canSellHouseHotelArray.push(ownedColorPropertyArray[i+1])
                     i += 2
                 } 
                 else{
                     i++
                 }        
         }
-        else if(ownedPropertyArray[i].type === 'color' && ownedPropertyArray[i].setTotal === 3 && (i + 2) < ownedPropertyArray.length){
-            if (ownedPropertyArray[i].color === ownedPropertyArray[i+1].color && ownedPropertyArray[i].color === ownedPropertyArray[i+2].color){
-                canSellHouseHotelArray.push(ownedPropertyArray[i])
-                canSellHouseHotelArray.push(ownedPropertyArray[i+1])
-                canSellHouseHotelArray.push(ownedPropertyArray[i+2])
+        else if(ownedColorPropertyArray[i].type === 'color' && ownedColorPropertyArray[i].setTotal === 3 && (i + 2) < ownedColorPropertyArray.length){
+            if (ownedColorPropertyArray[i].color === ownedColorPropertyArray[i+1].color && ownedColorPropertyArray[i].color === ownedColorPropertyArray[i+2].color){
+                canSellHouseHotelArray.push(ownedColorPropertyArray[i])
+                canSellHouseHotelArray.push(ownedColorPropertyArray[i+1])
+                canSellHouseHotelArray.push(ownedColorPropertyArray[i+2])
                 i += 3
             }
             else{
