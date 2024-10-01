@@ -106,11 +106,16 @@ function generatePlayerPieces(){
 function displayPlayerCash(){
     document.getElementById(currentPlayerTurn.cashDisplayId).innerText = `${currentPlayerTurn.name} Cash: ${currentPlayerTurn.cash}`
     document.getElementById(currentPlayerTurn.cashDisplayId).style.color = currentPlayerTurn.color
+
 }
 
 function updatePlayerCashTotalDisplay(){
     for (let i = 0; i < totalPlayers; i++){
         document.getElementById(activePlayers[i].cashDisplayId).innerText = `${activePlayers[i].name} Cash: ${activePlayers[i].cash}`
+        if (activePlayers[i].isBankrupt === true){
+            document.getElementById(activePlayers[i].cashDisplayId).style.opacity = .4
+            document.getElementById(activePlayers[i].cashDisplayId).innerText = `${activePlayers[i].name}: Bankrupt`
+        }
     }
 }
 
@@ -2171,7 +2176,6 @@ function addFinishCloseMortgageBtn (){
 
 //Add logic for buy property button to avoid going negative
 //Add logic for community / chance to not interact with bankrupt players
-//Add logic to remove indicate bankrupt player
 //Add trading window
 //Add cpu
 //Add 
