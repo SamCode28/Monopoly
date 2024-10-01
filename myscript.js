@@ -1723,10 +1723,10 @@ sellHouseHotelBtn.addEventListener('click', function(e){
         //Create clickable property to sell houses
         function sellHouseHotelPropertySpace (){
             if(property.totalHouses <= 4 && property.totalHouses > 0){
-                document.getElementById('sellHouseHotelLabel').innerHTML = `Would you like to sell a house on ${property.name} for $${property.buildingCost}?`        
+                document.getElementById('sellHouseHotelLabel').innerHTML = `Would you like to sell a house on ${property.name} for $${(Math.floor(property.buildingCost / 2))}?`        
             }
             else if (property.totalHouses === 5){
-                document.getElementById('sellHouseHotelLabel').innerHTML = `Would you like to sell a hotel on ${property.name} for $${property.buildingCost}?`  
+                document.getElementById('sellHouseHotelLabel').innerHTML = `Would you like to sell a hotel on ${property.name} for $${Math.floor((property.buildingCost / 2))}?`  
             }
             else{
                 return
@@ -1760,7 +1760,7 @@ sellHouseHotelBtn.addEventListener('click', function(e){
                 clickableProperty.removeEventListener('click', sellHouseHotelPropertySpace)
             }
             property.totalHouses--
-            currentPlayerTurn.cash += property.buildingCost
+            currentPlayerTurn.cash += (Math.floor(property.buildingCost / 2))
             updateRentHouseHotel(property)
             //change placeHouse
             updatePlayerCashTotalDisplay()
@@ -2043,7 +2043,7 @@ closeMortgageBtn.addEventListener('click', function (e){
 
         //Choose property to close mortgage
         function closeMortgagePropertySpace (){
-            document.getElementById('closeMortgageLabel').innerHTML = `Would you like to close mortgage for ${property.name} for $${property.mortgage}?`
+            document.getElementById('closeMortgageLabel').innerHTML = `Would you like to close mortgage for ${property.name} for $${Math.floor((property.mortgage * 1.1))}?`
             removeCloseMortgageTutorial()
             addCloseMortgageYesNoButtons()
             closeMortgageYesBtn.addEventListener('click', closeMortgageYesBtnOutcome)
@@ -2071,7 +2071,7 @@ closeMortgageBtn.addEventListener('click', function (e){
                 }
 
             }
-            currentPlayerTurn.cash -= property.mortgage
+            currentPlayerTurn.cash -= (Math.floor(property.mortgage * 1.1)) 
             updatePlayerCashTotalDisplay()
             removeCloseMortgageYesNoButtons()
             addCloseMortgageTutorial()
@@ -2167,3 +2167,11 @@ function addFinishCloseMortgageBtn (){
     finishCloseMortgageBtn.classList.add('end-turn-button')
     finishCloseMortgageBtn.classList.remove('hidden')
 }
+
+
+//Add logic for buy property button to avoid going negative
+//Add logic for community / chance to not interact with bankrupt players
+//Add logic to remove indicate bankrupt player
+//Add trading window
+//Add cpu
+//Add 
