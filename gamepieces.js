@@ -32,7 +32,7 @@ let activePlayers = [
             this.mortgageAssets = 0
             for (let i = 0; i < this.properties.length; i++){
                 if (this.properties[i].mortgageOpen === false){
-                    this.mortgageAssets += this.properties[i].mortgage
+                    this.mortgageAssets += (this.properties[i].mortgage)
                 }
         }
             },
@@ -41,7 +41,7 @@ let activePlayers = [
             this.assets = 0
             for (let i = 0; i < this.properties.length;){
                 if(this.properties[i].type === 'color'){
-                    this.houseAssets += (this.properties[i].totalHouses * this.properties[i].buildingCost)
+                    this.houseAssets += (this.properties[i].totalHouses * (this.properties[i].buildingCost / 2))
                 }
                 i++
                 
@@ -76,7 +76,7 @@ let activePlayers = [
             this.mortgageAssets = 0
             for (let i = 0; i < this.properties.length; i++){
                 if (this.properties[i].mortgageOpen === false){
-                    this.mortgageAssets += this.properties[i].mortgage
+                    this.mortgageAssets += (this.properties[i].mortgage)
                 }
         }
             },
@@ -85,7 +85,7 @@ let activePlayers = [
             this.assets = 0
             for (let i = 0; i < this.properties.length;){
                 if(this.properties[i].type === 'color'){
-                    this.houseAssets += (this.properties[i].totalHouses * this.properties[i].buildingCost)
+                    this.houseAssets += (this.properties[i].totalHouses * (this.properties[i].buildingCost / 2))
                 }
                 i++
                 
@@ -121,7 +121,7 @@ let activePlayers = [
             this.mortgageAssets = 0
             for (let i = 0; i < this.properties.length; i++){
                 if (this.properties[i].mortgageOpen === false){
-                    this.mortgageAssets += this.properties[i].mortgage
+                    this.mortgageAssets += (this.properties[i].mortgage)
                 }
         }
             },
@@ -130,7 +130,7 @@ let activePlayers = [
             this.assets = 0
             for (let i = 0; i < this.properties.length;){
                 if(this.properties[i].type === 'color'){
-                    this.houseAssets += (this.properties[i].totalHouses * this.properties[i].buildingCost)
+                    this.houseAssets += (this.properties[i].totalHouses * (this.properties[i].buildingCost / 2))
                 }
                 i++
                 
@@ -165,7 +165,7 @@ let activePlayers = [
             this.mortgageAssets = 0
             for (let i = 0; i < this.properties.length; i++){
                 if (this.properties[i].mortgageOpen === false){
-                    this.mortgageAssets += this.properties[i].mortgage
+                    this.mortgageAssets += (this.properties[i].mortgage)
                 }
         }
             },
@@ -174,7 +174,7 @@ let activePlayers = [
             this.assets = 0
             for (let i = 0; i < this.properties.length;){
                 if(this.properties[i].type === 'color'){
-                    this.houseAssets += (this.properties[i].totalHouses * this.properties[i].buildingCost)
+                    this.houseAssets += (this.properties[i].totalHouses * (this.properties[i].buildingCost / 2))
                 }
                 i++
                 
