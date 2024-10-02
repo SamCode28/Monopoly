@@ -33,17 +33,18 @@ function updateChoosePieceName(){
     }
 }
 
-
 //Set each player icon
 pieceSelectionButton.forEach(icon => {
     let iconButton = icon.button
     let iconPiece = icon.gamePiece
     let iconIdname = icon.gamePieceId
-    let iconColor = icon.color
+    let iconColorLight = icon.colorLight
+    let iconColorDark = icon.colorDark
     iconButton.addEventListener('click', function (e){
         currentPlayerTurn.gamePiece = iconPiece
         currentPlayerTurn.pieceId = iconIdname
-        currentPlayerTurn.color = iconColor
+        currentPlayerTurn.colorLight = iconColorLight
+        currentPlayerTurn.colorDark = iconColorDark
         currentPlayerTurn.isBankrupt = false
         playersSelected++
         updateChoosePieceName()
@@ -105,7 +106,7 @@ function generatePlayerPieces(){
 
 function displayPlayerCash(){
     document.getElementById(currentPlayerTurn.cashDisplayId).innerText = `${currentPlayerTurn.name} Cash: ${currentPlayerTurn.cash}`
-    document.getElementById(currentPlayerTurn.cashDisplayId).style.color = currentPlayerTurn.color
+    document.getElementById(currentPlayerTurn.cashDisplayId).style.color = currentPlayerTurn.colorDark
 
 }
 
@@ -139,7 +140,7 @@ function startGame (){
 
 function updateMiddleScreenPlayerTurn (){
     document.getElementById('float-screen-game-middle-playerTurn').innerHTML = `${currentPlayerTurn.name}`
-    document.getElementById('float-screen-game-middle-playerTurn').style.color = currentPlayerTurn.color
+    document.getElementById('float-screen-game-middle-playerTurn').style.color = currentPlayerTurn.colorDark
     document.getElementById('float-screen-game-middle-playerTurn').style.fontSize = "2em"
 
 }
@@ -147,6 +148,18 @@ function updateMiddleScreenPlayerTurn (){
 function updateMiddleScreenPlayerLocation (){
     document.getElementById('float-screen-game-middle-currentLocation').innerHTML = `Current Location:<br>${propertyArray[currentPlayerTurn.position].name}`
 }
+
+function displayDiceRollOutput(roll1, roll2){
+    document.getElementById('rollCounterDisplay').innerHTML = `Dice One: ${roll1}<br>Dice Two: ${roll2}<br>Total: ${(roll1 + roll2)}<br>Doubles Streak: ${currentPlayerTurn.doublesCounter}`
+ }
+
+function displayJailRollOutput (roll1, roll2){
+    document.getElementById('rollCounterDisplay').innerHTML = `Dice One: ${roll1}<br>Dice Two: ${roll2}<br>Total: ${(roll1 + roll2)}`  
+ }
+
+function clearDiceRollOutput(){
+    document.getElementById('rollCounterDisplay').innerHTML = ""
+ }
 
 //Game Interactions
 //Game Interactions
@@ -187,18 +200,6 @@ rollBtn.addEventListener('click', function (e){
        currentLocationInteraction()
  })
 
-function displayDiceRollOutput(roll1, roll2){
-    document.getElementById('rollCounterDisplay').innerHTML = `Dice One: ${roll1}<br>Dice Two: ${roll2}<br>Total: ${(roll1 + roll2)}<br>Doubles Streak: ${currentPlayerTurn.doublesCounter}`
- }
-
-function displayJailRollOutput (roll1, roll2){
-    document.getElementById('rollCounterDisplay').innerHTML = `Dice One: ${roll1}<br>Dice Two: ${roll2}<br>Total: ${(roll1 + roll2)}`  
- }
-
-function clearDiceRollOutput(){
-    document.getElementById('rollCounterDisplay').innerHTML = ""
- }
-
 //Logic for space landed on
  function currentLocationInteraction (){
     if (spaceLandedOn().isProperty === true){
@@ -207,14 +208,14 @@ function clearDiceRollOutput(){
                 //Pay rent
                 if(spaceLandedOn().owner.isInJail === false && spaceLandedOn().mortgageOpen === false){
                     if(spaceLandedOn().type === 'utility'){
-                        spaceLandedOn().updateRent()
+                        spaceLandedOn().updateRent(spaceLandedOn().owner)
                     }
                     updatePlayerTotalAssets()
                     if (currentPlayerTurn.totalAssets < spaceLandedOn().rent){
                         informBankrupt()
                         return
                     }
-                    addPropertyCard()
+                    addPropertyCard('propertyCardId')
                     addPayRentContainer()
                     addPayRentTutorial()
                     document.getElementById('payRentLabelId').innerHTML = `You owe ${spaceLandedOn().owner.name} $${spaceLandedOn().rent}.`
@@ -222,14 +223,14 @@ function clearDiceRollOutput(){
                 }
                 else if(spaceLandedOn().owner.isInJail === true){
                     addturnInteractionDescriptionDisplay()
-                    removePropertyCard()
+                    removePropertyCard('propertyCardId')
                     addHouseHotelMortgageScreen()
                     turnInteractionDescription.innerHTML = `The owner of ${spaceLandedOn().name} is in jail.  You do not pay rent.`
                     addEndTurnButton()
                 }
                 else if(spaceLandedOn().mortgageOpen === true){
                     addturnInteractionDescriptionDisplay()
-                    removePropertyCard()
+                    removePropertyCard('propertyCardId')
                     addHouseHotelMortgageScreen()
                     turnInteractionDescription.innerHTML = `${spaceLandedOn().name} currently has an open mortgage.  You do not pay rent.`
                     addEndTurnButton()
@@ -238,7 +239,7 @@ function clearDiceRollOutput(){
             else{
                 addturnInteractionDescriptionDisplay()
                 turnInteractionDescription.innerHTML = `You own ${spaceLandedOn().name}`
-                removePropertyCard()
+                removePropertyCard('propertyCardId')
                 addHouseHotelMortgageScreen()
                 addEndTurnButton()
             }
@@ -246,7 +247,7 @@ function clearDiceRollOutput(){
         //Buy property
         else if (spaceLandedOn().hasOwner === false){
                 addPropertyBuySellButtons()
-                addPropertyCard()
+                addPropertyCard('propertyCardId')
                 document.getElementById('wouldYouLikeToBuyId').innerHTML = `Would you like to buy ${spaceLandedOn().name} for $${spaceLandedOn().price}?`
         }
 
@@ -300,16 +301,6 @@ function clearDiceRollOutput(){
     
 }
 
-function addPropertyBuySellButtons(){
-    document.getElementById('propertyForPurchaseId').classList.add('property-for-purchase-grid');
-    document.getElementById('propertyForPurchaseId').classList.remove('hidden');
- }
-
- function removePropertyBuySellButtons(){
-    document.getElementById('propertyForPurchaseId').classList.add('hidden');
-    document.getElementById('propertyForPurchaseId').classList.remove('property-for-purchase-grid');
- }
-
  function addturnInteractionDescriptionDisplay(){
     document.getElementById('turnInteractionDescriptionId').classList.add('turn-interaction-description');
     document.getElementById('turnInteractionDescriptionId').classList.remove('hidden');
@@ -362,7 +353,6 @@ function endTurn(){
     }
     removeTurnInteractionDescriptionDisplay()
     addDice()
-    removePropertyCard()
     removeEndTurnButton()
     updateMiddleScreenPlayerTurn()
     updateMiddleScreenPlayerLocation()
@@ -845,42 +835,43 @@ function placePieceRight(){
 
 }
 
-
 //Property Cards
 //Property Cards
 
-function addPropertyCard (){
+function addPropertyCard (locationId){
     if (currentLocation.type === "color"){
-        addColorPropertyCard()
+        addColorPropertyCard(locationId)
     }
     else if (currentLocation.type === "railroad"){
-        addRailroadPropertyCard()
+        addRailroadPropertyCard(locationId)
     }
     else if (currentLocation.type === "utility" ){
-        addUtilityCard()
+        addUtilityCard(locationId)
     }
     else {
+        console.log('missing property type add')
         return
     }
 }
 
-function removePropertyCard (){
+function removePropertyCard (locationId){
     if (currentLocation.type === "color"){
-        removeColorPropertyCard()
+        removeColorPropertyCard(locationId)
     }
     else if (currentLocation.type === "railroad"){
-        removeRailroadPropertyCard()
+        removeRailroadPropertyCard(locationId)
     }
     else if (currentLocation.type === "utility" ){
-        removeUtilityCard()
+        removeUtilityCard(locationId)
     }
     else {
+        console.log('missing property type remove')
         return
     }
 }
 
-function addColorPropertyCard(){
-    document.getElementById('propertyCardId').innerHTML = colorPropertyCard;
+function addColorPropertyCard(locationId){
+    document.getElementById(locationId).innerHTML = colorPropertyCard;
     document.getElementById('colorPropertyName').innerHTML = `${currentLocation.name}`
     document.getElementById('colorPropertyName').style.borderTop = `20px solid ${currentLocation.color}`
     document.getElementById('colorPropertyRent').innerHTML = `Rent: $${currentLocation.startingRent}`
@@ -892,37 +883,40 @@ function addColorPropertyCard(){
     document.getElementById('colorPropertyHouseCost').innerHTML = `Cost to build house: $${currentLocation.buildingCost}`
     document.getElementById('colorPropertyHotelCost').innerHTML = `Cost to build hotel: $${currentLocation.buildingCost}`
     document.getElementById('colorPropertyMortgage').innerHTML = `Mortgage Value: $${currentLocation.mortgage}`
-    document.getElementById('propertyCardId').classList.add('color-property-card')
-    document.getElementById('propertyCardId').classList.remove('hidden')
+    document.getElementById(locationId).classList.add('color-property-card')
+    document.getElementById(locationId).classList.remove('hidden')
 }
 
-function removeColorPropertyCard(){
-    document.getElementById('propertyCardId').classList.add('hidden')
-    document.getElementById('propertyCardId').classList.remove('color-property-card')
+function removeColorPropertyCard(locationId){
+    document.getElementById(locationId).classList.add('hidden')
+    document.getElementById(locationId).classList.remove('color-property-card')
+    document.getElementById(locationId).innerHTML = ""
 }
 
-function addRailroadPropertyCard(){
-    document.getElementById('propertyCardId').innerHTML = railroadPropertyCard;
+function addRailroadPropertyCard(locationId){
+    document.getElementById(locationId).innerHTML = railroadPropertyCard;
     document.getElementById('railroadPropertyName').innerHTML = `${currentLocation.name}`
-    document.getElementById('propertyCardId').classList.add('railroad-property-card')
-    document.getElementById('propertyCardId').classList.remove('hidden')
+    document.getElementById(locationId).classList.add('railroad-property-card')
+    document.getElementById(locationId).classList.remove('hidden')
 }
 
-function removeRailroadPropertyCard(){
-    document.getElementById('propertyCardId').classList.remove('railroad-property-card')
-    document.getElementById('propertyCardId').classList.add('hidden')
+function removeRailroadPropertyCard(locationId){
+    document.getElementById(locationId).classList.remove('railroad-property-card')
+    document.getElementById(locationId).classList.add('hidden')
+    document.getElementById(locationId).innerHTML = ""
 }
 
-function addUtilityCard(){
-    document.getElementById('propertyCardId').innerHTML = utilityPropertyCard;
+function addUtilityCard(locationId){
+    document.getElementById(locationId).innerHTML = utilityPropertyCard;
     document.getElementById('utilityPropertyName').innerHTML = `${currentLocation.name}`
-    document.getElementById('propertyCardId').classList.add('utility-property-card')
-    document.getElementById('propertyCardId').classList.remove('hidden')
+    document.getElementById(locationId).classList.add('utility-property-card')
+    document.getElementById(locationId).classList.remove('hidden')
 }
 
-function removeUtilityCard(){
-    document.getElementById('propertyCardId').classList.remove('utility-property-card')
-    document.getElementById('propertyCardId').classList.add('hidden')
+function removeUtilityCard(locationId){
+    document.getElementById(locationId).classList.remove('utility-property-card')
+    document.getElementById(locationId).classList.add('hidden')
+    document.getElementById(locationId).innerHTML = ""
 }
 
 buyPropertyYesBtn.addEventListener('click', function(e){
@@ -931,23 +925,164 @@ buyPropertyYesBtn.addEventListener('click', function(e){
     spaceLandedOn().hasOwner = true
     currentPlayerTurn.cash -= spaceLandedOn().price
     currentPlayerTurn.updateTotalAssets()
-    updateRent()
+    updateRent(currentPlayerTurn)
     updatePlayerCashTotalDisplay()
-    document.getElementById(spaceLandedOn().id).style.backgroundColor = currentPlayerTurn.color;
+    document.getElementById(spaceLandedOn().id).style.backgroundColor = currentPlayerTurn.colorLight;
     removePropertyBuySellButtons()
     addEndTurnButton()
     addturnInteractionDescriptionDisplay()
-    removePropertyCard()
+    removePropertyCard('propertyCardId')
     addHouseHotelMortgageScreen()
     document.getElementById('turnInteractionDescriptionId').innerHTML = `You purchased ${spaceLandedOn().name} for $${spaceLandedOn().price}` 
 })
 
-buyPropertyNoBtn.addEventListener('click', function(e){
+buyPropertyAuctionBtn.addEventListener('click', function(e){
     removePropertyBuySellButtons()
     addEndTurnButton()
-    removePropertyCard()
+    removePropertyCard('propertyCardId')
     addHouseHotelMortgageScreen()
+    addAuctionScreen()
+    addPropertyCard('auctionCardId')
+    generateAuctionScreen()
 })
+
+function addPropertyBuySellButtons(){
+    document.getElementById('propertyForPurchaseId').classList.add('property-for-purchase-grid');
+    document.getElementById('propertyForPurchaseId').classList.remove('hidden');
+ }
+
+ function removePropertyBuySellButtons(){
+    document.getElementById('propertyForPurchaseId').classList.add('hidden');
+    document.getElementById('propertyForPurchaseId').classList.remove('property-for-purchase-grid');
+ }
+
+//Auction Property
+//Auction Property
+function generateAuctionScreen(){
+    document.getElementById('auctionOriginalPriceId').innerText = `Original Price: $${currentLocation.price}`
+        //Update Auction screen with active players
+    for (let i = 0; i < totalPlayers; i++){
+        if (activePlayers[i].isBankrupt === false){
+            playerAuctionContainers[i].nameplate.innerHTML =  `${activePlayers[i].name}`
+            playerAuctionContainers[i].nameplate.style.color = activePlayers[i].colorDark
+            activePlayers[i].colorBid = playerAuctionContainers[i].nameplate.style.color
+            playerAuctionContainers[i].cashDisplay.innerHTML = `Availible Cash: ${activePlayers[i].cash}`
+            playerAuctionContainers[i].cashDisplay.style.color = activePlayers[i].colorDark
+                //Add buttons to bid for property
+                for (let j = 0; j < 6; j++){
+                    let auctionButton = document.createElement('button')
+                    auctionButton.classList.add('auction-btn')
+                    auctionButton.style.backgroundColor = activePlayers[i].colorDark
+                    auctionButton.innerText = `${auctionButtonsValueArray[j].buttonValue}`
+                    activePlayers[i].auctionButtons.push(auctionButton)
+                    playerAuctionContainers[i].buttonId.append(auctionButton)
+    
+                    auctionButton.addEventListener('click', function(){
+                        let buttonValue = parseInt(this.innerText)
+                        currentAuctionBid += buttonValue
+                        spanBid.innerText = `$${currentAuctionBid}`
+                        spanBid.style.color = this.style.backgroundColor
+                        auctionLeaderColor = this.style.backgroundColor
+                        clearTimeout(noBidsGoingOnce)
+                        clearTimeout(noBidsGoingTwice)
+                        clearTimeout(noBidsFinal)
+                        clearTimeout(auctionResult)
+                        checkPlayerCanAffordAuctionButtonValue()  
+                        setAuctionLeaderColor() 
+                        bidOnProperty()
+                                             
+                    })
+                }
+        }
+        else{
+            playerAuctionContainers[i].nameplate.innerHTML =  ""
+            playerAuctionContainers[i].cashDisplay.innerHTML = ""
+        }
+    }
+    checkPlayerCanAffordAuctionButtonValue() 
+}
+
+function setAuctionLeaderColor(){
+    document.documentElement.style.setProperty('--auction-leader-color', auctionLeaderColor);
+}
+
+function bidOnProperty(){
+    for (let i = 0; i < totalPlayers; i++){
+        if (auctionLeaderColor === activePlayers[i].colorBid){
+            bidLeader = activePlayers[i].name
+            auctioneerText.innerHTML = `<span class="auction-leader-color-span">${bidLeader} </span>is now the highest bidder!`
+        }
+    }
+    noBidsGoingOnce = setTimeout(goingOnceBidOnProperty, 3000)
+}
+
+function goingOnceBidOnProperty(){
+    auctioneerText.innerHTML = `<span class="auction-leader-color-span">${bidLeader}</span> buying ${currentLocation.name} for <span class="auction-leader-color-span">$${currentAuctionBid}</span> going once!`
+    noBidsGoingTwice = setTimeout(goingTwiceBidOnProperty, 3000)
+}
+
+function goingTwiceBidOnProperty(){
+    auctioneerText.innerHTML = `<span class="auction-leader-color-span">${bidLeader}</span> buying ${currentLocation.name} for <span class="auction-leader-color-span">$${currentAuctionBid}</span> going twice!!`
+    noBidsFinal = setTimeout(auctionPropertySoldMessage, 4000)
+}
+
+function auctionPropertySoldMessage(){
+    for (let i = 0; i < totalPlayers; i++){
+        if (activePlayers[i].isBankrupt === false){
+            activePlayers[i].auctionButtons = []
+            playerAuctionContainers[i].buttonId.innerHTML = ""
+        }
+    }
+    auctioneerText.innerHTML = `${currentLocation.name} sold to <span class="auction-leader-color-span">${bidLeader}</span> for <span class="auction-leader-color-span">$${currentAuctionBid}</span>!`
+    auctionResult = setTimeout(auctionWonResult, 4000)
+}
+
+function auctionWonResult(){
+    removeAuctionScreen()
+    spanBid.innerText = "$0"
+    spanBid.style.color = "black"
+    auctioneerText.innerHTML = `Start the bidding!`
+    removePropertyCard('auctionCardId')
+
+    for (let i = 0; i < totalPlayers; i++){
+        if (auctionLeaderColor === activePlayers[i].colorBid){
+            activePlayers[i].properties.push(spaceLandedOn())
+            spaceLandedOn().owner = activePlayers[i]
+            spaceLandedOn().hasOwner = true
+            activePlayers[i].cash -= currentAuctionBid
+            updatePlayerCashTotalDisplay()
+            document.getElementById(spaceLandedOn().id).style.backgroundColor = activePlayers[i].colorLight;
+            updateRent(activePlayers[i])
+        }
+    }
+    currentAuctionBid = 0
+}
+
+function checkPlayerCanAffordAuctionButtonValue(){
+    for (let i = 0; i < totalPlayers; i++){
+        for (let j = 0; j < 6; j++){
+            if (activePlayers[i].isBankrupt === false && parseInt(activePlayers[i].auctionButtons[j].innerText) + currentAuctionBid > activePlayers[i].cash){
+                activePlayers[i].auctionButtons[j].classList.add('auction-button-inactive')
+                activePlayers[i].auctionButtons[j].classList.add('disable-clicks')
+                activePlayers[i].auctionButtons[j].style.backgroundColor = activePlayers[i].colorLight
+            }
+        }
+    }
+}
+
+function addAuctionScreen(){
+    document.getElementById('floatScreenGameId').classList.remove('float-screen-game')
+    document.getElementById('floatScreenGameId').classList.add('hidden')
+    document.getElementById('auctionScreenContainerId').classList.add('auction-screen-container')
+    document.getElementById('auctionScreenContainerId').classList.remove('hidden')
+}
+
+function removeAuctionScreen(){
+    document.getElementById('auctionScreenContainerId').classList.remove('auction-screen-container')
+    document.getElementById('auctionScreenContainerId').classList.add('hidden')
+    document.getElementById('floatScreenGameId').classList.add('float-screen-game')
+    document.getElementById('floatScreenGameId').classList.remove('hidden')
+}
 
 //Pay Rent / Bankrupt
 //Pay Rent / Bankrupt
@@ -987,7 +1122,7 @@ payRentBtn.addEventListener('click', function (e){
     updatePlayerCashTotalDisplay()
 
     if (document.getElementById('propertyCardId').classList.contains('hidden') === false){
-        removePropertyCard()
+        removePropertyCard('propertyCardId')
     }
     addHouseHotelMortgageScreen()
     removePayRentTutorial()
@@ -995,7 +1130,7 @@ payRentBtn.addEventListener('click', function (e){
 })
 
 sellToPayRentBtn.addEventListener('click', function(e){
-    removePropertyCard()
+    removePropertyCard('propertyCardId')
     addHouseHotelMortgageScreen()
     removePayRentContainer()
     document.getElementById('payRentTutorialId').innerHTML = `Sell houses or open mortgage to pay rent.  Click "finish" to pay rent.`
@@ -1012,7 +1147,7 @@ function removePayRentTutorial(){
 }
 
 bankruptBtn.addEventListener('click', function(){
-    removePropertyCard()
+    removePropertyCard('propertyCardId')
     addBankruptWarning()
     removePayRentTutorial()
     removePayRentContainer()
@@ -1057,7 +1192,7 @@ function bankrupt(){
     playerBankrupt.properties.forEach(property => {
         playerOwed.properties.push(property)
         property.owner = playerOwed
-        document.getElementById(property.id).style.backgroundColor = playerOwed.color
+        document.getElementById(property.id).style.backgroundColor = playerOwed.colorLight
         
     })
     //End game if only 1 player remaining
@@ -1108,8 +1243,6 @@ function removeInformBankruptScreen(){
     document.getElementById('bankruptGoodbyeContainer').classList.add('hidden')
     document.getElementById('bankruptGoodbyeContainer').classList.remove('bankrupt-inform-container')
 }
-
-
 
 //Jail Functions
 //Jail Functions
@@ -1210,21 +1343,21 @@ function removeJailOptions (){
 //Buy Sell House Hotel Mortgage Functions
 //Buy Sell House Hotel Mortgage Functions
 
-function updateRent(){
+function updateRent(player){
     if (currentLocation.type === "color"){
-        updateRentColor()
+        updateRentColor(player)
     }
     else if (currentLocation.type === "railroad"){
-        updateRentRailroad()
+        updateRentRailroad(player)
     }
     else if (currentLocation.type === "utility" ){
-        updateRentUtility()
+        updateRentUtility(player)
     }
 }
 
-function updateRentColor(){
+function updateRentColor(player){
     ownedPropertyArray = []
-    generatePlayerPropertyArray()
+    generatePlayerPropertyArray(player)
     let sameColorProperties = []
     //Filter for same color properties as last bought property
     sameColorProperties = ownedPropertyArray.filter(function(property){return property.color === currentLocation.color})
@@ -1267,9 +1400,9 @@ function updateRentHouseHotel(property){
     }
 }
 
-function updateRentRailroad(){
+function updateRentRailroad(player){
     ownedPropertyArray = []
-    generatePlayerPropertyArray()
+    generatePlayerPropertyArray(player)
     let railroadProperties = []
     //Filter for railroads
     railroadProperties = ownedPropertyArray.filter(function(property){return property.type === currentLocation.type})
@@ -1289,9 +1422,9 @@ function updateRentRailroad(){
     })
 }
 
-function updateRentUtility(){
+function updateRentUtility(player){
     ownedPropertyArray = []
-    generatePlayerPropertyArray()
+    generatePlayerPropertyArray(player)
     let utilityProperties = []
     //Filter for utilities
     utilityProperties = ownedPropertyArray.filter(function(property){return property.type === currentLocation.type})
@@ -1312,11 +1445,11 @@ function updateRentUtility(){
     })
 }
 
-function generatePlayerPropertyArray(){
+function generatePlayerPropertyArray(player){
     ownedPropertyArray = []
 
     for (let i = 0; i < 40; i++){
-        if (propertyArray[i].owner === currentPlayerTurn){
+        if (propertyArray[i].owner === player){
             ownedPropertyArray.push(propertyArray[i])
         }
     }
@@ -1684,7 +1817,7 @@ function removeFinishBuyHouseBtn (){
 //Sell House Functions
 sellHouseHotelBtn.addEventListener('click', function(e){
     removeDice()
-    generatePlayerPropertyArray()
+    generatePlayerPropertyArray(currentPlayerTurn)
     removeHouseHotelMortgageScreen()
     removeEndTurnButton()
     addFinishSellHouseHotelBtn()
@@ -1874,7 +2007,7 @@ function removeSellHouseHotelTutorial (){
 //Open Mortgage Functions
 openMortgageBtn.addEventListener('click', function (){
     removeDice()
-    generatePlayerPropertyArray()
+    generatePlayerPropertyArray(currentPlayerTurn)
     removeHouseHotelMortgageScreen()
     removeEndTurnButton()
     addFinishOpenMortgageBtn()
@@ -2026,7 +2159,7 @@ function removeFinishOpenMortgageBtn (){
 //Close Mortgage Functions
 closeMortgageBtn.addEventListener('click', function (e){
     removeDice()
-    generatePlayerPropertyArray()
+    generatePlayerPropertyArray(currentPlayerTurn)
     removeHouseHotelMortgageScreen()
     removeEndTurnButton()
     addFinishCloseMortgageBtn()
@@ -2178,4 +2311,8 @@ function addFinishCloseMortgageBtn (){
 //Add logic for community / chance to not interact with bankrupt players
 //Add trading window
 //Add cpu
-//Add 
+//Add animations to buy/sell/open/close properties
+//Add update all player locations on move
+//Add income tax 10% option
+//Houses only able to be bought 1 per property until even
+//Can only mortgage if no buildings on property
