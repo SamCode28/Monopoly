@@ -520,7 +520,7 @@ function chance (){
     else if (chanceRoll === 15){
         turnInteractionDescription.innerHTML = `<span class="bold-font-span">Chance:</span><br>You have been elected Chairman of the Board. Pay each player $50.`
         for (let i = 0; i < totalPlayers; i++){
-            if (activePlayers[i].name != currentPlayerTurn.name){
+            if (activePlayers[i].name != currentPlayerTurn.name && activePlayers[i].isBankrupt === false){
                 currentPlayerTurn.cash -= 50
                 activePlayers[i].cash += 50
             }
@@ -581,7 +581,7 @@ function communityChest(){
     else if (communityChestRoll === 9){
         turnInteractionDescription.innerHTML = `<span class="bold-font-span">Community Chest:</span><br>It is your birthday. Collect $10 from every player.`
         for (let i = 0; i < totalPlayers; i++){
-            if (currentPlayerTurn.name != activePlayers[i].name){
+            if (currentPlayerTurn.name != activePlayers[i].name && activePlayers[i].isBankrupt === false){
                 currentPlayerTurn.cash +=10
                 activePlayers[i].cash -= 10
             }
