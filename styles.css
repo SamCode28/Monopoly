@@ -7,6 +7,15 @@
     position: relative;
 }
 
+:root{
+    --auction-leader-color: black;
+}
+
+.auction-leader-color-span{
+    color: var(--auction-leader-color);
+}
+
+
 div {
     font-size: 17px;
 }
@@ -591,6 +600,7 @@ svg{
 
 .action-display-screen{
     display: flex;
+    justify-self: center;
     grid-column: 2/8;
     grid-row: 3/8;
     width: 760px;
@@ -719,22 +729,20 @@ svg{
 }
 
 .float-screen-game-left-top{
-    display: grid;
-    grid-template-rows: 1fr 1fr 1fr 1fr;
     width: 253.2px;
-    justify-content: space-between;
-    align-items: center;
 }
 
 .player-total-cash{
     display: flex;
     width: 253.2px;
     font-size: 25px;
+    justify-content: baseline;
 }
 
 .float-screen-game-left-bottom{
     display: flex;
-    padding-bottom: 20px;
+    justify-content: center;
+    align-content: center;
 }
 
 .house-hotel-mortgage-screen{
@@ -774,7 +782,7 @@ svg{
 
 .color-property-card{
     display: grid;
-    width: 200px;
+    width: 220px;
     align-content: center;
     justify-content: center;
     grid-template-rows: auto repeat(1fr, 9);
@@ -785,14 +793,15 @@ svg{
 }
 
 #colorPropertyName{
-    width: 196.8px;
+    width: 216.8px;
     font-size: 1.25em;
     font-weight:bold;
 }
 
 .railroad-property-card{
     display: grid;
-    width: 200px;
+    width: 220px;
+    height: 200px;
     justify-content: center;
     align-items: flex-start;
     grid-template-rows: auto repeat(1fr, 5);
@@ -802,24 +811,25 @@ svg{
 }
 
 #railroadPropertyName{
-    width: 196.8px;
+    width: 216.8px;
     font-size: 1.25em;
     font-weight:bold;
 }
 
 .utility-property-card{
-    display: grid;
-    width: 200px;
-    justify-content: center;
-    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    width: 220px;
+    height: 200px;
+    align-items: center;
+    justify-content: space-around;
     grid-template-rows: auto 1fr 1fr auto; 
     border: 2px solid black;
-    justify-self: center;
     align-self: center;
 }
 
 #utilityPropertyName{
-    width: 196.8px;
+    width: 216.8px;
     font-size: 1.25em;
     font-weight:bold;
 }
@@ -1025,7 +1035,7 @@ svg{
 }
 
 .test-div{
-    color: #7f0202
+    color: #f62da2
 }
 
 .can-open-mortgage, .can-close-mortgage, .can-buy-house, .can-sell-house{
@@ -1060,4 +1070,75 @@ svg{
 
 .button-inactive{
     background-color: #75abbd;
+}
+
+.auction-button-inactive{
+    cursor: default;
+}
+
+.auction-button-inactive:hover{
+    opacity: 1;
+}
+
+.auction-button-inactive{
+
+}
+
+.auction-screen-container{
+    display: grid;
+    position: fixed;
+    grid-template-columns: 1fr 1fr 1fr;
+    justify-self: center;
+    align-self: center;
+    align-items: center;
+    justify-items: center;
+    width: 760px;
+    height: 375px;
+    left: 50%;
+    right: 50%;
+    top: 50%;
+    bottom: 50%;
+}
+
+.auction-individual-player-container{
+    display: grid;
+    grid-template-rows: auto auto auto;
+    width: 253.33px;
+    height: 187.5px;
+    justify-items: center;
+    align-content: start;
+}
+
+
+.player-auction-nameplate{
+    font-size: 1.5em;
+    padding-top: 10px;
+    font-weight: bolder;
+}
+
+.player-auction-btns{
+    padding-top: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    align-items: center;
+}
+
+.auction-btn{
+    width: 50px;
+    height: 35px;
+    margin: 2.5px;
+    font-size: 1em;
+}
+
+.player-auction-cash{
+    font-size: 1.25em;
+}
+
+.auction-property-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 100%;
+    height: 100%;
 }

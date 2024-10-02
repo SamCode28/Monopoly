@@ -1,7 +1,7 @@
 //Game Pieces
 const catPiece = '<div class="game-pieces" id="catPieceId"><svg class = "svg-game-pieces" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="#000000" d="M320 192l17.1 0c22.1 38.3 63.5 64 110.9 64c11 0 21.8-1.4 32-4l0 4 0 32 0 192c0 17.7-14.3 32-32 32s-32-14.3-32-32l0-140.8L280 448l56 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-144 0c-53 0-96-43-96-96l0-223.5c0-16.1-12-29.8-28-31.8l-7.9-1c-17.5-2.2-30-18.2-27.8-35.7s18.2-30 35.7-27.8l7.9 1c48 6 84.1 46.8 84.1 95.3l0 85.3c34.4-51.7 93.2-85.8 160-85.8zm160 26.5s0 0 0 0c-10 3.5-20.8 5.5-32 5.5c-28.4 0-54-12.4-71.6-32c0 0 0 0 0 0c-3.7-4.1-7-8.5-9.9-13.2C357.3 164 352 146.6 352 128c0 0 0 0 0 0l0-96 0-20 0-1.3C352 4.8 356.7 .1 362.6 0l.2 0c3.3 0 6.4 1.6 8.4 4.2c0 0 0 0 0 .1L384 21.3l27.2 36.3L416 64l64 0 4.8-6.4L512 21.3 524.8 4.3c0 0 0 0 0-.1c2-2.6 5.1-4.2 8.4-4.2l.2 0C539.3 .1 544 4.8 544 10.7l0 1.3 0 20 0 96c0 17.3-4.6 33.6-12.6 47.6c-11.3 19.8-29.6 35.2-51.4 42.9zM432 128a16 16 0 1 0 -32 0 16 16 0 1 0 32 0zm48 16a16 16 0 1 0 0-32 16 16 0 1 0 0 32z"/></svg></div>'
 const dogPiece = '<div class="game-pieces" id="dogPieceId"><svg class = "svg-game-pieces" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="#5e2222" d="M309.6 158.5L332.7 19.8C334.6 8.4 344.5 0 356.1 0c7.5 0 14.5 3.5 19 9.5L392 32l52.1 0c12.7 0 24.9 5.1 33.9 14.1L496 64l56 0c13.3 0 24 10.7 24 24l0 24c0 44.2-35.8 80-80 80l-32 0-16 0-21.3 0-5.1 30.5-112-64zM416 256.1L416 480c0 17.7-14.3 32-32 32l-32 0c-17.7 0-32-14.3-32-32l0-115.2c-24 12.3-51.2 19.2-80 19.2s-56-6.9-80-19.2L160 480c0 17.7-14.3 32-32 32l-32 0c-17.7 0-32-14.3-32-32l0-230.2c-28.8-10.9-51.4-35.3-59.2-66.5L1 167.8c-4.3-17.1 6.1-34.5 23.3-38.8s34.5 6.1 38.8 23.3l3.9 15.5C70.5 182 83.3 192 98 192l30 0 16 0 159.8 0L416 256.1zM464 80a16 16 0 1 0 -32 0 16 16 0 1 0 32 0z"/></svg></div>'
-const ghostPiece = '<div class="game-pieces" id="ghostPieceId"><svg class = "svg-game-pieces" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="#f7fb32" d="M40.1 467.1l-11.2 9c-3.2 2.5-7.1 3.9-11.1 3.9C8 480 0 472 0 462.2L0 192C0 86 86 0 192 0S384 86 384 192l0 270.2c0 9.8-8 17.8-17.8 17.8c-4 0-7.9-1.4-11.1-3.9l-11.2-9c-13.4-10.7-32.8-9-44.1 3.9L269.3 506c-3.3 3.8-8.2 6-13.3 6s-9.9-2.2-13.3-6l-26.6-30.5c-12.7-14.6-35.4-14.6-48.2 0L141.3 506c-3.3 3.8-8.2 6-13.3 6s-9.9-2.2-13.3-6L84.2 471c-11.3-12.9-30.7-14.6-44.1-3.9zM160 192a32 32 0 1 0 -64 0 32 32 0 1 0 64 0zm96 32a32 32 0 1 0 0-64 32 32 0 1 0 0 64z"/></svg></div>'
+const ghostPiece = '<div class="game-pieces" id="ghostPieceId"><svg class = "svg-game-pieces" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="#f62da2" d="M40.1 467.1l-11.2 9c-3.2 2.5-7.1 3.9-11.1 3.9C8 480 0 472 0 462.2L0 192C0 86 86 0 192 0S384 86 384 192l0 270.2c0 9.8-8 17.8-17.8 17.8c-4 0-7.9-1.4-11.1-3.9l-11.2-9c-13.4-10.7-32.8-9-44.1 3.9L269.3 506c-3.3 3.8-8.2 6-13.3 6s-9.9-2.2-13.3-6l-26.6-30.5c-12.7-14.6-35.4-14.6-48.2 0L141.3 506c-3.3 3.8-8.2 6-13.3 6s-9.9-2.2-13.3-6L84.2 471c-11.3-12.9-30.7-14.6-44.1-3.9zM160 192a32 32 0 1 0 -64 0 32 32 0 1 0 64 0zm96 32a32 32 0 1 0 0-64 32 32 0 1 0 0 64z"/></svg></div>'
 const moonPiece = '<div class="game-pieces" id="moonPieceId"><svg class = "svg-game-pieces" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="#124973" d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z"/></svg></div>'
 const astronautPiece = '<div class="game-pieces" id="astronautPieceId"><svg class = "svg-game-pieces" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="#9172ee" d="M370.7 96.1C346.1 39.5 289.7 0 224 0S101.9 39.5 77.3 96.1C60.9 97.5 48 111.2 48 128l0 64c0 16.8 12.9 30.5 29.3 31.9C101.9 280.5 158.3 320 224 320s122.1-39.5 146.7-96.1c16.4-1.4 29.3-15.1 29.3-31.9l0-64c0-16.8-12.9-30.5-29.3-31.9zM336 144l0 16c0 53-43 96-96 96l-32 0c-53 0-96-43-96-96l0-16c0-26.5 21.5-48 48-48l128 0c26.5 0 48 21.5 48 48zM189.3 162.7l-6-21.2c-.9-3.3-3.9-5.5-7.3-5.5s-6.4 2.2-7.3 5.5l-6 21.2-21.2 6c-3.3 .9-5.5 3.9-5.5 7.3s2.2 6.4 5.5 7.3l21.2 6 6 21.2c.9 3.3 3.9 5.5 7.3 5.5s6.4-2.2 7.3-5.5l6-21.2 21.2-6c3.3-.9 5.5-3.9 5.5-7.3s-2.2-6.4-5.5-7.3l-21.2-6zM112.7 316.5C46.7 342.6 0 407 0 482.3C0 498.7 13.3 512 29.7 512l98.3 0 0-64c0-17.7 14.3-32 32-32l128 0c17.7 0 32 14.3 32 32l0 64 98.3 0c16.4 0 29.7-13.3 29.7-29.7c0-75.3-46.7-139.7-112.7-165.8C303.9 338.8 265.5 352 224 352s-79.9-13.2-111.3-35.5zM176 448c-8.8 0-16 7.2-16 16l0 48 32 0 0-48c0-8.8-7.2-16-16-16zm96 32a16 16 0 1 0 0-32 16 16 0 1 0 0 32z"/></svg></div>'
 const winePiece = '<div class="game-pieces" id="winePieceId"><svg class = "svg-game-pieces" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="#ab1c1c" d="M32.1 29.3C33.5 12.8 47.4 0 64 0L256 0c16.6 0 30.5 12.8 31.9 29.3l14 168.4c6 72-42.5 135.2-109.9 150.6l0 99.6 48 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-80 0-80 0c-17.7 0-32-14.3-32-32s14.3-32 32-32l48 0 0-99.6C60.6 333 12.1 269.8 18.1 197.8l14-168.4zm56 98.7l143.8 0-5.3-64L93.4 64l-5.3 64z"/></svg></div>'
@@ -15,7 +15,9 @@ const hotelPiece = '<svg id="hotelPieceId" xmlns="http://www.w3.org/2000/svg" vi
 let activePlayers = [
     {
         name: "Player One",
-        color: "",
+        colorDark: "",
+        colorLight: "",
+        colorBid: "",
         position: 0,
         gamePiece: "",
         pieceId: "",
@@ -48,6 +50,7 @@ let activePlayers = [
             }
         },
         properties: [],
+        auctionButtons: [],
         housesOwned: 0,
         hotelsOwned: 0,
         cashDisplayId: "playerOneCashId",
@@ -59,7 +62,9 @@ let activePlayers = [
     },
     {
         name: "Player Two",
-        color: "",
+        colorDark: "",
+        colorLight: "",
+        colorBid: "",
         position: 0,
         gamePiece: "",
         pieceId: "",
@@ -92,6 +97,7 @@ let activePlayers = [
             }
         },
         properties: [],
+        auctionButtons: [],
         housesOwned: 0,
         hotelsOwned: 0,
         cashDisplayId: "playerTwoCashId",
@@ -104,7 +110,9 @@ let activePlayers = [
 
     {
         name: "Player Three",
-        color: "",
+        colorDark: "",
+        colorLight: "",
+        colorBid: "",
         position: 0,
         gamePiece: "",
         pieceId: "",
@@ -137,6 +145,7 @@ let activePlayers = [
             }
         },
         properties: [],
+        auctionButtons: [],
         housesOwned: 0,
         hotelsOwned: 0,
         cashDisplayId: "playerThreeCashId",
@@ -148,7 +157,9 @@ let activePlayers = [
     },
     {
         name: "Player Four",
-        color: "",
+        colorDark: "",
+        colorLight: "",
+        colorBid: "",
         position: 0,
         gamePiece: "",
         pieceId: "",
@@ -181,6 +192,7 @@ let activePlayers = [
             }
         },
         properties: [],
+        auctionButtons: [],
         housesOwned: 0,
         hotelsOwned: 0,
         cashDisplayId: "playerFourCashId",
@@ -200,14 +212,14 @@ const getOutJailCardBtn = document.getElementById('getOutJailCardBtnId')
 
 //Game Piece Buttons
 const pieceSelectionButton = [
-    {button: document.getElementById('dogPieceIdBtn'), gamePiece: dogPiece, gamePieceId: 'dogPieceId', color: '#866b44'},
-    {button: document.getElementById('catPieceIdBtn'), gamePiece: catPiece, gamePieceId: 'catPieceId', color: '#555555'},
-    {button: document.getElementById('ghostPieceIdBtn'), gamePiece: ghostPiece, gamePieceId: 'ghostPieceId', color: '#fdff7f'},
-    {button: document.getElementById('moonPieceIdBtn'), gamePiece: moonPiece, gamePieceId: 'moonPieceId', color: '#3e586c'},
-    {button: document.getElementById('astronautPieceIdBtn'), gamePiece: astronautPiece, gamePieceId: 'astronautPieceId', color: '#b2a0eb'},
-    {button: document.getElementById('winePieceIdBtn'), gamePiece: winePiece, gamePieceId: 'winePieceId', color: '#a84848'},
-    {button: document.getElementById('weedPieceIdBtn'), gamePiece: weedPiece, gamePieceId:'weedPieceId', color: '#4f9968'},
-    {button: document.getElementById('musicNoteIdBtn'), gamePiece: musicNotePiece, gamePieceId: 'musicNoteId', color: '#ecb363'},
+    {button: document.getElementById('dogPieceIdBtn'), gamePiece: dogPiece, gamePieceId: 'dogPieceId', colorLight: '#866b44', colorDark: '#5e2222'},
+    {button: document.getElementById('catPieceIdBtn'), gamePiece: catPiece, gamePieceId: 'catPieceId', colorLight: '#555555', colorDark: '#000000'},
+    {button: document.getElementById('ghostPieceIdBtn'), gamePiece: ghostPiece, gamePieceId: 'ghostPieceId', colorLight: '#fa93cf', colorDark: '#f62da2'},
+    {button: document.getElementById('moonPieceIdBtn'), gamePiece: moonPiece, gamePieceId: 'moonPieceId', colorLight: '#3e586c', colorDark: '#124973'},
+    {button: document.getElementById('astronautPieceIdBtn'), gamePiece: astronautPiece, gamePieceId: 'astronautPieceId', colorLight: '#b2a0eb', colorDark: '#9172ee'},
+    {button: document.getElementById('winePieceIdBtn'), gamePiece: winePiece, gamePieceId: 'winePieceId', colorLight: '#a84848', colorDark: '#ab1c1c'},
+    {button: document.getElementById('weedPieceIdBtn'), gamePiece: weedPiece, gamePieceId:'weedPieceId', colorLight: '#4f9968', colorDark: '#1b8d41'},
+    {button: document.getElementById('musicNoteIdBtn'), gamePiece: musicNotePiece, gamePieceId: 'musicNoteId', colorLight: '#ecb363', colorDark: '#f4991a'},
 ]
 
 //Game Setup Variables
@@ -231,15 +243,13 @@ const playerTotalButtons = [
 let colorPropertyCard = '<container class="color-property-card" id="colorPropertyCardId"><div id="colorPropertyName"></div><div id="colorPropertyRent"></div><div id="colorPropertyOneHouse"></div><div id="colorPropertyTwoHouse"></div><div id="colorPropertyThreeHouse"></div><div id="colorPropertyFourHouse"></div><div id="colorPropertyHotelRent"></div><div id="colorPropertyHouseCost"></div><div id="colorPropertyHotelCost"></div><div id="colorPropertyMortgage"></div></container>'
 let railroadPropertyCard = '<container class="railroad-property-card" id="railroadPropertyCardId"><div id="railroadPropertyName"></div><div id="railroadPropertyOne">One Railroad Owned: $25</div><div id="railroadPropertyTwoRailroad">Two Railroads Owned: $50</div><div id="railroadPropertyThreeRailroad">Three Railroads Owned: $100</div><div id="railroadPropertyFourRailRoad">Four Railroads Owned: $200</div><div id="railroadPropertyMortgage">Mortgage Value: $100</div></container>'
 let utilityPropertyCard = '<container class="utility-property-card" id="utilityPropertyCardId"><div id="utilityPropertyName"></div><div id="utilityPropertyOneOwned">If one utility property  owned; rent is 4x the cost of roll value.</div><div id="utilityPropertyTwoOwned">If two utility properties onwed; rent is 10x the cost of roll value.</div><div id="utilityPropertyMortgage">Mortgage Value: $75</div></container>'
-
-
 //Game Interactions Buttons
 const playBtn = document.getElementById('playBtnId');
 const rollBtn = document.getElementById('rollBtnId');
 const endTurnBtn = document.getElementById('endTurnBtnId');
 
-/// Rent / Property 
-/// Rent / Property 
+//Rent / Property 
+//Rent / Property 
 let ownedPropertyArray = []
 let ownedColorPropertyArray = []
 const payRentBtn = document.getElementById('payRentBtnId')
@@ -249,7 +259,34 @@ const bankruptYesBtn = document.getElementById('bankruptYesBtnId')
 const bankruptNoBtn = document.getElementById('bankruptNoBtnId')
 const goodbyeBtn = document.getElementById('goodbyeBtnId')
 const buyPropertyYesBtn = document.getElementById('buyPropertyYesBtn')
-const buyPropertyNoBtn = document.getElementById('buyPropertyNoBtn')
+const buyPropertyAuctionBtn = document.getElementById('buyPropertyAuctionBtn')
+
+//Auction Property
+let playerAuctionContainers = [
+    {container: document.getElementById('playerOneAuctionContainerId'), nameplate: document.getElementById('playerOneAuctionNameplateId'), cashDisplay: document.getElementById('playerOneAuctionCashId'), buttonId: document.getElementById('playerOneAuctionBtnsId')},
+    {container: document.getElementById('playerTwoAuctionContainerId'), nameplate: document.getElementById('playerTwoAuctionNameplateId'), cashDisplay: document.getElementById('playerTwoAuctionCashId'), buttonId: document.getElementById('playerTwoAuctionBtnsId')},
+    {container: document.getElementById('playerThreeAuctionContainerId'), nameplate: document.getElementById('playerThreeAuctionNameplateId'), cashDisplay: document.getElementById('playerThreeAuctionCashId'), buttonId: document.getElementById('playerThreeAuctionBtnsId')},
+    {container: document.getElementById('playerFourAuctionContainerId'), nameplate: document.getElementById('playerFourAuctionNameplateId'), cashDisplay: document.getElementById('playerFourAuctionCashId'), buttonId: document.getElementById('playerFourAuctionBtnsId')},
+]
+let auctionButtonsValueArray = [
+    {buttonValue: 1},
+    {buttonValue: 5},
+    {buttonValue: 10},
+    {buttonValue: 25},
+    {buttonValue: 50},
+    {buttonValue: 100}
+]
+
+let currentAuctionBid = 0
+const spanBid = document.getElementById('currentBidSpanId')
+const auctioneerText = document.getElementById('auctioneerTextId')
+let bidLeader;
+
+let noBidsGoingOnce
+let noBidsGoingTwice
+let noBidsFinal
+let auctionResult
+let auctionLeaderColor
 
 //House Hotel Mortgage Variables
 //House Hotel Mortgage Variables
@@ -331,8 +368,6 @@ let propertyArray = [
        color: '#5b064e',
        type: "color",
        setTotal: 2,
-
-
    },
    {
        name: "Community Chest",
