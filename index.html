@@ -272,12 +272,14 @@
                 <!--Middle Game Screen-->
                 <div class="float-screen-game-middle">
                     <div class="float-screen-game-middle-top-contents">
-                        <h2 style="padding-top: 15px;">Current Turn:</h2>
-                        <h2 id="float-screen-game-middle-playerTurn"></h2>
+                        <h2>Current Turn:</h2>
+                        <h2 id="playerTurnNameId"></h2>
+
+                        <!--Update Player locations-->
+                        <h2 id="float-screen-game-middle-currentLocation" style="padding-bottom: 5px;"></h2>
                     </div>
                     <div class="float-screen-game-middle-bottom-contents">
-                        <!--Update Player locations-->
-                        <h2 id="float-screen-game-middle-currentLocation"></h2>
+
 
                         <!--Pay Rent Insructions-->
                         <div class="hidden" id="payRentTutorialId"></div>
@@ -309,7 +311,8 @@
                         <div class="hidden" id="propertyForPurchaseId">
                             <div id="wouldYouLikeToBuyId"></div>
                             <div class="purchase-property-container">
-                                <button class="purchase-property-button" id="buyPropertyYesBtn">Yes</button>
+                                <button class="hidden" id="buyPropertyYesBtn">Yes</button>
+                                <button class="hidden" id="buyPropertySellBtn">Sell</button>
                                 <button class="purchase-property-button" id="buyPropertyAuctionBtn">Auction</button>
                             </div>
                         </div>

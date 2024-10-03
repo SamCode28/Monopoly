@@ -259,6 +259,7 @@ const bankruptYesBtn = document.getElementById('bankruptYesBtnId')
 const bankruptNoBtn = document.getElementById('bankruptNoBtnId')
 const goodbyeBtn = document.getElementById('goodbyeBtnId')
 const buyPropertyYesBtn = document.getElementById('buyPropertyYesBtn')
+const buyPropertySellBtn = document.getElementById('buyPropertySellBtn')
 const buyPropertyAuctionBtn = document.getElementById('buyPropertyAuctionBtn')
 
 //Auction Property
