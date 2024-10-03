@@ -96,7 +96,7 @@ function whosTurnSetup (){
 
 function generatePlayerPieces(){
     for (let i = 0; i < totalPlayers ; i++ ){
-        placePiece();
+        placePiece(currentPlayerTurn);
         whosTurnSetup();
         displayPlayerCash()
     }
@@ -193,7 +193,7 @@ rollBtn.addEventListener('click', function (e){
        }
        displayDiceRollOutput(diceOneValue, diceTwoValue);
        playerPiece().remove();
-       placePiece()
+       placePiece(currentPlayerTurn)
        removeDice()
        removeHouseHotelMortgageScreen()
        currentLocationInteraction()
@@ -398,7 +398,7 @@ function chance (){
         turnInteractionDescription.innerHTML = `<span class="bold-font-span">Chance:</span><br>Advance to Boardwalk.`
         playerPiece().remove()
         currentPlayerTurn.position = 39
-        placePiece()
+        placePiece(currentPlayerTurn)
         currentLocationInteraction()  
     }
     else if (chanceRoll === 2){
@@ -406,7 +406,7 @@ function chance (){
         turnInteractionDescription.innerHTML =`<span class="bold-font-span">Chance:</span><br>Advance to Go (Collect $200).`
         playerPiece().remove()
         currentPlayerTurn.position = 0
-        placePiece()
+        placePiece(currentPlayerTurn)
         currentPlayerTurn.cash += 200
         currentLocationInteraction()    
     }
@@ -418,7 +418,7 @@ function chance (){
         }
         playerPiece().remove()
         currentPlayerTurn.position = 24
-        placePiece()
+        placePiece(currentPlayerTurn)
         currentLocationInteraction()
     }
     else if (chanceRoll === 4){
@@ -429,7 +429,7 @@ function chance (){
         }
         playerPiece().remove()
         currentPlayerTurn.position = 11
-        placePiece()
+        placePiece(currentPlayerTurn)
         currentLocationInteraction()
     }
     else if (chanceRoll === 5){
@@ -445,7 +445,7 @@ function chance (){
         if (currentPlayerTurn.position === 36){
             currentPlayerTurn.position = 35
         } 
-        placePiece()
+        placePiece(currentPlayerTurn)
         currentLocationInteraction()  
     }
     else if (chanceRoll === 6 || chanceRoll === 7){
@@ -461,7 +461,7 @@ function chance (){
         if (currentPlayerTurn.position === 36){
             currentPlayerTurn.position = 35
         } 
-        placePiece()
+        placePiece(currentPlayerTurn)
         currentLocationInteraction()  
     }
 
@@ -485,7 +485,7 @@ function chance (){
         if (currentPlayerTurn.position < 0){
             currentPlayerTurn.position += 40
         }
-        placePiece()
+        placePiece(currentPlayerTurn)
         currentLocationInteraction()
 
     }
@@ -521,7 +521,7 @@ function chance (){
             currentPlayerTurn.position = 5
             currentPlayerTurn.cash += 200
         } 
-        placePiece()
+        placePiece(currentPlayerTurn)
         currentLocationInteraction()  
         
     }
@@ -555,7 +555,7 @@ function communityChest(){
         turnInteractionDescription.innerHTML = `<span class="bold-font-span">Community Chest:</span><br>Advance to Go (Collect $200).`
         playerPiece().remove()
         currentPlayerTurn.position = 0
-        placePiece()
+        placePiece(currentPlayerTurn)
         currentPlayerTurn.cash += 200  
     }
     else if (communityChestRoll === 2){
@@ -646,199 +646,218 @@ function clearBottomRightScreenContents(){
 
 //Place Piece
 //Place Piece
-function placePiece(){
-    if (currentPlayerTurn.position >= 0 && currentPlayerTurn.position <= 9){
-        placePieceBottom()
+function placePiece(pieceBeingPlaced){
+    if (pieceBeingPlaced.position >= 0 && pieceBeingPlaced.position <= 9){
+        placePieceBottom(pieceBeingPlaced)
     }
-    else if(currentPlayerTurn.position >= 11 && currentPlayerTurn.position <= 19){
-        placePieceLeft()
+    else if(pieceBeingPlaced.position >= 11 && pieceBeingPlaced.position <= 19){
+        placePieceLeft(pieceBeingPlaced)
     }
-    else if (currentPlayerTurn.position >= 20 && currentPlayerTurn.position <= 29){
-        placePieceTop()
+    else if (pieceBeingPlaced.position >= 20 && pieceBeingPlaced.position <= 29){
+        placePieceTop(pieceBeingPlaced)
     }
-    else if (currentPlayerTurn.position >= 31 && currentPlayerTurn.position <= 39){
-        placePieceRight()
+    else if (pieceBeingPlaced.position >= 31 && pieceBeingPlaced.position <= 39){
+        placePieceRight(pieceBeingPlaced)
     }
     //Place Piece "Just Visiting"
-    else if (currentPlayerTurn.position === 10){
-        currentLocation = propertyArray[(currentPlayerTurn.position)]
+    else if (pieceBeingPlaced.position === 10){
+        currentLocation = propertyArray[(pieceBeingPlaced.position)]
         if (currentLocation.currentOccupants === 0){
-            document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece);
-            document.getElementById(currentPlayerTurn.pieceId).style.top = "5px";
-            document.getElementById(currentPlayerTurn.pieceId).style.left = "5.5px";
+            document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece);
+            document.getElementById(pieceBeingPlaced.pieceId).style.top = "5px";
+            document.getElementById(pieceBeingPlaced.pieceId).style.left = "5.5px";
         }
         else if(currentLocation.currentOccupants === 1)
             {
-            document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece)
-            document.getElementById(currentPlayerTurn.pieceId).style.top = "50px";
-            document.getElementById(currentPlayerTurn.pieceId).style.left = "5.5px";
+            document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece)
+            document.getElementById(pieceBeingPlaced.pieceId).style.top = "50px";
+            document.getElementById(pieceBeingPlaced.pieceId).style.left = "5.5px";
         }
         else if (currentLocation.currentOccupants === 2){
-            document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece)
-            document.getElementById(currentPlayerTurn.pieceId).style.bottom = "5px";
-            document.getElementById(currentPlayerTurn.pieceId).style.left = "5.5px";
+            document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece)
+            document.getElementById(pieceBeingPlaced.pieceId).style.bottom = "5px";
+            document.getElementById(pieceBeingPlaced.pieceId).style.left = "5.5px";
     
         }
         else if (currentLocation.currentOccupants === 3){
-            document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece)
-            document.getElementById(currentPlayerTurn.pieceId).style.bottom = "5px";
-            document.getElementById(currentPlayerTurn.pieceId).style.left = "50px";
+            document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece)
+            document.getElementById(pieceBeingPlaced.pieceId).style.bottom = "5px";
+            document.getElementById(pieceBeingPlaced.pieceId).style.left = "50px";
     
         }  
     }
     //Place Piece "Go To Jail"
-    else if (currentPlayerTurn.position === 30){
+    else if (pieceBeingPlaced.position === 30){
         addturnInteractionDescriptionDisplay()
         turnInteractionDescription.innerText = `You landed on "Go To Jail" space`
-        currentLocation = propertyArray[(currentPlayerTurn.position)]
-        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece);
+        currentLocation = propertyArray[(pieceBeingPlaced.position)]
+        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece);
     }
     //Place Piece "In Jail"
-    else if (currentPlayerTurn.position === 40){
-        currentLocation = propertyArray[(currentPlayerTurn.position)]
+    else if (pieceBeingPlaced.position === 40){
+        currentLocation = propertyArray[(pieceBeingPlaced.position)]
         if (currentLocation.currentOccupants === 0){
-            document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece);
-            document.getElementById(currentPlayerTurn.pieceId).style.top = "5px";
-            document.getElementById(currentPlayerTurn.pieceId).style.left = "5x";
+            document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece);
+            document.getElementById(pieceBeingPlaced.pieceId).style.top = "5px";
+            document.getElementById(pieceBeingPlaced.pieceId).style.left = "5x";
         }
         else if(currentLocation.currentOccupants === 1)
             {
-            document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece)
-            document.getElementById(currentPlayerTurn.pieceId).style.top = "5px";
-            document.getElementById(currentPlayerTurn.pieceId).style.right = "5px";
+            document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece)
+            document.getElementById(pieceBeingPlaced.pieceId).style.top = "5px";
+            document.getElementById(pieceBeingPlaced.pieceId).style.right = "5px";
         }
         else if (currentLocation.currentOccupants === 2){
-            document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece)
-            document.getElementById(currentPlayerTurn.pieceId).style.bottom = "5px";
-            document.getElementById(currentPlayerTurn.pieceId).style.left = "5px";
+            document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece)
+            document.getElementById(pieceBeingPlaced.pieceId).style.bottom = "5px";
+            document.getElementById(pieceBeingPlaced.pieceId).style.left = "5px";
     
         }
         else if (currentLocation.currentOccupants === 3){
-            document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece)
-            document.getElementById(currentPlayerTurn.pieceId).style.bottom = "5px";
-            document.getElementById(currentPlayerTurn.pieceId).style.right = "5px";
+            document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece)
+            document.getElementById(pieceBeingPlaced.pieceId).style.bottom = "5px";
+            document.getElementById(pieceBeingPlaced.pieceId).style.right = "5px";
     
         }
     }
-
-    updateMiddleScreenPlayerLocation();
+    
     currentLocation.currentOccupants++
+
+    //If space left had other occupants, move occupants up one position in previous property container
+    if (pieceBeingPlaced === currentPlayerTurn && hasRolled === true){
+        updateMiddleScreenPlayerLocation()
+        let previousLocation = (currentPlayerTurn.position - diceOneValue - diceTwoValue)
+        if (previousLocation < 0){
+            previousLocation += 40
+        }
+
+        if (propertyArray[previousLocation].currentOccupants > 0){
+            propertyArray[previousLocation].currentOccupants = 0
+            for (let i = 0; i < totalPlayers; i++){
+                if (activePlayers[i].position === previousLocation){
+                    let playerToBeRemoved = document.getElementById(activePlayers[i].pieceId)
+                    playerToBeRemoved.remove()
+                    placePiece(activePlayers[i])
+                }
+            }
+        }
+    }
 }
 
- function placePieceBottom(){
-    currentLocation = propertyArray[(currentPlayerTurn.position)]
+ function placePieceBottom(pieceBeingPlaced){
+    currentLocation = propertyArray[(pieceBeingPlaced.position)]
     if (currentLocation.currentOccupants === 0){
-        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece);
-        document.getElementById(currentPlayerTurn.pieceId).style.top = "15%";
-        document.getElementById(currentPlayerTurn.pieceId).style.left = "5%";
+        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece);
+        document.getElementById(pieceBeingPlaced.pieceId).style.top = "15%";
+        document.getElementById(pieceBeingPlaced.pieceId).style.left = "5%";
     }
     else if(currentLocation.currentOccupants === 1)
         {
-        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece)
-        document.getElementById(currentPlayerTurn.pieceId).style.top = "45%";
-        document.getElementById(currentPlayerTurn.pieceId).style.left = "5%";
+        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece)
+        document.getElementById(pieceBeingPlaced.pieceId).style.top = "45%";
+        document.getElementById(pieceBeingPlaced.pieceId).style.left = "5%";
     }
     else if (currentLocation.currentOccupants === 2){
-        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece)
-        document.getElementById(currentPlayerTurn.pieceId).style.top = "15%";
-        document.getElementById(currentPlayerTurn.pieceId).style.right = "5%";
+        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece)
+        document.getElementById(pieceBeingPlaced.pieceId).style.top = "15%";
+        document.getElementById(pieceBeingPlaced.pieceId).style.right = "5%";
 
     }
     else if (currentLocation.currentOccupants === 3){
-        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece)
-        document.getElementById(currentPlayerTurn.pieceId).style.top = "45%";
-        document.getElementById(currentPlayerTurn.pieceId).style.right = "5%";
+        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece)
+        document.getElementById(pieceBeingPlaced.pieceId).style.top = "45%";
+        document.getElementById(pieceBeingPlaced.pieceId).style.right = "5%";
 
-    }
-
-}
-
-function placePieceLeft(){
-    currentLocation = propertyArray[(currentPlayerTurn.position)]
-    if (currentLocation.currentOccupants === 0){
-        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece);
-        document.getElementById(currentPlayerTurn.pieceId).style.right = "15%"
-        document.getElementById(currentPlayerTurn.pieceId).style.top = "5%";
-        document.getElementById(currentPlayerTurn.pieceId).style.transform = "rotate(90deg)";
-    }
-    else if(currentLocation.currentOccupants === 1)
-        {
-        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece)
-        document.getElementById(currentPlayerTurn.pieceId).style.right = "45%";
-        document.getElementById(currentPlayerTurn.pieceId).style.top = "5%";
-        document.getElementById(currentPlayerTurn.pieceId).style.transform = "rotate(90deg)";
-    }
-    else if (currentLocation.currentOccupants === 2){
-        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece)
-        document.getElementById(currentPlayerTurn.pieceId).style.right = "15%";
-        document.getElementById(currentPlayerTurn.pieceId).style.bottom = "5%";
-        document.getElementById(currentPlayerTurn.pieceId).style.transform = "rotate(90deg)";
-    }
-    else if (currentLocation.currentOccupants === 3){
-        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece)
-        document.getElementById(currentPlayerTurn.pieceId).style.right = "45%";
-        document.getElementById(currentPlayerTurn.pieceId).style.bottom = "5%";
-        document.getElementById(currentPlayerTurn.pieceId).style.transform = "rotate(90deg)";
     }
 
 }
 
-function placePieceTop(){
-    currentLocation = propertyArray[(currentPlayerTurn.position)]
+function placePieceLeft(pieceBeingPlaced){
+    currentLocation = propertyArray[(pieceBeingPlaced.position)]
     if (currentLocation.currentOccupants === 0){
-        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece)
-        document.getElementById(currentPlayerTurn.pieceId).style.bottom = "15%"
-        document.getElementById(currentPlayerTurn.pieceId).style.right = "5%";
-        document.getElementById(currentPlayerTurn.pieceId).style.transform = "rotate(180deg)";
+        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece);
+        document.getElementById(pieceBeingPlaced.pieceId).style.right = "15%"
+        document.getElementById(pieceBeingPlaced.pieceId).style.top = "5%";
+        document.getElementById(pieceBeingPlaced.pieceId).style.transform = "rotate(90deg)";
     }
     else if(currentLocation.currentOccupants === 1)
         {
-        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece)
-        document.getElementById(currentPlayerTurn.pieceId).style.bottom = "45%";
-        document.getElementById(currentPlayerTurn.pieceId).style.right = "5%";
-        document.getElementById(currentPlayerTurn.pieceId).style.transform = "rotate(180deg)";
+        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece)
+        document.getElementById(pieceBeingPlaced.pieceId).style.right = "45%";
+        document.getElementById(pieceBeingPlaced.pieceId).style.top = "5%";
+        document.getElementById(pieceBeingPlaced.pieceId).style.transform = "rotate(90deg)";
     }
     else if (currentLocation.currentOccupants === 2){
-        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece)
-        document.getElementById(currentPlayerTurn.pieceId).style.bottom = "15%";
-        document.getElementById(currentPlayerTurn.pieceId).style.left = "5%";
-        document.getElementById(currentPlayerTurn.pieceId).style.transform = "rotate(180deg)";
+        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece)
+        document.getElementById(pieceBeingPlaced.pieceId).style.right = "15%";
+        document.getElementById(pieceBeingPlaced.pieceId).style.bottom = "5%";
+        document.getElementById(pieceBeingPlaced.pieceId).style.transform = "rotate(90deg)";
     }
     else if (currentLocation.currentOccupants === 3){
-        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece)
-        document.getElementById(currentPlayerTurn.pieceId).style.bottom = "45%";
-        document.getElementById(currentPlayerTurn.pieceId).style.left = "5%";
-        document.getElementById(currentPlayerTurn.pieceId).style.transform = "rotate(180deg)";
+        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece)
+        document.getElementById(pieceBeingPlaced.pieceId).style.right = "45%";
+        document.getElementById(pieceBeingPlaced.pieceId).style.bottom = "5%";
+        document.getElementById(pieceBeingPlaced.pieceId).style.transform = "rotate(90deg)";
     }
 
 }
 
-function placePieceRight(){
-    currentLocation = propertyArray[(currentPlayerTurn.position)]
+function placePieceTop(pieceBeingPlaced){
+    currentLocation = propertyArray[(pieceBeingPlaced.position)]
     if (currentLocation.currentOccupants === 0){
-        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece);
-        document.getElementById(currentPlayerTurn.pieceId).style.bottom = "5%"
-        document.getElementById(currentPlayerTurn.pieceId).style.left = "15%";
-        document.getElementById(currentPlayerTurn.pieceId).style.transform = "rotate(270deg)";
+        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece)
+        document.getElementById(pieceBeingPlaced.pieceId).style.bottom = "15%"
+        document.getElementById(pieceBeingPlaced.pieceId).style.right = "5%";
+        document.getElementById(pieceBeingPlaced.pieceId).style.transform = "rotate(180deg)";
     }
     else if(currentLocation.currentOccupants === 1)
         {
-        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece)
-        document.getElementById(currentPlayerTurn.pieceId).style.bottom = "5%";
-        document.getElementById(currentPlayerTurn.pieceId).style.left = "45%";
-        document.getElementById(currentPlayerTurn.pieceId).style.transform = "rotate(270deg)";
+        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece)
+        document.getElementById(pieceBeingPlaced.pieceId).style.bottom = "45%";
+        document.getElementById(pieceBeingPlaced.pieceId).style.right = "5%";
+        document.getElementById(pieceBeingPlaced.pieceId).style.transform = "rotate(180deg)";
     }
     else if (currentLocation.currentOccupants === 2){
-        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece)
-        document.getElementById(currentPlayerTurn.pieceId).style.top = "5%";
-        document.getElementById(currentPlayerTurn.pieceId).style.left = "15%";
-        document.getElementById(currentPlayerTurn.pieceId).style.transform = "rotate(270deg)";
+        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece)
+        document.getElementById(pieceBeingPlaced.pieceId).style.bottom = "15%";
+        document.getElementById(pieceBeingPlaced.pieceId).style.left = "5%";
+        document.getElementById(pieceBeingPlaced.pieceId).style.transform = "rotate(180deg)";
     }
     else if (currentLocation.currentOccupants === 3){
-        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece)
-        document.getElementById(currentPlayerTurn.pieceId).style.top = "5%";
-        document.getElementById(currentPlayerTurn.pieceId).style.left = "45%";
-        document.getElementById(currentPlayerTurn.pieceId).style.transform = "rotate(270deg)";
+        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece)
+        document.getElementById(pieceBeingPlaced.pieceId).style.bottom = "45%";
+        document.getElementById(pieceBeingPlaced.pieceId).style.left = "5%";
+        document.getElementById(pieceBeingPlaced.pieceId).style.transform = "rotate(180deg)";
+    }
+
+}
+
+function placePieceRight(pieceBeingPlaced){
+    currentLocation = propertyArray[(pieceBeingPlaced.position)]
+    if (currentLocation.currentOccupants === 0){
+        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece);
+        document.getElementById(pieceBeingPlaced.pieceId).style.bottom = "5%"
+        document.getElementById(pieceBeingPlaced.pieceId).style.left = "15%";
+        document.getElementById(pieceBeingPlaced.pieceId).style.transform = "rotate(270deg)";
+    }
+    else if(currentLocation.currentOccupants === 1)
+        {
+        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece)
+        document.getElementById(pieceBeingPlaced.pieceId).style.bottom = "5%";
+        document.getElementById(pieceBeingPlaced.pieceId).style.left = "45%";
+        document.getElementById(pieceBeingPlaced.pieceId).style.transform = "rotate(270deg)";
+    }
+    else if (currentLocation.currentOccupants === 2){
+        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece)
+        document.getElementById(pieceBeingPlaced.pieceId).style.top = "5%";
+        document.getElementById(pieceBeingPlaced.pieceId).style.left = "15%";
+        document.getElementById(pieceBeingPlaced.pieceId).style.transform = "rotate(270deg)";
+    }
+    else if (currentLocation.currentOccupants === 3){
+        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece)
+        document.getElementById(pieceBeingPlaced.pieceId).style.top = "5%";
+        document.getElementById(pieceBeingPlaced.pieceId).style.left = "45%";
+        document.getElementById(pieceBeingPlaced.pieceId).style.transform = "rotate(270deg)";
     }
 
 }
@@ -1305,7 +1324,7 @@ function goToJail (){
     currentPlayerTurn.doublesCounter = 0
     playerPiece().remove()
     currentPlayerTurn.position = 40
-    placePiece()
+    placePiece(currentPlayerTurn)
     currentPlayerTurn.isInJail = true
     updateMiddleScreenPlayerLocation()
     addEndTurnButton()
@@ -1342,7 +1361,7 @@ attemptDoublesBtn.addEventListener('click', function (e){
         currentLocation = (propertyArray[currentPlayerTurn.position])
         currentLocation.currentOccupants--
         currentPlayerTurn.position = (diceOneValue + diceTwoValue + 10)
-        placePiece()
+        placePiece(currentPlayerTurn)
         removeHouseHotelMortgageScreen()
         currentLocationInteraction()
         
@@ -1373,7 +1392,7 @@ function getOutOfJail (){
     currentLocation.currentOccupants--
     playerPiece().remove()
     currentPlayerTurn.position = 10
-    placePiece()
+    placePiece(currentPlayerTurn)
     updateMiddleScreenPlayerLocation()
     removeJailOptions()
     addDice()
@@ -2545,6 +2564,5 @@ function addFinishCloseMortgageBtn (){
 //Add logic to bakrupt player if they land on non-owned property square but don't have assets to pay for it
 //Add trading window
 //Add cpu
-//Add update all player locations on move
 //Houses only able to be bought 1 per property until even
 //Can only mortgage if no buildings on property
