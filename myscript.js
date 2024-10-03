@@ -260,8 +260,18 @@ rollBtn.addEventListener('click', function (e){
     }
     else if (spaceLandedOn().name === "Income Tax"){
         addturnInteractionDescriptionDisplay()
-        turnInteractionDescription.innerText = "Pay $200 Income Tax"
-        currentPlayerTurn.cash -= 200
+        currentPlayerTurn.updateIncomeTax()
+        let tenPercentIncomeTax = (currentPlayerTurn.incomeTax / 10)
+        if (tenPercentIncomeTax < 200)
+        {
+            turnInteractionDescription.innerText = `Pay 10% Income Tax ($${tenPercentIncomeTax})`
+            currentPlayerTurn.cash -= tenPercentIncomeTax
+        }
+        else{
+            turnInteractionDescription.innerText= 'Pay $200 Income Tax'
+            currentPlayerTurn.cash -= 200
+        }
+        
         addHouseHotelMortgageScreen()
         addEndTurnButton()
     }
@@ -2367,6 +2377,5 @@ function addFinishCloseMortgageBtn (){
 //Add cpu
 //Add animations to buy/sell/open/close properties
 //Add update all player locations on move
-//Add income tax 10% option
 //Houses only able to be bought 1 per property until even
 //Can only mortgage if no buildings on property
