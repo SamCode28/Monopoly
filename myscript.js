@@ -139,14 +139,13 @@ function startGame (){
 }
 
 function updateMiddleScreenPlayerTurn (){
-    document.getElementById('float-screen-game-middle-playerTurn').innerHTML = `${currentPlayerTurn.name}`
-    document.getElementById('float-screen-game-middle-playerTurn').style.color = currentPlayerTurn.colorDark
-    document.getElementById('float-screen-game-middle-playerTurn').style.fontSize = "2em"
-
+    document.getElementById('playerTurnNameId').innerHTML = `${currentPlayerTurn.name}`
+    document.getElementById('playerTurnNameId').style.color = currentPlayerTurn.colorDark
+    document.getElementById('playerTurnNameId').style.fontSize = "2em"
 }
 
 function updateMiddleScreenPlayerLocation (){
-    document.getElementById('float-screen-game-middle-currentLocation').innerHTML = `Current Location:<br>${propertyArray[currentPlayerTurn.position].name}`
+    document.getElementById('float-screen-game-middle-currentLocation').innerHTML = `Current Location:<br><span class="enlarge-font-span">${propertyArray[currentPlayerTurn.position].name}</span>`
 }
 
 function displayDiceRollOutput(roll1, roll2){
@@ -246,9 +245,8 @@ rollBtn.addEventListener('click', function (e){
         }
         //Buy property
         else if (spaceLandedOn().hasOwner === false){
-                addPropertyBuySellButtons()
+                addPropertyBuySellAuctionButtons()
                 addPropertyCard('propertyCardId')
-                document.getElementById('wouldYouLikeToBuyId').innerHTML = `Would you like to buy ${spaceLandedOn().name} for $${spaceLandedOn().price}?`
         }
 
     }
@@ -920,6 +918,7 @@ function removeUtilityCard(locationId){
 }
 
 buyPropertyYesBtn.addEventListener('click', function(e){
+    removeBuyPropertyYesBtn()
     currentPlayerTurn.properties.push(spaceLandedOn())
     spaceLandedOn().owner = currentPlayerTurn
     spaceLandedOn().hasOwner = true
@@ -928,7 +927,7 @@ buyPropertyYesBtn.addEventListener('click', function(e){
     updateRent(currentPlayerTurn)
     updatePlayerCashTotalDisplay()
     document.getElementById(spaceLandedOn().id).style.backgroundColor = currentPlayerTurn.colorLight;
-    removePropertyBuySellButtons()
+    removePropertyBuySellAuctionButtons()
     addEndTurnButton()
     addturnInteractionDescriptionDisplay()
     removePropertyCard('propertyCardId')
@@ -937,7 +936,8 @@ buyPropertyYesBtn.addEventListener('click', function(e){
 })
 
 buyPropertyAuctionBtn.addEventListener('click', function(e){
-    removePropertyBuySellButtons()
+    removePropertyBuySellAuctionButtons()
+    removeBuyPropertySellBtn()
     addEndTurnButton()
     removePropertyCard('propertyCardId')
     addHouseHotelMortgageScreen()
@@ -946,12 +946,54 @@ buyPropertyAuctionBtn.addEventListener('click', function(e){
     generateAuctionScreen()
 })
 
-function addPropertyBuySellButtons(){
+buyPropertySellBtn.addEventListener('click', function(e){
+    removeBuyPropertyYesBtn()
+    removePropertyBuySellAuctionButtons()
+    removePropertyCard('propertyCardId')
+    addHouseHotelMortgageScreen()
+})
+
+function addPropertyBuySellAuctionButtons(){
     document.getElementById('propertyForPurchaseId').classList.add('property-for-purchase-grid');
     document.getElementById('propertyForPurchaseId').classList.remove('hidden');
+    updatePlayerTotalAssets()
+
+    if (currentPlayerTurn.cash >= spaceLandedOn().price){
+        document.getElementById('wouldYouLikeToBuyId').innerHTML = `Would you like to buy ${spaceLandedOn().name} for $${spaceLandedOn().price}?`
+        addBuyPropertyYesBtn()
+        removeBuyPropertySellBtn()    
+    }
+    else if (currentPlayerTurn.totalAssets > spaceLandedOn().price){
+        document.getElementById('wouldYouLikeToBuyId').innerHTML = `You need $${currentLocation.price} to buy ${currentLocation.name}. Open a mortgage, sell houses or auction this property`
+        addBuyPropertySellBtn()
+        removeBuyPropertyYesBtn()
+    }
+    else{
+        document.getElementById('wouldYouLikeToBuyId').innerHTML = `You do not have enough assets to sell to afford ${currentLocation.name}`
+    }
  }
 
- function removePropertyBuySellButtons(){
+function addBuyPropertyYesBtn(){
+    buyPropertyYesBtn.classList.remove('hidden')
+    buyPropertyYesBtn.classList.add('purchase-property-button')
+}
+ 
+function removeBuyPropertyYesBtn(){
+    buyPropertyYesBtn.classList.remove('purchase-property-button')
+    buyPropertyYesBtn.classList.add('hidden')
+}
+
+function addBuyPropertySellBtn(){
+    buyPropertySellBtn.classList.remove('hidden')
+    buyPropertySellBtn.classList.add('purchase-property-button')
+}
+
+function removeBuyPropertySellBtn(){
+    buyPropertySellBtn.classList.remove('purchase-property-button')
+    buyPropertySellBtn.classList.add('hidden')
+}
+
+ function removePropertyBuySellAuctionButtons(){
     document.getElementById('propertyForPurchaseId').classList.add('hidden');
     document.getElementById('propertyForPurchaseId').classList.remove('property-for-purchase-grid');
  }
@@ -1765,6 +1807,15 @@ function checkRentPaid(){
     }
 }
 
+function checkIfBuyingProperty(){
+    if (!buyPropertySellBtn.classList.contains('hidden')){
+        removeEndTurnButton()
+        removeHouseHotelMortgageScreen()
+        addPropertyBuySellAuctionButtons()
+        addPropertyCard('propertyCardId')
+    }
+}
+
 finishBuyHouseBtn.addEventListener('click', function(e){ 
     addHouseHotelMortgageScreen()
     removeBuyHouseTutorial()
@@ -1780,6 +1831,7 @@ finishBuyHouseBtn.addEventListener('click', function(e){
             removeEndTurnButton()
         }
         checkRentPaid()
+        checkIfBuyingProperty()
 })
 
 function addBuyHouseYesNoButtons (){
@@ -1948,6 +2000,7 @@ finishSellHouseHotelBtn.addEventListener('click', function(e){
         removeEndTurnButton()
     }
     checkRentPaid()
+    checkIfBuyingProperty()
 })
 
 function removeHouseHotel(property){
@@ -2123,6 +2176,7 @@ finishOpenMortgageBtn.addEventListener('click', function(e){
          removeEndTurnButton()
      }
      checkRentPaid()
+     checkIfBuyingProperty()
 })
 
 function addOpenMortgageYesNoButtons (){
@@ -2274,6 +2328,7 @@ finishCloseMortgageBtn.addEventListener('click', function(e){
         removeEndTurnButton()
     }
     checkRentPaid()
+    checkIfBuyingProperty()
 })
 
 function addCloseMortgageTutorial (){
@@ -2307,8 +2362,7 @@ function addFinishCloseMortgageBtn (){
 }
 
 
-//Add logic for buy property button to avoid going negative
-//Add logic for community / chance to not interact with bankrupt players
+//Add logic to bakrupt player if they land on non-owned property square but don't have assets to pay for it
 //Add trading window
 //Add cpu
 //Add animations to buy/sell/open/close properties
