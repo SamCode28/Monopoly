@@ -561,6 +561,7 @@ svg{
 
 .game-pieces{
     position: absolute;
+    opacity: 1;
     z-index: 1;
     justify-self: flex-start;
     align-self: flex-start;
@@ -1041,10 +1042,6 @@ svg{
     color: #f62da2
 }
 
-.can-open-mortgage, .can-close-mortgage, .can-buy-house, .can-sell-house{
-    color: black;
-}
-
 .can-open-mortgage:hover, .can-close-mortgage:hover, .can-buy-house:hover, .can-sell-house:hover {
     cursor: pointer;
 }
@@ -1053,8 +1050,60 @@ svg{
     opacity: .7;
 }
 
+.can-open-mortgage-bottom, .can-close-mortgage-bottom, .can-buy-house-bottom, .can-sell-house-bottom{
+    animation: bounceBottom 0.5s infinite alternate;
+    }
+
+    @keyframes bounceBottom {
+        from{
+            transform: translateY(-5px);
+        }
+        to{
+            transform: translatey(0);
+        }
+    }
+
+.can-open-mortgage-left, .can-close-mortgage-left, .can-buy-house-left, .can-sell-house-left{
+    animation: bounceLeft 0.5s infinite alternate;
+    }
+
+    @keyframes bounceLeft {
+        from{
+            transform: translateX(5px);
+        }
+        to{
+            transform: translateX(0);
+        }
+    }
+
+.can-open-mortgage-top, .can-close-mortgage-top, .can-buy-house-top, .can-sell-house-top{
+    animation: bounceTop 0.5s infinite alternate;
+    }
+
+    @keyframes bounceTop {
+        from{
+            transform: translateY(5px);
+        }
+        to{
+            transform: translateY(0);
+        }
+    } 
+    
+.can-open-mortgage-right, .can-close-mortgage-right, .can-buy-house-right, .can-sell-house-right{
+    animation: bounceRight 0.5s infinite alternate;
+    }
+
+    @keyframes bounceRight {
+        from{
+            transform: translateX(-5px);
+        }
+        to{
+            transform: translateX(0);
+        }
+    }
+
 .mortgaged{
-    opacity: .3;
+    opacity: .4;
 }
 
 .disable-clicks{
