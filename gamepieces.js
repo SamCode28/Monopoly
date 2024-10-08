@@ -413,7 +413,54 @@ const closeMortgageNoBtn = document.getElementById('closeMortgageNoBtnId')
 const finishCloseMortgageBtn = document.getElementById('finishCloseMortgageBtnId')
 let canCloseMortgageArray = []
 
+//Trade
+//Trade
+let trader
+let tradee
+const tradeBtn = document.getElementById('tradeBtnId')
+const traderNametag = document.getElementById('traderNameId')
+const tradeeNametag = document.getElementById('tradeeNameId')
+const potentailTradeButtons = document.getElementById('potentailTradeButtonsId')
+const tradeScreenTutorial = document.getElementById('tradeScreenTutorialId')
 
+//Trade Screen Contents
+const traderContents = document.getElementById('traderContentsId')
+const tradeeContents = document.getElementById('tradeeContentsId')
+const traderPropertyDropoffContainer = document.getElementById('traderPropertyDropoffContainerId')
+const tradeePropertyDropoffContainer = document.getElementById('tradeePropertyDropoffContainerId')
+const traderCashInputContainer = document.getElementById('traderCashInputContainerId')
+const traderCashInput = document.getElementById('traderCashInputId')
+const tradeeCashInputContainer = document.getElementById('tradeeCashInputContainerId')
+const tradeeCashInput = document.getElementById('tradeeCashInputId')
+const traderCashOfferValue = document.getElementById('traderCashOfferValueId')
+const tradeeCashOfferValue = document.getElementById('tradeeCashOfferValueId')
+
+//Trade Screen Buttons
+const tradeOfferBtn = document.getElementById('tradeOfferBtnId')
+const tradeCancelBtn = document.getElementById('tradeCancelBtnId')
+const tradeAcceptBtn = document.getElementById('tradeAcceptBtnId')
+const tradeDeclineBtn = document.getElementById('tradeDeclineBtnId')
+const acceptDeclineButtonsContainer = document.getElementById('acceptDeclineButtonsContainerId')
+
+//Trader Offered Items
+let traderProperty;
+let traderEligibleTradeProperties = []
+let traderOfferedPropertyList = []
+let traderCashOffer = 0
+
+//Tradee Offered Items
+let tradeeProperty;
+let tradeeEligibleTradeProperties = []
+let tradeeOfferedPropertyList = []
+let tradeeCashOffer = 0
+
+//Potential Trade Prospects
+const playerTradeButtons = [
+ document.getElementById('playerOneTradeButtonId'),
+ document.getElementById('playerTwoTradeButtonId'),
+ document.getElementById('playerThreeTradeButtonId'),
+ document.getElementById('playerFourTradeButtonId'),
+]
 
 //Function Variables
 //let rollDiceOne = () => {return 3}

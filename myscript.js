@@ -11,7 +11,6 @@ playBtn.addEventListener('click', function (e){
     document.getElementById('floatScreenPlayersId').classList.remove('hidden')
 })
 
-
 //set player total
 //Transition from # player screen to select piece screen
 playerTotalButtons.forEach(item =>{
@@ -261,7 +260,7 @@ rollBtn.addEventListener('click', function (e){
     else if (spaceLandedOn().name === "Income Tax"){
         addturnInteractionDescriptionDisplay()
         currentPlayerTurn.updateIncomeTax()
-        let tenPercentIncomeTax = (currentPlayerTurn.incomeTax / 10)
+        let tenPercentIncomeTax = (Math.floor(currentPlayerTurn.incomeTax / 10))
         if (tenPercentIncomeTax < 200)
         {
             turnInteractionDescription.innerText = `Pay 10% Income Tax ($${tenPercentIncomeTax})`
@@ -394,7 +393,7 @@ function addEndTurnButton (){
 function chance (){
     let chanceRoll = chanceDice()
     if (chanceRoll === 1){
-        currentLocation.currentOccupants--
+        spaceLandedOn().currentOccupants--
         turnInteractionDescription.innerHTML = `<span class="bold-font-span">Chance:</span><br>Advance to Boardwalk.`
         playerPiece().remove()
         currentPlayerTurn.position = 39
@@ -402,7 +401,7 @@ function chance (){
         currentLocationInteraction()  
     }
     else if (chanceRoll === 2){
-        currentLocation.currentOccupants--
+        spaceLandedOn().currentOccupants--
         turnInteractionDescription.innerHTML =`<span class="bold-font-span">Chance:</span><br>Advance to Go (Collect $200).`
         playerPiece().remove()
         currentPlayerTurn.position = 0
@@ -411,7 +410,7 @@ function chance (){
         currentLocationInteraction()    
     }
     else if (chanceRoll === 3){
-        currentLocation.currentOccupants--
+        spaceLandedOn().currentOccupants--
         turnInteractionDescription.innerHTML = `<span class="bold-font-span">Chance:</span><br>Advance to Illinois Avenue. If you pass Go, collect $200.`
         if (currentPlayerTurn.position > 23){
             currentPlayerTurn.cash += 200
@@ -422,7 +421,7 @@ function chance (){
         currentLocationInteraction()
     }
     else if (chanceRoll === 4){
-        currentLocation.currentOccupants--
+        spaceLandedOn().currentOccupants--
         turnInteractionDescription.innerHTML = `<span class="bold-font-span">Chance:</span><br>Advance to St. Charles Place. If you pass Go, collect $200.`
         if (currentPlayerTurn.position > 10){
             currentPlayerTurn.cash += 200
@@ -433,7 +432,7 @@ function chance (){
         currentLocationInteraction()
     }
     else if (chanceRoll === 5){
-        currentLocation.currentOccupants--
+        spaceLandedOn().currentOccupants--
         turnInteractionDescription.innerHTML = `<span class="bold-font-span">Chance:</span><br>Advance to the nearest Railroad.`
         playerPiece().remove()
         if (currentPlayerTurn.position === 7){
@@ -449,7 +448,7 @@ function chance (){
         currentLocationInteraction()  
     }
     else if (chanceRoll === 6 || chanceRoll === 7){
-        currentLocation.currentOccupants--
+        spaceLandedOn().currentOccupants--
         turnInteractionDescription.innerHTML = `<span class="bold-font-span">Chance:</span><br>Advance to the nearest Railroad.`
         playerPiece().remove()
         if (currentPlayerTurn.position === 7){
@@ -478,7 +477,7 @@ function chance (){
         addHouseHotelMortgageScreen()     
     }
     else if (chanceRoll === 10){
-        currentLocation.currentOccupants--
+        spaceLandedOn().currentOccupants--
         turnInteractionDescription.innerHTML = `<span class="bold-font-span">Chance:</span><br>Go Back 3 Spaces.`
         playerPiece().remove()
         currentPlayerTurn.position -= 3
@@ -506,7 +505,7 @@ function chance (){
         addHouseHotelMortgageScreen()
     }
     else if (chanceRoll === 14){
-        currentLocation.currentOccupants--
+        spaceLandedOn().currentOccupants--
         turnInteractionDescription.innerHTML = `<span class="bold-font-span">Chance:</span><br>Take a trip to Reading Railroad. If you pass Go, collect $200.`
         playerPiece().remove()
         if (currentPlayerTurn.position === 7){
@@ -551,7 +550,7 @@ function communityChest(){
     let communityChestRoll = communityChestDice()
     if (communityChestRoll === 1){
         //This needs to be edited.  Remove Current location...  Make this the current location ineraction
-        currentLocation.currentOccupants--
+        spaceLandedOn().currentOccupants--
         turnInteractionDescription.innerHTML = `<span class="bold-font-span">Community Chest:</span><br>Advance to Go (Collect $200).`
         playerPiece().remove()
         currentPlayerTurn.position = 0
@@ -866,13 +865,13 @@ function placePieceRight(pieceBeingPlaced){
 //Property Cards
 
 function addPropertyCard (locationId){
-    if (currentLocation.type === "color"){
+    if (spaceLandedOn().type === "color"){
         addColorPropertyCard(locationId)
     }
-    else if (currentLocation.type === "railroad"){
+    else if (spaceLandedOn().type === "railroad"){
         addRailroadPropertyCard(locationId)
     }
-    else if (currentLocation.type === "utility" ){
+    else if (spaceLandedOn().type === "utility" ){
         addUtilityCard(locationId)
     }
     else {
@@ -882,13 +881,13 @@ function addPropertyCard (locationId){
 }
 
 function removePropertyCard (locationId){
-    if (currentLocation.type === "color"){
+    if (spaceLandedOn().type === "color"){
         removeColorPropertyCard(locationId)
     }
-    else if (currentLocation.type === "railroad"){
+    else if (spaceLandedOn().type === "railroad"){
         removeRailroadPropertyCard(locationId)
     }
-    else if (currentLocation.type === "utility" ){
+    else if (spaceLandedOn().type === "utility" ){
         removeUtilityCard(locationId)
     }
     else {
@@ -899,17 +898,17 @@ function removePropertyCard (locationId){
 
 function addColorPropertyCard(locationId){
     document.getElementById(locationId).innerHTML = colorPropertyCard;
-    document.getElementById('colorPropertyName').innerHTML = `${currentLocation.name}`
-    document.getElementById('colorPropertyName').style.borderTop = `20px solid ${currentLocation.color}`
-    document.getElementById('colorPropertyRent').innerHTML = `Rent: $${currentLocation.startingRent}`
-    document.getElementById('colorPropertyOneHouse').innerHTML = `One House Rent: $${currentLocation.oneHouseRent}`
-    document.getElementById('colorPropertyTwoHouse').innerHTML = `Two Houses Rent: $${currentLocation.twoHouseRent}`
-    document.getElementById('colorPropertyThreeHouse').innerHTML = `Three Houses Rent: $${currentLocation.threeHouseRent}`
-    document.getElementById('colorPropertyFourHouse').innerHTML = `Four Houses Rent: $${currentLocation.fourHouseRent}`
-    document.getElementById('colorPropertyHotelRent').innerHTML = `Hotel Rent: $${currentLocation.hotelRent}`
-    document.getElementById('colorPropertyHouseCost').innerHTML = `Cost to build house: $${currentLocation.buildingCost}`
-    document.getElementById('colorPropertyHotelCost').innerHTML = `Cost to build hotel: $${currentLocation.buildingCost}`
-    document.getElementById('colorPropertyMortgage').innerHTML = `Mortgage Value: $${currentLocation.mortgage}`
+    document.getElementById('colorPropertyName').innerHTML = `${spaceLandedOn().name}`
+    document.getElementById('colorPropertyName').style.borderTop = `20px solid ${spaceLandedOn().color}`
+    document.getElementById('colorPropertyRent').innerHTML = `Rent: $${spaceLandedOn().startingRent}`
+    document.getElementById('colorPropertyOneHouse').innerHTML = `One House Rent: $${spaceLandedOn().oneHouseRent}`
+    document.getElementById('colorPropertyTwoHouse').innerHTML = `Two Houses Rent: $${spaceLandedOn().twoHouseRent}`
+    document.getElementById('colorPropertyThreeHouse').innerHTML = `Three Houses Rent: $${spaceLandedOn().threeHouseRent}`
+    document.getElementById('colorPropertyFourHouse').innerHTML = `Four Houses Rent: $${spaceLandedOn().fourHouseRent}`
+    document.getElementById('colorPropertyHotelRent').innerHTML = `Hotel Rent: $${spaceLandedOn().hotelRent}`
+    document.getElementById('colorPropertyHouseCost').innerHTML = `Cost to build house: $${spaceLandedOn().buildingCost}`
+    document.getElementById('colorPropertyHotelCost').innerHTML = `Cost to build hotel: $${spaceLandedOn().buildingCost}`
+    document.getElementById('colorPropertyMortgage').innerHTML = `Mortgage Value: $${spaceLandedOn().mortgage}`
     document.getElementById(locationId).classList.add('color-property-card')
     document.getElementById(locationId).classList.remove('hidden')
 }
@@ -922,7 +921,7 @@ function removeColorPropertyCard(locationId){
 
 function addRailroadPropertyCard(locationId){
     document.getElementById(locationId).innerHTML = railroadPropertyCard;
-    document.getElementById('railroadPropertyName').innerHTML = `${currentLocation.name}`
+    document.getElementById('railroadPropertyName').innerHTML = `${spaceLandedOn().name}`
     document.getElementById(locationId).classList.add('railroad-property-card')
     document.getElementById(locationId).classList.remove('hidden')
 }
@@ -935,7 +934,7 @@ function removeRailroadPropertyCard(locationId){
 
 function addUtilityCard(locationId){
     document.getElementById(locationId).innerHTML = utilityPropertyCard;
-    document.getElementById('utilityPropertyName').innerHTML = `${currentLocation.name}`
+    document.getElementById('utilityPropertyName').innerHTML = `${spaceLandedOn().name}`
     document.getElementById(locationId).classList.add('utility-property-card')
     document.getElementById(locationId).classList.remove('hidden')
 }
@@ -977,6 +976,7 @@ buyPropertyAuctionBtn.addEventListener('click', function(e){
 
 buyPropertySellBtn.addEventListener('click', function(e){
     removeBuyPropertyYesBtn()
+    removeTradeButton()
     removePropertyBuySellAuctionButtons()
     removePropertyCard('propertyCardId')
     addHouseHotelMortgageScreen()
@@ -993,12 +993,12 @@ function addPropertyBuySellAuctionButtons(){
         removeBuyPropertySellBtn()    
     }
     else if (currentPlayerTurn.totalAssets > spaceLandedOn().price){
-        document.getElementById('wouldYouLikeToBuyId').innerHTML = `You need $${currentLocation.price} to buy ${currentLocation.name}. Open a mortgage, sell houses or auction this property`
+        document.getElementById('wouldYouLikeToBuyId').innerHTML = `You need $${spaceLandedOn().price} to buy ${spaceLandedOn().name}. Open a mortgage, sell houses or auction this property`
         addBuyPropertySellBtn()
         removeBuyPropertyYesBtn()
     }
     else{
-        document.getElementById('wouldYouLikeToBuyId').innerHTML = `You do not have enough assets to sell to afford ${currentLocation.name}`
+        document.getElementById('wouldYouLikeToBuyId').innerHTML = `You do not have enough assets to sell to afford ${spaceLandedOn().name}`
     }
  }
 
@@ -1030,7 +1030,7 @@ function removeBuyPropertySellBtn(){
 //Auction Property
 //Auction Property
 function generateAuctionScreen(){
-    document.getElementById('auctionOriginalPriceId').innerText = `Original Price: $${currentLocation.price}`
+    document.getElementById('auctionOriginalPriceId').innerText = `Original Price: $${spaceLandedOn().price}`
         //Update Auction screen with active players
     for (let i = 0; i < totalPlayers; i++){
         if (activePlayers[i].isBankrupt === false){
@@ -1088,12 +1088,12 @@ function bidOnProperty(){
 }
 
 function goingOnceBidOnProperty(){
-    auctioneerText.innerHTML = `<span class="auction-leader-color-span">${bidLeader}</span> buying ${currentLocation.name} for <span class="auction-leader-color-span">$${currentAuctionBid}</span> going once!`
+    auctioneerText.innerHTML = `<span class="auction-leader-color-span">${bidLeader}</span> buying ${spaceLandedOn().name} for <span class="auction-leader-color-span">$${currentAuctionBid}</span> going once!`
     noBidsGoingTwice = setTimeout(goingTwiceBidOnProperty, 3000)
 }
 
 function goingTwiceBidOnProperty(){
-    auctioneerText.innerHTML = `<span class="auction-leader-color-span">${bidLeader}</span> buying ${currentLocation.name} for <span class="auction-leader-color-span">$${currentAuctionBid}</span> going twice!!`
+    auctioneerText.innerHTML = `<span class="auction-leader-color-span">${bidLeader}</span> buying ${spaceLandedOn().name} for <span class="auction-leader-color-span">$${currentAuctionBid}</span> going twice!!`
     noBidsFinal = setTimeout(auctionPropertySoldMessage, 4000)
 }
 
@@ -1104,7 +1104,7 @@ function auctionPropertySoldMessage(){
             playerAuctionContainers[i].buttonId.innerHTML = ""
         }
     }
-    auctioneerText.innerHTML = `${currentLocation.name} sold to <span class="auction-leader-color-span">${bidLeader}</span> for <span class="auction-leader-color-span">$${currentAuctionBid}</span>!`
+    auctioneerText.innerHTML = `${spaceLandedOn().name} sold to <span class="auction-leader-color-span">${bidLeader}</span> for <span class="auction-leader-color-span">$${currentAuctionBid}</span>!`
     auctionResult = setTimeout(auctionWonResult, 4000)
 }
 
@@ -1204,6 +1204,7 @@ sellToPayRentBtn.addEventListener('click', function(e){
     removePropertyCard('propertyCardId')
     addHouseHotelMortgageScreen()
     removePayRentContainer()
+    removeTradeButton()
     document.getElementById('payRentTutorialId').innerHTML = `Sell houses or open mortgage to pay rent.  Click "finish" to pay rent.`
 })
 
@@ -1249,9 +1250,9 @@ function removeBankruptWarning(){
 function bankrupt(){
     removeInformBankruptScreen()
     removeBankruptWarning()
-    currentLocation.currentOccupants--
+    spaceLandedOn().currentOccupants--
     playerPiece().remove()
-    let playerOwed = currentLocation.owner
+    let playerOwed = spaceLandedOn().owner
     let playerBankrupt = currentPlayerTurn
     playerBankrupt.isBankrupt = true
     playerOwed.cash += playerBankrupt.cash
@@ -1320,7 +1321,7 @@ function removeInformBankruptScreen(){
 
 function goToJail (){
     removeHouseHotelMortgageScreen()
-    currentLocation.currentOccupants--
+    spaceLandedOn().currentOccupants--
     currentPlayerTurn.doublesCounter = 0
     playerPiece().remove()
     currentPlayerTurn.position = 40
@@ -1358,8 +1359,8 @@ attemptDoublesBtn.addEventListener('click', function (e){
         currentPlayerTurn.jailRollAttempts = 3
         currentPlayerTurn.isInJail = false
         playerPiece().remove()
-        currentLocation = (propertyArray[currentPlayerTurn.position])
-        currentLocation.currentOccupants--
+        spaceLandedOn() = (propertyArray[currentPlayerTurn.position])
+        spaceLandedOn().currentOccupants--
         currentPlayerTurn.position = (diceOneValue + diceTwoValue + 10)
         placePiece(currentPlayerTurn)
         removeHouseHotelMortgageScreen()
@@ -1388,8 +1389,7 @@ getOutJailCardBtn.addEventListener('click', function (e){
 function getOutOfJail (){
     currentPlayerTurn.jailRollAttempts = 3
     currentPlayerTurn.isInJail = false
-    currentLocation = propertyArray[(currentPlayerTurn.position)]
-    currentLocation.currentOccupants--
+    spaceLandedOn().currentOccupants--
     playerPiece().remove()
     currentPlayerTurn.position = 10
     placePiece(currentPlayerTurn)
@@ -1415,13 +1415,13 @@ function removeJailOptions (){
 //Buy Sell House Hotel Mortgage Functions
 
 function updateRent(player){
-    if (currentLocation.type === "color"){
+    if (spaceLandedOn().type === "color"){
         updateRentColor(player)
     }
-    else if (currentLocation.type === "railroad"){
+    else if (spaceLandedOn().type === "railroad"){
         updateRentRailroad(player)
     }
-    else if (currentLocation.type === "utility" ){
+    else if (spaceLandedOn().type === "utility" ){
         updateRentUtility(player)
     }
 }
@@ -1431,7 +1431,7 @@ function updateRentColor(player){
     generatePlayerPropertyArray(player)
     let sameColorProperties = []
     //Filter for same color properties as last bought property
-    sameColorProperties = ownedPropertyArray.filter(function(property){return property.color === currentLocation.color})
+    sameColorProperties = ownedPropertyArray.filter(function(property){return property.color === spaceLandedOn().color})
     for (let i = 0; i < sameColorProperties.length;){
         if (sameColorProperties[i].setTotal === 2 && sameColorProperties.length === 2){
                 sameColorProperties[i].rent = (sameColorProperties[i].startingRent * 2)
@@ -1476,7 +1476,7 @@ function updateRentRailroad(player){
     generatePlayerPropertyArray(player)
     let railroadProperties = []
     //Filter for railroads
-    railroadProperties = ownedPropertyArray.filter(function(property){return property.type === currentLocation.type})
+    railroadProperties = ownedPropertyArray.filter(function(property){return property.type === spaceLandedOn().type})
     railroadProperties.forEach(railroad =>{
         if (railroadProperties.length === 1){
             railroad.rent = 25
@@ -1498,7 +1498,7 @@ function updateRentUtility(player){
     generatePlayerPropertyArray(player)
     let utilityProperties = []
     //Filter for utilities
-    utilityProperties = ownedPropertyArray.filter(function(property){return property.type === currentLocation.type})
+    utilityProperties = ownedPropertyArray.filter(function(property){return property.type === spaceLandedOn().type})
     utilityProperties.forEach(utility =>{
         if (utilityProperties.length === 1){
             utility.updateRent = function() {
@@ -1918,6 +1918,7 @@ function checkRentPaid(){
     if (document.getElementById('payRentTutorialId').classList.contains('hidden') === false){
         addPayRentContainer()
         removeHouseHotelMortgageScreen()
+        addTradeButton()
     }
 }
 
@@ -1927,6 +1928,7 @@ function checkIfBuyingProperty(){
         removeHouseHotelMortgageScreen()
         addPropertyBuySellAuctionButtons()
         addPropertyCard('propertyCardId')
+        addTradeButton()
     }
 }
 
@@ -1976,6 +1978,16 @@ function addFinishBuyHouseBtn (){
 function removeFinishBuyHouseBtn (){
     finishBuyHouseBtn.classList.add('hidden')
     finishBuyHouseBtn.classList.remove('end-turn-button')
+}
+
+function removeTradeButton(){
+    tradeBtn.classList.add('hidden')
+    tradeBtn.classList.remove('trade-button')
+}
+
+function addTradeButton(){
+    tradeBtn.classList.add('trade-button')
+    tradeBtn.classList.remove('hidden')
 }
 
 
@@ -2558,6 +2570,328 @@ function removeFinishCloseMortgageBtn (){
 function addFinishCloseMortgageBtn (){
     finishCloseMortgageBtn.classList.add('end-turn-button')
     finishCloseMortgageBtn.classList.remove('hidden')
+}
+
+// Trade
+
+tradeBtn.addEventListener('click', clickTradeBtn)
+tradeOfferBtn.addEventListener('click', clickTradeOfferBtn)
+tradeCancelBtn.addEventListener('click', clickTradeCancelBtn)
+tradeAcceptBtn.addEventListener('click', clickTradeAcceptBtn)
+tradeDeclineBtn.addEventListener('click', clickTradeDeclineBtn)
+
+function clickTradeBtn(){
+    trader = currentPlayerTurn
+    addTradeScreen()
+    addPotentialTradeParterButtons()
+    traderNametag.innerText = `${trader.name} - $${trader.cash}`
+    traderNametag.style.color = `${trader.colorDark}`
+    tradeScreenTutorial.innerText = "Who Would You Like to Trade With?"
+}
+
+function clickTradeOfferBtn(){
+    addAcceptDeclineButtonsContainer()
+    removeTraderOfferButton()
+    traderContents.classList.add('green-border')
+}
+
+function clickTradeCancelBtn(){
+    removeTradeScreen()
+    resetPotentialTradeParterButtons()
+    addPotentialTradeButtons()
+    removePlayerTradeContents()
+    removeCashInputContainers()
+    removeAcceptDeclineButtonsContainer()
+    removeTraderOfferButton()
+    tradeeNametag.innerText = ""
+    traderPropertyDropoffContainer.innerHTML = ""
+    tradeePropertyDropoffContainer.innerHTML = ""
+}
+
+function clickTradeAcceptBtn(){
+
+}
+
+function clickTradeDeclineBtn(){
+
+}
+
+
+
+function addTradeItem(propertyName, screenAdded){
+    let tradeCard = document.createElement('div')
+    let tradeContents = document.createElement('div')
+
+    tradeCard.classList.add('trade-property-card')
+    tradeContents.classList.add('trade-property-name')
+    tradeContents.innerHTML = `${propertyName}`
+
+    tradeCard.append(tradeContents)
+
+    if (selectedTradeProperty.type === 'color'){
+        tradeContents.style.borderTop =  `10px solid ${selectedTradeProperty.color}`
+    }
+
+    screenAdded.append(tradeCard)
+
+
+} 
+
+function addPotentialTradeParterButtons(){
+    for (let i = 0; i < totalPlayers; i++){
+        
+        if (activePlayers[i] != trader){
+            playerTradeButtons[i].classList.add('trade-partner-button')
+            playerTradeButtons[i].classList.remove('hidden')
+            playerTradeButtons[i].style.backgroundColor = activePlayers[i].colorDark
+        }
+    }
+}
+
+function resetPotentialTradeParterButtons(){
+    for (let i = 0; i < totalPlayers; i++){   
+        playerTradeButtons[i].classList.add('hidden')
+        playerTradeButtons[i].classList.remove('trade-partner-button')
+    }
+}
+
+function addTradeScreen(){
+    document.getElementById('floatScreenGameId').classList.remove('float-screen-game')
+    document.getElementById('floatScreenGameId').classList.add('hidden')
+    document.getElementById('tradeScreenContainerId').classList.add('trade-screen-container')
+    document.getElementById('tradeScreenContainerId').classList.remove('hidden')
+}
+
+function removeTradeScreen(){
+    document.getElementById('tradeScreenContainerId').classList.add('hidden')
+    document.getElementById('tradeScreenContainerId').classList.remove('trade-screen-container')
+    document.getElementById('floatScreenGameId').classList.remove('hidden')
+    document.getElementById('floatScreenGameId').classList.add('float-screen-game')
+}
+
+playerTradeButtons.forEach((button) => {
+    button.addEventListener('click', function(){
+        tradeeNametag.innerText = `${this.innerText}`
+        tradeScreenTutorial.innerText = `Drag And Drop Properties In Container To Add Them To Trade.  To Add Cash, Enter Cash Amount And Click "Add" Button To Update Cash Offer`
+        setTradeeVariable()
+        removePotentialTradeButtons()
+        addPlayerTradeContentsScreen()
+        addTraderOfferButton()
+        addCashInputContainers()
+        tradeOfferBtn.addEventListener('click', clickTradeOfferBtn)
+    })
+}) 
+
+function addPotentialTradeButtons(){
+    potentailTradeButtons.classList.add('trade-screen-player-options')
+    potentailTradeButtons.classList.remove('hidden')
+}
+
+function removePotentialTradeButtons(){
+    potentailTradeButtons.classList.add('hidden')
+    potentailTradeButtons.classList.remove('trade-screen-player-options')
+}
+
+function addPlayerTradeContentsScreen(){
+    tradeeContents.classList.add('trade-screen-contents')
+    tradeeContents.classList.remove('hidden')
+    traderContents.classList.add('trade-screen-contents')
+    traderContents.classList.remove('hidden')
+}
+
+function removePlayerTradeContents(){
+    tradeeContents.classList.add('hidden')
+    tradeeContents.classList.remove('trade-screen-contents')
+    traderContents.classList.add('hidden')
+    traderContents.classList.remove('trade-screen-contents')
+}
+
+function addEventsForPotentialTradeItems(){
+    for (let i = 0; i < totalPlayers; i++){
+        if (activePlayers[i] === trader){
+            trader.properties.forEach((property) =>{
+                let clickableProperty = document.getElementById(property.id)
+                clickableProperty.draggable = true
+                clickableProperty.classList.add('can-open-mortgage-bottom')
+                clickableProperty.addEventListener('dragstart', setSelectedPropertyForTrader)
+                clickableProperty.addEventListener('mouseover', addBorderForTraderContainer)
+                clickableProperty.addEventListener('mouseout', removeBorderForTraderContainer)
+            })
+        }
+
+        else if (activePlayers[i] === tradee){
+            activePlayers[i].properties.forEach((property) =>{
+                let clickableProperty = document.getElementById(property.id)
+                clickableProperty.draggable = true
+                clickableProperty.classList.add('can-open-mortgage-bottom')
+                clickableProperty.addEventListener('dragstart', setSelectedPropertyForTradee)
+                clickableProperty.addEventListener('mouseover', addBorderForTradeeContainer)
+                clickableProperty.addEventListener('mouseout', removeBorderForTradeeContainer)
+            })   
+        }
+    }
+}
+
+tradeePropertyDropoffContainer.addEventListener('dragover', function(event){
+    if (selectedTradeProperty.owner === tradee){
+        event.preventDefault()
+    }
+})
+
+tradeePropertyDropoffContainer.addEventListener('drop', function(event){
+    if (selectedTradeProperty.owner === tradee)
+    addTradeItem(selectedTradeProperty.name, tradeePropertyDropoffContainer)
+    removeEventListenersAndClassesTradeeSingleProperty(selectedTradeProperty)
+    removeBorderForTradeeContainer()
+
+})
+
+traderPropertyDropoffContainer.addEventListener('dragover', function(event){
+    if (selectedTradeProperty.owner === trader){
+        event.preventDefault()
+    }
+})
+
+traderPropertyDropoffContainer.addEventListener('drop', function(event){
+    if (selectedTradeProperty.owner === trader)
+    addTradeItem(selectedTradeProperty.name, traderPropertyDropoffContainer)
+    removeEventListenersAndClassesTraderSingleProperty(selectedTradeProperty)
+    removeBorderForTraderContainer()
+})
+
+function addBorderForTraderContainer(){
+    traderPropertyDropoffContainer.classList.add('green-border')
+}
+
+function removeBorderForTraderContainer(){
+    traderPropertyDropoffContainer.classList.remove('green-border')
+}
+
+function addBorderForTradeeContainer(){
+    tradeePropertyDropoffContainer.classList.add('green-border')
+}
+
+function removeBorderForTradeeContainer(){
+    tradeePropertyDropoffContainer.classList.remove('green-border')
+}
+
+function setSelectedPropertyForTrader(event){
+    for (let i = 0; i < trader.properties.length; i++){
+        if (trader.properties[i].id === event.target.id){
+            selectedTradeProperty = trader.properties[i]
+        }
+    }
+}
+
+function setSelectedPropertyForTradee(event){
+    for (let i = 0; i < tradee.properties.length; i++){
+        if (tradee.properties[i].id === event.target.id){
+            selectedTradeProperty = tradee.properties[i]
+        }
+    }
+}
+
+function setTradeeVariable(){
+    for (let i = 0; i < totalPlayers; i++){
+        if (tradeeNametag.innerText === activePlayers[i].name){
+            tradee = activePlayers[i]
+        }
+    }
+        tradeeNametag.style.color = `${tradee.colorDark}`
+        tradeeNametag.innerText = `${tradee.name} - $${tradee.cash}`
+        addEventsForPotentialTradeItems()
+}
+
+function addTraderOfferButton(){
+    tradeOfferBtn.classList.add('trade-offer-decline-buttons')
+    tradeOfferBtn.classList.remove('hidden')
+}
+
+function removeTraderOfferButton(){
+    tradeOfferBtn.classList.add('hidden')
+    tradeOfferBtn.classList.remove('trade-offer-decline-buttons')
+}
+
+function addAcceptDeclineButtonsContainer(){
+    acceptDeclineButtonsContainer.classList.add('accept-decline-trade-container')
+    acceptDeclineButtonsContainer.classList.remove('hidden')
+}
+
+function removeAcceptDeclineButtonsContainer(){
+    acceptDeclineButtonsContainer.classList.add('hidden')
+    acceptDeclineButtonsContainer.classList.remove('accept-decline-trade-container')
+}
+
+function addCashInputContainers(){
+    traderCashInputContainer.classList.add('cash-input-container')
+    traderCashInputContainer.classList.remove('hidden')
+
+    tradeeCashInputContainer.classList.add('cash-input-container')
+    tradeeCashInputContainer.classList.remove('hidden')
+}
+
+function removeCashInputContainers(){
+    traderCashInputContainer.classList.add('hidden')
+    traderCashInputContainer.classList.remove('cash-input-container')
+
+    tradeeCashInputContainer.classList.add('hidden')
+    tradeeCashInputContainer.classList.remove('cash-input-container')
+}
+
+function removeEventListenersAndClassesTraderAllProperties(){
+    traderEligibleTradeProperties.forEach((property) => {
+        let clickableProperty = property.id
+        clickableProperty.removeEventListener('dragstart', setSelectedPropertyForTrader)
+        clickableProperty.removeEventListener('mouseover', addBorderForTraderContainer)
+        clickableProperty.removeEventListener('mouseout', removeBorderForTraderContainer)
+        clickableProperty.draggable = false
+        clickableProperty.classList.add('can-open-mortgage-bottom')
+
+    })
+}
+
+function removeEventListenersAndClassesTraderSingleProperty(singleProperty){
+    let property = document.getElementById(singleProperty.id)
+    property.removeEventListener('dragstart', setSelectedPropertyForTrader)
+    property.removeEventListener('mouseover', addBorderForTraderContainer)
+    property.removeEventListener('mouseout', removeBorderForTraderContainer)
+    property.draggable = false
+    property.classList.remove('can-open-mortgage-bottom')
+}
+
+function removeEventListenersAndClassesTradeeAllProperties(){
+    tradeeEligibleTradeProperties.forEach((property) =>{
+        let clickableProperty = document.getElementById(property.id)
+        clickableProperty.removeEventListener('dragstart', setSelectedPropertyForTradee)
+        clickableProperty.removeEventListener('mouseover', addBorderForTradeeContainer)
+        clickableProperty.removeEventListener('mouseout', removeBorderForTradeeContainer)
+        clickableProperty.draggable = false
+        clickableProperty.classList.add('can-open-mortgage-bottom')
+    })
+}
+
+function removeEventListenersAndClassesTradeeSingleProperty(singleProperty){
+    property = document.getElementById(singleProperty.id)
+    property.removeEventListener('dragstart', setSelectedPropertyForTradee)
+    property.removeEventListener('mouseover', addBorderForTradeeContainer)
+    property.removeEventListener('mouseout', removeBorderForTradeeContainer)
+    property.draggable = false
+    property.classList.remove('can-open-mortgage-bottom')
+}
+
+function addClassesToTradeProperties(propertyToAddClass){
+    if(propertyToAddClass.number > 0 && propertyToAddClass.number < 10){
+
+    }
+    else if(propertyToAddClass.number > 0 && propertyToAddClass.number < 10){
+
+    }
+    else if(propertyToAddClass.number > 0 && propertyToAddClass.number < 10){
+
+    }
+    else if(propertyToAddClass.number > 0 && propertyToAddClass.number < 10){
+
+    }
 }
 
 

@@ -179,6 +179,62 @@
                 </container>
             </container>
 
+            <!--Trade Screen-->
+            <!--Trade Screen // trade-screen-container -->
+            <container class="hidden" id="tradeScreenContainerId">
+                    <!--Players Trading Name Display-->
+                    <container class="trade-screen-players-trading">
+                        <h1 class="players-trading-names" id="traderNameId"></h2>
+                        <h1 class="players-trading-names" id="tradeeNameId"></h2>
+                    </container>
+                    <!--Trade Screen Tutorial-->
+                    <h3 id="tradeScreenTutorialId"></h3>
+                    <!--Trader Trade Screen // trade-screen-contents-->
+                    <div class="hidden" id="traderContentsId">
+                        <!--Trader Properties Being Traded-->
+                        <div class="property-dropoff-container" id="traderPropertyDropoffContainerId"></div>
+                        <!--Trader Cash Input Trader // cash-input-container -->
+                        <div class="hidden" id="traderCashInputContainerId">
+                            <div class="cash-offer">Cash Offer: <span id="traderCashOfferValueId">$0</span></div>
+                            <div class="dollar-sign">$</div>
+                            <input type="number" placeholder="Enter" class="cash-input" id="traderCashInputId">
+                            <button class="cash-add-button" id="traderCashSubmitBtnId">Add</button>
+                        </div>
+                    </div>
+                    <!--Tradee Trade Screen // trade-screen-contents-->
+                    <div class="hidden" id="tradeeContentsId">
+                        <!--Tradee Properties Being Traded // trade-screen-contents-->
+                        <div class="property-dropoff-container" id="tradeePropertyDropoffContainerId"></div>
+                         <!--Tradee Cash Input Tradee // cash-input-container-->
+                        <div class="hidden" id="tradeeCashInputContainerId">
+                            <div class="cash-offer">Cash Offer: <span id="tradeeCashOfferValueId">$0</span></div>
+                            <div class="dollar-sign">$</div>
+                            <input type="number" placeholder="Enter" class="cash-input" id="tradeeCashInputId">
+                            <button class="cash-add-button" id="tradeeCashSubmitBtnId">Add</button>
+                        </div>
+                    </div>
+                    <!--Select Who To Trade With-->
+                    <div class="trade-screen-player-options" id="potentailTradeButtonsId">
+                        <button class="hidden" id="playerOneTradeButtonId">Player One</button>
+                        <button class="hidden" id="playerTwoTradeButtonId">Player Two</button>
+                        <button class="hidden" id="playerThreeTradeButtonId">Player Three</button>
+                        <button class="hidden" id="playerFourTradeButtonId">Player Four</button>
+                    </div>
+
+                    <!--Offer / Accept Button-->
+                    <container class="trade-offer-decline-container">
+                        <button class="hidden" id="tradeOfferBtnId">Offer</button>
+                        <button class="trade-cancel-button" id="tradeCancelBtnId">Cancel</button>
+                        <!--Tradee Accept / Decline Buttons // accept-decline-trade-container-->
+                        <div class="hidden" id="acceptDeclineButtonsContainerId">
+                            <button class="trade-offer-decline-buttons" id="tradeAcceptBtnId">Accept</button>
+                            <button class="trade-offer-decline-buttons" id="tradeDeclineBtnId">Decline</button>
+                        </div>
+                        
+
+                    </container>
+            </container>
+
             <!--Main Player Select Screen-->
             <!--Main Player Select Screen-->
             <div class="hidden" id="floatScreenPlayersId">
@@ -224,6 +280,7 @@
                             <button class="house-hotel-mortgage-btns" id="buyHouseHotelBtnId">Buy</button><button class="house-hotel-mortgage-btns" id="sellHouseHotelBtn">Sell</button>
                             <div id="mortgageBtnLabelId">Mortgage Property</div>
                             <button class="house-hotel-mortgage-btns" id="openMortgageBtnId">Open</button><button class="house-hotel-mortgage-btns" id="closeMortgageBtnId">Close</button>
+                            <button class="trade-button" id="tradeBtnId">Trade</button>
                         </div>
 
                      <!--Buy House Tutorial-->
