@@ -1359,13 +1359,11 @@ attemptDoublesBtn.addEventListener('click', function (e){
         currentPlayerTurn.jailRollAttempts = 3
         currentPlayerTurn.isInJail = false
         playerPiece().remove()
-        spaceLandedOn() = (propertyArray[currentPlayerTurn.position])
         spaceLandedOn().currentOccupants--
         currentPlayerTurn.position = (diceOneValue + diceTwoValue + 10)
         placePiece(currentPlayerTurn)
         removeHouseHotelMortgageScreen()
         currentLocationInteraction()
-        
     }
     else{
         currentPlayerTurn.jailRollAttempts--
@@ -1546,209 +1544,235 @@ function addHouseHotelMortgageScreen (){
     document.getElementById('houseHotelMortgageScreenId').classList.remove('house-hotel-mortgage-screen');
  }
 
- function addHouseHotelBuyClassBasedOnLocationAllProperties(sortedPropertyArray, houseLimit){
-    for (let i = 0; i < sortedPropertyArray.length; i++){
-        if(sortedPropertyArray[i].totalHouses < houseLimit){
-            if(sortedPropertyArray[i].number > 0 && sortedPropertyArray[i].number < 10){
-                document.getElementById(sortedPropertyArray[i].id).classList.add(`can-select-property-bottom`)
+ function addCanSelectClassesToPropertyArray(array){
+    for (let i = 0; i < array.length; i++){
+        let clickableProperty = document.getElementById(array[i].id)
+
+            if(array[i].number > 0 && array[i].number < 10){
+               clickableProperty.classList.add(`can-select-property-bottom`)
             }
-            else if(sortedPropertyArray[i].number > 10 && sortedPropertyArray[i].number < 20){
-                document.getElementById(sortedPropertyArray[i].id).classList.add('can-select-property-left')
+            else if(array[i].number > 10 && array[i].number < 20){
+                clickableProperty.classList.add('can-select-property-left')
             }
-            else if(sortedPropertyArray[i].number > 20 && sortedPropertyArray[i].number < 30){
-                document.getElementById(sortedPropertyArray[i].id).classList.add('can-select-property-top')
+            else if(array[i].number > 20 && array[i].number < 30){
+                clickableProperty.classList.add('can-select-property-top')
             }
-            else if(sortedPropertyArray[i].number > 30 && sortedPropertyArray[i].number < 40){
-                document.getElementById(sortedPropertyArray[i].id).classList.add('can-select-property-right')
+            else if(array[i].number > 30 && array[i].number < 40){
+                clickableProperty.classList.add('can-select-property-right')
             }
-        }
+            clickableProperty.classList.add('can-select-property')
     }
 
 }
 
-function addHouseHotelSellClassBasedOnLocationAllProperties(sortedPropertyArray, houseMinimum){
-    for (let i = 0; i < sortedPropertyArray.length; i++){
-        if(sortedPropertyArray[i].totalHouses > houseMinimum){
-            if(sortedPropertyArray[i].number > 0 && sortedPropertyArray[i].number < 10){
-                document.getElementById(sortedPropertyArray[i].id).classList.add('can-select-property-bottom')
-            }
-            else if(sortedPropertyArray[i].number > 10 && sortedPropertyArray[i].number < 20){
-                document.getElementById(sortedPropertyArray[i].id).classList.add('can-select-property-left')
-            }
-            else if(sortedPropertyArray[i].number > 20 && sortedPropertyArray[i].number < 30){
-                document.getElementById(sortedPropertyArray[i].id).classList.add('can-select-property-top')
-            }
-            else if(sortedPropertyArray[i].number > 30 && sortedPropertyArray[i].number < 40){
-                document.getElementById(sortedPropertyArray[i].id).classList.add('can-select-property-right')
-            }
-        }
-    }
+function removeCanSelectClassesToPropertyArray(array){
+    for (let i = 0; i < array.length; i++){
+        let clickableProperty = document.getElementById(array[i].id)
 
-}
-
-function removeHouseHotelClassBasedOnLocationAllProperties(sortedPropertyArray){
-    for (let i = 0; i < sortedPropertyArray.length; i++){
-        if(sortedPropertyArray[i].number > 0 && sortedPropertyArray[i].number < 10){
-            document.getElementById(sortedPropertyArray[i].id).classList.remove('can-select-property-bottom')
+        if(array[i].number > 0 && array[i].number < 10){
+            clickableProperty.classList.remove('can-select-property-bottom')
         }
-        else if(sortedPropertyArray[i].number > 10 && sortedPropertyArray[i].number < 20){
-            document.getElementById(sortedPropertyArray[i].id).classList.remove('can-select-property-left')
+        else if(array[i].number > 10 && array[i].number < 20){
+            clickableProperty.classList.remove('can-select-property-left')
         }
-        else if(sortedPropertyArray[i].number > 20 && sortedPropertyArray[i].number < 30){
-            document.getElementById(sortedPropertyArray[i].id).classList.remove('can-select-property-top')
+        else if(array[i].number > 20 && array[i].number < 30){
+            clickableProperty.classList.remove('can-select-property-top')
         }
-        else if(sortedPropertyArray[i].number > 30 && sortedPropertyArray[i].number < 40){
-            document.getElementById(sortedPropertyArray[i].id).classList.remove('can-select-property-right')
+        else if(array[i].number > 30 && array[i].number < 40){
+            clickableProperty.classList.remove('can-select-property-right')
         }
+        clickableProperty.classList.remove('can-select-property')
     }
 }
 
-function removeHouseHotelClassBasedOnLocationSingleProperty(propertyToChange){
-        if(propertyToChange.number > 0 && propertyToChange.number < 10){
-            document.getElementById(propertyToChange.id).classList.remove('can-select-property-bottom')
-        }
-        else if(propertyToChange.number > 10 && propertyToChange.number < 20){
-            document.getElementById(propertyToChange.id).classList.remove('can-select-property-left')
-        }
-        else if(propertyToChange.number > 20 && propertyToChange.number < 30){
-            document.getElementById(propertyToChange.id).classList.remove('can-select-property-top')
-        }
-        else if(propertyToChange.number > 30 && propertyToChange.number < 40){
-            document.getElementById(propertyToChange.id).classList.remove('can-select-property-right')
-        }
+function addEventLisentersToArray(array, listener){
+    array.forEach((property) =>{
+        let clickableProperty = document.getElementById(property.id)
+        clickableProperty.addEventListener('click', listener)
+    })
 }
+
+function removeEventListenersFromArray(array, listener){
+    array.forEach((property) =>{
+        let clickableProperty = document.getElementById(property.id)
+        clickableProperty.removeEventListener('click', listener)
+    })
+}
+
+
 
 //Buy House Functions
 //Buy House Functions
-
-
-buyHouseHotelBtn.addEventListener('click', function(e){
+buyHouseHotelBtn.addEventListener('click', function(){
     removeDice()
     generatePlayerColorPropertyArray()
     removeHouseHotelMortgageScreen()
     removeEndTurnButton()
-    addFinishBuyHouseBtn()
-    addBuyHouseTutorial()
-    canBuyHouseHotelArray = []
+    addFinishBuyHouseHotelBtn()
+    addBuyHouseHotelTutorial()
+    updateCanBuyHouseHotelArray()
+    addCanSelectClassesToPropertyArray(canBuyHouseHotelArray)
+    addEventLisentersToArray(canBuyHouseHotelArray, buyHouseHotelPropertySpace)
+})
 
-    //Sort owned property into array of full color set based on number of properties needed to make full set
-    for (let i = 0; i < ownedColorPropertyArray.length;){
-        if (ownedColorPropertyArray[i].type === 'color' && ownedColorPropertyArray[i].setTotal === 2 && (i + 1) < ownedColorPropertyArray.length){
-                if(ownedColorPropertyArray[i].color === ownedColorPropertyArray[i+1].color){
-                    canBuyHouseHotelArray.push(ownedColorPropertyArray[i])
-                    canBuyHouseHotelArray.push(ownedColorPropertyArray[i+1])
-                    i += 2
-                } 
+    //Create Clickable Property
+    function buyHouseHotelPropertySpace (){
+        for (let i = 0; i < canBuyHouseHotelArray.length; i++){
+            if (canBuyHouseHotelArray[i].id == this.id){
+                propertyClickedOn = canBuyHouseHotelArray[i]
+
+                if(propertyClickedOn.totalHouses < 4){
+                    document.getElementById('buyHouseHotelLabel').innerHTML = `Would you like to buy a house on ${propertyClickedOn.name} for $${propertyClickedOn.buildingCost}?`        
+                }
+                else if (propertyClickedOn.totalHouses === 4){
+                    document.getElementById('buyHouseHotelLabel').innerHTML = `Would you like to buy a hotel on ${propertyClickedOn.name} for $${propertyClickedOn.buildingCost}?`  
+                }
+                removeBuyHouseHotelTutorial()
+                addBuyHouseHotelYesNoButtons()
+                buyHouseHotelYesBtn.addEventListener('click', buyHouseHotelYesBtnOutcome)
+                buyHouseHotelNoBtn.addEventListener('click', buyHouseHotelNoBtnOutcome) 
+                removeFinishBuyHouseHotelBtn()
+                //Prevent user from clicking multiple properties at once
+                removeCanSelectClassesToPropertyArray(canBuyHouseHotelArray)
+                removeEventListenersFromArray(canBuyHouseHotelArray, buyHouseHotelPropertySpace)
+                return
+            }
+        }        
+    }
+
+    //Yes button function
+    function buyHouseHotelYesBtnOutcome(){
+        if(propertyClickedOn.totalHouses < 4){
+            currentPlayerTurn.housesOwned++
+        }
+        else{
+            currentPlayerTurn.hotelsOwned++
+            currentPlayerTurn.housesOwned -= 4
+        }
+        propertyClickedOn.totalHouses++
+        updatePropertySetTotalHousesAdd()
+        updateCanBuyHouseHotelArray()
+        currentPlayerTurn.cash -= propertyClickedOn.buildingCost
+        updateRentHouseHotel(propertyClickedOn)
+        placeHouseHotel(propertyClickedOn)
+        updatePlayerCashTotalDisplay()
+        removeBuyHouseHotelYesNoButtons()
+        addBuyHouseHotelTutorial()
+        addFinishBuyHouseHotelBtn()            
+        //Restore function and class indicators to add houses to eligible properties
+        addCanSelectClassesToPropertyArray(canBuyHouseHotelArray)
+        addEventLisentersToArray(canBuyHouseHotelArray, buyHouseHotelPropertySpace)       
+        buyHouseHotelYesBtn.removeEventListener('click', buyHouseHotelYesBtnOutcome)
+        buyHouseHotelNoBtn.removeEventListener('click', buyHouseHotelNoBtnOutcome)
+    }
+
+    //No Button Function
+    function buyHouseHotelNoBtnOutcome(){
+        removeBuyHouseHotelYesNoButtons()
+        addBuyHouseHotelTutorial()
+        addFinishBuyHouseHotelBtn()
+        //Restore function and class indicators to add houses to eligible properties
+        addCanSelectClassesToPropertyArray(canBuyHouseHotelArray)
+        addEventLisentersToArray(canBuyHouseHotelArray, buyHouseHotelPropertySpace)
+        buyHouseHotelYesBtn.removeEventListener('click', buyHouseHotelYesBtnOutcome)
+        buyHouseHotelNoBtn.removeEventListener('click', buyHouseHotelNoBtnOutcome)
+    }
+
+    //Finish Button Function
+    finishBuyHouseHotelBtn.addEventListener('click', function(e){ 
+        addHouseHotelMortgageScreen()
+        removeBuyHouseHotelTutorial()
+        removeFinishBuyHouseHotelBtn()
+        addEndTurnButton()
+        removeCanSelectClassesToPropertyArray(canBuyHouseHotelArray)
+        removeEventListenersFromArray(canBuyHouseHotelArray, buyHouseHotelPropertySpace)
+    
+            //Prevent user from skipping turn
+            if (hasRolled === false){
+                removeEndTurnButton()
+                addDice()
+            }
+            //Prevent user from ending turn before paying rent
+            if(document.getElementById('payRentTutorialId').classList.contains('hidden') === false){
+                removeEndTurnButton()
+            }
+            checkRentPaid()
+            checkIfBuyingProperty()
+    })
+
+        function checkRentPaid(){
+            //Return user to pay rent screen
+            if (document.getElementById('payRentTutorialId').classList.contains('hidden') === false){
+                addPayRentContainer()
+                removeHouseHotelMortgageScreen()
+                addTradeButton()
+            }
+        }
+        
+        function checkIfBuyingProperty(){
+            if (!buyPropertySellBtn.classList.contains('hidden')){
+                removeEndTurnButton()
+                removeHouseHotelMortgageScreen()
+                addPropertyBuySellAuctionButtons()
+                addPropertyCard('propertyCardId')
+                addTradeButton()
+            }
+        }
+
+    function updateCanBuyHouseHotelArray(){
+        canBuyHouseHotelArray = []
+    
+        for (let i = 0; i < ownedColorPropertyArray.length;){
+            //Check if player owns enough properties for set of two
+            if (ownedColorPropertyArray[i].setTotal === 2 && (i + 1) < ownedColorPropertyArray.length){
+                    //Check if player owns all properties if two properties in set
+                    if(ownedColorPropertyArray[i].color === ownedColorPropertyArray[i+1].color){
+                        for (let j = i ; j < i+2; j++){
+                            //Check if total houses on property is same or less than other properties in set, Check if property alread has max houses
+                            if(ownedColorPropertyArray[j].totalHouses < 5
+                               && ownedColorPropertyArray[j].totalHouses <= (ownedColorPropertyArray[j].propertySetTotalHouses / ownedColorPropertyArray[j].setTotal) 
+                               && ownedColorPropertyArray[j].mortgageOpen === false){
+                                    canBuyHouseHotelArray.push(ownedColorPropertyArray[j])
+                            }
+                        }
+                        i += 2
+                    } 
+                    else{
+                        i++
+                    }        
+            }
+    
+            //Check if player owns enough properties for set of 3
+            else if(ownedColorPropertyArray[i].setTotal === 3 && (i + 2) < ownedColorPropertyArray.length){
+                //Check if player owns all properties in set
+                if (ownedColorPropertyArray[i].color === ownedColorPropertyArray[i+1].color && ownedColorPropertyArray[i].color === ownedColorPropertyArray[i+2].color){
+                    for (let j = i; j < i+3; j++){
+                        //Check if total houses on property is same or less than other properties in set, Check if property alread has max houses
+                        if(ownedColorPropertyArray[j].totalHouses < 5 
+                           && ownedColorPropertyArray[j].totalHouses <= (ownedColorPropertyArray[j].propertySetTotalHouses / ownedColorPropertyArray[j].setTotal)
+                           && ownedColorPropertyArray[j].mortgageOpen === false){
+                                canBuyHouseHotelArray.push(ownedColorPropertyArray[j])
+                        }
+                    }
+                    i += 3
+                }
                 else{
                     i++
-                }        
-        }
-        else if(ownedColorPropertyArray[i].type === 'color' && ownedColorPropertyArray[i].setTotal === 3 && (i + 2) < ownedColorPropertyArray.length){
-            if (ownedColorPropertyArray[i].color === ownedColorPropertyArray[i+1].color && ownedColorPropertyArray[i].color === ownedColorPropertyArray[i+2].color){
-                canBuyHouseHotelArray.push(ownedColorPropertyArray[i])
-                canBuyHouseHotelArray.push(ownedColorPropertyArray[i+1])
-                canBuyHouseHotelArray.push(ownedColorPropertyArray[i+2])
-                i += 3
+                }
             }
             else{
                 i++
             }
         }
-        else{
-            i++
-        }
     }
 
-    addHouseHotelBuyClassBasedOnLocationAllProperties(canBuyHouseHotelArray, 5)
-    
-    //Create clickable property to build houses on for properties with less than 5 houses
-    canBuyHouseHotelArray.forEach(property =>{
-        let clickableProperty = document.getElementById(property.id)
-        if (property.totalHouses < 5){
-            clickableProperty.classList.add('can-select-property')
-            clickableProperty.addEventListener('click', buyHousePropertySpace) 
-        }
-
-        //Function for property spaces that are eligible to build houses
-        function buyHousePropertySpace (){
-            if(property.totalHouses < 4){
-                document.getElementById('buyHouseLabel').innerHTML = `Would you like to buy a house on ${property.name} for $${property.buildingCost}?`        
-            }
-            else if (property.totalHouses === 4){
-                document.getElementById('buyHouseLabel').innerHTML = `Would you like to buy a hotel on ${property.name} for $${property.buildingCost}?`  
-            }
-            else{
-                return
-            }
-            removeBuyHouseTutorial()
-            addBuyHouseYesNoButtons()
-            buyHouseYesBtn.addEventListener('click', buyHouseYesBtnOutcome)
-            buyHouseNoBtn.addEventListener('click', buyHouseNoBtnOutcome) 
-            removeFinishBuyHouseBtn()
-            //Prevent user from clicking multiple properties at once
-            for (let i = 0; i < canBuyHouseHotelArray.length; i++){
-                if (canBuyHouseHotelArray[i].totalHouses < 5){
-                    document.getElementById(canBuyHouseHotelArray[i].id).classList.add('disable-clicks')
-                    document.getElementById(canBuyHouseHotelArray[i].id).classList.remove('can-select-property')
-                }
+    function updatePropertySetTotalHousesAdd(){
+        for (let i = 0; i < ownedColorPropertyArray.length; i++){
+            if (ownedColorPropertyArray[i].color === propertyClickedOn.color){
+                ownedColorPropertyArray[i].propertySetTotalHouses++
             }
         }
-
-        //Yes button function
-        function buyHouseYesBtnOutcome(){
-            //Restore function and class indicators to add houses to eligible properties
-            for (let i = 0; i < canBuyHouseHotelArray.length; i++){
-                if (canBuyHouseHotelArray[i].totalHouses < 5){
-                    document.getElementById(canBuyHouseHotelArray[i].id).classList.remove('disable-clicks')
-                    document.getElementById(canBuyHouseHotelArray[i].id).classList.add('can-select-property')
-                }
-            }
-            if(property.totalHouses < 4){
-                currentPlayerTurn.housesOwned++
-            }
-            else{
-                currentPlayerTurn.hotelsOwned++
-                currentPlayerTurn.housesOwned -= 4
-                clickableProperty.removeEventListener('click', buyHousePropertySpace)
-                clickableProperty.classList.remove('can-select-property')
-                removeHouseHotelClassBasedOnLocationSingleProperty(property)
-            }
-            property.totalHouses++
-            currentPlayerTurn.cash -= property.buildingCost
-            updateRentHouseHotel(property)
-            placeHouseHotel(property)
-            updatePlayerCashTotalDisplay()
-            removeBuyHouseYesNoButtons()
-            addBuyHouseTutorial()
-            buyHouseYesBtn.removeEventListener('click', buyHouseYesBtnOutcome)
-            buyHouseNoBtn.removeEventListener('click', buyHouseNoBtnOutcome)
-            addFinishBuyHouseBtn()
-        }
-        
-        //No Button Function
-        function buyHouseNoBtnOutcome(){
-            //Restore function and class indicators to add houses to eligible properties
-            for (let i = 0; i < canBuyHouseHotelArray.length; i++){
-                document.getElementById(canBuyHouseHotelArray[i].id).classList.remove('disable-clicks')
-                document.getElementById(canBuyHouseHotelArray[i].id).classList.add('can-select-property')
-            }
-            buyHouseYesBtn.removeEventListener('click', buyHouseYesBtnOutcome)
-            buyHouseNoBtn.removeEventListener('click', buyHouseNoBtnOutcome)
-            removeBuyHouseYesNoButtons()
-            addBuyHouseTutorial()
-            addFinishBuyHouseBtn()
-        } 
-
-        //Finish Button Function
-        finishBuyHouseBtn.addEventListener('click', finishBuyHouseBtnOutcome)
-        function finishBuyHouseBtnOutcome (){
-            clickableProperty.classList.remove('can-select-property')
-            clickableProperty.removeEventListener('click', buyHousePropertySpace)
-            finishBuyHouseBtn.removeEventListener('click', finishBuyHouseBtnOutcome)
-            removeHouseHotelClassBasedOnLocationAllProperties(canBuyHouseHotelArray)   
-        }
-    }) 
-})
+    }
 
 function placeHouseHotel(property){
     if (property.number < 10 && property.number > 0){
@@ -1765,219 +1789,182 @@ function placeHouseHotel(property){
     }
 }
 
-function placeHouseHotelBottom(property){
-    if(property.totalHouses === 1){
-        document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
-        document.getElementById(property.id).firstChild.style.left = "0px"
+    function placeHouseHotelBottom(property){
+        if(property.totalHouses === 1){
+            document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
+            document.getElementById(property.id).firstChild.style.left = "0px"
 
-    }
-    else if(property.totalHouses === 2){
-        document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
-        document.getElementById(property.id).firstChild.style.left = "26.7px"
-
-    }
-    else if (property.totalHouses === 3){
-        document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
-        document.getElementById(property.id).firstChild.style.right = "26.7px"
-   
-    }
-    else if (property.totalHouses === 4){
-        document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
-        document.getElementById(property.id).firstChild.style.right = "0px"
-        document.getElementById(property.id).firstChild.style.top = "0px"
-    }
-    else if(property.totalHouses === 5){
-        document.getElementById(property.id).firstChild.remove()
-        document.getElementById(property.id).firstChild.remove()
-        document.getElementById(property.id).firstChild.remove()
-        document.getElementById(property.id).firstChild.remove()
-        document.getElementById(property.id).insertAdjacentHTML('afterbegin', hotelPiece);
-        document.getElementById(property.id).firstChild.style.left = "50%"
-        document.getElementById(property.id).firstChild.style.marginLeft = "-20px"
-    }
-
-}
-
-function placeHouseHotelLeft(property){
-    if(property.totalHouses === 1){
-        document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
-        document.getElementById(property.id).firstChild.style.right = "0px"
-        document.getElementById(property.id).firstChild.style.transform = "rotate(90deg)"
-
-    }
-    else if(property.totalHouses === 2){
-        document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
-        document.getElementById(property.id).firstChild.style.right = "0px"
-        document.getElementById(property.id).firstChild.style.top = "26.7px"
-        document.getElementById(property.id).firstChild.style.transform = "rotate(90deg)"
-
-    }
-    else if (property.totalHouses === 3){
-        document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
-        document.getElementById(property.id).firstChild.style.right = "0px"
-        document.getElementById(property.id).firstChild.style.bottom = "26.7px"
-        document.getElementById(property.id).firstChild.style.transform = "rotate(90deg)"   
-    }
-    else if (property.totalHouses === 4){
-        document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
-        document.getElementById(property.id).firstChild.style.right = "0px"
-        document.getElementById(property.id).firstChild.style.bottom = "0px"
-        document.getElementById(property.id).firstChild.style.transform = "rotate(90deg)"
-    }
-    else if(property.totalHouses === 5){
-        document.getElementById(property.id).firstChild.remove()
-        document.getElementById(property.id).firstChild.remove()
-        document.getElementById(property.id).firstChild.remove()
-        document.getElementById(property.id).firstChild.remove()
-        document.getElementById(property.id).insertAdjacentHTML('afterbegin', hotelPiece);
-        document.getElementById(property.id).firstChild.style.transform = "rotate(90deg)"
-        document.getElementById(property.id).firstChild.style.right = "-10px"
-        document.getElementById(property.id).firstChild.style.top = "40%"
-    }
-
-}
-
-function placeHouseHotelTop(property){
-    if(property.totalHouses === 1){
-        document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
-        document.getElementById(property.id).firstChild.style.bottom = "0px"
-        document.getElementById(property.id).firstChild.style.right = "0px"
-        document.getElementById(property.id).firstChild.style.transform = "rotate(180deg)"
-
-    }
-    else if(property.totalHouses === 2){
-        document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
-        document.getElementById(property.id).firstChild.style.bottom = "0px"
-        document.getElementById(property.id).firstChild.style.right = "26.7px"
-        document.getElementById(property.id).firstChild.style.transform = "rotate(180deg)"
-
-    }
-    else if (property.totalHouses === 3){
-        document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
-        document.getElementById(property.id).firstChild.style.bottom = "0px"
-        document.getElementById(property.id).firstChild.style.left = "26.7px"
-        document.getElementById(property.id).firstChild.style.transform = "rotate(180deg)"   
-    }
-    else if (property.totalHouses === 4){
-        document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
-        document.getElementById(property.id).firstChild.style.bottom = "0px"
-        document.getElementById(property.id).firstChild.style.left = "0px"
-        document.getElementById(property.id).firstChild.style.transform = "rotate(180deg)"
-    }
-    else if(property.totalHouses === 5){
-        document.getElementById(property.id).firstChild.remove()
-        document.getElementById(property.id).firstChild.remove()
-        document.getElementById(property.id).firstChild.remove()
-        document.getElementById(property.id).firstChild.remove()
-        document.getElementById(property.id).insertAdjacentHTML('afterbegin', hotelPiece);
-        document.getElementById(property.id).firstChild.style.transform = "rotate(180deg)"
-        document.getElementById(property.id).firstChild.style.bottom = "0px"
-        document.getElementById(property.id).firstChild.style.right = "50%"
-        document.getElementById(property.id).firstChild.style.marginRight = "-20px"
-    }
-
-}
-
-function placeHouseHotelRight(property){
-    if(property.totalHouses === 1){
-        document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
-        document.getElementById(property.id).firstChild.style.bottom = "0px"
-        document.getElementById(property.id).firstChild.style.transform = "rotate(270deg)"
-
-    }
-    else if(property.totalHouses === 2){
-        document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
-        document.getElementById(property.id).firstChild.style.bottom = "26.7px"
-        document.getElementById(property.id).firstChild.style.transform = "rotate(270deg)"
-
-    }
-    else if (property.totalHouses === 3){
-        document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
-        document.getElementById(property.id).firstChild.style.top = "26.7px"
-        document.getElementById(property.id).firstChild.style.transform = "rotate(270deg)"   
-    }
-    else if (property.totalHouses === 4){
-        document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
-        document.getElementById(property.id).firstChild.style.transform = "rotate(270deg)"
-    }
-    else if(property.totalHouses === 5){
-        document.getElementById(property.id).firstChild.remove()
-        document.getElementById(property.id).firstChild.remove()
-        document.getElementById(property.id).firstChild.remove()
-        document.getElementById(property.id).firstChild.remove()
-        document.getElementById(property.id).insertAdjacentHTML('afterbegin', hotelPiece);
-        document.getElementById(property.id).firstChild.style.transform = "rotate(270deg)"
-        document.getElementById(property.id).firstChild.style.top = "40%"
-        document.getElementById(property.id).firstChild.style.marginLeft = "-10px"
-    }
-
-}
-
-function checkRentPaid(){
-    //Return user to pay rent screen
-    if (document.getElementById('payRentTutorialId').classList.contains('hidden') === false){
-        addPayRentContainer()
-        removeHouseHotelMortgageScreen()
-        addTradeButton()
-    }
-}
-
-function checkIfBuyingProperty(){
-    if (!buyPropertySellBtn.classList.contains('hidden')){
-        removeEndTurnButton()
-        removeHouseHotelMortgageScreen()
-        addPropertyBuySellAuctionButtons()
-        addPropertyCard('propertyCardId')
-        addTradeButton()
-    }
-}
-
-finishBuyHouseBtn.addEventListener('click', function(e){ 
-    addHouseHotelMortgageScreen()
-    removeBuyHouseTutorial()
-    removeFinishBuyHouseBtn()
-    addEndTurnButton()
-        //Prevent user from skipping turn
-        if (hasRolled === false){
-            removeEndTurnButton()
-            addDice()
         }
-        //Prevent user from ending turn before paying rent
-        if(document.getElementById('payRentTutorialId').classList.contains('hidden') === false){
-            removeEndTurnButton()
+        else if(property.totalHouses === 2){
+            document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
+            document.getElementById(property.id).firstChild.style.left = "26.7px"
+
         }
-        checkRentPaid()
-        checkIfBuyingProperty()
-})
+        else if (property.totalHouses === 3){
+            document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
+            document.getElementById(property.id).firstChild.style.right = "26.7px"
+    
+        }
+        else if (property.totalHouses === 4){
+            document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
+            document.getElementById(property.id).firstChild.style.right = "0px"
+            document.getElementById(property.id).firstChild.style.top = "0px"
+        }
+        else if(property.totalHouses === 5){
+            document.getElementById(property.id).firstChild.remove()
+            document.getElementById(property.id).firstChild.remove()
+            document.getElementById(property.id).firstChild.remove()
+            document.getElementById(property.id).firstChild.remove()
+            document.getElementById(property.id).insertAdjacentHTML('afterbegin', hotelPiece);
+            document.getElementById(property.id).firstChild.style.left = "50%"
+            document.getElementById(property.id).firstChild.style.marginLeft = "-20px"
+        }
 
-function addBuyHouseYesNoButtons (){
-    document.getElementById('buyHouseBtnsId').classList.add('house-hotel-mortgage-btns-container')
-    document.getElementById('buyHouseBtnsId').classList.remove('hidden')
+    }
+
+    function placeHouseHotelLeft(property){
+        if(property.totalHouses === 1){
+            document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
+            document.getElementById(property.id).firstChild.style.right = "0px"
+            document.getElementById(property.id).firstChild.style.transform = "rotate(90deg)"
+
+        }
+        else if(property.totalHouses === 2){
+            document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
+            document.getElementById(property.id).firstChild.style.right = "0px"
+            document.getElementById(property.id).firstChild.style.top = "26.7px"
+            document.getElementById(property.id).firstChild.style.transform = "rotate(90deg)"
+
+        }
+        else if (property.totalHouses === 3){
+            document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
+            document.getElementById(property.id).firstChild.style.right = "0px"
+            document.getElementById(property.id).firstChild.style.bottom = "26.7px"
+            document.getElementById(property.id).firstChild.style.transform = "rotate(90deg)"   
+        }
+        else if (property.totalHouses === 4){
+            document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
+            document.getElementById(property.id).firstChild.style.right = "0px"
+            document.getElementById(property.id).firstChild.style.bottom = "0px"
+            document.getElementById(property.id).firstChild.style.transform = "rotate(90deg)"
+        }
+        else if(property.totalHouses === 5){
+            document.getElementById(property.id).firstChild.remove()
+            document.getElementById(property.id).firstChild.remove()
+            document.getElementById(property.id).firstChild.remove()
+            document.getElementById(property.id).firstChild.remove()
+            document.getElementById(property.id).insertAdjacentHTML('afterbegin', hotelPiece);
+            document.getElementById(property.id).firstChild.style.transform = "rotate(90deg)"
+            document.getElementById(property.id).firstChild.style.right = "-10px"
+            document.getElementById(property.id).firstChild.style.top = "40%"
+        }
+
+    }
+
+    function placeHouseHotelTop(property){
+        if(property.totalHouses === 1){
+            document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
+            document.getElementById(property.id).firstChild.style.bottom = "0px"
+            document.getElementById(property.id).firstChild.style.right = "0px"
+            document.getElementById(property.id).firstChild.style.transform = "rotate(180deg)"
+
+        }
+        else if(property.totalHouses === 2){
+            document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
+            document.getElementById(property.id).firstChild.style.bottom = "0px"
+            document.getElementById(property.id).firstChild.style.right = "26.7px"
+            document.getElementById(property.id).firstChild.style.transform = "rotate(180deg)"
+
+        }
+        else if (property.totalHouses === 3){
+            document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
+            document.getElementById(property.id).firstChild.style.bottom = "0px"
+            document.getElementById(property.id).firstChild.style.left = "26.7px"
+            document.getElementById(property.id).firstChild.style.transform = "rotate(180deg)"   
+        }
+        else if (property.totalHouses === 4){
+            document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
+            document.getElementById(property.id).firstChild.style.bottom = "0px"
+            document.getElementById(property.id).firstChild.style.left = "0px"
+            document.getElementById(property.id).firstChild.style.transform = "rotate(180deg)"
+        }
+        else if(property.totalHouses === 5){
+            document.getElementById(property.id).firstChild.remove()
+            document.getElementById(property.id).firstChild.remove()
+            document.getElementById(property.id).firstChild.remove()
+            document.getElementById(property.id).firstChild.remove()
+            document.getElementById(property.id).insertAdjacentHTML('afterbegin', hotelPiece);
+            document.getElementById(property.id).firstChild.style.transform = "rotate(180deg)"
+            document.getElementById(property.id).firstChild.style.bottom = "0px"
+            document.getElementById(property.id).firstChild.style.right = "50%"
+            document.getElementById(property.id).firstChild.style.marginRight = "-20px"
+        }
+
+    }
+
+    function placeHouseHotelRight(property){
+        if(property.totalHouses === 1){
+            document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
+            document.getElementById(property.id).firstChild.style.bottom = "0px"
+            document.getElementById(property.id).firstChild.style.transform = "rotate(270deg)"
+
+        }
+        else if(property.totalHouses === 2){
+            document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
+            document.getElementById(property.id).firstChild.style.bottom = "26.7px"
+            document.getElementById(property.id).firstChild.style.transform = "rotate(270deg)"
+
+        }
+        else if (property.totalHouses === 3){
+            document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
+            document.getElementById(property.id).firstChild.style.top = "26.7px"
+            document.getElementById(property.id).firstChild.style.transform = "rotate(270deg)"   
+        }
+        else if (property.totalHouses === 4){
+            document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
+            document.getElementById(property.id).firstChild.style.transform = "rotate(270deg)"
+        }
+        else if(property.totalHouses === 5){
+            document.getElementById(property.id).firstChild.remove()
+            document.getElementById(property.id).firstChild.remove()
+            document.getElementById(property.id).firstChild.remove()
+            document.getElementById(property.id).firstChild.remove()
+            document.getElementById(property.id).insertAdjacentHTML('afterbegin', hotelPiece);
+            document.getElementById(property.id).firstChild.style.transform = "rotate(270deg)"
+            document.getElementById(property.id).firstChild.style.top = "40%"
+            document.getElementById(property.id).firstChild.style.marginLeft = "-10px"
+        }
+
+    }
+
+function addBuyHouseHotelYesNoButtons (){
+    document.getElementById('buyHouseHotelBtnsId').classList.add('house-hotel-mortgage-btns-container')
+    document.getElementById('buyHouseHotelBtnsId').classList.remove('hidden')
 }
 
-function removeBuyHouseYesNoButtons (){
-    document.getElementById('buyHouseBtnsId').classList.add('hidden')
-    document.getElementById('buyHouseBtnsId').classList.remove('house-hotel-mortgage-btns-container')
+function removeBuyHouseHotelYesNoButtons (){
+    document.getElementById('buyHouseHotelBtnsId').classList.add('hidden')
+    document.getElementById('buyHouseHotelBtnsId').classList.remove('house-hotel-mortgage-btns-container')
 }
 
-function addBuyHouseTutorial (){
-    document.getElementById('buyHouseTutorialId').classList.add('turn-interaction-description')
-    document.getElementById('buyHouseTutorialId').classList.remove('hidden')
+function addBuyHouseHotelTutorial (){
+    document.getElementById('buyHouseHotelTutorialId').classList.add('turn-interaction-description')
+    document.getElementById('buyHouseHotelTutorialId').classList.remove('hidden')
 }
 
-function removeBuyHouseTutorial (){
-    document.getElementById('buyHouseTutorialId').classList.add('hidden')
-    document.getElementById('buyHouseTutorialId').classList.remove('turn-interaction-description')
+function removeBuyHouseHotelTutorial (){
+    document.getElementById('buyHouseHotelTutorialId').classList.add('hidden')
+    document.getElementById('buyHouseHotelTutorialId').classList.remove('turn-interaction-description')
 }
 
-function addFinishBuyHouseBtn (){
-    finishBuyHouseBtn.classList.add('end-turn-button')
-    finishBuyHouseBtn.classList.remove('hidden')
+function addFinishBuyHouseHotelBtn (){
+    finishBuyHouseHotelBtn.classList.add('end-turn-button')
+    finishBuyHouseHotelBtn.classList.remove('hidden')
 }
 
-function removeFinishBuyHouseBtn (){
-    finishBuyHouseBtn.classList.add('hidden')
-    finishBuyHouseBtn.classList.remove('end-turn-button')
+function removeFinishBuyHouseHotelBtn (){
+    finishBuyHouseHotelBtn.classList.add('hidden')
+    finishBuyHouseHotelBtn.classList.remove('end-turn-button')
 }
 
 function removeTradeButton(){
@@ -1993,34 +1980,145 @@ function addTradeButton(){
 
 //Sell House Functions
 //Sell House Functions
-
-
-sellHouseHotelBtn.addEventListener('click', function(e){
+sellHouseHotelBtn.addEventListener('click', function(){
     removeDice()
-    generatePlayerPropertyArray(currentPlayerTurn)
+    generatePlayerColorPropertyArray()
     removeHouseHotelMortgageScreen()
     removeEndTurnButton()
     addFinishSellHouseHotelBtn()
     addSellHouseHotelTutorial()
-    canSellHouseHotelArray = []
+    updateCanSellHouseHotelArray()
+    addCanSelectClassesToPropertyArray(canSellHouseHotelArray)
+    addEventLisentersToArray(canSellHouseHotelArray, sellHouseHotelPropertySpace)  
+})
 
-    //Sort owned property into array of full color set matches
+    //Create clickable property to sell houses
+    function sellHouseHotelPropertySpace (){
+        for (let i = 0; i < canSellHouseHotelArray.length; i++){
+            if (canSellHouseHotelArray[i].id === this.id){
+                propertyClickedOn = canSellHouseHotelArray[i]
+
+                if(propertyClickedOn.totalHouses <= 4 && propertyClickedOn.totalHouses > 0){
+                    document.getElementById('sellHouseHotelLabel').innerHTML = `Would you like to sell a house on ${propertyClickedOn.name} for $${(Math.floor(propertyClickedOn.buildingCost / 2))}?`        
+                }
+                else if (propertyClickedOn.totalHouses === 5){
+                    document.getElementById('sellHouseHotelLabel').innerHTML = `Would you like to sell a hotel on ${propertyClickedOn.name} for $${Math.floor((propertyClickedOn.buildingCost / 2))}?`  
+                }
+                removeSellHouseHotelTutorial()
+                addSellHouseHotelYesNoButtons()
+                sellHouseHotelYesBtn.addEventListener('click', sellHouseHotelYesBtnOutcome)
+                sellHouseHotelNoBtn.addEventListener('click', sellHouseHotelNoBtnOutcome) 
+                removeFinishSellHouseHotelBtn()
+                //Prevent user from clicking multiple properties at once
+                removeCanSelectClassesToPropertyArray(canSellHouseHotelArray)
+                removeEventListenersFromArray(canSellHouseHotelArray, sellHouseHotelPropertySpace)
+                return
+            }
+        }
+    }
+
+    //Yes button function
+    function sellHouseHotelYesBtnOutcome(){
+        removeHouseHotel(propertyClickedOn)
+        if(propertyClickedOn.totalHouses < 4){
+            currentPlayerTurn.housesOwned--
+            propertyClickedOn.totalHouses--
+        }
+
+        else{
+            currentPlayerTurn.housesOwned += 4
+            currentPlayerTurn.hotelsOwned--
+            propertyClickedOn.totalHouses--
+        }
+        updatePropertySetTotalHousesSubtract()
+        updateCanSellHouseHotelArray()
+        currentPlayerTurn.cash += (Math.floor(propertyClickedOn.buildingCost / 2))
+        updateRentHouseHotel(propertyClickedOn)
+        updatePlayerCashTotalDisplay()
+        removeSellHouseHotelYesNoButtons()
+        addSellHouseHotelTutorial()
+        addFinishSellHouseHotelBtn()
+        //Restore function and class indicators to add houses to eligible properties
+        addCanSelectClassesToPropertyArray(canSellHouseHotelArray)
+        addEventLisentersToArray(canSellHouseHotelArray, sellHouseHotelPropertySpace)       
+        sellHouseHotelYesBtn.removeEventListener('click', sellHouseHotelYesBtnOutcome)
+        sellHouseHotelNoBtn.removeEventListener('click', sellHouseHotelNoBtnOutcome)
+    }
+
+    //No Button Function
+    function sellHouseHotelNoBtnOutcome(){
+        removeSellHouseHotelYesNoButtons()
+        addSellHouseHotelTutorial()
+        addFinishSellHouseHotelBtn()
+        //Restore function and class indicators to sell houses to eligible properties
+        addCanSelectClassesToPropertyArray(canSellHouseHotelArray)
+        addEventLisentersToArray(canSellHouseHotelArray, sellHouseHotelPropertySpace)       
+        sellHouseHotelYesBtn.removeEventListener('click', sellHouseHotelYesBtnOutcome)
+        sellHouseHotelNoBtn.removeEventListener('click', sellHouseHotelNoBtnOutcome)
+    } 
+
+    //Finish Button Function
+    finishSellHouseHotelBtn.addEventListener('click', function(e){ 
+        addHouseHotelMortgageScreen()
+        removeSellHouseHotelTutorial()
+        removeFinishSellHouseHotelBtn()
+        addEndTurnButton()
+        removeCanSelectClassesToPropertyArray(canSellHouseHotelArray)
+        removeEventListenersFromArray(canSellHouseHotelArray, sellHouseHotelPropertySpace)
+        
+        //Prevent User From Skipping Turn
+        if (hasRolled === false){
+            removeEndTurnButton()
+            addDice()
+        }    
+        //Prevent user from ending turn before paying rent
+        if(document.getElementById('payRentTutorialId').classList.contains('hidden') === false){
+            removeEndTurnButton()
+        }
+        checkRentPaid()
+        checkIfBuyingProperty()
+    })
+
+    function updatePropertySetTotalHousesSubtract(){
+        for (let i = 0; i < ownedColorPropertyArray.length; i++){
+            if (ownedColorPropertyArray[i].color === propertyClickedOn.color){
+                ownedColorPropertyArray[i].propertySetTotalHouses--
+            }
+        }
+    }
+
+function updateCanSellHouseHotelArray(){
+    canSellHouseHotelArray = []
+    
     for (let i = 0; i < ownedColorPropertyArray.length;){
-        if (ownedColorPropertyArray[i].type === 'color' && ownedColorPropertyArray[i].setTotal === 2 && (i + 1) < ownedColorPropertyArray.length){
+        //Check if player owns enough properties for set of two
+        if (ownedColorPropertyArray[i].setTotal === 2 && (i + 1) <= ownedColorPropertyArray.length){
+                //Check if player owns all properties if two properties in set
                 if(ownedColorPropertyArray[i].color === ownedColorPropertyArray[i+1].color){
-                    canSellHouseHotelArray.push(ownedColorPropertyArray[i])
-                    canSellHouseHotelArray.push(ownedColorPropertyArray[i+1])
+                    for (let j = i ; j < i+2; j++){
+                        // Check if property has houses to sell, Check if total houses on property is same or more than other properties in set
+                        if(ownedColorPropertyArray[j].totalHouses > 0
+                        && ownedColorPropertyArray[j].totalHouses >= (ownedColorPropertyArray[j].propertySetTotalHouses / ownedColorPropertyArray[j].setTotal)){
+                                canSellHouseHotelArray.push(ownedColorPropertyArray[j])
+                        }
+                    }
                     i += 2
                 } 
                 else{
                     i++
                 }        
         }
-        else if(ownedColorPropertyArray[i].type === 'color' && ownedColorPropertyArray[i].setTotal === 3 && (i + 2) < ownedColorPropertyArray.length){
+        //Check if player owns enough properties for set of 3
+        else if(ownedColorPropertyArray[i].setTotal === 3 && (i + 2) <= ownedColorPropertyArray.length){
+            //Check if player owns all properties in set
             if (ownedColorPropertyArray[i].color === ownedColorPropertyArray[i+1].color && ownedColorPropertyArray[i].color === ownedColorPropertyArray[i+2].color){
-                canSellHouseHotelArray.push(ownedColorPropertyArray[i])
-                canSellHouseHotelArray.push(ownedColorPropertyArray[i+1])
-                canSellHouseHotelArray.push(ownedColorPropertyArray[i+2])
+                for (let j = i; j < i+3; j++){
+                        // Check if property has houses to sell, Check if total houses on property is same or more than other properties in set
+                        if(ownedColorPropertyArray[j].totalHouses > 0 
+                        && ownedColorPropertyArray[j].totalHouses >= (ownedColorPropertyArray[j].propertySetTotalHouses / ownedColorPropertyArray[j].setTotal)){
+                            canSellHouseHotelArray.push(ownedColorPropertyArray[j])
+                    }
+                }
                 i += 3
             }
             else{
@@ -2030,121 +2128,8 @@ sellHouseHotelBtn.addEventListener('click', function(e){
         else{
             i++
         }
-       
     }
-    addHouseHotelSellClassBasedOnLocationAllProperties(canSellHouseHotelArray, 0)
-
-    //Function for property spaces that are eilible to sell houses
-    canSellHouseHotelArray.forEach(property =>{
-        let clickableProperty = document.getElementById(property.id)
-        if (property.totalHouses > 0){
-            clickableProperty.classList.add('can-select-property')
-            clickableProperty.addEventListener('click', sellHouseHotelPropertySpace)     
-        }
-        
-        //Create clickable property to sell houses
-        function sellHouseHotelPropertySpace (){
-            if(property.totalHouses <= 4 && property.totalHouses > 0){
-                document.getElementById('sellHouseHotelLabel').innerHTML = `Would you like to sell a house on ${property.name} for $${(Math.floor(property.buildingCost / 2))}?`        
-            }
-            else if (property.totalHouses === 5){
-                document.getElementById('sellHouseHotelLabel').innerHTML = `Would you like to sell a hotel on ${property.name} for $${Math.floor((property.buildingCost / 2))}?`  
-            }
-            else{
-                return
-            }
-            removeSellHouseHotelTutorial()
-            addSellHouseHotelYesNoButtons()
-            sellHouseHotelYesBtn.addEventListener('click', sellHouseHotelYesBtnOutcome)
-            sellHouseHotelNoBtn.addEventListener('click', sellHouseHotelNoBtnOutcome) 
-            removeFinishSellHouseHotelBtn()
-            //Prevent user from clicking multiple properties at once
-            for (let i = 0; i < canSellHouseHotelArray.length; i++){
-                if (canSellHouseHotelArray > 0){
-                    document.getElementById(canSellHouseHotelArray[i].id).classList.add('disable-clicks')
-                    document.getElementById(canSellHouseHotelArray[i].id).classList.remove('can-select-property')
-                }
-            }
-        }
-
-        //Yes button function
-        function sellHouseHotelYesBtnOutcome(){
-            //Restore function and class indicators to add houses to eligible properties
-            for (let i = 0; i < canSellHouseHotelArray.length; i++){
-                if (canSellHouseHotelArray[i].totalHouses > 0){
-                    document.getElementById(canSellHouseHotelArray[i].id).classList.remove('disable-clicks')
-                    document.getElementById(canSellHouseHotelArray[i].id).classList.add('can-select-property')
-                }              
-            }
-            removeHouseHotel(property)
-            if(property.totalHouses < 4){
-                currentPlayerTurn.housesOwned--
-                property.totalHouses--
-                if(property.totalHouses === 0){
-                    clickableProperty.classList.remove('can-select-property')
-                    clickableProperty.removeEventListener('click', sellHouseHotelPropertySpace)
-                    removeHouseHotelClassBasedOnLocationSingleProperty(property)
-                }
-            }
-        
-            else{
-                currentPlayerTurn.housesOwned += 4
-                currentPlayerTurn.hotelsOwned--
-                property.totalHouses--
-            }
-            currentPlayerTurn.cash += (Math.floor(property.buildingCost / 2))
-            updateRentHouseHotel(property)
-            //change placeHouse
-            updatePlayerCashTotalDisplay()
-            removeSellHouseHotelYesNoButtons()
-            addSellHouseHotelTutorial()
-            sellHouseHotelYesBtn.removeEventListener('click', sellHouseHotelYesBtnOutcome)
-            sellHouseHotelNoBtn.removeEventListener('click', sellHouseHotelNoBtnOutcome)
-            addFinishSellHouseHotelBtn()
-        }
-        
-        //No Button Function
-        function sellHouseHotelNoBtnOutcome(){
-            //Restore function and class indicators to sell houses to eligible properties
-            for (let i = 0; i < canSellHouseHotelArray.length; i++){
-                document.getElementById(canSellHouseHotelArray[i].id).classList.remove('disable-clicks')
-                document.getElementById(canSellHouseHotelArray[i].id).classList.add('can-select-property')
-            }
-            sellHouseHotelYesBtn.removeEventListener('click', sellHouseHotelYesBtnOutcome)
-            sellHouseHotelNoBtn.removeEventListener('click', sellHouseHotelNoBtnOutcome)
-            removeSellHouseHotelYesNoButtons()
-            addSellHouseHotelTutorial()
-            addFinishSellHouseHotelBtn()
-        } 
-
-        //Finish Button Function
-        finishSellHouseHotelBtn.addEventListener('click', finishSellHouseHotelBtnOutcome)
-        function finishSellHouseHotelBtnOutcome (){
-            clickableProperty.classList.remove('can-select-property')
-            clickableProperty.removeEventListener('click', sellHouseHotelPropertySpace)
-            finishSellHouseHotelBtn.removeEventListener('click', finishSellHouseHotelBtnOutcome)     
-            removeHouseHotelClassBasedOnLocationAllProperties(canSellHouseHotelArray)   
-        }
-    }) 
-})
-
-finishSellHouseHotelBtn.addEventListener('click', function(e){ 
-    addHouseHotelMortgageScreen()
-    removeSellHouseHotelTutorial()
-    removeFinishSellHouseHotelBtn()
-    addEndTurnButton()
-    //Prevent User From Skipping Turn
-    if (hasRolled === false){
-        removeEndTurnButton()
-        addDice()
-    }    
-    //Prevent user from ending turn before paying rent
-    if(document.getElementById('payRentTutorialId').classList.contains('hidden') === false){
-        removeEndTurnButton()
-    }
-    checkRentPaid()
-    checkIfBuyingProperty()
-})
+}
 
 function removeHouseHotel(property){
     if(property.totalHouses === 1){
@@ -2199,56 +2184,6 @@ function removeSellHouseHotelTutorial (){
     document.getElementById('sellHouseHotelTutorialId').classList.remove('turn-interaction-description')
 }
 
-function addMortgageClassBasedOnLocationAllProperties(sortedPropertyArray){
-    for (let i = 0; i < sortedPropertyArray.length; i++){
-        if(sortedPropertyArray[i].number > 0 && sortedPropertyArray[i].number < 10){
-            document.getElementById(sortedPropertyArray[i].id).classList.add('can-select-property-bottom')
-        }
-        else if(sortedPropertyArray[i].number > 10 && sortedPropertyArray[i].number < 20){
-            document.getElementById(sortedPropertyArray[i].id).classList.add('can-select-property-left')
-        }
-        else if(sortedPropertyArray[i].number > 20 && sortedPropertyArray[i].number < 30){
-            document.getElementById(sortedPropertyArray[i].id).classList.add('can-select-property-top')
-        }
-        else if(sortedPropertyArray[i].number > 30 && sortedPropertyArray[i].number < 40){
-            document.getElementById(sortedPropertyArray[i].id).classList.add('can-select-property-right')
-        }
-    }
-}
-
-function removeMortgageClassBasedOnLocationAllProperties(sortedPropertyArray){
-    for (let i = 0; i < sortedPropertyArray.length; i++){
-        if(sortedPropertyArray[i].number > 0 && sortedPropertyArray[i].number < 10){
-            document.getElementById(sortedPropertyArray[i].id).classList.remove('can-select-property-bottom')
-        }
-        else if(sortedPropertyArray[i].number > 10 && sortedPropertyArray[i].number < 20){
-            document.getElementById(sortedPropertyArray[i].id).classList.remove('can-select-property-left')
-        }
-        else if(sortedPropertyArray[i].number > 20 && sortedPropertyArray[i].number < 30){
-            document.getElementById(sortedPropertyArray[i].id).classList.remove('can-select-property-top')
-        }
-        else if(sortedPropertyArray[i].number > 30 && sortedPropertyArray[i].number < 40){
-            document.getElementById(sortedPropertyArray[i].id).classList.remove('can-select-property-right')
-        }
-    }
-}
-
-function removeMortgageClassBasedOnLocationSingleProperty(propertyToChange){
-        if(propertyToChange.number > 0 && propertyToChange.number < 10){
-            document.getElementById(propertyToChange.id).classList.remove('can-select-property-bottom')
-        }
-        else if(propertyToChange.number > 10 && propertyToChange.number < 20){
-            document.getElementById(propertyToChange.id).classList.remove('can-select-property-left')
-        }
-        else if(propertyToChange.number > 20 && propertyToChange.number < 30){
-            document.getElementById(propertyToChange.id).classList.remove('can-select-property-top')
-        }
-        else if(propertyToChange.number > 30 && propertyToChange.number < 40){
-            document.getElementById(propertyToChange.id).classList.remove('can-select-property-right')
-        }
-    }
-
-
 
 //Open Mortgage Functions
 //Open Mortgage Functions
@@ -2259,128 +2194,90 @@ openMortgageBtn.addEventListener('click', function (){
     removeEndTurnButton()
     addFinishOpenMortgageBtn()
     addOpenMortgageTutorial()
-    canOpenMortgageArray = []
+    updateCanOpenMortgageArray()
+    addCanSelectClassesToPropertyArray(canOpenMortgageArray)
+    addEventLisentersToArray(canOpenMortgageArray, openMortgagePropertySpace)
+})
 
-    //Sort owned property into array of only mortgageable properties
-    for (let i = 0; i < ownedPropertyArray.length; i++){
-        if (ownedPropertyArray[i].mortgageOpen === false){
-            canOpenMortgageArray.push(ownedPropertyArray[i])
-            //Add indicator to mortgagable properties
-            document.getElementById(ownedPropertyArray[i].id).classList.add('can-select-property')
+    //Choose property to open mortgage
+    function openMortgagePropertySpace (){
+        for (let i = 0; i < canOpenMortgageArray.length; i++){
+            if (canOpenMortgageArray[i].id === this.id){
+                propertyClickedOn = canOpenMortgageArray[i]
+                document.getElementById('openMortgageLabel').innerHTML = `Would you like to open mortgage for ${propertyClickedOn.name} for $${propertyClickedOn.mortgage}?`
+                removeOpenMortgageTutorial()
+                addOpenMortgageYesNoButtons()
+                openMortgageYesBtn.addEventListener('click', openMortgageYesBtnOutcome)
+                openMortgageNoBtn.addEventListener('click', openMortgageNoBtnOutcome) 
+                removeFinishOpenMortgageBtn()
+                //Prevent user from clicking multiple properties at once
+                removeCanSelectClassesToPropertyArray(canOpenMortgageArray)
+                removeEventListenersFromArray(canOpenMortgageArray, openMortgagePropertySpace)
+                return   
+            }
         }
-        //Add indicator to mortgagable properties based on location
-        addMortgageClassBasedOnLocationAllProperties(canOpenMortgageArray)
     }
 
-     //Create clickable property to open mortgage
-    canOpenMortgageArray.forEach(property =>{
-        let clickableProperty = document.getElementById(property.id)
-        clickableProperty.addEventListener('click', openMortgagePropertySpace) 
+    //Yes button function
+    function openMortgageYesBtnOutcome(){
+        propertyClickedOn.mortgageOpen = true
+        document.getElementById(propertyClickedOn.id).classList.add('mortgaged')
+        currentPlayerTurn.cash += propertyClickedOn.mortgage
+        updatePlayerCashTotalDisplay()
+        removeOpenMortgageYesNoButtons()
+        addOpenMortgageTutorial()
+        updateCanOpenMortgageArray()
+        addCanSelectClassesToPropertyArray(canOpenMortgageArray)
+        addEventLisentersToArray(canOpenMortgageArray, openMortgagePropertySpace)
+        openMortgageYesBtn.removeEventListener('click', openMortgageYesBtnOutcome)
+        openMortgageNoBtn.removeEventListener('click', openMortgageNoBtnOutcome)
+        addFinishOpenMortgageBtn()
+    }
+    
+    //No Button Function
+    function openMortgageNoBtnOutcome(){
+        removeOpenMortgageYesNoButtons()
+        addOpenMortgageTutorial()
+        addFinishOpenMortgageBtn()
+        addCanSelectClassesToPropertyArray(canOpenMortgageArray)
+        addEventLisentersToArray(canOpenMortgageArray, openMortgagePropertySpace)
+        openMortgageYesBtn.removeEventListener('click', openMortgageYesBtnOutcome)
+        openMortgageNoBtn.removeEventListener('click', openMortgageNoBtnOutcome)
+    } 
 
-        //Choose property to open mortgage
-        function openMortgagePropertySpace (){
-            document.getElementById('openMortgageLabel').innerHTML = `Would you like to open mortgage for ${property.name} for $${property.mortgage}?`
-            removeOpenMortgageTutorial()
-            addOpenMortgageYesNoButtons()
-            openMortgageYesBtn.addEventListener('click', openMortgageYesBtnOutcome)
-            openMortgageNoBtn.addEventListener('click', openMortgageNoBtnOutcome) 
-            removeFinishOpenMortgageBtn()
-            //Prevent user from clicking multiple properties at once
-            for (let i = 0; i < canOpenMortgageArray.length; i++){
-                //Prevent classes being added back to closed mortgage property after closing multiple mortgage                
-                if(canOpenMortgageArray[i].mortgageOpen === false){
-                    document.getElementById(canOpenMortgageArray[i].id).classList.add('disable-clicks')
-                    document.getElementById(canOpenMortgageArray[i].id).classList.remove('can-select-property')
-                }
+    finishOpenMortgageBtn.addEventListener('click', function(){ 
+        addHouseHotelMortgageScreen()
+        removeOpenMortgageTutorial()
+        removeFinishOpenMortgageBtn()
+        addEndTurnButton()
+        removeCanSelectClassesToPropertyArray(canOpenMortgageArray)
+        removeEventListenersFromArray(canOpenMortgageArray, openMortgagePropertySpace)
 
-            }
+        //Prevent User From Skipping Turn
+        if (hasRolled === false){
+            removeEndTurnButton()
+            addDice()
         }
-
-        //Yes button function
-        function openMortgageYesBtnOutcome(){
-            property.mortgageOpen = true
-            //Restore function and class indicators to remaining mortgagebale propterties
-            for (let i = 0; i < canOpenMortgageArray.length;){
-                if(canOpenMortgageArray[i].mortgageOpen === false){
-                    document.getElementById(canOpenMortgageArray[i].id).classList.remove('disable-clicks')
-                    document.getElementById(canOpenMortgageArray[i].id).classList.add('can-select-property')
-                    i++
-                }
-                else{
-                    i++
-                }
-
-            }
-            currentPlayerTurn.cash += property.mortgage
-            updatePlayerCashTotalDisplay()
-            removeOpenMortgageYesNoButtons()
-            addOpenMortgageTutorial()
-            clickableProperty.classList.add('mortgaged')
-            clickableProperty.classList.remove('can-select-property')
-            clickableProperty.classList.remove('disable-clicks')
-            removeMortgageClassBasedOnLocationSingleProperty(property)
-            clickableProperty.removeEventListener('click', openMortgagePropertySpace)
-            openMortgageYesBtn.removeEventListener('click', openMortgageYesBtnOutcome)
-            openMortgageNoBtn.removeEventListener('click', openMortgageNoBtnOutcome)
-            addFinishOpenMortgageBtn()
+        //Prevent user from ending turn before paying rent
+        if(document.getElementById('payRentTutorialId').classList.contains('hidden') === false){
+            removeEndTurnButton()
         }
-        
-        //No Button Function
-        function openMortgageNoBtnOutcome(){
-        //Restore function and class indicators to remaining mortgagebale propterties
-        for (let i = 0; i < canOpenMortgageArray.length;){
-            if (canOpenMortgageArray[i].mortgageOpen === false){
-                document.getElementById(canOpenMortgageArray[i].id).classList.remove('disable-clicks')
-                document.getElementById(canOpenMortgageArray[i].id).classList.add('can-select-property')
-                i++
-            }
-            else{
-                i++
-            }
-
-        }
-            openMortgageYesBtn.removeEventListener('click', openMortgageYesBtnOutcome)
-            openMortgageNoBtn.removeEventListener('click', openMortgageNoBtnOutcome)
-            removeOpenMortgageYesNoButtons()
-            addOpenMortgageTutorial()
-            addFinishOpenMortgageBtn()
-        } 
-
-        //Finish Button Function
-        finishOpenMortgageBtn.addEventListener('click', finishOpenMortgageBtnOutcome)
-        function finishOpenMortgageBtnOutcome (){
-            let remainingUnmortgagedProperties = []
-            remainingUnmortgagedProperties = canOpenMortgageArray.filter(function(remainingProperty){return remainingProperty.mortgageOpen === false})
-            //Find reamining unmortgaged properties and remove event listener and class indicators
-            remainingUnmortgagedProperties.forEach(remaining =>{
-                let notMortgagable = document.getElementById(remaining.id)
-                notMortgagable.classList.remove('can-select-property')
-                notMortgagable.removeEventListener('click', openMortgagePropertySpace)
-                finishOpenMortgageBtn.removeEventListener('click', finishOpenMortgageBtnOutcome)
-            })
-            //Remove classes for rest of properties based on location
-            removeMortgageClassBasedOnLocationAllProperties(canOpenMortgageArray)
-        }
+        checkRentPaid()
+        checkIfBuyingProperty()
     })
-})
 
-finishOpenMortgageBtn.addEventListener('click', function(e){ 
-    addHouseHotelMortgageScreen()
-    removeOpenMortgageTutorial()
-    removeFinishOpenMortgageBtn()
-    addEndTurnButton()
-    //Prevent User From Skipping Turn
-    if (hasRolled === false){
-        removeEndTurnButton()
-        addDice()
+    function updateCanOpenMortgageArray(){
+        canOpenMortgageArray = []
+        //Sort owned property into array of mortgageable properties
+        for (let i = 0; i < ownedPropertyArray.length; i++){
+            if (ownedPropertyArray[i].type != 'color' && !ownedPropertyArray[i].mortgageOpen){
+                canOpenMortgageArray.push(ownedPropertyArray[i])
+            }
+            else if(!ownedPropertyArray[i].mortgageOpen && ownedPropertyArray[i].totalHouses < 1){
+                canOpenMortgageArray.push(ownedPropertyArray[i])
+            }
+        }
     }
-     //Prevent user from ending turn before paying rent
-     if(document.getElementById('payRentTutorialId').classList.contains('hidden') === false){
-         removeEndTurnButton()
-     }
-     checkRentPaid()
-     checkIfBuyingProperty()
-})
 
 function addOpenMortgageYesNoButtons (){
     document.getElementById('openMortgageBtnsId').classList.add('house-hotel-mortgage-btns-container')
@@ -2414,6 +2311,7 @@ function removeFinishOpenMortgageBtn (){
 
 //Close Mortgage Functions
 //Close Mortgage Functions
+
 closeMortgageBtn.addEventListener('click', function (e){
     removeDice()
     generatePlayerPropertyArray(currentPlayerTurn)
@@ -2421,126 +2319,87 @@ closeMortgageBtn.addEventListener('click', function (e){
     removeEndTurnButton()
     addFinishCloseMortgageBtn()
     addCloseMortgageTutorial()
-    canCloseMortgageArray = []
+    updateCanCloseMortgageArray()
+    addCanSelectClassesToPropertyArray(canCloseMortgageArray)
+    addEventLisentersToArray(canCloseMortgageArray, closeMortgagePropertySpace)
+})
 
-    //Sort owned property into array of only mortgageable properties
+    //Choose property to close mortgage
+    function closeMortgagePropertySpace (){
+        for (let i = 0; i < canCloseMortgageArray.length; i++){
+            if (canCloseMortgageArray[i].id === this.id){
+                propertyClickedOn = canCloseMortgageArray[i]
+                document.getElementById('closeMortgageLabel').innerHTML = `Would you like to close mortgage for ${propertyClickedOn.name} for $${Math.floor((propertyClickedOn.mortgage * 1.1))}?`
+                removeCloseMortgageTutorial()
+                addCloseMortgageYesNoButtons()
+                closeMortgageYesBtn.addEventListener('click', closeMortgageYesBtnOutcome)
+                closeMortgageNoBtn.addEventListener('click', closeMortgageNoBtnOutcome) 
+                removeFinishCloseMortgageBtn()
+                //Prevent user from clicking multiple properties
+                removeCanSelectClassesToPropertyArray(canCloseMortgageArray)
+                removeEventListenersFromArray(canCloseMortgageArray, closeMortgagePropertySpace)
+                return
+            }
+        }
+    }
+    //Yes button function
+    function closeMortgageYesBtnOutcome(){
+        propertyClickedOn.mortgageOpen = false
+        document.getElementById(propertyClickedOn.id).classList.remove('mortgaged')
+        currentPlayerTurn.cash -= (Math.floor(propertyClickedOn.mortgage * 1.1)) 
+        updatePlayerCashTotalDisplay()
+        removeCloseMortgageYesNoButtons()
+        addCloseMortgageTutorial()
+        updateCanCloseMortgageArray()
+        addCanSelectClassesToPropertyArray(canCloseMortgageArray)
+        addEventLisentersToArray(canCloseMortgageArray, closeMortgagePropertySpace)
+        closeMortgageYesBtn.removeEventListener('click', closeMortgageYesBtnOutcome)
+        closeMortgageNoBtn.removeEventListener('click', closeMortgageNoBtnOutcome)
+        addFinishCloseMortgageBtn()
+    }
+            
+    //No Button Function
+    function closeMortgageNoBtnOutcome(){
+            removeCloseMortgageYesNoButtons()
+            addCloseMortgageTutorial()
+            addFinishCloseMortgageBtn()
+            addCanSelectClassesToPropertyArray(canCloseMortgageArray)
+            addEventLisentersToArray(canCloseMortgageArray, closeMortgagePropertySpace)
+            closeMortgageYesBtn.removeEventListener('click', closeMortgageYesBtnOutcome)
+            closeMortgageNoBtn.removeEventListener('click', closeMortgageNoBtnOutcome)
+        } 
+
+    //Finish Close Mortgage Button
+    finishCloseMortgageBtn.addEventListener('click', function(e){ 
+        addHouseHotelMortgageScreen()
+        removeCloseMortgageTutorial()
+        removeFinishCloseMortgageBtn()
+        addEndTurnButton()
+        removeCanSelectClassesToPropertyArray(canCloseMortgageArray)
+        removeEventListenersFromArray(canCloseMortgageArray, closeMortgagePropertySpace)
+
+        //Prevent User From Skipping Turn
+        if (hasRolled === false){
+            removeEndTurnButton()
+            addDice()
+        }
+        //Prevent user from ending turn before paying rent
+        if(document.getElementById('payRentTutorialId').classList.contains('hidden') === false){
+            removeEndTurnButton()
+        }
+        checkRentPaid()
+        checkIfBuyingProperty()
+    })
+
+function updateCanCloseMortgageArray(){
+canCloseMortgageArray = []
+    //Sort owned property into array of opened mortgage properties
     for (let i = 0; i < ownedPropertyArray.length; i++){
         if (ownedPropertyArray[i].mortgageOpen === true){
             canCloseMortgageArray.push(ownedPropertyArray[i])
-            //Add indicator to mortgagable properties
-            document.getElementById(ownedPropertyArray[i].id).classList.add('can-select-property')
         }
-                //Add indicator to mortgagable properties based on location
-                addMortgageClassBasedOnLocationAllProperties(canCloseMortgageArray)
     }
-        //Create clickable property to close mortgage
-        canCloseMortgageArray.forEach(property =>{
-        let clickableProperty = document.getElementById(property.id)
-        clickableProperty.addEventListener('click', closeMortgagePropertySpace) 
-
-        //Choose property to close mortgage
-        function closeMortgagePropertySpace (){
-            document.getElementById('closeMortgageLabel').innerHTML = `Would you like to close mortgage for ${property.name} for $${Math.floor((property.mortgage * 1.1))}?`
-            removeCloseMortgageTutorial()
-            addCloseMortgageYesNoButtons()
-            closeMortgageYesBtn.addEventListener('click', closeMortgageYesBtnOutcome)
-            closeMortgageNoBtn.addEventListener('click', closeMortgageNoBtnOutcome) 
-            removeFinishCloseMortgageBtn()
-            //Prevent user from clicking multiple properties
-            for (let i = 0; i < canCloseMortgageArray.length; i++){
-                //Prevent classes being added back to closed mortgage property after closing multiple mortgage
-                if (canCloseMortgageArray[i].mortgageOpen === true){
-                    document.getElementById(canCloseMortgageArray[i].id).classList.add('disable-clicks')
-                    document.getElementById(canCloseMortgageArray[i].id).classList.remove('can-select-property')
-                }
-            }
-        }
-
-        //Yes button function
-        function closeMortgageYesBtnOutcome(){
-            property.mortgageOpen = false
-            //Restore function and class indicators to remaining mortgagebale propterties
-            for (let i = 0; i < canCloseMortgageArray.length;){
-                if (canCloseMortgageArray[i].mortgageOpen === true){
-                    document.getElementById(canCloseMortgageArray[i].id).classList.remove('disable-clicks')
-                    document.getElementById(canCloseMortgageArray[i].id).classList.add('can-select-property')
-                    i++
-                }
-                else{
-                    i++
-                }
-
-            }
-            currentPlayerTurn.cash -= (Math.floor(property.mortgage * 1.1)) 
-            updatePlayerCashTotalDisplay()
-            removeCloseMortgageYesNoButtons()
-            addCloseMortgageTutorial()
-            clickableProperty.classList.remove('mortgaged')
-            clickableProperty.classList.remove('can-select-property')
-            clickableProperty.classList.remove('disable-clicks')
-            removeMortgageClassBasedOnLocationSingleProperty(property)
-            clickableProperty.removeEventListener('click', closeMortgagePropertySpace)
-            closeMortgageYesBtn.removeEventListener('click', closeMortgageYesBtnOutcome)
-            closeMortgageNoBtn.removeEventListener('click', closeMortgageNoBtnOutcome)
-            addFinishCloseMortgageBtn()
-        }
-        
-        //No Button Function
-        function closeMortgageNoBtnOutcome(){
-        //Restore function and class indicators to remaining mortgagebale propterties
-        for (let i = 0; i < canCloseMortgageArray.length;){
-            if(canCloseMortgageArray[i].mortgageOpen === true){
-                document.getElementById(canCloseMortgageArray[i].id).classList.remove('disable-clicks')
-                document.getElementById(canCloseMortgageArray[i].id).classList.add('can-select-property')
-                i++
-            }
-            else{
-                i++
-            }
-
-        }
-            closeMortgageYesBtn.removeEventListener('click', closeMortgageYesBtnOutcome)
-            closeMortgageNoBtn.removeEventListener('click', closeMortgageNoBtnOutcome)
-            removeCloseMortgageYesNoButtons()
-            addCloseMortgageTutorial()
-            addFinishCloseMortgageBtn()
-        } 
-
-        //Finish Button Function
-        finishCloseMortgageBtn.addEventListener('click', finishCloseMortgageBtnOutcome)
-        function finishCloseMortgageBtnOutcome (){
-         let remainingMortgagedProperties = []
-         remainingMortgagedProperties = canCloseMortgageArray.filter(function(remainingProperty){return remainingProperty.mortgageOpen === true})
-         //Find reamining mortgaged properties and remove event listener and class indicators
-         remainingMortgagedProperties.forEach(remaining =>{
-             let canMortgage = document.getElementById(remaining.id)
-             canMortgage.classList.remove('can-select-property')
-             canMortgage.removeEventListener('click', closeMortgagePropertySpace)
-             finishCloseMortgageBtn.removeEventListener('click', finishCloseMortgageBtnOutcome)
-         })
-          //Remove classes for rest of properties based on location
-          removeMortgageClassBasedOnLocationAllProperties(canCloseMortgageArray)
-        }
-    }) 
-})
-
-finishCloseMortgageBtn.addEventListener('click', function(e){ 
-    addHouseHotelMortgageScreen()
-    removeCloseMortgageTutorial()
-    removeFinishCloseMortgageBtn()
-    addEndTurnButton()
-    //Prevent User From Skipping Turn
-    if (hasRolled === false){
-        removeEndTurnButton()
-        addDice()
-    }
-    //Prevent user from ending turn before paying rent
-    if(document.getElementById('payRentTutorialId').classList.contains('hidden') === false){
-        removeEndTurnButton()
-    }
-    checkRentPaid()
-    checkIfBuyingProperty()
-})
+}
 
 function addCloseMortgageTutorial (){
     document.getElementById('closeMortgageTutorialId').classList.add('turn-interaction-description')
@@ -2935,5 +2794,4 @@ function sortPlayerPropertyArray(array){
 //Add logic to bakrupt player if they land on non-owned property square but don't have assets to pay for it
 //Add trading window
 //Add cpu
-//Houses only able to be bought 1 per property until even
-//Can only mortgage if no buildings on property
+

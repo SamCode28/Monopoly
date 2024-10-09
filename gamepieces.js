@@ -323,6 +323,7 @@ let playerTurnTicker = 1;
 let turnInteractionDescription = document.getElementById('turnInteractionDescriptionId')
 let hasRolled = false
 let gameWinner
+let propertyClickedOn
 
 //Game Setup Total Player Buttons
 const playerTotalButtons = [
@@ -386,9 +387,9 @@ let auctionLeaderColor
 
 //Buy House / Hotel
 const buyHouseHotelBtn = document.getElementById('buyHouseHotelBtnId')
-const buyHouseYesBtn = document.getElementById('buyHouseYesBtnId')
-const buyHouseNoBtn = document.getElementById('buyHouseNoBtnId')
-const finishBuyHouseBtn = document.getElementById('finishBuyHouseBtnId')
+const buyHouseHotelYesBtn = document.getElementById('buyHouseHotelYesBtnId')
+const buyHouseHotelNoBtn = document.getElementById('buyHouseHotelNoBtnId')
+const finishBuyHouseHotelBtn = document.getElementById('finishBuyHouseHotelBtnId')
 let canBuyHouseHotelArray = []
 
 
@@ -500,6 +501,7 @@ let propertyArray = [
        mortgageOpen: false,
        buildingCost: 50,
        totalHouses: 0,
+       propertySetTotalHouses: 0,
        oneHouseRent: 10,
        twoHouseRent: 30,
        threeHouseRent: 90,
@@ -525,7 +527,7 @@ let propertyArray = [
        currentOccupants: 0,
        isProperty: true,
        hasOwner: false,
-       owner:  "",
+       owner: "",
        price: 60,
        rent: 4,
        startingRent: 4,
@@ -533,6 +535,7 @@ let propertyArray = [
        mortgageOpen: false,
        buildingCost: 50,
        totalHouses: 0,
+       propertySetTotalHouses: 0,
        oneHouseRent: 20,
        twoHouseRent: 60,
        threeHouseRent: 80,
@@ -580,6 +583,7 @@ let propertyArray = [
        mortgageOpen: false,
        buildingCost: 50,
        totalHouses: 0,
+       propertySetTotalHouses: 0,
        oneHouseRent: 30,
        twoHouseRent: 90,
        threeHouseRent: 270,
@@ -603,7 +607,7 @@ let propertyArray = [
        currentOccupants: 0,
        isProperty: true,
        hasOwner: false,
-       owner:  "",
+       owner: "",
        price: 100,
        rent: 6,
        startingRent: 6,
@@ -611,6 +615,7 @@ let propertyArray = [
        mortgageOpen: false,
        buildingCost: 50,
        totalHouses: 0,
+       propertySetTotalHouses: 0,
        oneHouseRent: 30,
        twoHouseRent: 90,
        threeHouseRent: 270,
@@ -627,7 +632,7 @@ let propertyArray = [
        currentOccupants: 0,
        isProperty: true,
        hasOwner: false,
-       owner:  "",
+       owner: "",
        price: 120,
        rent: 8, 
        startingRent: 8,
@@ -635,6 +640,7 @@ let propertyArray = [
        mortgageOpen: false,
        buildingCost: 50,
        totalHouses: 0,
+       propertySetTotalHouses: 0,
        oneHouseRent: 40,
        twoHouseRent: 100,
        threeHouseRent: 300,
@@ -665,6 +671,7 @@ let propertyArray = [
        mortgageOpen: false,
        buildingCost: 100,
        totalHouses: 0,
+       propertySetTotalHouses: 0,
        oneHouseRent: 50,
        twoHouseRent: 150,
        threeHouseRent: 450,
@@ -705,6 +712,7 @@ let propertyArray = [
        mortgageOpen: false,
        buildingCost: 100,
        totalHouses: 0,
+       propertySetTotalHouses: 0,
        oneHouseRent: 50,
        twoHouseRent: 150,
        threeHouseRent: 450,
@@ -729,6 +737,7 @@ let propertyArray = [
        mortgageOpen: false,
        buildingCost: 100,
        totalHouses: 0,
+       propertySetTotalHouses: 0,
        oneHouseRent: 60,
        twoHouseRent: 180,
        threeHouseRent: 500,
@@ -768,6 +777,7 @@ let propertyArray = [
        mortgageOpen: false,
        buildingCost: 100,
        totalHouses: 0,
+       propertySetTotalHouses: 0,
        oneHouseRent: 70,
        twoHouseRent: 200,
        threeHouseRent: 550,
@@ -798,6 +808,7 @@ let propertyArray = [
        mortgageOpen: false,
        buildingCost: 100,
        totalHouses: 0,
+       propertySetTotalHouses: 0,
        oneHouseRent: 70,
        twoHouseRent: 200,
        threeHouseRent: 550,
@@ -822,6 +833,7 @@ let propertyArray = [
        mortgageOpen: false,
        buildingCost: 100,
        totalHouses: 0,
+       propertySetTotalHouses: 0,
        oneHouseRent: 80,
        twoHouseRent: 220,
        threeHouseRent: 600,
@@ -852,6 +864,7 @@ let propertyArray = [
        mortgageOpen: false,
        buildingCost: 150,
        totalHouses: 0,
+       propertySetTotalHouses: 0,
        oneHouseRent: 90,
        twoHouseRent: 250,
        threeHouseRent: 700,
@@ -882,6 +895,7 @@ let propertyArray = [
        mortgageOpen: false,
        buildingCost: 150,
        totalHouses: 0,
+       propertySetTotalHouses: 0,
        oneHouseRent: 90,
        twoHouseRent: 250,
        threeHouseRent: 700,
@@ -906,6 +920,7 @@ let propertyArray = [
        mortgageOpen: false,
        buildingCost: 150,
        totalHouses: 0,
+       propertySetTotalHouses: 0,
        oneHouseRent: 100,
        twoHouseRent: 300,
        threeHouseRent: 750,
@@ -945,6 +960,7 @@ let propertyArray = [
        mortgageOpen: false,
        buildingCost: 150,
        totalHouses: 0,
+       propertySetTotalHouses: 0,
        oneHouseRent: 110,
        twoHouseRent: 330,
        threeHouseRent: 800,
@@ -969,6 +985,7 @@ let propertyArray = [
        mortgageOpen: false,
        buildingCost: 150,
        totalHouses: 0,
+       propertySetTotalHouses: 0,
        oneHouseRent: 110,
        twoHouseRent: 330,
        threeHouseRent: 800,
@@ -1009,6 +1026,7 @@ let propertyArray = [
        mortgageOpen: false,
        buildingCost: 150,
        totalHouses: 0,
+       propertySetTotalHouses: 0,
        oneHouseRent: 120,
        twoHouseRent: 360,
        threeHouseRent: 850,
@@ -1039,6 +1057,7 @@ let propertyArray = [
        mortgageOpen: false,
        buildingCost: 200,
        totalHouses: 0,
+       propertySetTotalHouses: 0,
        oneHouseRent: 130,
        twoHouseRent: 390,
        threeHouseRent: 900,
@@ -1063,6 +1082,7 @@ let propertyArray = [
        mortgageOpen: false,
        buildingCost: 200,
        totalHouses: 0,
+       propertySetTotalHouses: 0,
        oneHouseRent: 130,
        twoHouseRent: 390,
        threeHouseRent: 900,
@@ -1093,6 +1113,7 @@ let propertyArray = [
        mortgageOpen: false,
        buildingCost: 200,
        totalHouses: 0,
+       propertySetTotalHouses: 0,
        oneHouseRent: 150,
        twoHouseRent: 450,
        threeHouseRent: 1000,
@@ -1138,6 +1159,7 @@ let propertyArray = [
        mortgageOpen: false,
        buildingCost: 200,
        totalHouses: 0,
+       propertySetTotalHouses: 0,
        oneHouseRent: 175,
        twoHouseRent: 500,
        threeHouseRent: 1100,
@@ -1168,6 +1190,7 @@ let propertyArray = [
        mortgageOpen: false,
        buildingCost: 200,
        totalHouses: 0,
+       propertySetTotalHouses: 0,
        oneHouseRent: 200,
        twoHouseRent: 600,
        threeHouseRent: 1400,
