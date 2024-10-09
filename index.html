@@ -197,7 +197,7 @@
                         <div class="hidden" id="traderCashInputContainerId">
                             <div class="cash-offer">Cash Offer: <span id="traderCashOfferValueId">$0</span></div>
                             <div class="dollar-sign">$</div>
-                            <input type="number" placeholder="Enter" class="cash-input" id="traderCashInputId">
+                            <input type="number" placeholder="Enter" min="0" class="cash-input" id="traderCashInputId">
                             <button class="cash-add-button" id="traderCashSubmitBtnId">Add</button>
                         </div>
                     </div>
@@ -209,7 +209,7 @@
                         <div class="hidden" id="tradeeCashInputContainerId">
                             <div class="cash-offer">Cash Offer: <span id="tradeeCashOfferValueId">$0</span></div>
                             <div class="dollar-sign">$</div>
-                            <input type="number" placeholder="Enter" class="cash-input" id="tradeeCashInputId">
+                            <input type="number" placeholder="Enter" min="0" class="cash-input" id="tradeeCashInputId">
                             <button class="cash-add-button" id="tradeeCashSubmitBtnId">Add</button>
                         </div>
                     </div>
@@ -229,9 +229,7 @@
                         <div class="hidden" id="acceptDeclineButtonsContainerId">
                             <button class="trade-offer-decline-buttons" id="tradeAcceptBtnId">Accept</button>
                             <button class="trade-offer-decline-buttons" id="tradeDeclineBtnId">Decline</button>
-                        </div>
-                        
-
+                        </div>      
                     </container>
             </container>
 

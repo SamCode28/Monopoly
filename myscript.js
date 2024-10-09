@@ -1546,75 +1546,75 @@ function addHouseHotelMortgageScreen (){
     document.getElementById('houseHotelMortgageScreenId').classList.remove('house-hotel-mortgage-screen');
  }
 
- function addHouseHotelBuyClassBasedOnLocationAllProperties(sortedPropertyArray, action, houseLimit){
+ function addHouseHotelBuyClassBasedOnLocationAllProperties(sortedPropertyArray, houseLimit){
     for (let i = 0; i < sortedPropertyArray.length; i++){
         if(sortedPropertyArray[i].totalHouses < houseLimit){
             if(sortedPropertyArray[i].number > 0 && sortedPropertyArray[i].number < 10){
-                document.getElementById(sortedPropertyArray[i].id).classList.add(`can-${action}-house-bottom`)
+                document.getElementById(sortedPropertyArray[i].id).classList.add(`can-select-property-bottom`)
             }
             else if(sortedPropertyArray[i].number > 10 && sortedPropertyArray[i].number < 20){
-                document.getElementById(sortedPropertyArray[i].id).classList.add(`can-${action}-house-left`)
+                document.getElementById(sortedPropertyArray[i].id).classList.add('can-select-property-left')
             }
             else if(sortedPropertyArray[i].number > 20 && sortedPropertyArray[i].number < 30){
-                document.getElementById(sortedPropertyArray[i].id).classList.add(`can-${action}-house-top`)
+                document.getElementById(sortedPropertyArray[i].id).classList.add('can-select-property-top')
             }
             else if(sortedPropertyArray[i].number > 30 && sortedPropertyArray[i].number < 40){
-                document.getElementById(sortedPropertyArray[i].id).classList.add(`can-${action}-house-right`)
+                document.getElementById(sortedPropertyArray[i].id).classList.add('can-select-property-right')
             }
         }
     }
 
 }
 
-function addHouseHotelSellClassBasedOnLocationAllProperties(sortedPropertyArray, action, houseMinimum){
+function addHouseHotelSellClassBasedOnLocationAllProperties(sortedPropertyArray, houseMinimum){
     for (let i = 0; i < sortedPropertyArray.length; i++){
         if(sortedPropertyArray[i].totalHouses > houseMinimum){
             if(sortedPropertyArray[i].number > 0 && sortedPropertyArray[i].number < 10){
-                document.getElementById(sortedPropertyArray[i].id).classList.add(`can-${action}-house-bottom`)
+                document.getElementById(sortedPropertyArray[i].id).classList.add('can-select-property-bottom')
             }
             else if(sortedPropertyArray[i].number > 10 && sortedPropertyArray[i].number < 20){
-                document.getElementById(sortedPropertyArray[i].id).classList.add(`can-${action}-house-left`)
+                document.getElementById(sortedPropertyArray[i].id).classList.add('can-select-property-left')
             }
             else if(sortedPropertyArray[i].number > 20 && sortedPropertyArray[i].number < 30){
-                document.getElementById(sortedPropertyArray[i].id).classList.add(`can-${action}-house-top`)
+                document.getElementById(sortedPropertyArray[i].id).classList.add('can-select-property-top')
             }
             else if(sortedPropertyArray[i].number > 30 && sortedPropertyArray[i].number < 40){
-                document.getElementById(sortedPropertyArray[i].id).classList.add(`can-${action}-house-right`)
+                document.getElementById(sortedPropertyArray[i].id).classList.add('can-select-property-right')
             }
         }
     }
 
 }
 
-function removeHouseHotelClassBasedOnLocationAllProperties(sortedPropertyArray, action){
+function removeHouseHotelClassBasedOnLocationAllProperties(sortedPropertyArray){
     for (let i = 0; i < sortedPropertyArray.length; i++){
         if(sortedPropertyArray[i].number > 0 && sortedPropertyArray[i].number < 10){
-            document.getElementById(sortedPropertyArray[i].id).classList.remove(`can-${action}-house-bottom`)
+            document.getElementById(sortedPropertyArray[i].id).classList.remove('can-select-property-bottom')
         }
         else if(sortedPropertyArray[i].number > 10 && sortedPropertyArray[i].number < 20){
-            document.getElementById(sortedPropertyArray[i].id).classList.remove(`can-${action}-house-left`)
+            document.getElementById(sortedPropertyArray[i].id).classList.remove('can-select-property-left')
         }
         else if(sortedPropertyArray[i].number > 20 && sortedPropertyArray[i].number < 30){
-            document.getElementById(sortedPropertyArray[i].id).classList.remove(`can-${action}-house-top`)
+            document.getElementById(sortedPropertyArray[i].id).classList.remove('can-select-property-top')
         }
         else if(sortedPropertyArray[i].number > 30 && sortedPropertyArray[i].number < 40){
-            document.getElementById(sortedPropertyArray[i].id).classList.remove(`can-${action}-house-right`)
+            document.getElementById(sortedPropertyArray[i].id).classList.remove('can-select-property-right')
         }
     }
 }
 
-function removeHouseHotelClassBasedOnLocationSingleProperty(action, propertyToChange){
+function removeHouseHotelClassBasedOnLocationSingleProperty(propertyToChange){
         if(propertyToChange.number > 0 && propertyToChange.number < 10){
-            document.getElementById(propertyToChange.id).classList.remove(`can-${action}-house-bottom`)
+            document.getElementById(propertyToChange.id).classList.remove('can-select-property-bottom')
         }
         else if(propertyToChange.number > 10 && propertyToChange.number < 20){
-            document.getElementById(propertyToChange.id).classList.remove(`can-${action}-house-left`)
+            document.getElementById(propertyToChange.id).classList.remove('can-select-property-left')
         }
         else if(propertyToChange.number > 20 && propertyToChange.number < 30){
-            document.getElementById(propertyToChange.id).classList.remove(`can-${action}-house-top`)
+            document.getElementById(propertyToChange.id).classList.remove('can-select-property-top')
         }
         else if(propertyToChange.number > 30 && propertyToChange.number < 40){
-            document.getElementById(propertyToChange.id).classList.remove(`can-${action}-house-right`)
+            document.getElementById(propertyToChange.id).classList.remove('can-select-property-right')
         }
 }
 
@@ -1659,13 +1659,13 @@ buyHouseHotelBtn.addEventListener('click', function(e){
         }
     }
 
-    addHouseHotelBuyClassBasedOnLocationAllProperties(canBuyHouseHotelArray, 'buy', 5)
+    addHouseHotelBuyClassBasedOnLocationAllProperties(canBuyHouseHotelArray, 5)
     
     //Create clickable property to build houses on for properties with less than 5 houses
     canBuyHouseHotelArray.forEach(property =>{
         let clickableProperty = document.getElementById(property.id)
         if (property.totalHouses < 5){
-            clickableProperty.classList.add('can-buy-house')
+            clickableProperty.classList.add('can-select-property')
             clickableProperty.addEventListener('click', buyHousePropertySpace) 
         }
 
@@ -1689,7 +1689,7 @@ buyHouseHotelBtn.addEventListener('click', function(e){
             for (let i = 0; i < canBuyHouseHotelArray.length; i++){
                 if (canBuyHouseHotelArray[i].totalHouses < 5){
                     document.getElementById(canBuyHouseHotelArray[i].id).classList.add('disable-clicks')
-                    document.getElementById(canBuyHouseHotelArray[i].id).classList.remove('can-buy-house')
+                    document.getElementById(canBuyHouseHotelArray[i].id).classList.remove('can-select-property')
                 }
             }
         }
@@ -1700,7 +1700,7 @@ buyHouseHotelBtn.addEventListener('click', function(e){
             for (let i = 0; i < canBuyHouseHotelArray.length; i++){
                 if (canBuyHouseHotelArray[i].totalHouses < 5){
                     document.getElementById(canBuyHouseHotelArray[i].id).classList.remove('disable-clicks')
-                    document.getElementById(canBuyHouseHotelArray[i].id).classList.add('can-buy-house')
+                    document.getElementById(canBuyHouseHotelArray[i].id).classList.add('can-select-property')
                 }
             }
             if(property.totalHouses < 4){
@@ -1710,8 +1710,8 @@ buyHouseHotelBtn.addEventListener('click', function(e){
                 currentPlayerTurn.hotelsOwned++
                 currentPlayerTurn.housesOwned -= 4
                 clickableProperty.removeEventListener('click', buyHousePropertySpace)
-                clickableProperty.classList.remove('can-buy-house')
-                removeHouseHotelClassBasedOnLocationSingleProperty('buy', property)
+                clickableProperty.classList.remove('can-select-property')
+                removeHouseHotelClassBasedOnLocationSingleProperty(property)
             }
             property.totalHouses++
             currentPlayerTurn.cash -= property.buildingCost
@@ -1730,7 +1730,7 @@ buyHouseHotelBtn.addEventListener('click', function(e){
             //Restore function and class indicators to add houses to eligible properties
             for (let i = 0; i < canBuyHouseHotelArray.length; i++){
                 document.getElementById(canBuyHouseHotelArray[i].id).classList.remove('disable-clicks')
-                document.getElementById(canBuyHouseHotelArray[i].id).classList.add('can-buy-house')
+                document.getElementById(canBuyHouseHotelArray[i].id).classList.add('can-select-property')
             }
             buyHouseYesBtn.removeEventListener('click', buyHouseYesBtnOutcome)
             buyHouseNoBtn.removeEventListener('click', buyHouseNoBtnOutcome)
@@ -1742,10 +1742,10 @@ buyHouseHotelBtn.addEventListener('click', function(e){
         //Finish Button Function
         finishBuyHouseBtn.addEventListener('click', finishBuyHouseBtnOutcome)
         function finishBuyHouseBtnOutcome (){
-            clickableProperty.classList.remove('can-buy-house')
+            clickableProperty.classList.remove('can-select-property')
             clickableProperty.removeEventListener('click', buyHousePropertySpace)
             finishBuyHouseBtn.removeEventListener('click', finishBuyHouseBtnOutcome)
-            removeHouseHotelClassBasedOnLocationAllProperties(canBuyHouseHotelArray, 'buy')   
+            removeHouseHotelClassBasedOnLocationAllProperties(canBuyHouseHotelArray)   
         }
     }) 
 })
@@ -2032,13 +2032,13 @@ sellHouseHotelBtn.addEventListener('click', function(e){
         }
        
     }
-    addHouseHotelSellClassBasedOnLocationAllProperties(canSellHouseHotelArray, 'sell', 0)
+    addHouseHotelSellClassBasedOnLocationAllProperties(canSellHouseHotelArray, 0)
 
     //Function for property spaces that are eilible to sell houses
     canSellHouseHotelArray.forEach(property =>{
         let clickableProperty = document.getElementById(property.id)
         if (property.totalHouses > 0){
-            clickableProperty.classList.add('can-sell-house')
+            clickableProperty.classList.add('can-select-property')
             clickableProperty.addEventListener('click', sellHouseHotelPropertySpace)     
         }
         
@@ -2062,7 +2062,7 @@ sellHouseHotelBtn.addEventListener('click', function(e){
             for (let i = 0; i < canSellHouseHotelArray.length; i++){
                 if (canSellHouseHotelArray > 0){
                     document.getElementById(canSellHouseHotelArray[i].id).classList.add('disable-clicks')
-                    document.getElementById(canSellHouseHotelArray[i].id).classList.remove('can-sell-house')
+                    document.getElementById(canSellHouseHotelArray[i].id).classList.remove('can-select-property')
                 }
             }
         }
@@ -2073,7 +2073,7 @@ sellHouseHotelBtn.addEventListener('click', function(e){
             for (let i = 0; i < canSellHouseHotelArray.length; i++){
                 if (canSellHouseHotelArray[i].totalHouses > 0){
                     document.getElementById(canSellHouseHotelArray[i].id).classList.remove('disable-clicks')
-                    document.getElementById(canSellHouseHotelArray[i].id).classList.add('can-sell-house')
+                    document.getElementById(canSellHouseHotelArray[i].id).classList.add('can-select-property')
                 }              
             }
             removeHouseHotel(property)
@@ -2081,9 +2081,9 @@ sellHouseHotelBtn.addEventListener('click', function(e){
                 currentPlayerTurn.housesOwned--
                 property.totalHouses--
                 if(property.totalHouses === 0){
-                    clickableProperty.classList.remove('can-sell-house')
+                    clickableProperty.classList.remove('can-select-property')
                     clickableProperty.removeEventListener('click', sellHouseHotelPropertySpace)
-                    removeHouseHotelClassBasedOnLocationSingleProperty('sell', property)
+                    removeHouseHotelClassBasedOnLocationSingleProperty(property)
                 }
             }
         
@@ -2108,7 +2108,7 @@ sellHouseHotelBtn.addEventListener('click', function(e){
             //Restore function and class indicators to sell houses to eligible properties
             for (let i = 0; i < canSellHouseHotelArray.length; i++){
                 document.getElementById(canSellHouseHotelArray[i].id).classList.remove('disable-clicks')
-                document.getElementById(canSellHouseHotelArray[i].id).classList.add('can-sell-house')
+                document.getElementById(canSellHouseHotelArray[i].id).classList.add('can-select-property')
             }
             sellHouseHotelYesBtn.removeEventListener('click', sellHouseHotelYesBtnOutcome)
             sellHouseHotelNoBtn.removeEventListener('click', sellHouseHotelNoBtnOutcome)
@@ -2120,10 +2120,10 @@ sellHouseHotelBtn.addEventListener('click', function(e){
         //Finish Button Function
         finishSellHouseHotelBtn.addEventListener('click', finishSellHouseHotelBtnOutcome)
         function finishSellHouseHotelBtnOutcome (){
-            clickableProperty.classList.remove('can-sell-house')
+            clickableProperty.classList.remove('can-select-property')
             clickableProperty.removeEventListener('click', sellHouseHotelPropertySpace)
             finishSellHouseHotelBtn.removeEventListener('click', finishSellHouseHotelBtnOutcome)     
-            removeHouseHotelClassBasedOnLocationAllProperties(canSellHouseHotelArray, 'sell')   
+            removeHouseHotelClassBasedOnLocationAllProperties(canSellHouseHotelArray)   
         }
     }) 
 })
@@ -2199,52 +2199,52 @@ function removeSellHouseHotelTutorial (){
     document.getElementById('sellHouseHotelTutorialId').classList.remove('turn-interaction-description')
 }
 
-function addMortgageClassBasedOnLocationAllProperties(sortedPropertyArray, action){
+function addMortgageClassBasedOnLocationAllProperties(sortedPropertyArray){
     for (let i = 0; i < sortedPropertyArray.length; i++){
         if(sortedPropertyArray[i].number > 0 && sortedPropertyArray[i].number < 10){
-            document.getElementById(sortedPropertyArray[i].id).classList.add(`can-${action}-mortgage-bottom`)
+            document.getElementById(sortedPropertyArray[i].id).classList.add('can-select-property-bottom')
         }
         else if(sortedPropertyArray[i].number > 10 && sortedPropertyArray[i].number < 20){
-            document.getElementById(sortedPropertyArray[i].id).classList.add(`can-${action}-mortgage-left`)
+            document.getElementById(sortedPropertyArray[i].id).classList.add('can-select-property-left')
         }
         else if(sortedPropertyArray[i].number > 20 && sortedPropertyArray[i].number < 30){
-            document.getElementById(sortedPropertyArray[i].id).classList.add(`can-${action}-mortgage-top`)
+            document.getElementById(sortedPropertyArray[i].id).classList.add('can-select-property-top')
         }
         else if(sortedPropertyArray[i].number > 30 && sortedPropertyArray[i].number < 40){
-            document.getElementById(sortedPropertyArray[i].id).classList.add(`can-${action}-mortgage-right`)
+            document.getElementById(sortedPropertyArray[i].id).classList.add('can-select-property-right')
         }
     }
 }
 
-function removeMortgageClassBasedOnLocationAllProperties(sortedPropertyArray, action){
+function removeMortgageClassBasedOnLocationAllProperties(sortedPropertyArray){
     for (let i = 0; i < sortedPropertyArray.length; i++){
         if(sortedPropertyArray[i].number > 0 && sortedPropertyArray[i].number < 10){
-            document.getElementById(sortedPropertyArray[i].id).classList.remove(`can-${action}-mortgage-bottom`)
+            document.getElementById(sortedPropertyArray[i].id).classList.remove('can-select-property-bottom')
         }
         else if(sortedPropertyArray[i].number > 10 && sortedPropertyArray[i].number < 20){
-            document.getElementById(sortedPropertyArray[i].id).classList.remove(`can-${action}-mortgage-left`)
+            document.getElementById(sortedPropertyArray[i].id).classList.remove('can-select-property-left')
         }
         else if(sortedPropertyArray[i].number > 20 && sortedPropertyArray[i].number < 30){
-            document.getElementById(sortedPropertyArray[i].id).classList.remove(`can-${action}-mortgage-top`)
+            document.getElementById(sortedPropertyArray[i].id).classList.remove('can-select-property-top')
         }
         else if(sortedPropertyArray[i].number > 30 && sortedPropertyArray[i].number < 40){
-            document.getElementById(sortedPropertyArray[i].id).classList.remove(`can-${action}-mortgage-right`)
+            document.getElementById(sortedPropertyArray[i].id).classList.remove('can-select-property-right')
         }
     }
 }
 
-function removeMortgageClassBasedOnLocationSingleProperty(action, propertyToChange){
+function removeMortgageClassBasedOnLocationSingleProperty(propertyToChange){
         if(propertyToChange.number > 0 && propertyToChange.number < 10){
-            document.getElementById(propertyToChange.id).classList.remove(`can-${action}-mortgage-bottom`)
+            document.getElementById(propertyToChange.id).classList.remove('can-select-property-bottom')
         }
         else if(propertyToChange.number > 10 && propertyToChange.number < 20){
-            document.getElementById(propertyToChange.id).classList.remove(`can-${action}-mortgage-left`)
+            document.getElementById(propertyToChange.id).classList.remove('can-select-property-left')
         }
         else if(propertyToChange.number > 20 && propertyToChange.number < 30){
-            document.getElementById(propertyToChange.id).classList.remove(`can-${action}-mortgage-top`)
+            document.getElementById(propertyToChange.id).classList.remove('can-select-property-top')
         }
         else if(propertyToChange.number > 30 && propertyToChange.number < 40){
-            document.getElementById(propertyToChange.id).classList.remove(`can-${action}-mortgage-right`)
+            document.getElementById(propertyToChange.id).classList.remove('can-select-property-right')
         }
     }
 
@@ -2266,10 +2266,10 @@ openMortgageBtn.addEventListener('click', function (){
         if (ownedPropertyArray[i].mortgageOpen === false){
             canOpenMortgageArray.push(ownedPropertyArray[i])
             //Add indicator to mortgagable properties
-            document.getElementById(ownedPropertyArray[i].id).classList.add('can-open-mortgage')
+            document.getElementById(ownedPropertyArray[i].id).classList.add('can-select-property')
         }
         //Add indicator to mortgagable properties based on location
-        addMortgageClassBasedOnLocationAllProperties(canOpenMortgageArray, 'open')
+        addMortgageClassBasedOnLocationAllProperties(canOpenMortgageArray)
     }
 
      //Create clickable property to open mortgage
@@ -2290,7 +2290,7 @@ openMortgageBtn.addEventListener('click', function (){
                 //Prevent classes being added back to closed mortgage property after closing multiple mortgage                
                 if(canOpenMortgageArray[i].mortgageOpen === false){
                     document.getElementById(canOpenMortgageArray[i].id).classList.add('disable-clicks')
-                    document.getElementById(canOpenMortgageArray[i].id).classList.remove('can-open-mortgage')
+                    document.getElementById(canOpenMortgageArray[i].id).classList.remove('can-select-property')
                 }
 
             }
@@ -2303,7 +2303,7 @@ openMortgageBtn.addEventListener('click', function (){
             for (let i = 0; i < canOpenMortgageArray.length;){
                 if(canOpenMortgageArray[i].mortgageOpen === false){
                     document.getElementById(canOpenMortgageArray[i].id).classList.remove('disable-clicks')
-                    document.getElementById(canOpenMortgageArray[i].id).classList.add('can-open-mortgage')
+                    document.getElementById(canOpenMortgageArray[i].id).classList.add('can-select-property')
                     i++
                 }
                 else{
@@ -2316,9 +2316,9 @@ openMortgageBtn.addEventListener('click', function (){
             removeOpenMortgageYesNoButtons()
             addOpenMortgageTutorial()
             clickableProperty.classList.add('mortgaged')
-            clickableProperty.classList.remove('can-open-mortgage')
+            clickableProperty.classList.remove('can-select-property')
             clickableProperty.classList.remove('disable-clicks')
-            removeMortgageClassBasedOnLocationSingleProperty('open', property)
+            removeMortgageClassBasedOnLocationSingleProperty(property)
             clickableProperty.removeEventListener('click', openMortgagePropertySpace)
             openMortgageYesBtn.removeEventListener('click', openMortgageYesBtnOutcome)
             openMortgageNoBtn.removeEventListener('click', openMortgageNoBtnOutcome)
@@ -2331,7 +2331,7 @@ openMortgageBtn.addEventListener('click', function (){
         for (let i = 0; i < canOpenMortgageArray.length;){
             if (canOpenMortgageArray[i].mortgageOpen === false){
                 document.getElementById(canOpenMortgageArray[i].id).classList.remove('disable-clicks')
-                document.getElementById(canOpenMortgageArray[i].id).classList.add('can-open-mortgage')
+                document.getElementById(canOpenMortgageArray[i].id).classList.add('can-select-property')
                 i++
             }
             else{
@@ -2354,12 +2354,12 @@ openMortgageBtn.addEventListener('click', function (){
             //Find reamining unmortgaged properties and remove event listener and class indicators
             remainingUnmortgagedProperties.forEach(remaining =>{
                 let notMortgagable = document.getElementById(remaining.id)
-                notMortgagable.classList.remove('can-open-mortgage')
+                notMortgagable.classList.remove('can-select-property')
                 notMortgagable.removeEventListener('click', openMortgagePropertySpace)
                 finishOpenMortgageBtn.removeEventListener('click', finishOpenMortgageBtnOutcome)
             })
             //Remove classes for rest of properties based on location
-            removeMortgageClassBasedOnLocationAllProperties(canOpenMortgageArray, 'open')
+            removeMortgageClassBasedOnLocationAllProperties(canOpenMortgageArray)
         }
     })
 })
@@ -2428,10 +2428,10 @@ closeMortgageBtn.addEventListener('click', function (e){
         if (ownedPropertyArray[i].mortgageOpen === true){
             canCloseMortgageArray.push(ownedPropertyArray[i])
             //Add indicator to mortgagable properties
-            document.getElementById(ownedPropertyArray[i].id).classList.add('can-close-mortgage')
+            document.getElementById(ownedPropertyArray[i].id).classList.add('can-select-property')
         }
                 //Add indicator to mortgagable properties based on location
-                addMortgageClassBasedOnLocationAllProperties(canCloseMortgageArray, 'close')
+                addMortgageClassBasedOnLocationAllProperties(canCloseMortgageArray)
     }
         //Create clickable property to close mortgage
         canCloseMortgageArray.forEach(property =>{
@@ -2451,7 +2451,7 @@ closeMortgageBtn.addEventListener('click', function (e){
                 //Prevent classes being added back to closed mortgage property after closing multiple mortgage
                 if (canCloseMortgageArray[i].mortgageOpen === true){
                     document.getElementById(canCloseMortgageArray[i].id).classList.add('disable-clicks')
-                    document.getElementById(canCloseMortgageArray[i].id).classList.remove('can-close-mortgage')
+                    document.getElementById(canCloseMortgageArray[i].id).classList.remove('can-select-property')
                 }
             }
         }
@@ -2463,7 +2463,7 @@ closeMortgageBtn.addEventListener('click', function (e){
             for (let i = 0; i < canCloseMortgageArray.length;){
                 if (canCloseMortgageArray[i].mortgageOpen === true){
                     document.getElementById(canCloseMortgageArray[i].id).classList.remove('disable-clicks')
-                    document.getElementById(canCloseMortgageArray[i].id).classList.add('can-close-mortgage')
+                    document.getElementById(canCloseMortgageArray[i].id).classList.add('can-select-property')
                     i++
                 }
                 else{
@@ -2476,9 +2476,9 @@ closeMortgageBtn.addEventListener('click', function (e){
             removeCloseMortgageYesNoButtons()
             addCloseMortgageTutorial()
             clickableProperty.classList.remove('mortgaged')
-            clickableProperty.classList.remove('can-close-mortgage')
+            clickableProperty.classList.remove('can-select-property')
             clickableProperty.classList.remove('disable-clicks')
-            removeMortgageClassBasedOnLocationSingleProperty('close', property)
+            removeMortgageClassBasedOnLocationSingleProperty(property)
             clickableProperty.removeEventListener('click', closeMortgagePropertySpace)
             closeMortgageYesBtn.removeEventListener('click', closeMortgageYesBtnOutcome)
             closeMortgageNoBtn.removeEventListener('click', closeMortgageNoBtnOutcome)
@@ -2491,7 +2491,7 @@ closeMortgageBtn.addEventListener('click', function (e){
         for (let i = 0; i < canCloseMortgageArray.length;){
             if(canCloseMortgageArray[i].mortgageOpen === true){
                 document.getElementById(canCloseMortgageArray[i].id).classList.remove('disable-clicks')
-                document.getElementById(canCloseMortgageArray[i].id).classList.add('can-close-mortgage')
+                document.getElementById(canCloseMortgageArray[i].id).classList.add('can-select-property')
                 i++
             }
             else{
@@ -2514,12 +2514,12 @@ closeMortgageBtn.addEventListener('click', function (e){
          //Find reamining mortgaged properties and remove event listener and class indicators
          remainingMortgagedProperties.forEach(remaining =>{
              let canMortgage = document.getElementById(remaining.id)
-             canMortgage.classList.remove('can-close-mortgage')
+             canMortgage.classList.remove('can-select-property')
              canMortgage.removeEventListener('click', closeMortgagePropertySpace)
              finishCloseMortgageBtn.removeEventListener('click', finishCloseMortgageBtnOutcome)
          })
           //Remove classes for rest of properties based on location
-          removeMortgageClassBasedOnLocationAllProperties(canCloseMortgageArray, 'close')
+          removeMortgageClassBasedOnLocationAllProperties(canCloseMortgageArray)
         }
     }) 
 })
@@ -2573,6 +2573,9 @@ function addFinishCloseMortgageBtn (){
 }
 
 // Trade
+// Trade
+// Trade
+// Trade
 
 tradeBtn.addEventListener('click', clickTradeBtn)
 tradeOfferBtn.addEventListener('click', clickTradeOfferBtn)
@@ -2593,6 +2596,7 @@ function clickTradeOfferBtn(){
     addAcceptDeclineButtonsContainer()
     removeTraderOfferButton()
     traderContents.classList.add('green-border')
+    tradeScreenTutorial.innerText = `${tradee.name}, Click "Accept" Button To Accept Trade Or Click "Decline" To Reject Trade`
 }
 
 function clickTradeCancelBtn(){
@@ -2603,6 +2607,7 @@ function clickTradeCancelBtn(){
     removeCashInputContainers()
     removeAcceptDeclineButtonsContainer()
     removeTraderOfferButton()
+    traderContents.classList.remove('green-border')
     tradeeNametag.innerText = ""
     traderPropertyDropoffContainer.innerHTML = ""
     tradeePropertyDropoffContainer.innerHTML = ""
@@ -2712,7 +2717,7 @@ function addEventsForPotentialTradeItems(){
             trader.properties.forEach((property) =>{
                 let clickableProperty = document.getElementById(property.id)
                 clickableProperty.draggable = true
-                clickableProperty.classList.add('can-open-mortgage-bottom')
+                addClassToTradeProperty(property)
                 clickableProperty.addEventListener('dragstart', setSelectedPropertyForTrader)
                 clickableProperty.addEventListener('mouseover', addBorderForTraderContainer)
                 clickableProperty.addEventListener('mouseout', removeBorderForTraderContainer)
@@ -2723,7 +2728,7 @@ function addEventsForPotentialTradeItems(){
             activePlayers[i].properties.forEach((property) =>{
                 let clickableProperty = document.getElementById(property.id)
                 clickableProperty.draggable = true
-                clickableProperty.classList.add('can-open-mortgage-bottom')
+                addClassToTradeProperty(property)
                 clickableProperty.addEventListener('dragstart', setSelectedPropertyForTradee)
                 clickableProperty.addEventListener('mouseover', addBorderForTradeeContainer)
                 clickableProperty.addEventListener('mouseout', removeBorderForTradeeContainer)
@@ -2825,9 +2830,13 @@ function removeAcceptDeclineButtonsContainer(){
 function addCashInputContainers(){
     traderCashInputContainer.classList.add('cash-input-container')
     traderCashInputContainer.classList.remove('hidden')
+    traderCashInput.max = `${trader.cash}`
+    traderCashInput.placeholder = `Max $${trader.cash}`
 
     tradeeCashInputContainer.classList.add('cash-input-container')
     tradeeCashInputContainer.classList.remove('hidden')
+    tradeeCashInput.max = `${tradee.cash}`
+    tradeeCashInput.placeholder = `Max $${tradee.cash}`
 }
 
 function removeCashInputContainers(){
@@ -2845,7 +2854,7 @@ function removeEventListenersAndClassesTraderAllProperties(){
         clickableProperty.removeEventListener('mouseover', addBorderForTraderContainer)
         clickableProperty.removeEventListener('mouseout', removeBorderForTraderContainer)
         clickableProperty.draggable = false
-        clickableProperty.classList.add('can-open-mortgage-bottom')
+        removeClassToTradeProperty(property)
 
     })
 }
@@ -2856,7 +2865,7 @@ function removeEventListenersAndClassesTraderSingleProperty(singleProperty){
     property.removeEventListener('mouseover', addBorderForTraderContainer)
     property.removeEventListener('mouseout', removeBorderForTraderContainer)
     property.draggable = false
-    property.classList.remove('can-open-mortgage-bottom')
+    removeClassToTradeProperty(singleProperty)
 }
 
 function removeEventListenersAndClassesTradeeAllProperties(){
@@ -2866,7 +2875,7 @@ function removeEventListenersAndClassesTradeeAllProperties(){
         clickableProperty.removeEventListener('mouseover', addBorderForTradeeContainer)
         clickableProperty.removeEventListener('mouseout', removeBorderForTradeeContainer)
         clickableProperty.draggable = false
-        clickableProperty.classList.add('can-open-mortgage-bottom')
+        removeClassToTradeProperty(property)
     })
 }
 
@@ -2876,24 +2885,52 @@ function removeEventListenersAndClassesTradeeSingleProperty(singleProperty){
     property.removeEventListener('mouseover', addBorderForTradeeContainer)
     property.removeEventListener('mouseout', removeBorderForTradeeContainer)
     property.draggable = false
-    property.classList.remove('can-open-mortgage-bottom')
+    removeClassToTradeProperty(singleProperty)
 }
 
-function addClassesToTradeProperties(propertyToAddClass){
+function addClassToTradeProperty(propertyToAddClass){
     if(propertyToAddClass.number > 0 && propertyToAddClass.number < 10){
-
+        document.getElementById(propertyToAddClass.id).classList.add('can-select-property-bottom')
     }
-    else if(propertyToAddClass.number > 0 && propertyToAddClass.number < 10){
-
+    else if(propertyToAddClass.number > 10 && propertyToAddClass.number < 20){
+        document.getElementById(propertyToAddClass.id).classList.add('can-select-property-left')
     }
-    else if(propertyToAddClass.number > 0 && propertyToAddClass.number < 10){
-
+    else if(propertyToAddClass.number > 20 && propertyToAddClass.number < 30){
+        document.getElementById(propertyToAddClass.id).classList.add('can-select-property-top')
     }
-    else if(propertyToAddClass.number > 0 && propertyToAddClass.number < 10){
-
+    else if(propertyToAddClass.number > 30 && propertyToAddClass.number < 40){
+        document.getElementById(propertyToAddClass.id).classList.add('can-select-property-right')
     }
 }
 
+function removeClassToTradeProperty(propertyToAddClass){
+    if(propertyToAddClass.number > 0 && propertyToAddClass.number < 10){
+        document.getElementById(propertyToAddClass.id).classList.remove('can-select-property-bottom')
+    }
+    else if(propertyToAddClass.number > 10 && propertyToAddClass.number < 20){
+        document.getElementById(propertyToAddClass.id).classList.remove('can-select-property-left')
+    }
+    else if(propertyToAddClass.number > 20 && propertyToAddClass.number < 30){
+        document.getElementById(propertyToAddClass.id).classList.remove('can-select-property-top')
+    }
+    else if(propertyToAddClass.number > 30 && propertyToAddClass.number < 40){
+        document.getElementById(propertyToAddClass.id).classList.remove('can-select-property-right')
+    }
+}
+
+function sortPlayerPropertyArray(array){
+    array.properties.sort((a, b) => a.number - b.number)
+    console.log(array.properties)
+}
+
+/* function generateEligiblePropertyToTradeArray(player){
+    sortPlayerPropertyArray(player)
+    for (let i = 0; i < player.properties.length; i++){
+        if (player.properties[i].type === 'color'){
+
+        }
+    }
+} */
 
 //Add logic to bakrupt player if they land on non-owned property square but don't have assets to pay for it
 //Add trading window
