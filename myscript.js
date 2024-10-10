@@ -193,13 +193,14 @@ rollBtn.addEventListener('click', function (e){
        displayDiceRollOutput(diceOneValue, diceTwoValue);
        playerPiece().remove();
        placePiece(currentPlayerTurn)
-       removeDice()
        removeHouseHotelMortgageScreen()
        currentLocationInteraction()
  })
 
 //Logic for space landed on
  function currentLocationInteraction (){
+    clearBottomRightScreenContents()
+
     if (spaceLandedOn().isProperty === true){
         if (spaceLandedOn().hasOwner === true){
             if (spaceLandedOn().owner.name != currentPlayerTurn.name){
@@ -390,24 +391,27 @@ function addEndTurnButton (){
     document.getElementById('endTurnBtnId').classList.remove('hidden')
 }
 
+function chanceDelayInteraction(){
+    setTimeout(currentLocationInteraction, 2000)
+    setTimeout(function(){playerPiece().remove()}, 2000)
+    setTimeout(placePiece, 2000, currentPlayerTurn)
+    setTimeout(updateMiddleScreenPlayerLocation, 2000)
+}
+
 function chance (){
     let chanceRoll = chanceDice()
     if (chanceRoll === 1){
         spaceLandedOn().currentOccupants--
         turnInteractionDescription.innerHTML = `<span class="bold-font-span">Chance:</span><br>Advance to Boardwalk.`
-        playerPiece().remove()
         currentPlayerTurn.position = 39
-        placePiece(currentPlayerTurn)
-        currentLocationInteraction()  
+        chanceDelayInteraction()
     }
     else if (chanceRoll === 2){
         spaceLandedOn().currentOccupants--
         turnInteractionDescription.innerHTML =`<span class="bold-font-span">Chance:</span><br>Advance to Go (Collect $200).`
-        playerPiece().remove()
         currentPlayerTurn.position = 0
-        placePiece(currentPlayerTurn)
         currentPlayerTurn.cash += 200
-        currentLocationInteraction()    
+        chanceDelayInteraction()
     }
     else if (chanceRoll === 3){
         spaceLandedOn().currentOccupants--
@@ -415,10 +419,8 @@ function chance (){
         if (currentPlayerTurn.position > 23){
             currentPlayerTurn.cash += 200
         }
-        playerPiece().remove()
         currentPlayerTurn.position = 24
-        placePiece(currentPlayerTurn)
-        currentLocationInteraction()
+        chanceDelayInteraction()
     }
     else if (chanceRoll === 4){
         spaceLandedOn().currentOccupants--
@@ -426,15 +428,12 @@ function chance (){
         if (currentPlayerTurn.position > 10){
             currentPlayerTurn.cash += 200
         }
-        playerPiece().remove()
         currentPlayerTurn.position = 11
-        placePiece(currentPlayerTurn)
-        currentLocationInteraction()
+        chanceDelayInteraction()
     }
-    else if (chanceRoll === 5){
+    else if (chanceRoll === 5 || chanceRoll === 6 || chanceRoll === 7){
         spaceLandedOn().currentOccupants--
         turnInteractionDescription.innerHTML = `<span class="bold-font-span">Chance:</span><br>Advance to the nearest Railroad.`
-        playerPiece().remove()
         if (currentPlayerTurn.position === 7){
             currentPlayerTurn.position = 5
         }
@@ -444,24 +443,7 @@ function chance (){
         if (currentPlayerTurn.position === 36){
             currentPlayerTurn.position = 35
         } 
-        placePiece(currentPlayerTurn)
-        currentLocationInteraction()  
-    }
-    else if (chanceRoll === 6 || chanceRoll === 7){
-        spaceLandedOn().currentOccupants--
-        turnInteractionDescription.innerHTML = `<span class="bold-font-span">Chance:</span><br>Advance to the nearest Railroad.`
-        playerPiece().remove()
-        if (currentPlayerTurn.position === 7){
-            currentPlayerTurn.position = 5
-        }
-        if (currentPlayerTurn.position === 22){
-            currentPlayerTurn.position = 15
-        }
-        if (currentPlayerTurn.position === 36){
-            currentPlayerTurn.position = 35
-        } 
-        placePiece(currentPlayerTurn)
-        currentLocationInteraction()  
+        chanceDelayInteraction()
     }
 
     else if (chanceRoll === 8){
@@ -479,18 +461,16 @@ function chance (){
     else if (chanceRoll === 10){
         spaceLandedOn().currentOccupants--
         turnInteractionDescription.innerHTML = `<span class="bold-font-span">Chance:</span><br>Go Back 3 Spaces.`
-        playerPiece().remove()
         currentPlayerTurn.position -= 3
         if (currentPlayerTurn.position < 0){
             currentPlayerTurn.position += 40
         }
-        placePiece(currentPlayerTurn)
-        currentLocationInteraction()
+        chanceDelayInteraction()
 
     }
     else if (chanceRoll === 11){
         turnInteractionDescription.innerHTML = `<span class='bold-font-span'>Chance:</span><br>Go to Jail. Go directly to Jail, do not pass Go, do not collect $200.`
-        goToJail()
+        setTimeout(goToJail, 2000)
     }
     else if (chanceRoll === 12){
         turnInteractionDescription.innerHTML = `<span class="bold-font-span">Chance:</span><br>Make general repairs on all your property. For each house(${currentPlayerTurn.housesOwned}) pay $25. For each hotel(${currentPlayerTurn.hotelsOwned}) pay $100. Total = $${(currentPlayerTurn.housesOwned * 50) + (currentPlayerTurn.hotelsOwned * 50)}`
@@ -507,7 +487,6 @@ function chance (){
     else if (chanceRoll === 14){
         spaceLandedOn().currentOccupants--
         turnInteractionDescription.innerHTML = `<span class="bold-font-span">Chance:</span><br>Take a trip to Reading Railroad. If you pass Go, collect $200.`
-        playerPiece().remove()
         if (currentPlayerTurn.position === 7){
             currentPlayerTurn.position = 5
             currentPlayerTurn.cash += 200
@@ -520,8 +499,7 @@ function chance (){
             currentPlayerTurn.position = 5
             currentPlayerTurn.cash += 200
         } 
-        placePiece(currentPlayerTurn)
-        currentLocationInteraction()  
+        chanceDelayInteraction()
         
     }
     else if (chanceRoll === 15){
@@ -552,10 +530,10 @@ function communityChest(){
         //This needs to be edited.  Remove Current location...  Make this the current location ineraction
         spaceLandedOn().currentOccupants--
         turnInteractionDescription.innerHTML = `<span class="bold-font-span">Community Chest:</span><br>Advance to Go (Collect $200).`
-        playerPiece().remove()
         currentPlayerTurn.position = 0
-        placePiece(currentPlayerTurn)
         currentPlayerTurn.cash += 200  
+        chanceDelayInteraction()
+        return
     }
     else if (communityChestRoll === 2){
         turnInteractionDescription.innerHTML = `<span class="bold-font-span">Community Chest:</span><br>Bank error in your favor. Collect $200.`
@@ -575,7 +553,8 @@ function communityChest(){
     }
     else if (communityChestRoll === 6){
         turnInteractionDescription.innerHTML = `<span class="bold-font-span">Community Chest:</span><br>Go to Jail. Go directly to Jail, do not pass Go, do not collect $200.`
-        goToJail()
+        setTimeout(goToJail, 2000)
+        return
     }
     else if (communityChestRoll === 7){
         turnInteractionDescription.innerHTML = `<span class="bold-font-span">Community Chest:</span><br>Holiday fund matures. Receive $100.`
@@ -1610,7 +1589,7 @@ buyHouseHotelBtn.addEventListener('click', function(){
     addEventLisentersToArray(canBuyHouseHotelArray, buyHouseHotelPropertySpace)
 })
 
-    //Create Clickable Property
+    //Create Clickable Property To Buy Houses
     function buyHouseHotelPropertySpace (){
         for (let i = 0; i < canBuyHouseHotelArray.length; i++){
             if (canBuyHouseHotelArray[i].id == this.id){
@@ -1635,7 +1614,7 @@ buyHouseHotelBtn.addEventListener('click', function(){
         }        
     }
 
-    //Yes button function
+    //Yes Button Function
     function buyHouseHotelYesBtnOutcome(){
         if(propertyClickedOn.totalHouses < 4){
             currentPlayerTurn.housesOwned++
@@ -2925,4 +2904,3 @@ function removeTradedPropertiesTradee(){
 
 //Add logic to bakrupt player if they land on non-owned property square but don't have assets to pay for it
 //Add cpu
-//Add set timeouts for chance and community chest to prevent screens overflowing
