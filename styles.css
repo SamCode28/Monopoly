@@ -1313,10 +1313,11 @@ input::placeholder{
 }
 
 .green-border{
-    border-top: 4px solid green;
-    border-bottom: 4px solid green;
-    border-left: 4px solid green;
-    border-right: 4px solid green;
+    box-shadow: 0 0 10px rgb(5, 255, 76);
+}
+
+.red-border{
+    box-shadow: 0 0 10px rgb(255, 0, 0);
 }
 
 .trade-property-card{
