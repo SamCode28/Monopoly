@@ -206,7 +206,7 @@ rollBtn.addEventListener('click', function (e){
                 //Pay rent
                 if(spaceLandedOn().owner.isInJail === false && spaceLandedOn().mortgageOpen === false){
                     if(spaceLandedOn().type === 'utility'){
-                        spaceLandedOn().updateRent(spaceLandedOn().owner)
+                        spaceLandedOn().updateRent(spaceLandedOn().owner, spaceLandedOn())
                     }
                     updatePlayerTotalAssets()
                     if (currentPlayerTurn.totalAssets < spaceLandedOn().rent){
@@ -952,7 +952,7 @@ buyPropertyYesBtn.addEventListener('click', function(e){
     spaceLandedOn().hasOwner = true
     currentPlayerTurn.cash -= spaceLandedOn().price
     currentPlayerTurn.updateTotalAssets()
-    updateRent(currentPlayerTurn)
+    updateRent(currentPlayerTurn, spaceLandedOn())
     updatePlayerCashTotalDisplay()
     document.getElementById(spaceLandedOn().id).style.backgroundColor = currentPlayerTurn.colorLight;
     removePropertyBuySellAuctionButtons()
@@ -1123,7 +1123,7 @@ function auctionWonResult(){
             activePlayers[i].cash -= currentAuctionBid
             updatePlayerCashTotalDisplay()
             document.getElementById(spaceLandedOn().id).style.backgroundColor = activePlayers[i].colorLight;
-            updateRent(activePlayers[i])
+            updateRent(activePlayers[i], spaceLandedOn())
         }
     }
     currentAuctionBid = 0
@@ -1412,24 +1412,23 @@ function removeJailOptions (){
 //Buy Sell House Hotel Mortgage Functions
 //Buy Sell House Hotel Mortgage Functions
 
-function updateRent(player){
-    if (spaceLandedOn().type === "color"){
-        updateRentColor(player)
+function updateRent(player, property){
+    if (property.type === "color"){
+        updateRentColor(player, property)
     }
-    else if (spaceLandedOn().type === "railroad"){
+    else if (property.type === "railroad"){
         updateRentRailroad(player)
     }
-    else if (spaceLandedOn().type === "utility" ){
+    else if (property.type === "utility" ){
         updateRentUtility(player)
     }
 }
 
-function updateRentColor(player){
-    ownedPropertyArray = []
-    generatePlayerPropertyArray(player)
+function updateRentColor(player, property){
+    generatePlayerColorPropertyArray(player)
     let sameColorProperties = []
     //Filter for same color properties as last bought property
-    sameColorProperties = ownedPropertyArray.filter(function(property){return property.color === spaceLandedOn().color})
+    sameColorProperties = ownedColorPropertyArray.filter(function(propertyFiltered){return propertyFiltered.color === property.color})
     for (let i = 0; i < sameColorProperties.length;){
         if (sameColorProperties[i].setTotal === 2 && sameColorProperties.length === 2){
                 sameColorProperties[i].rent = (sameColorProperties[i].startingRent * 2)
@@ -1470,11 +1469,10 @@ function updateRentHouseHotel(property){
 }
 
 function updateRentRailroad(player){
-    ownedPropertyArray = []
     generatePlayerPropertyArray(player)
     let railroadProperties = []
     //Filter for railroads
-    railroadProperties = ownedPropertyArray.filter(function(property){return property.type === spaceLandedOn().type})
+    railroadProperties = ownedPropertyArray.filter(function(propertyFiltered){return propertyFiltered.type === 'railroad'})
     railroadProperties.forEach(railroad =>{
         if (railroadProperties.length === 1){
             railroad.rent = 25
@@ -1492,11 +1490,10 @@ function updateRentRailroad(player){
 }
 
 function updateRentUtility(player){
-    ownedPropertyArray = []
     generatePlayerPropertyArray(player)
     let utilityProperties = []
     //Filter for utilities
-    utilityProperties = ownedPropertyArray.filter(function(property){return property.type === spaceLandedOn().type})
+    utilityProperties = ownedPropertyArray.filter(function(propertyFiltered){return propertyFiltered.type === 'utility'})
     utilityProperties.forEach(utility =>{
         if (utilityProperties.length === 1){
             utility.updateRent = function() {
@@ -1599,8 +1596,6 @@ function removeEventListenersFromArray(array, listener){
     })
 }
 
-
-
 //Buy House Functions
 //Buy House Functions
 buyHouseHotelBtn.addEventListener('click', function(){
@@ -1650,9 +1645,9 @@ buyHouseHotelBtn.addEventListener('click', function(){
             currentPlayerTurn.housesOwned -= 4
         }
         propertyClickedOn.totalHouses++
+        currentPlayerTurn.cash -= propertyClickedOn.buildingCost
         updatePropertySetTotalHousesAdd()
         updateCanBuyHouseHotelArray()
-        currentPlayerTurn.cash -= propertyClickedOn.buildingCost
         updateRentHouseHotel(propertyClickedOn)
         placeHouseHotel(propertyClickedOn)
         updatePlayerCashTotalDisplay()
@@ -1731,7 +1726,8 @@ buyHouseHotelBtn.addEventListener('click', function(){
                             //Check if total houses on property is same or less than other properties in set, Check if property alread has max houses
                             if(ownedColorPropertyArray[j].totalHouses < 5
                                && ownedColorPropertyArray[j].totalHouses <= (ownedColorPropertyArray[j].propertySetTotalHouses / ownedColorPropertyArray[j].setTotal) 
-                               && ownedColorPropertyArray[j].mortgageOpen === false){
+                               && ownedColorPropertyArray[j].mortgageOpen === false
+                               && ownedColorPropertyArray[i].buildingCost <= currentPlayerTurn.cash){
                                     canBuyHouseHotelArray.push(ownedColorPropertyArray[j])
                             }
                         }
@@ -1750,7 +1746,8 @@ buyHouseHotelBtn.addEventListener('click', function(){
                         //Check if total houses on property is same or less than other properties in set, Check if property alread has max houses
                         if(ownedColorPropertyArray[j].totalHouses < 5 
                            && ownedColorPropertyArray[j].totalHouses <= (ownedColorPropertyArray[j].propertySetTotalHouses / ownedColorPropertyArray[j].setTotal)
-                           && ownedColorPropertyArray[j].mortgageOpen === false){
+                           && ownedColorPropertyArray[j].mortgageOpen === false
+                           && ownedColorPropertyArray[j].buildingCost <= currentPlayerTurn.cash){
                                 canBuyHouseHotelArray.push(ownedColorPropertyArray[j])
                         }
                     }
@@ -1977,7 +1974,6 @@ function addTradeButton(){
     tradeBtn.classList.remove('hidden')
 }
 
-
 //Sell House Functions
 //Sell House Functions
 sellHouseHotelBtn.addEventListener('click', function(){
@@ -2092,7 +2088,7 @@ function updateCanSellHouseHotelArray(){
     
     for (let i = 0; i < ownedColorPropertyArray.length;){
         //Check if player owns enough properties for set of two
-        if (ownedColorPropertyArray[i].setTotal === 2 && (i + 1) <= ownedColorPropertyArray.length){
+        if (ownedColorPropertyArray[i].setTotal === 2 && (i + 1) < ownedColorPropertyArray.length){
                 //Check if player owns all properties if two properties in set
                 if(ownedColorPropertyArray[i].color === ownedColorPropertyArray[i+1].color){
                     for (let j = i ; j < i+2; j++){
@@ -2109,7 +2105,7 @@ function updateCanSellHouseHotelArray(){
                 }        
         }
         //Check if player owns enough properties for set of 3
-        else if(ownedColorPropertyArray[i].setTotal === 3 && (i + 2) <= ownedColorPropertyArray.length){
+        else if(ownedColorPropertyArray[i].setTotal === 3 && (i + 2) < ownedColorPropertyArray.length){
             //Check if player owns all properties in set
             if (ownedColorPropertyArray[i].color === ownedColorPropertyArray[i+1].color && ownedColorPropertyArray[i].color === ownedColorPropertyArray[i+2].color){
                 for (let j = i; j < i+3; j++){
@@ -2395,7 +2391,7 @@ function updateCanCloseMortgageArray(){
 canCloseMortgageArray = []
     //Sort owned property into array of opened mortgage properties
     for (let i = 0; i < ownedPropertyArray.length; i++){
-        if (ownedPropertyArray[i].mortgageOpen === true){
+        if (ownedPropertyArray[i].mortgageOpen === true && (ownedPropertyArray[i].mortgage * 1.1) < currentPlayerTurn.cash){
             canCloseMortgageArray.push(ownedPropertyArray[i])
         }
     }
@@ -2441,6 +2437,8 @@ tradeOfferBtn.addEventListener('click', clickTradeOfferBtn)
 tradeCancelBtn.addEventListener('click', clickTradeCancelBtn)
 tradeAcceptBtn.addEventListener('click', clickTradeAcceptBtn)
 tradeDeclineBtn.addEventListener('click', clickTradeDeclineBtn)
+traderCashSubmitBtn.addEventListener('click', clickTraderCashSubmitBtn)
+tradeeCashSubmitBtn.addEventListener('click', clickTradeeCashSubmitBtn)
 
 function clickTradeBtn(){
     trader = currentPlayerTurn
@@ -2454,6 +2452,8 @@ function clickTradeBtn(){
 function clickTradeOfferBtn(){
     addAcceptDeclineButtonsContainer()
     removeTraderOfferButton()
+    removeEventListenersAndClassesTraderAllProperties()
+    removeEventListenersAndClassesTradeeAllProperties()
     traderContents.classList.add('green-border')
     tradeScreenTutorial.innerText = `${tradee.name}, Click "Accept" Button To Accept Trade Or Click "Decline" To Reject Trade`
 }
@@ -2466,21 +2466,98 @@ function clickTradeCancelBtn(){
     removeCashInputContainers()
     removeAcceptDeclineButtonsContainer()
     removeTraderOfferButton()
+    removeEventListenersAndClassesTraderAllProperties()
+    removeEventListenersAndClassesTradeeAllProperties()
+    resetPlayerCashTradeVariables()
     traderContents.classList.remove('green-border')
+    tradeeContents.classList.remove('green-border')
+    tradeeContents.classList.remove('red-border')
     tradeeNametag.innerText = ""
     traderPropertyDropoffContainer.innerHTML = ""
     tradeePropertyDropoffContainer.innerHTML = ""
 }
 
 function clickTradeAcceptBtn(){
+    tradeeContents.classList.add('green-border')
+    removeAcceptDeclineButtonsContainer()
+    acceptTradeLogic()
+    tradeDecision = setTimeout(clickTradeCancelBtn, 2000)
+}
 
+function acceptTradeLogic(){
+    //Transfer Property and Owndership from Tradee to Trader
+    for (let i = 0; i < tradeeOfferedPropertyList.length; i++){
+        let tradedProperty = tradeeOfferedPropertyList[i]
+        trader.properties.push(tradedProperty)
+        tradedProperty.owner = trader
+        document.getElementById(tradedProperty.id).style.backgroundColor = trader.colorLight;
+        updateRent(trader, tradedProperty)
+    }
+    removeTradedPropertiesTrader()
+    trader.cash += tradeeCashOffer
+
+    //Transfer Property and Owndership from Trader to Tradee
+    for (let i = 0; i < traderOfferedPropertyList.length; i++){
+        let tradedProperty = traderOfferedPropertyList[i]
+        tradee.properties.push(tradedProperty)
+        tradedProperty.owner = tradee
+        document.getElementById(tradedProperty.id).style.backgroundColor = tradee.colorLight
+        updateRent(trader, tradedProperty)
+    }
+    removeTradedPropertiesTradee()
+    tradee.cash += traderCashOffer
+
+    updatePlayerCashTotalDisplay()
 }
 
 function clickTradeDeclineBtn(){
-
+    tradeeContents.classList.add('red-border')
+    tradeDecision = setTimeout(clickTradeCancelBtn, 2000)
 }
 
+function clickTraderCashSubmitBtn(){
+    let pendingTraderCashOffer = parseInt(traderCashInputField.value)
+    if(pendingTraderCashOffer <= trader.cash && pendingTraderCashOffer > 0){
+        traderCashOffer = pendingTraderCashOffer
+        traderCashOfferDisplay.innerText = `$${pendingTraderCashOffer}`
+        traderCashInputField.value = ""
+        traderCashInputContainer.animate(acceptCashOfferColor, cashOfferColorTiming)
 
+    }
+    else{
+        traderCashInputField.value = ""
+        traderCashInputContainer.animate(declineCashOfferMovement, declineCashOfferMovementTiming)
+        traderCashInputContainer.animate(declineCashOfferColor, cashOfferColorTiming)
+        traderCashOfferDisplay.innerText ="$0"
+    }
+}
+
+function clickTradeeCashSubmitBtn(){
+    let pendingTradeeCashOffer = parseInt(tradeeCashInputField.value)
+    if(pendingTradeeCashOffer <= tradee.cash && pendingTradeeCashOffer > 0){
+        tradeeCashOffer = pendingTradeeCashOffer
+        tradeeCashOfferDisplay.innerText = `$${pendingTradeeCashOffer}`
+        tradeeCashInputField.value = ""
+        tradeeCashInputContainer.animate(acceptCashOfferColor, cashOfferColorTiming)
+
+    }
+    else{
+        tradeeCashInputField.value = ""
+        tradeeCashInputContainer.animate(declineCashOfferMovement, declineCashOfferMovementTiming)
+        tradeeCashInputContainer.animate(declineCashOfferColor, cashOfferColorTiming)
+        tradeeCashOfferDisplay.innerText ="$0"
+    }
+}
+
+function resetPlayerCashTradeVariables(){
+    traderCashOffer = 0
+    traderCashOfferDisplay.innerText = "$0"
+    traderCashInputField.value = ""
+
+    tradeeCashOffer = 0
+    tradeeCashOfferDisplay.innerText = "$0"
+    tradeeCashInputField.value = ""
+}
 
 function addTradeItem(propertyName, screenAdded){
     let tradeCard = document.createElement('div')
@@ -2571,29 +2648,28 @@ function removePlayerTradeContents(){
 }
 
 function addEventsForPotentialTradeItems(){
-    for (let i = 0; i < totalPlayers; i++){
-        if (activePlayers[i] === trader){
-            trader.properties.forEach((property) =>{
-                let clickableProperty = document.getElementById(property.id)
-                clickableProperty.draggable = true
-                addClassToTradeProperty(property)
-                clickableProperty.addEventListener('dragstart', setSelectedPropertyForTrader)
-                clickableProperty.addEventListener('mouseover', addBorderForTraderContainer)
-                clickableProperty.addEventListener('mouseout', removeBorderForTraderContainer)
-            })
-        }
+    updateEligiblePropertiesForTraderArray()
+    updateEligiblPropertiesForTradeeArray()
 
-        else if (activePlayers[i] === tradee){
-            activePlayers[i].properties.forEach((property) =>{
-                let clickableProperty = document.getElementById(property.id)
-                clickableProperty.draggable = true
-                addClassToTradeProperty(property)
-                clickableProperty.addEventListener('dragstart', setSelectedPropertyForTradee)
-                clickableProperty.addEventListener('mouseover', addBorderForTradeeContainer)
-                clickableProperty.addEventListener('mouseout', removeBorderForTradeeContainer)
-            })   
-        }
-    }
+        traderEligibleTradeProperties.forEach((property) =>{
+            let clickableProperty = document.getElementById(property.id)
+            clickableProperty.draggable = true
+            addClassToTradeProperty(property)
+            clickableProperty.addEventListener('dragstart', setSelectedPropertyForTrader)
+            clickableProperty.addEventListener('mouseover', addBorderForTraderContainer)
+            clickableProperty.addEventListener('mouseout', removeBorderForTraderContainer)
+        })
+    
+        tradeeEligibleTradeProperties.forEach((property) =>{
+            let clickableProperty = document.getElementById(property.id)
+            clickableProperty.draggable = true
+            addClassToTradeProperty(property)
+            clickableProperty.addEventListener('dragstart', setSelectedPropertyForTradee)
+            clickableProperty.addEventListener('mouseover', addBorderForTradeeContainer)
+            clickableProperty.addEventListener('mouseout', removeBorderForTradeeContainer)
+        })   
+        
+    
 }
 
 tradeePropertyDropoffContainer.addEventListener('dragover', function(event){
@@ -2604,6 +2680,7 @@ tradeePropertyDropoffContainer.addEventListener('dragover', function(event){
 
 tradeePropertyDropoffContainer.addEventListener('drop', function(event){
     if (selectedTradeProperty.owner === tradee)
+    tradeeOfferedPropertyList.push(selectedTradeProperty)
     addTradeItem(selectedTradeProperty.name, tradeePropertyDropoffContainer)
     removeEventListenersAndClassesTradeeSingleProperty(selectedTradeProperty)
     removeBorderForTradeeContainer()
@@ -2618,6 +2695,7 @@ traderPropertyDropoffContainer.addEventListener('dragover', function(event){
 
 traderPropertyDropoffContainer.addEventListener('drop', function(event){
     if (selectedTradeProperty.owner === trader)
+    traderOfferedPropertyList.push(selectedTradeProperty)
     addTradeItem(selectedTradeProperty.name, traderPropertyDropoffContainer)
     removeEventListenersAndClassesTraderSingleProperty(selectedTradeProperty)
     removeBorderForTraderContainer()
@@ -2689,13 +2767,13 @@ function removeAcceptDeclineButtonsContainer(){
 function addCashInputContainers(){
     traderCashInputContainer.classList.add('cash-input-container')
     traderCashInputContainer.classList.remove('hidden')
-    traderCashInput.max = `${trader.cash}`
-    traderCashInput.placeholder = `Max $${trader.cash}`
+    traderCashInputField.max = `${trader.cash}`
+    traderCashInputField.placeholder = `Max $${trader.cash}`
 
     tradeeCashInputContainer.classList.add('cash-input-container')
     tradeeCashInputContainer.classList.remove('hidden')
-    tradeeCashInput.max = `${tradee.cash}`
-    tradeeCashInput.placeholder = `Max $${tradee.cash}`
+    tradeeCashInputField.max = `${tradee.cash}`
+    tradeeCashInputField.placeholder = `Max $${tradee.cash}`
 }
 
 function removeCashInputContainers(){
@@ -2708,7 +2786,7 @@ function removeCashInputContainers(){
 
 function removeEventListenersAndClassesTraderAllProperties(){
     traderEligibleTradeProperties.forEach((property) => {
-        let clickableProperty = property.id
+        let clickableProperty = document.getElementById(property.id)
         clickableProperty.removeEventListener('dragstart', setSelectedPropertyForTrader)
         clickableProperty.removeEventListener('mouseover', addBorderForTraderContainer)
         clickableProperty.removeEventListener('mouseout', removeBorderForTraderContainer)
@@ -2777,21 +2855,74 @@ function removeClassToTradeProperty(propertyToAddClass){
     }
 }
 
-function sortPlayerPropertyArray(array){
-    array.properties.sort((a, b) => a.number - b.number)
+function sortPlayerPropertyArray(player){
+    player.properties.sort((a, b) => a.number - b.number)
     console.log(array.properties)
 }
 
-/* function generateEligiblePropertyToTradeArray(player){
-    sortPlayerPropertyArray(player)
-    for (let i = 0; i < player.properties.length; i++){
-        if (player.properties[i].type === 'color'){
+function updateEligiblePropertiesForTraderArray(){
+    //Reset arrays for next trade
+    traderEligibleTradeProperties = []
+    traderOfferedPropertyList = []
+
+    for (let i = 0; i < trader.properties.length; i++){
+        if (trader.properties[i].type != "color"){
+            traderEligibleTradeProperties.push(trader.properties[i])
+        }
+        //Properties with houses cannot be traded
+        else if(trader.properties[i].propertySetTotalHouses === 0){
+            traderEligibleTradeProperties.push(trader.properties[i])
+        }
+        else{
 
         }
     }
-} */
+}
+
+function updateEligiblPropertiesForTradeeArray(){
+    //Reset arrays for next trade
+    tradeeEligibleTradeProperties = []
+    tradeeOfferedPropertyList = []
+
+    for (let i = 0; i < tradee.properties.length; i++){
+        if (tradee.properties[i].type != "color"){
+            tradeeEligibleTradeProperties.push(tradee.properties[i])
+        }
+        //Properties with houses cannot be traded
+        else if(tradee.properties[i].propertySetTotalHouses === 0){
+            tradeeEligibleTradeProperties.push(tradee.properties[i])
+        }
+        else{
+
+        }
+    }
+}
+
+
+function removeTradedPropertiesTrader(){
+    traderOfferedPropertyList.forEach((property) =>{
+        for (let i = 0; i < trader.properties.length; i++){
+            if (property === trader.properties[i]){
+                let index = trader.properties.indexOf(trader.properties[i])
+                trader.properties.splice(index, 1)
+                i--
+            }
+        }
+    })
+}
+
+function removeTradedPropertiesTradee(){
+    tradeeOfferedPropertyList.forEach((property) =>{
+        for (let i = 0; i < tradee.properties.length; i++){
+            if (property === tradee.properties[i]){
+                let index = tradee.properties.indexOf(tradee.properties[i])
+                tradee.properties.splice(index, 1)
+                i--
+            }
+        }
+    })
+}
 
 //Add logic to bakrupt player if they land on non-owned property square but don't have assets to pay for it
-//Add trading window
 //Add cpu
-
+//Add set timeouts for chance and community chest to prevent screens overflowing
