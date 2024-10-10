@@ -418,6 +418,7 @@ let canCloseMortgageArray = []
 //Trade
 let trader
 let tradee
+let tradeDecision
 const tradeBtn = document.getElementById('tradeBtnId')
 const traderNametag = document.getElementById('traderNameId')
 const tradeeNametag = document.getElementById('tradeeNameId')
@@ -426,15 +427,18 @@ const tradeScreenTutorial = document.getElementById('tradeScreenTutorialId')
 
 //Trade Screen Contents
 const traderContents = document.getElementById('traderContentsId')
-const tradeeContents = document.getElementById('tradeeContentsId')
 const traderPropertyDropoffContainer = document.getElementById('traderPropertyDropoffContainerId')
-const tradeePropertyDropoffContainer = document.getElementById('tradeePropertyDropoffContainerId')
 const traderCashInputContainer = document.getElementById('traderCashInputContainerId')
-const traderCashInput = document.getElementById('traderCashInputId')
+const traderCashInputField = document.getElementById('traderCashInputFieldId')
+const traderCashOfferDisplay = document.getElementById('traderCashOfferDisplayId')
+const traderCashSubmitBtn = document.getElementById('traderCashSubmitBtnId')
+
+const tradeeContents = document.getElementById('tradeeContentsId')
+const tradeePropertyDropoffContainer = document.getElementById('tradeePropertyDropoffContainerId')
 const tradeeCashInputContainer = document.getElementById('tradeeCashInputContainerId')
-const tradeeCashInput = document.getElementById('tradeeCashInputId')
-const traderCashOfferValue = document.getElementById('traderCashOfferValueId')
-const tradeeCashOfferValue = document.getElementById('tradeeCashOfferValueId')
+const tradeeCashInputField = document.getElementById('tradeeCashInputFieldId')
+const tradeeCashOfferDisplay = document.getElementById('tradeeCashOfferDisplayId')
+const tradeeCashSubmitBtn = document.getElementById('tradeeCashSubmitBtnId')
 
 //Trade Screen Buttons
 const tradeOfferBtn = document.getElementById('tradeOfferBtnId')
@@ -454,6 +458,13 @@ let tradeeProperty;
 let tradeeEligibleTradeProperties = []
 let tradeeOfferedPropertyList = []
 let tradeeCashOffer = 0
+
+//Trade Screen Animations
+const declineCashOfferMovement = [{ transform: "translateX(0px)" }, {transform: "translateX(-5px)"}, { transform: "translateX(5px)" }]
+const declineCashOfferMovementTiming = {duration: 100, iterations: 3}
+const declineCashOfferColor = {boxShadow: "0 0 10px rgb(255, 0, 0)"}
+const acceptCashOfferColor = {boxShadow: "0 0 10px rgb(5, 255, 76)"}
+const cashOfferColorTiming = {duration: 300}
 
 //Potential Trade Prospects
 const playerTradeButtons = [
