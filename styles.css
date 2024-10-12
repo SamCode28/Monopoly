@@ -4,12 +4,24 @@
     border: 0;
     box-sizing: border-box;
     text-align: center;
-    position: relative;
+    text-wrap: wrap;
+}
+
+body{
+    overflow-x: hidden;
+    max-height: ;
 }
 
 :root{
     --auction-leader-color: black;
+    --grid-height: 40vw;
+    --grid-width: 65vw;
+    --top-margin: 14vw;
+    --bottom-margin: 16vw;
+    --grid-margin-left: calc(100vw - 100%);
 }
+
+
 
 .auction-leader-color-span{
     color: var(--auction-leader-color);
@@ -17,23 +29,24 @@
 
 
 div {
-    font-size: 17px;
+    font-size: 1.45vw;
+    word-break: break-word;
 }
 
 button {
     display: inline;
     text-align: center;
     cursor: pointer;
-    border-top-right-radius: 15px;
-    border-bottom-right-radius: 15px;
-    border-top-left-radius: 15px;
-    border-bottom-left-radius: 15px; 
+    border-top-right-radius: 1vw;
+    border-bottom-right-radius: 1vw;
+    border-top-left-radius: 1vw;
+    border-bottom-left-radius: 1vw;
     background-color: rgb(29, 143, 181);
     color: antiquewhite;
     transition: background-color 0.3s ease;
-    font-size:24px;
-    height: 100px;
-    width: 150px;
+    font-size: 3vw;
+    height: 8vw;
+    width: 12vw;
 }
 
 
@@ -47,142 +60,105 @@ button:active
 }
 
 
-#gameboard {
-    justify-content: center;
-    padding-top: 25px;
-    padding-bottom: 25px;;
-}
-
-
 .top-bottom-grid{
-    margin: auto;
     display: grid;
     align-items: center;    
     justify-content: center;
-    grid-template-columns: 150px 100px 100px 100px 100px 100px 100px 100px 100px 100px 150px;
-
+    grid-template-columns: 12vw 8vw 8vw 8vw 8vw 8vw 8vw 8vw 8vw 8vw 12vw;
 }
 
 
 .middle-grid{
-    margin: auto;
     display:grid;
-    grid-template-columns: repeat(8, 150px) ;
-    grid-template-rows: repeat(9, 100px);    
+    grid-template-columns: repeat(8, 12vw);
+    grid-template-rows: repeat(9, 8vw);  
     justify-content: center;
-    align-items: flex-end;
-
 }
 
-.top-contents{
-    display: grid;
+
+.bottom-name-padding{
+    padding-top: 1vw;
 }
 
 .bottom-name-alignment{
-    display: grid;
-    align-self: flex-start;
+    padding-top: .5vw;
 }
-
-.bottom-name-padding{
-    padding-top: 10px;
-}
-
 
 .square-top-bottom {
-    display: grid;
-    justify-content: center; 
-    align-items: end;
-    height: 150px;
-    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; 
+    height: 12vw;
+    width: 8vw;
 }
 
 .square-top-bottom-three {
-    display: grid;
-    justify-content: center; 
-    align-items: end;
-    height: 150px;
-    width: 100%;
-    grid-template-rows: auto 1fr 1fr;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; 
+    height: 12vw;
+    width: 8vw;
 }
 
 .left-middle-square-two{
-    display: grid;
-    justify-content: center;
-    height: 100px;
-    width: 150px;
-    grid-template-columns: auto 1fr;
+    display: flex;
+    justify-content: space-between;
+    width: 12vw;
+    height: 8vw;
 }
 
 .right-middle-square-two{
-    display: grid;
-    justify-content: center;
-    height: 100px;
-    width: 150px;
-    grid-template-columns: auto 1fr;
+    display: flex;
+    justify-content: space-between;
+    width: 12vw;
+    height: 8vw;
 }
 
 .left-middle-square-three {
-    display: grid;
-    justify-content: center;
-    height: 100px;
-    width: 150px;
-    grid-template-columns: auto 1fr 1fr;
+    display: flex;
+    justify-content: space-between;
+    width: 12vw;
+    height: 8vw;
 }
 
 .right-middle-square-three {
-    display: grid;
-    justify-content: center;
-    height: 100px;
-    width: 150px;
-    grid-template-columns: auto 1fr 1fr;
+    display: flex;
+    justify-content: space-between;
+    width: 12vw;
+    height: 8vw;
 }
 
 .left-middle-property{
-    display: grid;
-    height: 98.4px;
     writing-mode: vertical-rl;
     justify-self: flex-end;
+    padding-right: .5vw;
+}
+
+.left-name-utility-padding{
+    padding-right: 1vw;
 }
 
 .right-middle-property{
-    display: grid;
-    height: 98.4px;
     writing-mode: vertical-lr;
     transform: rotate(180deg);
+    padding-right: .5vw;
+    height: 100%;
 }
 
-.left-middle-svg{
-    display: grid;
-    height: 98.4px;
-    justify-content: center;
-    align-items: center; 
-   
-}
-
-.right-middle-svg{
-    display: grid;
-    height: 98.4px;
-    justify-content: center;
-    align-items: center; 
+.left-middle-svg, .right-middle-svg{
+    display: flex;
+    align-self: center;
 }
 
 .left-middle-description{
-    display: grid;
-    height: 98.4px;
     writing-mode: vertical-lr;
-    justify-content: center;
-    align-items: flex-end;
-    padding-left: 20px;
+    padding-left: 1vw;
 }
 
 .right-middle-description{
-    display: grid;
-    height: 98.4px;
     writing-mode: vertical-rl;
     transform: rotate(180deg);
-    justify-content: center;
-    align-items: flex-end;
-    padding-left: 20px;
+    padding-left: 1vw;
 }
 
 .left-svg-rotate{
@@ -195,7 +171,6 @@ button:active
 
 .right-svg-rotate-special{
     transform: rotate(270deg);
-    padding-top: 20px;
 }
 
 
@@ -213,35 +188,32 @@ button:active
     transform: rotate(180deg);
 }
 
-
-.top-name-utility-padding{
-    padding-top: 10px;
+.top-square-name{
+    padding-top: .5vw;
 }
 
-.top-name-utility-padding-special{
-    padding-top: 8px;
+.top-name-utility-padding{
+    padding-top: 1vw;
+}
+
+.top-chance-margin{
+    margin-top: .5vw;
 }
 
 .top-name-utility-padding-special-again{
-    padding-bottom: 10px;
+    padding-bottom: 1vw;
 }
 
 .description-utility-padding{
-    padding-bottom: 20px;
+    padding-bottom: 1vw;
 }
 
 .top-description-property-padding{
-    align-self: flex-start;
-    padding-bottom: 20px;
-}
-
-
-.left-name-utility-padding{
-    padding-right: 10px;
+    padding-bottom: 1vw;
 }
 
 .right-name-utility-padding{
-    padding-right: 10px;
+    padding-right: 1vw;
 }
 
 
@@ -255,62 +227,52 @@ button:active
 
 
 .right-chance-description-padding{
-    padding-left: 35px;
+    margin-left: 1.25vw;
 }
 
 .bottom-property-description{
-    display: grid;
-    align-self: end;
-    padding-bottom: 20px;
+    padding-bottom: 1vw;
 }
-
-.bottom-special{
-    align-self: flex-start;
-}
-
 
 /* Board Spaces By Color */
 .brown-property{
-    display: grid;
-    width: 98.4px;
-    border-top: 20px solid #5f2256;
+    border-top: 1.75vw solid #5f2256;
 }
 
 .light-blue-property{
-    border-top: 20px solid #add8e6;
-    width: 98.4px;
+    border-top: 1.75vw solid #add8e6;
 }
 
 .purple-property{
-    border-right: 20px solid #b420b4;
+    border-right: 1.75vw solid #b420b4;
 }
 .orange-property {
-    border-right: 20px solid #ffa500;
+    border-right: 1.75vw solid #ffa500;
 }
 
 .red-property {
-    border-top: 20px solid #f76969;
+    border-top: 1.75vw solid #f76969;
     transform: rotate(180deg);
 }
 
 .yellow-property {
-    border-top: 20px solid #ffff00;
+    border-top: 1.75vw solid #ffff00;
     transform: rotate(180deg);
 }
 
 .green-property {
-    border-right: 20px solid #4a6f4a;
+    border-right: 1.75vw solid #4a6f4a;
 }
 
 .dark-blue-property{
-    border-right: 20px solid #232388;
+    border-right: 1.75vw solid #232388;
 }
 
 
 /* Corner Square ID's */
 #freeParkingId{
-    width: 150px;
-    height: 150px;
+    width: 12vw;
+    height: 12vw;
     border-top: 2px solid black;
     border-left: 2px solid black;
     border-bottom: 1px solid black;
@@ -323,11 +285,13 @@ button:active
     text-align: center;
     display: grid;
     transform: rotate(135deg);
+    font-size: 2vw;
+    margin: .5vw 0 0 1.25vw;
 }
 
 #goJailId{  
-    width: 150px;
-    height: 150px;
+    width: 12vw;
+    height: 12vw;
     border-top: 2px solid black;
     border-left: 1px solid black;
     border-bottom: 1px solid black;
@@ -336,21 +300,23 @@ button:active
 }
 
 .go-jail-span{
-    text-align: center;
+    font-size: 2vw;
     display: grid;
+    text-align: center;
     transform: rotate(225deg);
 }
 
 #inJailId{
-    width: 95.94px;
-    height: 95.94px;
+    display: flex;
+    width: 5.9vw;
+    height: 5.9vw;
 }
 
 #justVisitingId{
     display: flex;
     flex-wrap: wrap;
-    width: 150px;
-    height: 150px;
+    width: 12vw;
+    height: 12vw;
     border-top: 1px solid black;
     border-left: 2px solid black;
     border-bottom: 2px solid black;
@@ -363,199 +329,156 @@ button:active
     flex-wrap: wrap;
     writing-mode: vertical-lr;
     align-items: flex-end;
-    padding-top: 29.295px;
-    width: 35%;
-    height: 65%;
-    font-size: 24px; 
+    width: 30%;
+    height: 70%;
+    font-size: 2.1vw; 
 }
 
 .just-padding{
-    padding-right:12.225px;
+    margin: auto;
 }
 
 .in-jail-space{
     display: flex;
-    width: 65%;
-    height: 65%;
+    width: 70%;
+    height: 70%;
     background-color: rgb(255, 193, 77);
-}
-
-.in-jail-rotate{
-    font-size:24px;
-    display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 95.94px;
-    height: 95.94px;
-    transform: rotate(45deg);
 }
+
 
 .visiting-space{
     display: flex;
     justify-content: flex-end;
-    padding-right: 10.015px;
+    padding-top: auto;
+    padding-bottom: auto;
     width: 100%;
-    height: 35%;
-    font-size: 24px;
+    height: 30%;
+    font-size: 2.1vw;
 }
 
 .visiting-padding{
-    display: inline;
-    padding-top: 12.225px;
+    margin: auto;
+    padding-left: 35%;
 }
 
 #startId{
     display: flex;
-    width: 150px;
-    height: 150px;
+    width: 12vw;
+    height: 12vw;
     flex-direction: column;
     border-top: 1px solid black;
     border-left: 1px solid black;
     border-bottom: 2px solid black;
     border-right: 2px solid black;
-    align-items: flex-start;
-    justify-content: flex-start;
     position: relative;
 }
 
 .start-span{
-    margin-top: 10px;
-    margin-left: 10px;
-    width: 75px;
-    height: 75px;
-    display:block;
+    top:-10%;
+    width: 12vw;
+    height: 12vw;
+    align-content: center;
     transform: rotate(315deg);
 }
 
 .go-span{
-    display: block;
-    font-size: 40px;
+    font-size: 6vw;
     font-weight:bolder;
-    
+    color:black;
 }
 
 
 /* SVG Classes*/
 svg{
-  
     justify-self: center;
 }
 
 .free-parking-svg{
-    height: 100px;
+    height: 7.5vw;
 }
 
-.top-chance-svg{
-    height: 90px;
-}
-
-.middle-chance-svg{
-    width: 57px;
-    height: 90px;
+.chance-svg{
+    height: 7vw;
 }
 
 .top-train-svg{
-    height: 35px;
-    width: 40px;
-
+    height: 3vw;
 }
 
 .middle-train-svg{
-    height: 45px;
-    width: 40px;
-   
+    height: 3vw;
 }
 
 .faucet-svg{
-    height: 55px;
+    height: 4vw;
 }
 
 .go-jail-svg{
-    height: 100px;
+    height: 7vw;
 }
 
 .light-svg{
-    height: 50px;
+    height: 3.5vw;
 }
 
 .community-chest-svg{
-    width: 60px;
-    
+    width: 5vw;
 }
 
 .jewel-svg{
-    height: 40px;
+    width: 4vw;
 }
 
 .diamond-svg{
-    height: 15px; 
+    width: 2.5vw;
 }
 
 .prisoner-svg{
-    width: 140px;
-    height: auto;
-}
-
-.diamond-center{
     display: flex;
-    justify-self: center;
-    align-self: center;
- 
-}
-
-.arrow-svg{
-    height: 40px;
-}
-
-.arrow-container{
-    display: flex;
-    bottom: -35px;
-    align-self: flex-end;
-    justify-self: flex-end;
-    padding-left: 5px;
-    padding-bottom: 10px;
-    position: relative;
+    width: 5.9vw;
+    height: 5.9vw;
+    transform: rotate(45deg);
 }
 
 .arrow-line{
-    width: 89px;
-    position: relative;
-    left:-30.5px;
-    border-top: 5px solid red;
-    border-top-right-radius: 15px;
-    border-bottom-right-radius: 15px;
-    border-top-left-radius: 15px;
-    border-bottom-left-radius: 15px;
+    width: 8.75vw;
+    position: absolute;
+    bottom: 1.5vw;
+    left: 1.45vw;
+    border-top: .5vw solid red;
+    border-top-right-radius: .5vw;
+    border-bottom-right-radius: .5vw;
+    border-top-left-radius: .5vw;
+    border-bottom-left-radius: .5vw;
 }
 
 .arrow-line::before{
-    content: "";
-    display: block;
-    background-color: red;
-    width: 30%;
-    height: 5px;
     position: absolute;
-    left: -4px;
-    bottom: 8.5px;
-    border-top-left-radius: 15px;
-    border-bottom-left-radius: 15px;
+    content: "";
+    background-color: red;
+    width: 1.65vw;
+    height: .5vw;
+    left: -.35vw;
+    bottom: .4vw;
+    border-top-right-radius: 1vw;
+    border-top-left-radius: .5vw;
+    border-bottom-left-radius: .5vw;
     transform: rotate(135deg);
 }
 
 .arrow-line::after{
-    content: "";
-    display: block;
-    background-color: red;
-    width: 32%;
-    height: 5px;
     position: absolute;
-    left: -5px;
-    bottom: -9px;
-    border-top-left-radius: 15px;
-    border-bottom-left-radius: 15px;
-    border-top-right-radius: 15px;
-    border-bottom-right-radius: 15px;
+    content: "";
+    background-color: red;
+    width: 1.65vw;
+    height: .5vw;
+    left: -.35vw;
+    bottom: -.4vw;
+    border-top-left-radius: 1vw;
+    border-bottom-right-radius: .5vw;
+    border-top-right-radius: .5vw;
     transform: rotate(45deg);
 }
 
@@ -600,37 +523,30 @@ svg{
 }
 
 .action-display-screen{
-    display: flex;
-    justify-self: center;
     grid-column: 2/8;
     grid-row: 3/8;
-    width: 760px;
-    height: 375px;
-    justify-content: center ;
-    align-items: center;
 }
 
-.float-screen-title{
-    display: grid;
-    position: fixed;
-    justify-self: center;
-    align-self: center;
-    align-items: center;
-    justify-content: center;
-    width: 760px;
-    height: 375px;
-    left:50%;
-    right: 50%;
-    top: 50%;
-    bottom: 50%;
+
+.float-screen-title {
+display: grid;
+position: fixed;
+align-items: center;
+justify-content: center;
+width: var(--grid-width);
+height: calc(100vh - var(--top-margin) - var(--bottom-margin));
+top: var(--top-margin);
+left: 50%;
+transform: translateX(-50%);
+background-color: #007BFF;
 }
 
 #playBtnId{
     display: inline;
-    width: 450px;
-    height: 30%;   
+    width: 45vw;
+    height: 12vw;   
     color: antiquewhite;
-    font-size: 28px;
+    font-size: 5vw;
     text-decoration: none;
 }
 
@@ -640,8 +556,8 @@ svg{
     align-self: center;
     align-items: center;
     justify-content: center;
-    width: 760px;
-    height: 375px;
+    width: var(--grid-width);
+    height: var(--grid-height);
     left:50%;
     right: 50%;
     top: 50%;
@@ -656,8 +572,8 @@ svg{
     align-self: center;
     justify-items: center;
     align-items: center;
-    width: 50%;
-    height: 375px;
+    width: var(--grid-width);
+    height: var(--grid-height);
     left:50%;
     right: 50%;
     top: 50%;
@@ -669,6 +585,7 @@ svg{
 
 .amount-players-prompt{
     grid-column: 1/4;
+    font-size: 6vw;
 }
 
 
@@ -679,8 +596,8 @@ svg{
     align-self: center;
     justify-items: center;
     align-items: center;
-    width: 50%;
-    height: 375px;
+    width: var(--grid-width);
+    height: var(--grid-height);
     left:50%;
     right: 50%;
     top: 50%;
@@ -692,6 +609,7 @@ svg{
 
 .choose-piece-h1{
     grid-column: 1/5;
+    font-size: 5vw;
 }
 
 .piece-selection-svg{
@@ -699,8 +617,13 @@ svg{
     width: 50%;
 }
 
+.choose-player-amount-buttons{
+    width: 15vw;
+}
+
 .choose-piece-button{
     background-color: whitesmoke;
+    width: 12vw;
 }
 
 .float-screen-game{
@@ -708,36 +631,41 @@ svg{
     position: fixed;
     justify-self: center;
     align-self: center;
-    width: 760px;
-    height: 375px;
+    width: var(--grid-width);
+    height: var(--grid-height);
     left:50%;
     right: 50%;
     top: 50%;
     bottom: 50%;
     flex-direction: column;
     grid-template-columns: 1fr 1fr 1fr;
+    border:5px solid red;
 }
 
 
 .float-screen-game-left, .float-screen-game-middle, .float-screen-game-right{
-    height: 375px;
+    height: inherit;
+    width: calc(var(--grid-width)/3);
+    border: 2px solid green;
 }
 
 .float-screen-game-left{
-    display: grid;
-    grid-template-rows: 140px 1fr;
-    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    border: 2px solid #007BFF;
 }
 
 .float-screen-game-left-top{
-    width: 253.2px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: calc(var(--grid-width) / 3);
 }
 
 .player-total-cash{
     display: flex;
-    width: 253.2px;
-    font-size: 25px;
-    justify-content: baseline;
+    font-size: 2.1vw;
 }
 
 .float-screen-game-left-bottom{
@@ -749,27 +677,25 @@ svg{
 .house-hotel-mortgage-screen{
     display: grid;
     flex-direction: column;
-    width: 253.2px;
-    height: min-content;
-    grid-template-rows: 25px 1fr 25px 1fr 1fr;
+    width: calc(var(--grid-width)/3);
+    grid-template-rows: auto 1fr auto 1fr 1fr;
     grid-template-columns: 1fr 1fr;
-    align-items: center;
-    justify-content: center;
-
+    align-content: end;
+    justify-items: center;
 }
 
 #houseHotelBtnLabelId, #mortgageBtnLabelId{
     grid-column: 1/3;
-    font-size: 25px;
+    font-size: 2vw;
     font-weight: bold;
-    height: 35px;
 }
 
 .house-hotel-mortgage-btns{
     align-self: center;
     justify-self: center;
-    width: 65px;
-    height: 50px;
+    width: 6vw;
+    height: 3.5vw;
+    font-size: 1.5vw;
 }
 
 .house-hotel-mortgage-btns-container{
@@ -779,14 +705,15 @@ svg{
 }
 
 .trade-button{
-    height: 50px;
+    height: 3.5vw;
+    width: 8vw;
     grid-column: 1/3;
-    margin-top: 5px;
     justify-self: center;
+    font-size: 1.5vw;
 }
 
 .house-hotel-mortgage-btns-label{
-    font-size: 1.5em;
+    font-size: 2vw;
     display: flex;
     grid-column: 1/3;
 }
@@ -878,9 +805,7 @@ svg{
 }
 
 .property-for-purchase-grid{
-
     width: 253.2px;
-
     justify-content: center;
     align-items: center;
 }
@@ -920,7 +845,7 @@ svg{
 
 .float-screen-game-right{
     display: grid;
-    width: 253.2px;
+    width: calc(var(--grid-width)/3);
     flex-direction: column;
     grid-template-rows: 1fr 2fr; 
     align-items: center;

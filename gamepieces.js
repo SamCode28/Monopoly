@@ -498,8 +498,8 @@ let propertyArray = [
 
    },
    {
-       name: "Medditerranian Avenue",
-       id: "mediterranianId",
+       name: "Mediterranean Avenue",
+       id: "mediterraneanId",
        number: 1,
        currentOccupants: 0,
        isProperty: true,
