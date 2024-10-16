@@ -2,23 +2,26 @@
     margin: 0;
     padding: 0;
     border: 0;
-    box-sizing: border-box;
     text-align: center;
-    text-wrap: wrap;
+    box-sizing: border-box;
 }
 
 body{
-    overflow-x: hidden;
-    max-height: ;
+    display: flex;
+    justify-content: center;
 }
 
 :root{
     --auction-leader-color: black;
-    --grid-height: 40vw;
-    --grid-width: 65vw;
-    --top-margin: 14vw;
-    --bottom-margin: 16vw;
-    --grid-margin-left: calc(100vw - 100%);
+    --grid-height: 40vh;
+    --grid-width: 70vh;
+    --top-margin: 14vh;
+    --bottom-margin: 16vh;
+    --grid-margin-left: calc(100vh - 100%);
+    --position-utility-screen: 0px;
+    --property-card-top-border-width: calc(var(--grid-width)/3.5 - 3px);
+    --boardgame-single-border: .25vh solid black;
+    --boardgame-double-border: .5vh solid black;
 }
 
 
@@ -27,26 +30,21 @@ body{
     color: var(--auction-leader-color);
 }
 
-
 div {
-    font-size: 1.45vw;
-    word-break: break-word;
+    font-size: 1.42vh;
 }
 
 button {
-    display: inline;
     text-align: center;
     cursor: pointer;
-    border-top-right-radius: 1vw;
-    border-bottom-right-radius: 1vw;
-    border-top-left-radius: 1vw;
-    border-bottom-left-radius: 1vw;
+    border-top-right-radius: 1vh;
+    border-bottom-right-radius: 1vh;
+    border-top-left-radius: 1vh;
+    border-bottom-left-radius: 1vh;
     background-color: rgb(29, 143, 181);
     color: antiquewhite;
     transition: background-color 0.3s ease;
-    font-size: 3vw;
-    height: 8vw;
-    width: 12vw;
+    font-size: 3vh;
 }
 
 
@@ -59,90 +57,68 @@ button:active
     background-color: rgb(4, 52, 68); 
 }
 
+#gameboard{
+}
 
-.top-bottom-grid{
+/* Top Grid */
+/* Top Grid */
+.top-grid{
     display: grid;
-    align-items: center;    
-    justify-content: center;
-    grid-template-columns: 12vw 8vw 8vw 8vw 8vw 8vw 8vw 8vw 8vw 8vw 12vw;
+    grid-template-rows: 12vh;
+    grid-template-columns: 12vh 8vh 8vh 8vh 8vh 8vh 8vh 8vh 8vh 8vh 12vh;
+    rotate: 180deg;
 }
 
+.top-property-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-content: center;
+}
 
+.top-price-padding{
+    padding-bottom: 1vh;
+}
+
+.top-name-padding{
+    padding-top: 1vh;
+}
+
+.top-chance-margin{
+    margin-top: .5vh;
+}
+
+/* Middle Grid */
+/* Middle Grid */
 .middle-grid{
-    display:grid;
-    grid-template-columns: repeat(8, 12vw);
-    grid-template-rows: repeat(9, 8vw);  
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(8, 12vh);
+    grid-template-rows: repeat(9, 8vh);  
 }
 
-
-.bottom-name-padding{
-    padding-top: 1vw;
-}
-
-.bottom-name-alignment{
-    padding-top: .5vw;
-}
-
-.square-top-bottom {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between; 
-    height: 12vw;
-    width: 8vw;
-}
-
-.square-top-bottom-three {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between; 
-    height: 12vw;
-    width: 8vw;
-}
+/* Middle Left Grid */
 
 .left-middle-square-two{
     display: flex;
     justify-content: space-between;
-    width: 12vw;
-    height: 8vw;
-}
-
-.right-middle-square-two{
-    display: flex;
-    justify-content: space-between;
-    width: 12vw;
-    height: 8vw;
 }
 
 .left-middle-square-three {
     display: flex;
     justify-content: space-between;
-    width: 12vw;
-    height: 8vw;
-}
-
-.right-middle-square-three {
-    display: flex;
-    justify-content: space-between;
-    width: 12vw;
-    height: 8vw;
 }
 
 .left-middle-property{
     writing-mode: vertical-rl;
-    justify-self: flex-end;
-    padding-right: .5vw;
+}
+
+.left-middle-description{
+    writing-mode: vertical-lr;
+    padding-left: 1vh;
 }
 
 .left-name-utility-padding{
-    padding-right: 1vw;
-}
-
-.right-middle-property{
-    writing-mode: vertical-lr;
-    transform: rotate(180deg);
-    padding-right: .5vw;
-    height: 100%;
+    padding-right: 1vh;
 }
 
 .left-middle-svg, .right-middle-svg{
@@ -150,188 +126,174 @@ button:active
     align-self: center;
 }
 
-.left-middle-description{
-    writing-mode: vertical-lr;
-    padding-left: 1vw;
-}
-
-.right-middle-description{
-    writing-mode: vertical-rl;
-    transform: rotate(180deg);
-    padding-left: 1vw;
-}
 
 .left-svg-rotate{
     transform: rotate(90deg);
+}
+
+/* Middle Right Grid */
+
+.right-middle-square{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    
+}
+
+
+.right-price-padding{
+    padding-left: 1vh;
+}
+
+.right-name-padding{
+    padding-right: 1vh;
 }
 
 .right-svg-rotate{
     transform: rotate(90deg);
 }
 
-.right-svg-rotate-special{
-    transform: rotate(270deg);
+.right-chance-padding{
+    padding-left: 2vh;
 }
 
 
-/* Board Spaces By Location */
+/* Bottom Grid */
+/* Bottom Grid */
+
+.bottom-grid{
+    display: grid;
+    grid-template-rows: 12vh;
+    grid-template-columns: 12vh 8vh 8vh 8vh 8vh 8vh 8vh 8vh 8vh 8vh 12vh;
+}
+
+.bottom-property-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-content: space-between;
+}
+     
+
+.bottom-name-padding{
+    padding-top: 1vh;
+}
+
+.bottom-price-padding{
+    padding-bottom: 1vh;
+}
+
+.bottom-svg-padding{
+    padding-bottom: .5vh;
+}
+
+/* Boarder By Location */
 
 .top-board-border{
-    border-top: 2px solid black;
-    border-bottom: 2px solid black;
-    border-left: 1px solid black;
-    border-right: 1px solid black;
-    position: relative;
+    border-top: var(--boardgame-double-border);
+    border-bottom: var(--boardgame-double-border);
+    border-left: var(--boardgame-single-border);
+    border-right: var(--boardgame-single-border);
 }
-
-.top-square-description, .top-square-name {
-    transform: rotate(180deg);
-}
-
-.top-square-name{
-    padding-top: .5vw;
-}
-
-.top-name-utility-padding{
-    padding-top: 1vw;
-}
-
-.top-chance-margin{
-    margin-top: .5vw;
-}
-
-.top-name-utility-padding-special-again{
-    padding-bottom: 1vw;
-}
-
-.description-utility-padding{
-    padding-bottom: 1vw;
-}
-
-.top-description-property-padding{
-    padding-bottom: 1vw;
-}
-
-.right-name-utility-padding{
-    padding-right: 1vw;
-}
-
 
 .middle-board-border{
-    position: relative;
-    border-top: 1px solid black;
-    border-right: 2px solid black;
-    border-left: 2px solid black;
-    border-bottom: 1px solid black;
-}
-
-
-.right-chance-description-padding{
-    margin-left: 1.25vw;
-}
-
-.bottom-property-description{
-    padding-bottom: 1vw;
+    border-top: var(--boardgame-single-border);
+    border-bottom: var(--boardgame-single-border);
+    border-right: var(--boardgame-double-border);
+    border-left: var(--boardgame-double-border);
 }
 
 /* Board Spaces By Color */
 .brown-property{
-    border-top: 1.75vw solid #5f2256;
+    border-top: 1.75vh solid #5f2256;
 }
 
 .light-blue-property{
-    border-top: 1.75vw solid #add8e6;
+    border-top: 1.75vh solid #add8e6;
 }
 
 .purple-property{
-    border-right: 1.75vw solid #b420b4;
+    border-right: 1.75vh solid #b420b4;
 }
 .orange-property {
-    border-right: 1.75vw solid #ffa500;
+    border-right: 1.75vh solid #ffa500;
 }
 
 .red-property {
-    border-top: 1.75vw solid #f76969;
-    transform: rotate(180deg);
+    border-top: 1.75vh solid #f76969;
 }
 
 .yellow-property {
-    border-top: 1.75vw solid #ffff00;
-    transform: rotate(180deg);
+    border-top: 1.75vh solid #ffff00;
 }
 
 .green-property {
-    border-right: 1.75vw solid #4a6f4a;
+    border-right: 1.75vh solid #4a6f4a;
 }
 
 .dark-blue-property{
-    border-right: 1.75vw solid #232388;
+    border-right: 1.75vh solid #232388;
 }
 
 
 /* Corner Square ID's */
 #freeParkingId{
-    width: 12vw;
-    height: 12vw;
-    border-top: 2px solid black;
-    border-left: 2px solid black;
-    border-bottom: 1px solid black;
-    border-right: 1px solid black;
-    position: relative;
-    flex-wrap: wrap;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-top: var(--boardgame-single-border);
+    border-bottom: var(--boardgame-double-border);
+    border-left: var(--boardgame-single-border);
+    border-right: var(--boardgame-double-border);
+    
 }
 
 .free-parking-span{
-    text-align: center;
     display: grid;
-    transform: rotate(135deg);
-    font-size: 2vw;
-    margin: .5vw 0 0 1.25vw;
+    rotate: 315deg;
+    font-size: 2vh;
+    margin: 0 .5vh 1.25vh 0;
 }
 
 #goJailId{  
-    width: 12vw;
-    height: 12vw;
-    border-top: 2px solid black;
-    border-left: 1px solid black;
-    border-bottom: 1px solid black;
-    border-right: 2px solid black;
-    position: relative;
+    display: grid;
+    border-top: var(--boardgame-single-border);
+    border-bottom: var(--boardgame-double-border);
+    border-left: var(--boardgame-double-border);
+    border-right: var(--boardgame-single-border);
 }
 
 .go-jail-span{
-    font-size: 2vw;
+    font-size: 2vh;
     display: grid;
     text-align: center;
-    transform: rotate(225deg);
+    transform: rotate(45deg);
 }
 
 #inJailId{
     display: flex;
-    width: 5.9vw;
-    height: 5.9vw;
+    width: 5.9vh;
+    height: 5.9vh;
 }
 
 #justVisitingId{
-    display: flex;
-    flex-wrap: wrap;
-    width: 12vw;
-    height: 12vw;
-    border-top: 1px solid black;
-    border-left: 2px solid black;
-    border-bottom: 2px solid black;
-    border-right: 1px solid black;
-    position: relative;
+    display: grid;
+    grid-template-rows: 3fr 1fr;
+    grid-template-columns: 1fr 3fr;
+    border-top: var(--boardgame-single-border);
+    border-bottom: var(--boardgame-double-border);
+    border-left: var(--boardgame-double-border);
+    border-right: var(--boardgame-single-border);
+
 }
 
 .just-space{
     display: flex;
-    flex-wrap: wrap;
     writing-mode: vertical-lr;
     align-items: flex-end;
-    width: 30%;
-    height: 70%;
-    font-size: 2.1vw; 
+    font-size: 2.1vh; 
 }
 
 .just-padding{
@@ -340,51 +302,37 @@ button:active
 
 .in-jail-space{
     display: flex;
-    width: 70%;
-    height: 70%;
     background-color: rgb(255, 193, 77);
     justify-content: center;
     align-items: center;
 }
 
-
 .visiting-space{
-    display: flex;
-    justify-content: flex-end;
-    padding-top: auto;
-    padding-bottom: auto;
-    width: 100%;
-    height: 30%;
-    font-size: 2.1vw;
-}
-
-.visiting-padding{
+    font-size: 2.1vh;
     margin: auto;
-    padding-left: 35%;
+    grid-column: 2/3;
 }
 
 #startId{
     display: flex;
-    width: 12vw;
-    height: 12vw;
     flex-direction: column;
-    border-top: 1px solid black;
-    border-left: 1px solid black;
-    border-bottom: 2px solid black;
-    border-right: 2px solid black;
+    border-top: var(--boardgame-single-border);
+    border-left: var(--boardgame-single-border);
+    border-bottom:var(--boardgame-double-border);
+    border-right: var(--boardgame-double-border);
     position: relative;
 }
 
 .start-span{
-    top:-10%;
-    width: 12vw;
-    height: 12vw;
+    margin-bottom: 3vh;
+    width: 12vh;
+    height: 12vh;
     align-content: center;
     transform: rotate(315deg);
 }
 
 .go-span{
-    font-size: 6vw;
+    font-size: 6vh;
     font-weight:bolder;
     color:black;
 }
@@ -396,75 +344,75 @@ svg{
 }
 
 .free-parking-svg{
-    height: 7.5vw;
+    height: 6vh;
 }
 
 .chance-svg{
-    height: 7vw;
+    height: 7vh;
 }
 
 .top-train-svg{
-    height: 3vw;
+    height: 3vh;
 }
 
 .middle-train-svg{
-    height: 3vw;
+    height: 3vh;
 }
 
 .faucet-svg{
-    height: 4vw;
+    height: 4vh;
 }
 
 .go-jail-svg{
-    height: 7vw;
+    height: 7vh;
 }
 
 .light-svg{
-    height: 3.5vw;
+    height: 3.5vh;
 }
 
 .community-chest-svg{
-    width: 5vw;
+    width: 5vh;
 }
 
 .jewel-svg{
-    width: 4vw;
+    width: 4vh;
 }
 
 .diamond-svg{
-    width: 2.5vw;
+    width: 2.5vh;
 }
 
 .prisoner-svg{
     display: flex;
-    width: 5.9vw;
-    height: 5.9vw;
+    width: 5.9vh;
+    height: 5.9vh;
     transform: rotate(45deg);
 }
 
 .arrow-line{
-    width: 8.75vw;
+    width: 8.75vh;
     position: absolute;
-    bottom: 1.5vw;
-    left: 1.45vw;
-    border-top: .5vw solid red;
-    border-top-right-radius: .5vw;
-    border-bottom-right-radius: .5vw;
-    border-top-left-radius: .5vw;
-    border-bottom-left-radius: .5vw;
+    bottom: 1.5vh;
+    left: 1.45vh;
+    border-top: .5vh solid red;
+    border-top-right-radius: .5vh;
+    border-bottom-right-radius: .5vh;
+    border-top-left-radius: .5vh;
+    border-bottom-left-radius: .5vh;
 }
 
 .arrow-line::before{
     position: absolute;
     content: "";
     background-color: red;
-    width: 1.65vw;
-    height: .5vw;
-    left: -.35vw;
-    bottom: .4vw;
-    border-top-right-radius: 1vw;
-    border-top-left-radius: .5vw;
-    border-bottom-left-radius: .5vw;
+    width: 1.65vh;
+    height: .5vh;
+    left: -.35vh;
+    bottom: .4vh;
+    border-top-right-radius: 1vh;
+    border-top-left-radius: .5vh;
+    border-bottom-left-radius: .5vh;
     transform: rotate(135deg);
 }
 
@@ -472,13 +420,13 @@ svg{
     position: absolute;
     content: "";
     background-color: red;
-    width: 1.65vw;
-    height: .5vw;
-    left: -.35vw;
-    bottom: -.4vw;
-    border-top-left-radius: 1vw;
-    border-bottom-right-radius: .5vw;
-    border-top-right-radius: .5vw;
+    width: 1.65vh;
+    height: .5vh;
+    left: -.35vh;
+    bottom: -.4vh;
+    border-top-left-radius: 1vh;
+    border-bottom-right-radius: .5vh;
+    border-top-right-radius: .5vh;
     transform: rotate(45deg);
 }
 
@@ -488,12 +436,12 @@ svg{
     z-index: 1;
     justify-self: flex-start;
     align-self: flex-start;
-    width: 40px;
-    height: 40px;
+    width: 4vh;
+    height: 4vh;
 }
 
 .svg-game-pieces{
-    height: 40px;
+    height: 4vh;
 }
 
 #hotelPieceId{
@@ -524,30 +472,22 @@ svg{
 
 .action-display-screen{
     grid-column: 2/8;
-    grid-row: 3/8;
+    grid-row: 1/9;
+    justify-self: center;
+    align-self: center;
 }
 
-
 .float-screen-title {
-display: grid;
-position: fixed;
-align-items: center;
-justify-content: center;
-width: var(--grid-width);
-height: calc(100vh - var(--top-margin) - var(--bottom-margin));
-top: var(--top-margin);
-left: 50%;
-transform: translateX(-50%);
-background-color: #007BFF;
+    margin: auto;
+    width: var(--grid-width);
 }
 
 #playBtnId{
-    display: inline;
-    width: 45vw;
-    height: 12vw;   
+    margin: auto;
+    width: 60vh;
+    height: 20vh;   
     color: antiquewhite;
-    font-size: 5vw;
-    text-decoration: none;
+    font-size: 10vh;
 }
 
 .game-over-screen{
@@ -567,17 +507,12 @@ background-color: #007BFF;
 
 .float-screen-players{
     display: grid;
-    position: fixed;
     justify-self: center;
     align-self: center;
     justify-items: center;
     align-items: center;
     width: var(--grid-width);
     height: var(--grid-height);
-    left:50%;
-    right: 50%;
-    top: 50%;
-    bottom: 50%;
     flex-direction: column;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 3fr;
@@ -585,87 +520,68 @@ background-color: #007BFF;
 
 .amount-players-prompt{
     grid-column: 1/4;
-    font-size: 6vw;
+    font-size: 9vh;
 }
 
 
 .float-screen-piece-selection{
     display: grid;
-    position: fixed;
-    justify-self: center;
-    align-self: center;
-    justify-items: center;
-    align-items: center;
+    justify-content: center;
+    align-content: center;
     width: var(--grid-width);
-    height: var(--grid-height);
-    left:50%;
-    right: 50%;
-    top: 50%;
-    bottom: 50%;
-    flex-direction: column;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: 1fr 2fr 2fr;
+    gap: 3vh;
 }
 
 .choose-piece-h1{
     grid-column: 1/5;
-    font-size: 5vw;
+    font-size: 6.5vh;
 }
 
 .piece-selection-svg{
-    height: 50%;
-    width: 50%;
+    height: 75%;
+    width: 75%;
 }
 
 .choose-player-amount-buttons{
-    width: 15vw;
+    width: 16vh;
+    height: 12vh;
+    font-size: 6.5vh;
 }
 
 .choose-piece-button{
     background-color: whitesmoke;
-    width: 12vw;
+    width: 12vh;
+    height: 12vh;;
 }
 
 .float-screen-game{
     display: grid;
-    position: fixed;
-    justify-self: center;
-    align-self: center;
+    align-content: center;
+    justify-content: center;
     width: var(--grid-width);
-    height: var(--grid-height);
-    left:50%;
-    right: 50%;
-    top: 50%;
-    bottom: 50%;
-    flex-direction: column;
+    height: 71.5vh;
+    margin-top: 8vh;
     grid-template-columns: 1fr 1fr 1fr;
-    border:5px solid red;
 }
 
 
 .float-screen-game-left, .float-screen-game-middle, .float-screen-game-right{
-    height: inherit;
-    width: calc(var(--grid-width)/3);
-    border: 2px solid green;
-}
-
-.float-screen-game-left{
     display: flex;
     flex-direction: column;
-    justify-items: center;
-    border: 2px solid #007BFF;
+    width: calc(var(--grid-width)/3);
+    row-gap: 3.5vh;
+
 }
 
 .float-screen-game-left-top{
     display: flex;
     flex-direction: column;
-    align-items: center;
-    width: calc(var(--grid-width) / 3);
+    row-gap: .25vh;
+
 }
 
 .player-total-cash{
-    display: flex;
-    font-size: 2.1vw;
+    font-size: 2.7vh;
 }
 
 .float-screen-game-left-bottom{
@@ -676,89 +592,92 @@ background-color: #007BFF;
 
 .house-hotel-mortgage-screen{
     display: grid;
-    flex-direction: column;
     width: calc(var(--grid-width)/3);
-    grid-template-rows: auto 1fr auto 1fr 1fr;
+    grid-template-rows: auto auto auto auto 1fr;
     grid-template-columns: 1fr 1fr;
-    align-content: end;
     justify-items: center;
+    gap:.25vh;
 }
 
-#houseHotelBtnLabelId, #mortgageBtnLabelId{
+#houseHotelBtnLabelId, #mortgageBtnLabelId, .property-button-label{
     grid-column: 1/3;
-    font-size: 2vw;
-    font-weight: bold;
-}
-
-.house-hotel-mortgage-btns{
-    align-self: center;
-    justify-self: center;
-    width: 6vw;
-    height: 3.5vw;
-    font-size: 1.5vw;
-}
-
-.house-hotel-mortgage-btns-container{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-}
-
-.trade-button{
-    height: 3.5vw;
-    width: 8vw;
-    grid-column: 1/3;
-    justify-self: center;
-    font-size: 1.5vw;
+    font-size: 3vh;
 }
 
 .house-hotel-mortgage-btns-label{
-    font-size: 2vw;
+    padding-bottom: 1.5vh;
+}
+
+.house-hotel-mortgage-btns{
+    width: 8vh;
+    height: 5.5vh;
+    font-size: 2.5vh;
+}
+
+.trade-button{
+    height: 5.5vh;
+    width: 10vh;
+    grid-column: 1/3;
+    justify-self: center;
+    font-size: 2.5vh;
+}
+
+.house-hotel-mortgage-btns-label{
+    font-size: 3vh;
     display: flex;
     grid-column: 1/3;
 }
 
 .color-property-card{
     display: grid;
-    width: 220px;
+    width: calc(var(--grid-width)/3.5);
     align-content: center;
     justify-content: center;
     grid-template-rows: auto repeat(1fr, 9);
     border: 2px solid black;
     justify-self: center;
     align-self: center;
-
+    font-size: 3vh;
 }
 
 #colorPropertyName{
-    width: 216.8px;
-    font-size: 1.25em;
+    width:var(--property-card-top-border-width);
+    font-size: 2.6vh;
     font-weight:bold;
 }
 
+#colorPropertyRent, #colorPropertyOneHouse, #colorPropertyTwoHouse, #colorPropertyThreeHouse, #colorPropertyFourHouse,
+ #colorPropertyHotelRent, #colorPropertyHouseCost, #colorPropertyHotelCost, #colorPropertyMortgage{
+    font-size: 1.9vh;
+}
+
+.railroad-inner-text, .utility-inner-text{
+    font-size: 2vh;
+}
+
+
 .railroad-property-card{
     display: grid;
-    width: 220px;
-    height: 200px;
+    width: calc(var(--grid-width)/3.5);
     justify-content: center;
     align-items: flex-start;
     grid-template-rows: auto repeat(1fr, 5);
     border: 2px solid black;
     justify-self: center;
     align-self: center;
+    font-size: 3vh;
 }
 
-#railroadPropertyName{
-    width: 216.8px;
-    font-size: 1.25em;
+#railroadPropertyName, #utilityPropertyName{
+    width:var(--property-card-top-border-width);
+    font-size: 2.6vh;
     font-weight:bold;
 }
 
 .utility-property-card{
     display: flex;
     flex-direction: column;
-    width: 220px;
-    height: 200px;
+    width: calc(var(--grid-width)/3);
     align-items: center;
     justify-content: space-around;
     grid-template-rows: auto 1fr 1fr auto; 
@@ -766,65 +685,55 @@ background-color: #007BFF;
     align-self: center;
 }
 
-#utilityPropertyName{
-    width: 216.8px;
-    font-size: 1.25em;
-    font-weight:bold;
-}
-
 #utilityPropertyOneOwned, #utilityPropertyTwoOwned{
     text-wrap: wrap;
 }
 
-
 .float-screen-game-middle{
-    display: grid;
-    justify-content: center;
-    align-items: center;
-    grid-template-rows: auto 1fr;
-}
-
-.float-screen-game-middle-playerTurn{
-    width: 253.2px;
-    height: min-content;
+    row-gap: 4.5vh;
 }
 
 .float-screen-game-middle-top-contents{
-    width: 253.2px;
-    height: min-content;
-    justify-content: center;
-    align-items: flex-start;
+    font-size: 1.9vh;
+    font-weight: 100;
+}
+
+#playerTurnNameId{
+    font-size: 4vh;
+    font-weight: bold;
+    margin-bottom: .5vh;
 }
 
 .float-screen-game-middle-bottom-contents{
-    display: grid;
-    width: 253.2px;
-    height: fit-content;
+    display: flex;
+    width: calc(var(--grid-width)/3);
     justify-content: center;
-    align-items: center;
 }
 
 .property-for-purchase-grid{
-    width: 253.2px;
+    width: calc(var(--grid-width)/3);
     justify-content: center;
     align-items: center;
 }
 
 .purchase-property-container{
     display: flex;
-    flex-wrap: wrap;
+
 }
 
 .purchase-property-button{
-    width: min-content;
-    height: min-content;
-    padding: 10px 25px;
-    margin-top: 5px;
+    width: 10vh;
+    height: 6vh;
+    font-size: 2.6vh;
+}
+
+#buyPropertyYesBtn{
+    width: 8vh;
 }
 
 #wouldYouLikeToBuyId{
     display: flex;
-    font-size: 1.5em;
+    font-size: 2.4vh;
     padding-bottom: 5px;
 }
 
@@ -832,10 +741,8 @@ background-color: #007BFF;
     display: inline-block;
     align-self:center;
     justify-self: center;
-    width: 253.2px;
-    height: 1875.px;
-    font-size: 28px;
-    padding: 0 20px;
+    width: calc(var(--grid-width)/3);
+    font-size: 3vh;
 }
 
 .purchase-property-container{
@@ -843,63 +750,54 @@ background-color: #007BFF;
     justify-content: space-around;
 }
 
-.float-screen-game-right{
-    display: grid;
-    width: calc(var(--grid-width)/3);
-    flex-direction: column;
-    grid-template-rows: 1fr 2fr; 
-    align-items: center;
-    justify-content: center;  
-}
 
 .right-top-screen{
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 253.2px;
-    height: 125px;
+    font-size: 2vh;
+    width: calc(var(--grid-width)/3);
 }
 
 .right-bottom-screen{
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 253.2px;
-    height: 250px;
+    width: calc(var(--grid-width)/3);
 }
 
 .pay-rent-container{
     display: grid;
-    width: 253.5px;
-    align-items: flex-end;
+    width: calc(var(--grid-width)/3);
     justify-items: center;
-    grid-template-columns: 126.75px 126.75px;
-    grid-template-rows: 100px 60px 60px;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto;
+    row-gap: 1vh;
+    column-gap: 1vh;
 }
 
 .pay-rent-tutorial{
-    font-size: 1.25em;
-}
-
-#payRentLabelId{
-    font-size: 24px;
-    padding-bottom: 20px;
-    grid-column: 1/3;
+    font-size: 2.6vh;
 }
 
 #payRentBtnId{
-    justify-self: end;
-    margin-right: 5px;
+    justify-self: flex-end;
 }
 
 #sellToPayRentBtnId{
-    justify-self: start;
-    margin-left: 5px;
+    justify-self: flex-start;
+}
+
+#payRentLabelId{
+    font-size: 2.6vh;
+    grid-column: 1/3;
 }
 
 #bankruptBtnId{
+    font-size: 2.4vh;
     grid-column: 1/3;
-    height: 55px;
+    width: 13vh;
+    height: 5vh;
 }
 
 .bankrupt-warning-container{
@@ -937,32 +835,30 @@ background-color: #007BFF;
 .roll-button{
     align-self:center;
     justify-self: center;
-    width: 50%;
-    height: 30%;
-    font-size: 28px;
+    width: 14vh;
+    height: 8vh;
+    font-size: 3.5vh;
     text-decoration: none;
 }
 
 .in-jail-options-screen{
     display: grid;
     grid-template-rows: 1fr 1fr 1fr;
-    row-gap: 10px;
+    row-gap: 1vh;
 }
 
 .jail-buttons{
-    width: 100%;
-    padding: 10px 20px;
-    height: 52.5px;
+    margin: auto;
+    width: 75%;
+    height: 8vh;
 }
 
 .end-turn-button{
     align-self:center;
     justify-self: center;
-    height: 55px;
-    font-size: 28px;
-    text-decoration: none;
-    text-wrap: nowrap;
-    margin: 15px 10px;
+    width: 14vh;
+    height: 6vh;
+    font-size: 3vh;
 }
 
 .enlarge-font-span{
@@ -973,9 +869,6 @@ background-color: #007BFF;
     font-weight: bold;
 }
 
-.test-div{
-    color: #f62da2
-}
 
 .can-select-property:hover{
     cursor: pointer;
@@ -1038,7 +931,7 @@ background-color: #007BFF;
     }
 
 .mortgaged{
-    opacity: .4;
+    box-shadow: 0 0 10px rgb(255, 0, 0);
 }
 
 .disable-clicks{
@@ -1069,25 +962,18 @@ background-color: #007BFF;
 
 .auction-screen-container{
     display: grid;
-    position: fixed;
     grid-template-columns: 1fr 1fr 1fr;
     justify-self: center;
     align-self: center;
     align-items: center;
     justify-items: center;
-    width: 760px;
-    height: 375px;
-    left: 50%;
-    right: 50%;
-    top: 50%;
-    bottom: 50%;
+    width: var(--grid-width);
 }
 
 .auction-individual-player-container{
     display: grid;
     grid-template-rows: auto auto auto;
-    width: 253.33px;
-    height: 187.5px;
+    width: calc((--grid-width) /3);
     justify-items: center;
     align-content: start;
 }
@@ -1128,32 +1014,28 @@ background-color: #007BFF;
 
 .trade-screen-container{
     display: grid;
-    position: fixed;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 60px 50px 1fr 60px;
-    justify-self: center;
-    align-self: center;
+    grid-template-rows: auto auto 1fr auto;
     align-items: center;
-    justify-items: center;
-    width: 800px;
-    height: 375px;
-    left: 50%;
-    right: 50%;
-    top: 50%;
-    bottom: 50%;
+    height: 71.5vh;
+    margin-top: 8vh;
+    width: var(--grid-width);
+    row-gap: 1.5vh;
+    border: 2px solid red;
 }
 
 #tradeScreenTutorialId{
+
     grid-column: 1/3;
+    font-size: 2vh;
 }
 
 .trade-screen-players-trading{
     display: grid;
     grid-template-columns: 1fr 1fr;
-    width: 100%;
-    height: 60px;
+    width: var(--grid-width);
     grid-column: 1/3;
-    align-items: center;
+    font-size: 2vh;
 
 }
 
@@ -1161,8 +1043,7 @@ background-color: #007BFF;
     display: grid;
     grid-template-rows:  1fr 50px;
     gap: 1px;
-    height: 205px;
-    width: 400px;
+    width: calc((--grid-width) /2);
 }
 
 .property-dropoff-container{
@@ -1172,39 +1053,33 @@ background-color: #007BFF;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr;
     flex-direction: column;
-    height: 150px;
-    width: 400px;  
-    row-gap: 1px;
-    column-gap: 1px;
+    width: calc(--grid-width / 2);
+    height: 20vh;
+    row-gap: .5vh;
+    column-gap: .5vh;
 }
 
 .dollar-sign{
-    height: 50px;
-    width: 50px;
-    font-size: 20px;
+    font-size: 3vh;
     font-weight: bold;
     background-color: #888;
     align-content: center;
 }
 
 .cash-input-container{
-    display: grid;
-    grid-template-columns: 200px 50px 100px 50px;
-    flex-wrap: nowrap;
-    height: 50px;
-    width: 400px;
+    display: flex;
 }
 
 .cash-offer{
     align-self: center;
-    font-size: 24px;
+    font-size: 3vh;
 }
 
 input {
     text-align: left;
     border: 1px solid #ccc;
-    padding: 10px;
-    font-size: 16px;
+    padding: 1vh;
+    font-size: 2vh;
 }
 
 input:hover {
@@ -1221,8 +1096,8 @@ input::placeholder{
 }
 
 .cash-add-button{
-    width: 100%;
-    height: 100%;
+    font-size: 2vh;
+    width: 5vh;
     border-radius: 0px;
     background-color: #888;
 }
@@ -1230,7 +1105,6 @@ input::placeholder{
 .trade-screen-player-options{
     display: flex;
     grid-column: 1/3;
-    flex-wrap: wrap;
     align-content: start;
     gap: 1px;
     height: 100%;
@@ -1257,14 +1131,15 @@ input::placeholder{
 }
 
 .trade-partner-button{
-   margin: 10px auto;
-   height: 75px;
+   margin: 0 auto;
+   width: 16vh;
+   height: 12vh;
+   font-size: 3.5vh;
 }
 
 .trade-offer-decline-container{
     display: grid;
     width: 100%;
-    height: 60px;
     grid-column: 1/3;
     grid-template-columns:  1fr 1fr 1fr;
     justify-items: center;
@@ -1272,8 +1147,9 @@ input::placeholder{
 }
 
 .trade-cancel-button, .trade-offer-decline-buttons{
-    height: 50px;
-    width: 100px;
+    height: 12vh;
+    width: 20vh;
+    font-size: 3.5vh;
 }
 
 .trade-cancel-button{
@@ -1289,4 +1165,21 @@ input::placeholder{
 
 #traderContentsId, #tradeeContentsId{
     box-sizing: content-box;
+}
+
+
+.roll-placement-bottom-bottom{
+    transform: translateY(16vh);
+}
+
+.roll-placement-middle-bottom{
+    transform: translateY(21vh);
+}
+
+.roll-placement-top-top{
+    transform: translateY(-16vh)
+}
+
+.roll-placement-middle-top{
+    transform: translateY(-12vh)
 }
