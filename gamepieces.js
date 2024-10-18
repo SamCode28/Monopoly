@@ -314,6 +314,12 @@ const pieceSelectionButton = [
     {button: document.getElementById('musicNoteIdBtn'), gamePiece: musicNotePiece, gamePieceId: 'musicNoteId', colorLight: '#ecb363', colorDark: '#f4991a'},
 ]
 
+//Display
+const getScreenWidth = () => {return screen.width}
+console.log('Screen width: ', getScreenWidth());
+let isScreenOverMaxWidth;
+const root = document.documentElement;
+
 //Game Setup Variables
 let currentPlayerTurn = activePlayers[0];
 let currentLocation;
@@ -334,8 +340,8 @@ const playerTotalButtons = [
 
 //Property Variables
 let colorPropertyCard = '<container class="color-property-card" id="colorPropertyCardId"><div id="colorPropertyName"></div><div id="colorPropertyRent"></div><div id="colorPropertyOneHouse"></div><div id="colorPropertyTwoHouse"></div><div id="colorPropertyThreeHouse"></div><div id="colorPropertyFourHouse"></div><div id="colorPropertyHotelRent"></div><div id="colorPropertyHouseCost"></div><div id="colorPropertyHotelCost"></div><div id="colorPropertyMortgage"></div></container>'
-let railroadPropertyCard = '<container class="railroad-property-card" id="railroadPropertyCardId"><div id="railroadPropertyName"></div><div id="railroadPropertyOne">One Railroad Owned: $25</div><div id="railroadPropertyTwoRailroad">Two Railroads Owned: $50</div><div id="railroadPropertyThreeRailroad">Three Railroads Owned: $100</div><div id="railroadPropertyFourRailRoad">Four Railroads Owned: $200</div><div id="railroadPropertyMortgage">Mortgage Value: $100</div></container>'
-let utilityPropertyCard = '<container class="utility-property-card" id="utilityPropertyCardId"><div id="utilityPropertyName"></div><div id="utilityPropertyOneOwned">If one utility property  owned; rent is 4x the cost of roll value.</div><div id="utilityPropertyTwoOwned">If two utility properties onwed; rent is 10x the cost of roll value.</div><div id="utilityPropertyMortgage">Mortgage Value: $75</div></container>'
+let railroadPropertyCard = '<container class="railroad-property-card" id="railroadPropertyCardId"><div id="railroadPropertyName"></div><div class="railroad-inner-text">One Railroad: $25</div><div class="railroad-inner-text">Two Railroads: $50</div><div class="railroad-inner-text">Three Railroads: $100</div><div class="railroad-inner-text">Four Railroads: $200</div><div class="railroad-inner-text">Mortgage Value: $100</div></container>'
+let utilityPropertyCard = '<container class="utility-property-card" id="utilityPropertyCardId"><div id="utilityPropertyName"></div><div class="utility-inner-text">If one utility property  owned; rent is 4x the cost of roll value.</div><div class="utility-inner-text">If two utility properties onwed; rent is 10x the cost of roll value.</div><div class="utility-inner-text">Mortgage Value: $75</div></container>'
 //Game Interactions Buttons
 const playBtn = document.getElementById('playBtnId');
 const rollBtn = document.getElementById('rollBtnId');
@@ -498,8 +504,8 @@ let propertyArray = [
 
    },
    {
-       name: "Medditerranian Avenue",
-       id: "mediterranianId",
+       name: "Mediterranean Avenue",
+       id: "mediterraneanId",
        number: 1,
        currentOccupants: 0,
        isProperty: true,

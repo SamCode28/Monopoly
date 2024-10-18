@@ -5,61 +5,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Monopoly</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
 </head>
 <body>
 
- <div id="gameboard">
-
     <!-- Top Board Pieces -->
     <!-- Top Board Pieces -->
     <!-- Top Board Pieces -->
     <!-- Top Board Pieces -->
 
-    <container class="top-bottom-grid">
+    <container id="gameboard">
 
-        <div class="square-top-bottom" id="freeParkingId">
-            <div class="top-contents"><span class="free-parking-span">Free<svg class="free-parking-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M135.2 117.4L109.1 192l293.8 0-26.1-74.6C372.3 104.6 360.2 96 346.6 96L165.4 96c-13.6 0-25.7 8.6-30.2 21.4zM39.6 196.8L74.8 96.3C88.3 57.8 124.6 32 165.4 32l181.2 0c40.8 0 77.1 25.8 90.6 64.3l35.2 100.5c23.2 9.6 39.6 32.5 39.6 59.2l0 144 0 48c0 17.7-14.3 32-32 32l-32 0c-17.7 0-32-14.3-32-32l0-48L96 400l0 48c0 17.7-14.3 32-32 32l-32 0c-17.7 0-32-14.3-32-32l0-48L0 256c0-26.7 16.4-49.6 39.6-59.2zM128 288a32 32 0 1 0 -64 0 32 32 0 1 0 64 0zm288 32a32 32 0 1 0 0-64 32 32 0 1 0 0 64z"/></svg>Parking</span></div>
+    <container class="top-grid">
+        <div id="goJailId">
+            <div><span class="go-jail-span">Go To<svg class="go-jail-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M240 32a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zM192 48a32 32 0 1 1 0 64 32 32 0 1 1 0-64zm-32 80c17.7 0 32 14.3 32 32l8 0c13.3 0 24 10.7 24 24l0 16c0 1.7-.2 3.4-.5 5.1C280.3 229.6 320 286.2 320 352c0 88.4-71.6 160-160 160S0 440.4 0 352c0-65.8 39.7-122.4 96.5-146.9c-.4-1.6-.5-3.3-.5-5.1l0-16c0-13.3 10.7-24 24-24l8 0c0-17.7 14.3-32 32-32zm0 320a96 96 0 1 0 0-192 96 96 0 1 0 0 192zm192-96c0-25.9-5.1-50.5-14.4-73.1c16.9-32.9 44.8-59.1 78.9-73.9c-.4-1.6-.5-3.3-.5-5.1l0-16c0-13.3 10.7-24 24-24l8 0c0-17.7 14.3-32 32-32s32 14.3 32 32l8 0c13.3 0 24 10.7 24 24l0 16c0 1.7-.2 3.4-.5 5.1C600.3 229.6 640 286.2 640 352c0 88.4-71.6 160-160 160c-62 0-115.8-35.3-142.4-86.9c9.3-22.5 14.4-47.2 14.4-73.1zm224 0a96 96 0 1 0 -192 0 96 96 0 1 0 192 0zM368 0a32 32 0 1 1 0 64 32 32 0 1 1 0-64zm80 48a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"/></svg>Jail</span></div>
         </div>
-        <div class="square-top-bottom top-board-border" id="kentuckyAvId">
-            <div class="top-contents top-square-description top-description-property-padding">$220</div> 
-            <div class="top-contents top-square-name red-property">Kentucky Avenue</div>
+
+        <div class="top-property-container top-board-border" id="marvinGardensId">
+            <div class="yellow-property">Marvin Gardens</div>
+            <div class="top-price-padding">$280</div>
         </div>
-        <div class="square-top-bottom top-board-border" id="chanceTopId">
-            <div class="top-contents top-square-description top-description-property-padding"><svg class="top-chance-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M80 160c0-35.3 28.7-64 64-64l32 0c35.3 0 64 28.7 64 64l0 3.6c0 21.8-11.1 42.1-29.4 53.8l-42.2 27.1c-25.2 16.2-40.4 44.1-40.4 74l0 1.4c0 17.7 14.3 32 32 32s32-14.3 32-32l0-1.4c0-8.2 4.2-15.8 11-20.2l42.2-27.1c36.6-23.6 58.8-64.1 58.8-107.7l0-3.6c0-70.7-57.3-128-128-128l-32 0C73.3 32 16 89.3 16 160c0 17.7 14.3 32 32 32s32-14.3 32-32zm80 320a40 40 0 1 0 0-80 40 40 0 1 0 0 80z"/></svg></div>
-            <div class="top-contents top-square-name top-name-utility-padding">Chance</div>
+        <div class="top-property-container top-board-border" id="waterWorksId">
+            <div class="top-name-padding">Water Works</div>
+            <svg class="faucet-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M192 96l0 12L96 96c-17.7 0-32 14.3-32 32s14.3 32 32 32l96-12 31-3.9 1-.1 1 .1 31 3.9 96 12c17.7 0 32-14.3 32-32s-14.3-32-32-32l-96 12 0-12c0-17.7-14.3-32-32-32s-32 14.3-32 32zM32 256c-17.7 0-32 14.3-32 32l0 64c0 17.7 14.3 32 32 32l100.1 0c20.2 29 53.9 48 91.9 48s71.7-19 91.9-48l36.1 0c17.7 0 32 14.3 32 32s14.3 32 32 32l64 0c17.7 0 32-14.3 32-32c0-88.4-71.6-160-160-160l-32 0-22.6-22.6c-6-6-14.1-9.4-22.6-9.4L256 224l0-43.8-32-4-32 4 0 43.8-18.7 0c-8.5 0-16.6 3.4-22.6 9.4L128 256l-96 0z"/></svg>
+            <div class="top-price-padding">$150</div>
         </div>
-        <div class="square-top-bottom top-board-border" id="indianaAvId">
-            <div class="top-contents top-square-description top-description-property-padding">$220</div>
-            <div class="top-contents top-square-name red-property">Indiana Avenue</div>
+        <div class="top-property-container top-board-border" id="ventorAvId">
+            <div class="yellow-property">Ventor Avenue</div>
+            <div class="top-price-padding">$260</div>
         </div>
-        <div class="square-top-bottom top-board-border" id="illinoisAvId">
-            <div class="top-contents top-square-description top-description-property-padding">$240</div>
-            <div class="top-contents top-square-name red-property">Illinois Avenue</div>
+        <div class="top-property-container top-board-border" id="atlanticAvId">
+            <div class="yellow-property">Atlantic Avenue</div>
+            <div class="top-price-padding">$260</div>
         </div>
-        <div class="square-top-bottom-three top-board-border" id="boRailroadId">
-            <div class="top-contents top-square-description top-description-property-padding">$200</div>
-            <div class="top-contents top-square-description top-name-utility-padding-special "><svg class="top-train-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M96 0C43 0 0 43 0 96L0 352c0 48 35.2 87.7 81.1 94.9l-46 46C28.1 499.9 33.1 512 43 512l39.7 0c8.5 0 16.6-3.4 22.6-9.4L160 448l128 0 54.6 54.6c6 6 14.1 9.4 22.6 9.4l39.7 0c10 0 15-12.1 7.9-19.1l-46-46c46-7.1 81.1-46.9 81.1-94.9l0-256c0-53-43-96-96-96L96 0zM64 96c0-17.7 14.3-32 32-32l256 0c17.7 0 32 14.3 32 32l0 96c0 17.7-14.3 32-32 32L96 224c-17.7 0-32-14.3-32-32l0-96zM224 288a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"/></svg></div>
-            <div class="top-contents top-square-name top-name-utility-padding">B&O Railroad</div>
+        <div class="top-property-container top-board-border" id="boRailroadId">
+            <div class="top-name-padding">B&O Railroad</div>
+            <svg class="top-train-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M96 0C43 0 0 43 0 96L0 352c0 48 35.2 87.7 81.1 94.9l-46 46C28.1 499.9 33.1 512 43 512l39.7 0c8.5 0 16.6-3.4 22.6-9.4L160 448l128 0 54.6 54.6c6 6 14.1 9.4 22.6 9.4l39.7 0c10 0 15-12.1 7.9-19.1l-46-46c46-7.1 81.1-46.9 81.1-94.9l0-256c0-53-43-96-96-96L96 0zM64 96c0-17.7 14.3-32 32-32l256 0c17.7 0 32 14.3 32 32l0 96c0 17.7-14.3 32-32 32L96 224c-17.7 0-32-14.3-32-32l0-96zM224 288a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"/></svg>
+            <div class="top-price-padding">$200</div>
         </div>
-        <div class="square-top-bottom top-board-border" id="atlanticAvId">
-            <div class="top-contents top-square-description top-description-property-padding">$260</div>
-            <div class="top-contents top-square-name yellow-property">Atlantic Avenue</div>
+        <div class="top-property-container top-board-border" id="illinoisAvId">
+            <div class="red-property">Illinois Avenue</div>
+            <div class="top-price-padding">$240</div>
         </div>
-        <div class="square-top-bottom top-board-border" id="ventorAvId">
-            <div class="top-contents top-square-description top-description-property-padding">$260</div>
-            <div class="top-contents top-square-name yellow-property">Ventor Avenue</div>
+        <div class="top-property-container top-board-border" id="indianaAvId">
+            <div class="red-property">Indiana Avenue</div>
+            <div class="top-price-padding">$220</div>
         </div>
-        <div class="square-top-bottom-three top-board-border" id="waterWorksId">
-            <div class="top-contents top-square-description top-description-property-padding">$150</div>
-            <div class="top-contents top-square-description top-name-utility-padding-special-again "><svg class="faucet-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M192 96l0 12L96 96c-17.7 0-32 14.3-32 32s14.3 32 32 32l96-12 31-3.9 1-.1 1 .1 31 3.9 96 12c17.7 0 32-14.3 32-32s-14.3-32-32-32l-96 12 0-12c0-17.7-14.3-32-32-32s-32 14.3-32 32zM32 256c-17.7 0-32 14.3-32 32l0 64c0 17.7 14.3 32 32 32l100.1 0c20.2 29 53.9 48 91.9 48s71.7-19 91.9-48l36.1 0c17.7 0 32 14.3 32 32s14.3 32 32 32l64 0c17.7 0 32-14.3 32-32c0-88.4-71.6-160-160-160l-32 0-22.6-22.6c-6-6-14.1-9.4-22.6-9.4L256 224l0-43.8-32-4-32 4 0 43.8-18.7 0c-8.5 0-16.6 3.4-22.6 9.4L128 256l-96 0z"/></svg></div>
-            <div class="top-contents top-square-name top-name-utility-padding">Water Works</div>
+        <div class="top-property-container top-board-border" id="chanceTopId">
+            <div class="top-name-padding">Chance</div>
+            <div class="top-chance-margin"><svg class="chance-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M80 160c0-35.3 28.7-64 64-64l32 0c35.3 0 64 28.7 64 64l0 3.6c0 21.8-11.1 42.1-29.4 53.8l-42.2 27.1c-25.2 16.2-40.4 44.1-40.4 74l0 1.4c0 17.7 14.3 32 32 32s32-14.3 32-32l0-1.4c0-8.2 4.2-15.8 11-20.2l42.2-27.1c36.6-23.6 58.8-64.1 58.8-107.7l0-3.6c0-70.7-57.3-128-128-128l-32 0C73.3 32 16 89.3 16 160c0 17.7 14.3 32 32 32s32-14.3 32-32zm80 320a40 40 0 1 0 0-80 40 40 0 1 0 0 80z"/></svg></div>
         </div>
-        <div class="square-top-bottom top-board-border" id="marvinGardensId">
-            <div class="top-contents top-square-description top-description-property-padding">$280</div>
-            <div class="top-contents top-square-name yellow-property">Marvin Gardens</div>
+        <div class="top-property-container top-board-border" id="kentuckyAvId">
+            <div class="red-property">Kentucky Avenue</div>
+            <div class= "top-square-description top-price-padding">$220</div> 
         </div>
-        <div class="square-top-bottom" id="goJailId">
-            <div class="top-contents"><span class="go-jail-span">Go To<svg class="go-jail-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M240 32a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zM192 48a32 32 0 1 1 0 64 32 32 0 1 1 0-64zm-32 80c17.7 0 32 14.3 32 32l8 0c13.3 0 24 10.7 24 24l0 16c0 1.7-.2 3.4-.5 5.1C280.3 229.6 320 286.2 320 352c0 88.4-71.6 160-160 160S0 440.4 0 352c0-65.8 39.7-122.4 96.5-146.9c-.4-1.6-.5-3.3-.5-5.1l0-16c0-13.3 10.7-24 24-24l8 0c0-17.7 14.3-32 32-32zm0 320a96 96 0 1 0 0-192 96 96 0 1 0 0 192zm192-96c0-25.9-5.1-50.5-14.4-73.1c16.9-32.9 44.8-59.1 78.9-73.9c-.4-1.6-.5-3.3-.5-5.1l0-16c0-13.3 10.7-24 24-24l8 0c0-17.7 14.3-32 32-32s32 14.3 32 32l8 0c13.3 0 24 10.7 24 24l0 16c0 1.7-.2 3.4-.5 5.1C600.3 229.6 640 286.2 640 352c0 88.4-71.6 160-160 160c-62 0-115.8-35.3-142.4-86.9c9.3-22.5 14.4-47.2 14.4-73.1zm224 0a96 96 0 1 0 -192 0 96 96 0 1 0 192 0zM368 0a32 32 0 1 1 0 64 32 32 0 1 1 0-64zm80 48a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"/></svg>Jail</span></div>
+        <div id="freeParkingId">
+            <div><span class="free-parking-span">Free<svg class="free-parking-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M135.2 117.4L109.1 192l293.8 0-26.1-74.6C372.3 104.6 360.2 96 346.6 96L165.4 96c-13.6 0-25.7 8.6-30.2 21.4zM39.6 196.8L74.8 96.3C88.3 57.8 124.6 32 165.4 32l181.2 0c40.8 0 77.1 25.8 90.6 64.3l35.2 100.5c23.2 9.6 39.6 32.5 39.6 59.2l0 144 0 48c0 17.7-14.3 32-32 32l-32 0c-17.7 0-32-14.3-32-32l0-48L96 400l0 48c0 17.7-14.3 32-32 32l-32 0c-17.7 0-32-14.3-32-32l0-48L0 256c0-26.7 16.4-49.6 39.6-59.2zM128 288a32 32 0 1 0 -64 0 32 32 0 1 0 64 0zm288 32a32 32 0 1 0 0-64 32 32 0 1 0 0 64z"/></svg>Parking</span></div>
         </div>
 
     </container>
@@ -76,48 +77,44 @@
             <div class="left-middle-description">$200</div>
             <div class="left-middle-property orange-property">New York Avenue</div>
         </div>
-        <div class="square-middle">
-        </div>
-        <div class="square-middle">
-        </div>
-        <div class="square-middle">
-        </div>
-        <div class="square-middle">
-        </div>
-        <div class="square-middle">
-        </div>
-        <div class="square-middle">
-        </div>    
-        <div class="right-middle-square-two middle-board-border" id="pacificAvId">
-            <div class="right-middle-property green-property">Avenue Pacific</div>
-            <div class="right-middle-description">$300</div>
+  
+        <div class="right-middle-square middle-board-border" id="pacificAvId">
+            <div class="green-property">Pacific Avenue</div>
+            <div class="right-price-padding">$300</div>
         </div>
         <div class="left-middle-square-two middle-board-border" id="tennAvId">
             <div class="left-middle-description">$180</div>
             <div class="left-middle-property orange-property">Tennessee Avenue</div>
         </div>
-        <div class="square-middle">
-        </div>
-        <div class="square-middle">
-        </div>
-        <div class="square-middle">
-        </div>
-        <div class="square-middle">
-        </div>
-        <div class="square-middle">
-        </div>
-        <div class="square-middle">
-        </div>
-        <div class="right-middle-square-two middle-board-border" id="northCarolinaId">
-            <div class="right-middle-property green-property"><span class="right-square-rotate-span">Avenue Carolina North</span></div>
-            <div class="right-middle-description"><span class="right-square-rotate-span">$300</span></div>
+        <div class="right-middle-square middle-board-border" id="northCarolinaId">
+            <div class="green-property"><span class="right-square-rotate-span">North Carolina Avenue</span></div>
+            <div class="right-price-padding"><span class="right-square-rotate-span">$300</span></div>
         </div>
         <div class="left-middle-square-two middle-board-border" id="commChestLeftId">
-            <div class="left-middle-description"><span class="left-svg-rotate"><svg class="community-chest-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M176 88l0 40 160 0 0-40c0-4.4-3.6-8-8-8L184 80c-4.4 0-8 3.6-8 8zm-48 40l0-40c0-30.9 25.1-56 56-56l144 0c30.9 0 56 25.1 56 56l0 40 28.1 0c12.7 0 24.9 5.1 33.9 14.1l51.9 51.9c9 9 14.1 21.2 14.1 33.9l0 92.1-128 0 0-32c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 32-128 0 0-32c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 32L0 320l0-92.1c0-12.7 5.1-24.9 14.1-33.9l51.9-51.9c9-9 21.2-14.1 33.9-14.1l28.1 0zM0 416l0-64 128 0c0 17.7 14.3 32 32 32s32-14.3 32-32l128 0c0 17.7 14.3 32 32 32s32-14.3 32-32l128 0 0 64c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64z"/></svg></span></div>
-            <div class="left-middle-property left-name-utility-padding"><span class="left-square-rotate-name">Community Chest</span></div>
+            <div class="left-middle-description"><svg class="community-chest-svg left-svg-rotate" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M176 88l0 40 160 0 0-40c0-4.4-3.6-8-8-8L184 80c-4.4 0-8 3.6-8 8zm-48 40l0-40c0-30.9 25.1-56 56-56l144 0c30.9 0 56 25.1 56 56l0 40 28.1 0c12.7 0 24.9 5.1 33.9 14.1l51.9 51.9c9 9 14.1 21.2 14.1 33.9l0 92.1-128 0 0-32c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 32-128 0 0-32c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 32L0 320l0-92.1c0-12.7 5.1-24.9 14.1-33.9l51.9-51.9c9-9 21.2-14.1 33.9-14.1l28.1 0zM0 416l0-64 128 0c0 17.7 14.3 32 32 32s32-14.3 32-32l128 0c0 17.7 14.3 32 32 32s32-14.3 32-32l128 0 0 64c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64z"/></svg></div>
+            <div class="left-middle-property left-name-utility-padding">Community Chest</div>
+        </div>  
+
+        <div class="right-middle-square middle-board-border" id="commChestRightId">
+            <div class="right-name-padding">Community Chest</div>
+            <div class="right-chest-padding"><svg class="community-chest-svg right-svg-rotate" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M176 88l0 40 160 0 0-40c0-4.4-3.6-8-8-8L184 80c-4.4 0-8 3.6-8 8zm-48 40l0-40c0-30.9 25.1-56 56-56l144 0c30.9 0 56 25.1 56 56l0 40 28.1 0c12.7 0 24.9 5.1 33.9 14.1l51.9 51.9c9 9 14.1 21.2 14.1 33.9l0 92.1-128 0 0-32c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 32-128 0 0-32c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 32L0 320l0-92.1c0-12.7 5.1-24.9 14.1-33.9l51.9-51.9c9-9 21.2-14.1 33.9-14.1l28.1 0zM0 416l0-64 128 0c0 17.7 14.3 32 32 32s32-14.3 32-32l128 0c0 17.7 14.3 32 32 32s32-14.3 32-32l128 0 0 64c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64z"/></svg></div>
+        </div>
+        <div class="left-middle-square-two middle-board-border" id="stJamesPlId">
+            <div class="left-middle-description">$180</span></div>
+            <div class="left-middle-property orange-property">St. James Place</span></div>
+        </div>   
+
+        <div class="right-middle-square middle-board-border" id="pennAvId">
+            <div class="green-property">Pennsylvania Avenue</div>
+            <div class="right-price-padding"><span class="right-square-rotate-span">$320</span></div>
+        </div>
+        <div class="left-middle-square-three middle-board-border" id="pennRailroadId">
+            <div class="left-middle-description">$200</div>
+            <div class="left-middle-svg"><svg class="middle-train-svg left-svg-rotate" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M96 0C43 0 0 43 0 96L0 352c0 48 35.2 87.7 81.1 94.9l-46 46C28.1 499.9 33.1 512 43 512l39.7 0c8.5 0 16.6-3.4 22.6-9.4L160 448l128 0 54.6 54.6c6 6 14.1 9.4 22.6 9.4l39.7 0c10 0 15-12.1 7.9-19.1l-46-46c46-7.1 81.1-46.9 81.1-94.9l0-256c0-53-43-96-96-96L96 0zM64 96c0-17.7 14.3-32 32-32l256 0c17.7 0 32 14.3 32 32l0 96c0 17.7-14.3 32-32 32L96 224c-17.7 0-32-14.3-32-32l0-96zM224 288a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"/></svg></div>
+            <div class="left-middle-property left-name-utility-padding">Pennsylvania Railroad</div>
         </div>
 
-
+        
  <!--Middle Floating Screen-->
  <!--Middle Floating Screen-->   
  <!--Middle Floating Screen-->   
@@ -235,11 +232,12 @@
 
             <!--Main Player Select Screen-->
             <!--Main Player Select Screen-->
+            <!--.float-screen-players-->
             <div class="hidden" id="floatScreenPlayersId">
-                <h1 class="amount-players-prompt" id="whichPlayChoosePieceId">How Many Players?</h1>
-                <button id="twoPlayerBtnId">2</button>
-                <button id="threePlayerBtnId">3</button>
-                <button id="fourPlayerBtnId">4</button>
+                <h1 class="amount-players-prompt">How Many Players?</h1>
+                <button class="choose-player-amount-buttons" id="twoPlayerBtnId">2</button>
+                <button class="choose-player-amount-buttons" id="threePlayerBtnId">3</button>
+                <button class="choose-player-amount-buttons" id="fourPlayerBtnId">4</button>
             </div>
 
             <!--Main Piece Select Screen-->
@@ -276,8 +274,9 @@
                         <div class="house-hotel-mortgage-screen" id="houseHotelMortgageScreenId">
                             <div id="houseHotelBtnLabelId">House & Hotel</div>
                             <button class="house-hotel-mortgage-btns" id="buyHouseHotelBtnId">Buy</button><button class="house-hotel-mortgage-btns" id="sellHouseHotelBtn">Sell</button>
-                            <div id="mortgageBtnLabelId">Mortgage Property</div>
+                            <div id="mortgageBtnLabelId">Mortgage</div>
                             <button class="house-hotel-mortgage-btns" id="openMortgageBtnId">Open</button><button class="house-hotel-mortgage-btns" id="closeMortgageBtnId">Close</button>
+                            <div class="property-button-label" id="propertyBtnLabelId">Property</div>
                             <button class="trade-button" id="tradeBtnId">Trade</button>
                         </div>
 
@@ -331,7 +330,7 @@
                         <h2 id="playerTurnNameId"></h2>
 
                         <!--Update Player locations-->
-                        <h2 id="float-screen-game-middle-currentLocation" style="padding-bottom: 5px;"></h2>
+                        <h2 id="float-screen-game-middle-currentLocation"></h2>
                     </div>
                     <div class="float-screen-game-middle-bottom-contents">
 
@@ -412,157 +411,119 @@
     <!-- Middle Board Pieces -->
     <!-- Middle Board Pieces -->
     <!-- Middle Board Pieces -->
-    <!-- Middle Board Pieces -->        
+    <!-- Middle Board Pieces -->      
 
-        <div class="right-middle-square-two middle-board-border" id="commChestRightId">
-            <div class="right-middle-property right-name-utility-padding">Chest Community</div>
-            <div class="right-middle-description"><svg class="community-chest-svg right-svg-rotate" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M176 88l0 40 160 0 0-40c0-4.4-3.6-8-8-8L184 80c-4.4 0-8 3.6-8 8zm-48 40l0-40c0-30.9 25.1-56 56-56l144 0c30.9 0 56 25.1 56 56l0 40 28.1 0c12.7 0 24.9 5.1 33.9 14.1l51.9 51.9c9 9 14.1 21.2 14.1 33.9l0 92.1-128 0 0-32c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 32-128 0 0-32c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 32L0 320l0-92.1c0-12.7 5.1-24.9 14.1-33.9l51.9-51.9c9-9 21.2-14.1 33.9-14.1l28.1 0zM0 416l0-64 128 0c0 17.7 14.3 32 32 32s32-14.3 32-32l128 0c0 17.7 14.3 32 32 32s32-14.3 32-32l128 0 0 64c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64z"/></svg></span></div>
-        </div>
-        <div class="left-middle-square-two middle-board-border" id="stJamesPlId">
-            <div class="left-middle-description">$180</span></div>
-            <div class="left-middle-property orange-property">St. James Place</span></div>
-        </div>
-
-        <div class="right-middle-square-two middle-board-border" id="pennAvId">
-            <div class="right-middle-property green-property"><span class="right-square-rotate-span">Avenue Pennsylvania</span></div>
-            <div class="right-middle-description"><span class="right-square-rotate-span">$320</span></div>
-        </div>
-        <div class="left-middle-square-three middle-board-border" id="pennRailroadId">
-            <div class="left-middle-description">$200</div>
-            <div class="left-middle-svg"><span class="left-svg-rotate"><svg class="middle-train-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M96 0C43 0 0 43 0 96L0 352c0 48 35.2 87.7 81.1 94.9l-46 46C28.1 499.9 33.1 512 43 512l39.7 0c8.5 0 16.6-3.4 22.6-9.4L160 448l128 0 54.6 54.6c6 6 14.1 9.4 22.6 9.4l39.7 0c10 0 15-12.1 7.9-19.1l-46-46c46-7.1 81.1-46.9 81.1-94.9l0-256c0-53-43-96-96-96L96 0zM64 96c0-17.7 14.3-32 32-32l256 0c17.7 0 32 14.3 32 32l0 96c0 17.7-14.3 32-32 32L96 224c-17.7 0-32-14.3-32-32l0-96zM224 288a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"/></svg></span></div>
-            <div class="left-middle-property left-name-utility-padding">Pennsylvania Railroad</span></div>
-        </div>
-
-        <div class="right-middle-square-three middle-board-border" id="shortLineId">
-            <div class="right-middle-property right-name-utility-padding">Short Line</div>
-            <div class="right-middle-svg"><span class="right-svg-rotate-special"><svg class="middle-train-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M96 0C43 0 0 43 0 96L0 352c0 48 35.2 87.7 81.1 94.9l-46 46C28.1 499.9 33.1 512 43 512l39.7 0c8.5 0 16.6-3.4 22.6-9.4L160 448l128 0 54.6 54.6c6 6 14.1 9.4 22.6 9.4l39.7 0c10 0 15-12.1 7.9-19.1l-46-46c46-7.1 81.1-46.9 81.1-94.9l0-256c0-53-43-96-96-96L96 0zM64 96c0-17.7 14.3-32 32-32l256 0c17.7 0 32 14.3 32 32l0 96c0 17.7-14.3 32-32 32L96 224c-17.7 0-32-14.3-32-32l0-96zM224 288a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"/></svg></span></div>
-            <div class="right-middle-description">$200</div>
+        <div class="right-middle-square middle-board-border" id="shortLineId">
+            <div class="right-name-padding">Short Line</div>
+            <div class="right-middle-svg"><svg class="middle-train-svg right-svg-rotate" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M96 0C43 0 0 43 0 96L0 352c0 48 35.2 87.7 81.1 94.9l-46 46C28.1 499.9 33.1 512 43 512l39.7 0c8.5 0 16.6-3.4 22.6-9.4L160 448l128 0 54.6 54.6c6 6 14.1 9.4 22.6 9.4l39.7 0c10 0 15-12.1 7.9-19.1l-46-46c46-7.1 81.1-46.9 81.1-94.9l0-256c0-53-43-96-96-96L96 0zM64 96c0-17.7 14.3-32 32-32l256 0c17.7 0 32 14.3 32 32l0 96c0 17.7-14.3 32-32 32L96 224c-17.7 0-32-14.3-32-32l0-96zM224 288a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"/></svg></div>
+            <div class="right-price-padding">$200</div>
         </div>
         <div class="left-middle-square-two middle-board-border" id="virginiaAvId">
             <div class="left-middle-description">$160</span></div>
             <div class="left-middle-property purple-property">Virginia Avenue</span></div>
         </div>
 
-        <div class="right-middle-square-two middle-board-border" id="chanceRightId">
-            <div class="right-middle-property right-name-utility-padding">Chance</div>
-            <div class="right-middle-description right-chance-description-padding"><span class="right-svg-rotate"><svg class="middle-chance-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M80 160c0-35.3 28.7-64 64-64l32 0c35.3 0 64 28.7 64 64l0 3.6c0 21.8-11.1 42.1-29.4 53.8l-42.2 27.1c-25.2 16.2-40.4 44.1-40.4 74l0 1.4c0 17.7 14.3 32 32 32s32-14.3 32-32l0-1.4c0-8.2 4.2-15.8 11-20.2l42.2-27.1c36.6-23.6 58.8-64.1 58.8-107.7l0-3.6c0-70.7-57.3-128-128-128l-32 0C73.3 32 16 89.3 16 160c0 17.7 14.3 32 32 32s32-14.3 32-32zm80 320a40 40 0 1 0 0-80 40 40 0 1 0 0 80z"/></svg></span></div>
+        <div class="right-middle-square middle-board-border" id="chanceRightId">
+            <div class="right-name-padding">Chance</div>
+            <div class="right-chance-padding"><svg class="chance-svg right-svg-rotate" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M80 160c0-35.3 28.7-64 64-64l32 0c35.3 0 64 28.7 64 64l0 3.6c0 21.8-11.1 42.1-29.4 53.8l-42.2 27.1c-25.2 16.2-40.4 44.1-40.4 74l0 1.4c0 17.7 14.3 32 32 32s32-14.3 32-32l0-1.4c0-8.2 4.2-15.8 11-20.2l42.2-27.1c36.6-23.6 58.8-64.1 58.8-107.7l0-3.6c0-70.7-57.3-128-128-128l-32 0C73.3 32 16 89.3 16 160c0 17.7 14.3 32 32 32s32-14.3 32-32zm80 320a40 40 0 1 0 0-80 40 40 0 1 0 0 80z"/></svg></div>
         </div>
         <div class="left-middle-square-two middle-board-border" id="statesAvId">
             <div class="left-middle-description">$140</span></div>
             <div class="left-middle-property purple-property">States Avenue</span></div>
         </div>
 
-        <div class="right-middle-square-two middle-board-border" id="parkPlaceId">
-            <div class="right-middle-property dark-blue-property">Park Place</div>
-            <div class="right-middle-description">$350</div>
+        <div class="right-middle-square middle-board-border" id="parkPlaceId">
+            <div class="dark-blue-property">Park Place</div>
+            <div class="right-price-padding">$350</div>
         </div>
         <div class="left-middle-square-three middle-board-border" id="electricCompanyId">
             <div class="left-middle-description">$150</div>
             <div class="left-middle-svg"><svg class="light-svg left-svg-rotate" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M297.2 248.9C311.6 228.3 320 203.2 320 176c0-70.7-57.3-128-128-128S64 105.3 64 176c0 27.2 8.4 52.3 22.8 72.9c3.7 5.3 8.1 11.3 12.8 17.7c0 0 0 0 0 0c12.9 17.7 28.3 38.9 39.8 59.8c10.4 19 15.7 38.8 18.3 57.5L109 384c-2.2-12-5.9-23.7-11.8-34.5c-9.9-18-22.2-34.9-34.5-51.8c0 0 0 0 0 0s0 0 0 0c-5.2-7.1-10.4-14.2-15.4-21.4C27.6 247.9 16 213.3 16 176C16 78.8 94.8 0 192 0s176 78.8 176 176c0 37.3-11.6 71.9-31.4 100.3c-5 7.2-10.2 14.3-15.4 21.4c0 0 0 0 0 0s0 0 0 0c-12.3 16.8-24.6 33.7-34.5 51.8c-5.9 10.8-9.6 22.5-11.8 34.5l-48.6 0c2.6-18.7 7.9-38.6 18.3-57.5c11.5-20.9 26.9-42.1 39.8-59.8c0 0 0 0 0 0s0 0 0 0s0 0 0 0c4.7-6.4 9-12.4 12.7-17.7zM192 128c-26.5 0-48 21.5-48 48c0 8.8-7.2 16-16 16s-16-7.2-16-16c0-44.2 35.8-80 80-80c8.8 0 16 7.2 16 16s-7.2 16-16 16zm0 384c-44.2 0-80-35.8-80-80l0-16 160 0 0 16c0 44.2-35.8 80-80 80z"/></svg></span></div>
             <div class="left-middle-property left-name-utility-padding">Electric Company</div>
         </div>
-        <div class="square">
-        </div>
-        <div class="square">
-        </div>
-        <div class="square">
-        </div>
-        <div class="square">
-        </div>
-        <div class="square">
-        </div>
-        <div class="square">
-        </div>
-        <div class="right-middle-square-three middle-board-border" id="luxTaxId">
-            <div class="right-middle-property right-name-utility-padding">Luxury Tax</div>
-            <div class="right-middle-svg"><span class="right-svg-rotate-special"><svg class="jewel-svg" xlmns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M168.5 72L256 165l87.5-93-175 0zM383.9 99.1L311.5 176l129 0L383.9 99.1zm50 124.9L256 224 78.1 224 256 420.3 433.9 224zM71.5 176l129 0L128.1 99.1 71.5 176zm434.3 40.1l-232 256c-4.5 5-11 7.9-17.8 7.9s-13.2-2.9-17.8-7.9l-232-256c-7.7-8.5-8.3-21.2-1.5-30.4l112-152c4.5-6.1 11.7-9.8 19.3-9.8l240 0c7.6 0 14.8 3.6 19.3 9.8l112 152c6.8 9.2 6.1 21.9-1.5 30.4z"/></svg></span></div>
-            <div class="right-middle-description">Pay $100</div> 
+
+        <div class="right-middle-square middle-board-border" id="luxTaxId">
+            <div class="right-name-padding">Luxury Tax</div>
+            <div class="right-middle-svg"><span class="right-svg-rotate"><svg class="jewel-svg" xlmns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M168.5 72L256 165l87.5-93-175 0zM383.9 99.1L311.5 176l129 0L383.9 99.1zm50 124.9L256 224 78.1 224 256 420.3 433.9 224zM71.5 176l129 0L128.1 99.1 71.5 176zm434.3 40.1l-232 256c-4.5 5-11 7.9-17.8 7.9s-13.2-2.9-17.8-7.9l-232-256c-7.7-8.5-8.3-21.2-1.5-30.4l112-152c4.5-6.1 11.7-9.8 19.3-9.8l240 0c7.6 0 14.8 3.6 19.3 9.8l112 152c6.8 9.2 6.1 21.9-1.5 30.4z"/></svg></span></div>
+            <div class="right-price-padding">Pay $100</div> 
         </div>
         <div class="left-middle-square-two middle-board-border"id="stCharlesPlaceId">
             <div class="left-middle-description">$140</span></div>
             <div class="left-middle-property purple-property">St. Charles Place</span></div>
         </div>
-        <div class="square">
-        </div>
-        <div class="square">
-        </div>
-        <div class="square">
-        </div>
-        <div class="square">
-        </div>
-        <div class="square">
-        </div>
-        <div class="square">
-        </div>
-        <div class="right-middle-square-two middle-board-border" id="boardwalkId">
-            <div class="right-middle-property dark-blue-property">Boardwalk</div>
-            <div class="right-middle-description">$400</div>
+        <div class="right-middle-square middle-board-border" id="boardwalkId">
+            <div class="dark-blue-property">Boardwalk</div>
+            <div class="right-price-padding">$400</div>
         </div>
 
     </container>
 
+
+
     <!-- Bottom Board Pieces -->
     <!-- Bottom Board Pieces -->
     <!-- Bottom Board Pieces -->
     <!-- Bottom Board Pieces -->
 
-    <container class="top-bottom-grid">
+    <container class="bottom-grid">
 
     <div id="justVisitingId">
         <div class="just-space"><span class="just-padding">Just</span></div>
         <div class="in-jail-space">
-            <div class="in-jail-color" id="inJailId"><span class="in-jail-rotate">In<svg class="pisoner-svg" version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="110px" height="110px" viewBox="-51.2 -51.2 614.40 614.40" xml:space="preserve" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"><rect x="-51.2" y="-51.2" width="614.40" height="614.40" rx="0" fill="#7ed0ec" strokewidth="0"></rect></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="102.4"> <style type="text/css">  .st0{fill:#000000;}  </style> <g> <path class="st0" d="M406.344,336.641c-1.766,0-3.953,0-6.344,0V0h-32v336.844c-18.141,1.063-25,13.641-25,25.125 c0,1.547,0,6.031,0,11.906c-4.875-29.281-17.125-55.906-32.422-75.766c19.953-16.016,32.766-40.547,32.766-68.109 c0-39.906-26.797-73.5-63.344-83.922v25.328c23.063,9.484,39.344,32.156,39.344,58.594c0,26.422-16.281,49.094-39.344,58.563v48.75 h26.531c4.594,9.703,8.266,20.016,10.781,30.594H280v68.156h41.344v29.172H280V512h65.344c0,0,0-27.375,0-79.094 c3.453,7.031,10.719,10.406,21,10.406c0.469,0,1.094,0,1.656,0V512h32v-68.688c0.109,0,0.219,0,0.344,0 c14,0,19.188-7.281,23.344-12.672c6.656-8.672,15.313-41.328,11.313-68C433.609,353.313,423.688,336.641,406.344,336.641z M410.969,420.906l-0.344,0.438c-3.406,4.469-4.563,5.969-10.281,5.969h-34c-7.344,0-7.344-1.031-7.344-5.344v-60 c0-8.266,6.063-9.328,11.344-9.328h36c7.688,0,12.406,9.391,12.844,12.375C422.75,388.813,414.406,416.172,410.969,420.906z"></path> <rect x="480" class="st0" width="32" height="512"></rect> <rect class="st0" width="32" height="512"></rect> <path class="st0" d="M168.672,230c0,27.563,12.797,52.094,32.75,68.094c-15.297,19.875-27.547,46.5-32.422,75.766 c0-5.859,0-10.344,0-11.891c0-11.484-6.859-24.063-25-25.125V0h-32v336.641c-2.391,0-4.578,0-6.344,0 c-17.328,0-27.266,16.672-28.656,26c-4,26.672,4.656,59.328,11.328,68c4.141,5.391,9.328,12.672,23.328,12.672 c0.125,0,0.234,0,0.344,0V512h32v-68.688c0.563,0,1.188,0,1.656,0c10.297,0,17.563-3.375,21.016-10.406c0,51.719,0,79.094,0,79.094 H232v-46.766h-41.328v-29.172H232v-68.156h-37.297c2.5-10.578,6.172-20.906,10.766-30.594H232v-48.75 c-23.047-9.469-39.328-32.141-39.328-58.563c0-26.438,16.281-49.109,39.328-58.594v-25.344 C195.453,156.5,168.672,190.094,168.672,230z M153,421.969c0,4.313,0,5.344-7.344,5.344h-34c-5.719,0-6.875-1.5-10.281-5.969 l-0.344-0.438c-3.422-4.734-11.781-32.094-8.219-55.891c0.453-2.984,5.172-12.375,12.844-12.375h36 c5.281,0,11.344,1.063,11.344,9.328V421.969z"></path> <rect x="240" class="st0" width="32" height="512"></rect> </g> </g><g id="SVGRepo_iconCarrier"> <style type="text/css">  .st0{fill:#000000;}  </style> <g> <path class="st0" d="M406.344,336.641c-1.766,0-3.953,0-6.344,0V0h-32v336.844c-18.141,1.063-25,13.641-25,25.125 c0,1.547,0,6.031,0,11.906c-4.875-29.281-17.125-55.906-32.422-75.766c19.953-16.016,32.766-40.547,32.766-68.109 c0-39.906-26.797-73.5-63.344-83.922v25.328c23.063,9.484,39.344,32.156,39.344,58.594c0,26.422-16.281,49.094-39.344,58.563v48.75 h26.531c4.594,9.703,8.266,20.016,10.781,30.594H280v68.156h41.344v29.172H280V512h65.344c0,0,0-27.375,0-79.094 c3.453,7.031,10.719,10.406,21,10.406c0.469,0,1.094,0,1.656,0V512h32v-68.688c0.109,0,0.219,0,0.344,0 c14,0,19.188-7.281,23.344-12.672c6.656-8.672,15.313-41.328,11.313-68C433.609,353.313,423.688,336.641,406.344,336.641z M410.969,420.906l-0.344,0.438c-3.406,4.469-4.563,5.969-10.281,5.969h-34c-7.344,0-7.344-1.031-7.344-5.344v-60 c0-8.266,6.063-9.328,11.344-9.328h36c7.688,0,12.406,9.391,12.844,12.375C422.75,388.813,414.406,416.172,410.969,420.906z"></path> <rect x="480" class="st0" width="32" height="512"></rect> <rect class="st0" width="32" height="512"></rect> <path class="st0" d="M168.672,230c0,27.563,12.797,52.094,32.75,68.094c-15.297,19.875-27.547,46.5-32.422,75.766 c0-5.859,0-10.344,0-11.891c0-11.484-6.859-24.063-25-25.125V0h-32v336.641c-2.391,0-4.578,0-6.344,0 c-17.328,0-27.266,16.672-28.656,26c-4,26.672,4.656,59.328,11.328,68c4.141,5.391,9.328,12.672,23.328,12.672 c0.125,0,0.234,0,0.344,0V512h32v-68.688c0.563,0,1.188,0,1.656,0c10.297,0,17.563-3.375,21.016-10.406c0,51.719,0,79.094,0,79.094 H232v-46.766h-41.328v-29.172H232v-68.156h-37.297c2.5-10.578,6.172-20.906,10.766-30.594H232v-48.75 c-23.047-9.469-39.328-32.141-39.328-58.563c0-26.438,16.281-49.109,39.328-58.594v-25.344 C195.453,156.5,168.672,190.094,168.672,230z M153,421.969c0,4.313,0,5.344-7.344,5.344h-34c-5.719,0-6.875-1.5-10.281-5.969 l-0.344-0.438c-3.422-4.734-11.781-32.094-8.219-55.891c0.453-2.984,5.172-12.375,12.844-12.375h36 c5.281,0,11.344,1.063,11.344,9.328V421.969z"></path> <rect x="240" class="st0" width="32" height="512"></rect> </g> </g></svg>Jail</span></div>
+            <div id="inJailId"><svg class="prisoner-svg" version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="110px" height="110px" viewBox="-51.2 -51.2 614.40 614.40" xml:space="preserve" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"><rect x="-51.2" y="-51.2" width="614.40" height="614.40" rx="0" fill="#7ed0ec" strokewidth="0"></rect></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="102.4"> <style type="text/css">  .st0{fill:#000000;}  </style> <g> <path class="st0" d="M406.344,336.641c-1.766,0-3.953,0-6.344,0V0h-32v336.844c-18.141,1.063-25,13.641-25,25.125 c0,1.547,0,6.031,0,11.906c-4.875-29.281-17.125-55.906-32.422-75.766c19.953-16.016,32.766-40.547,32.766-68.109 c0-39.906-26.797-73.5-63.344-83.922v25.328c23.063,9.484,39.344,32.156,39.344,58.594c0,26.422-16.281,49.094-39.344,58.563v48.75 h26.531c4.594,9.703,8.266,20.016,10.781,30.594H280v68.156h41.344v29.172H280V512h65.344c0,0,0-27.375,0-79.094 c3.453,7.031,10.719,10.406,21,10.406c0.469,0,1.094,0,1.656,0V512h32v-68.688c0.109,0,0.219,0,0.344,0 c14,0,19.188-7.281,23.344-12.672c6.656-8.672,15.313-41.328,11.313-68C433.609,353.313,423.688,336.641,406.344,336.641z M410.969,420.906l-0.344,0.438c-3.406,4.469-4.563,5.969-10.281,5.969h-34c-7.344,0-7.344-1.031-7.344-5.344v-60 c0-8.266,6.063-9.328,11.344-9.328h36c7.688,0,12.406,9.391,12.844,12.375C422.75,388.813,414.406,416.172,410.969,420.906z"></path> <rect x="480" class="st0" width="32" height="512"></rect> <rect class="st0" width="32" height="512"></rect> <path class="st0" d="M168.672,230c0,27.563,12.797,52.094,32.75,68.094c-15.297,19.875-27.547,46.5-32.422,75.766 c0-5.859,0-10.344,0-11.891c0-11.484-6.859-24.063-25-25.125V0h-32v336.641c-2.391,0-4.578,0-6.344,0 c-17.328,0-27.266,16.672-28.656,26c-4,26.672,4.656,59.328,11.328,68c4.141,5.391,9.328,12.672,23.328,12.672 c0.125,0,0.234,0,0.344,0V512h32v-68.688c0.563,0,1.188,0,1.656,0c10.297,0,17.563-3.375,21.016-10.406c0,51.719,0,79.094,0,79.094 H232v-46.766h-41.328v-29.172H232v-68.156h-37.297c2.5-10.578,6.172-20.906,10.766-30.594H232v-48.75 c-23.047-9.469-39.328-32.141-39.328-58.563c0-26.438,16.281-49.109,39.328-58.594v-25.344 C195.453,156.5,168.672,190.094,168.672,230z M153,421.969c0,4.313,0,5.344-7.344,5.344h-34c-5.719,0-6.875-1.5-10.281-5.969 l-0.344-0.438c-3.422-4.734-11.781-32.094-8.219-55.891c0.453-2.984,5.172-12.375,12.844-12.375h36 c5.281,0,11.344,1.063,11.344,9.328V421.969z"></path> <rect x="240" class="st0" width="32" height="512"></rect> </g> </g><g id="SVGRepo_iconCarrier"> <style type="text/css">  .st0{fill:#000000;}  </style> <g> <path class="st0" d="M406.344,336.641c-1.766,0-3.953,0-6.344,0V0h-32v336.844c-18.141,1.063-25,13.641-25,25.125 c0,1.547,0,6.031,0,11.906c-4.875-29.281-17.125-55.906-32.422-75.766c19.953-16.016,32.766-40.547,32.766-68.109 c0-39.906-26.797-73.5-63.344-83.922v25.328c23.063,9.484,39.344,32.156,39.344,58.594c0,26.422-16.281,49.094-39.344,58.563v48.75 h26.531c4.594,9.703,8.266,20.016,10.781,30.594H280v68.156h41.344v29.172H280V512h65.344c0,0,0-27.375,0-79.094 c3.453,7.031,10.719,10.406,21,10.406c0.469,0,1.094,0,1.656,0V512h32v-68.688c0.109,0,0.219,0,0.344,0 c14,0,19.188-7.281,23.344-12.672c6.656-8.672,15.313-41.328,11.313-68C433.609,353.313,423.688,336.641,406.344,336.641z M410.969,420.906l-0.344,0.438c-3.406,4.469-4.563,5.969-10.281,5.969h-34c-7.344,0-7.344-1.031-7.344-5.344v-60 c0-8.266,6.063-9.328,11.344-9.328h36c7.688,0,12.406,9.391,12.844,12.375C422.75,388.813,414.406,416.172,410.969,420.906z"></path> <rect x="480" class="st0" width="32" height="512"></rect> <rect class="st0" width="32" height="512"></rect> <path class="st0" d="M168.672,230c0,27.563,12.797,52.094,32.75,68.094c-15.297,19.875-27.547,46.5-32.422,75.766 c0-5.859,0-10.344,0-11.891c0-11.484-6.859-24.063-25-25.125V0h-32v336.641c-2.391,0-4.578,0-6.344,0 c-17.328,0-27.266,16.672-28.656,26c-4,26.672,4.656,59.328,11.328,68c4.141,5.391,9.328,12.672,23.328,12.672 c0.125,0,0.234,0,0.344,0V512h32v-68.688c0.563,0,1.188,0,1.656,0c10.297,0,17.563-3.375,21.016-10.406c0,51.719,0,79.094,0,79.094 H232v-46.766h-41.328v-29.172H232v-68.156h-37.297c2.5-10.578,6.172-20.906,10.766-30.594H232v-48.75 c-23.047-9.469-39.328-32.141-39.328-58.563c0-26.438,16.281-49.109,39.328-58.594v-25.344 C195.453,156.5,168.672,190.094,168.672,230z M153,421.969c0,4.313,0,5.344-7.344,5.344h-34c-5.719,0-6.875-1.5-10.281-5.969 l-0.344-0.438c-3.422-4.734-11.781-32.094-8.219-55.891c0.453-2.984,5.172-12.375,12.844-12.375h36 c5.281,0,11.344,1.063,11.344,9.328V421.969z"></path> <rect x="240" class="st0" width="32" height="512"></rect> </g></g></svg></div>
         </div>
-        <div class="visiting-space"><span class="visiting-padding">Visiting</span></div>
+        <div class="visiting-space">Visiting</div>
     </div>
-    <div class="square-top-bottom top-board-border" id="connecticutAvId">
-        <div class="bottom-name-alignment light-blue-property">Connecticut Avevnue</div>
-        <div class="top-contents bottom-property-description">$120</div>
+    <div class="bottom-property-container top-board-border" id="connecticutAvId">
+        <div class="light-blue-property">Connecticut Avevnue</div>
+        <div class="bottom-price-padding">$120</div>
     </div>
-    <div class="square-top-bottom top-board-border" id="vermontAvId">
-        <div class="bottom-name-alignment light-blue-property">Vermont Avenue</div>
-        <div class="top-contents bottom-property-description">$100</div>
+    <div class="bottom-property-container top-board-border" id="vermontAvId">
+        <div class="light-blue-property">Vermont Avenue</div>
+        <div class="bottom-price-padding">$100</div>
     </div>
-    <div class="square-top-bottom top-board-border" id="chanceBotId">
-        <div class="bottom-name-alignment bottom-name-padding">Chance</div>
-        <div class="top-contents bottom-property-description"><svg class="chance-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M80 160c0-35.3 28.7-64 64-64l32 0c35.3 0 64 28.7 64 64l0 3.6c0 21.8-11.1 42.1-29.4 53.8l-42.2 27.1c-25.2 16.2-40.4 44.1-40.4 74l0 1.4c0 17.7 14.3 32 32 32s32-14.3 32-32l0-1.4c0-8.2 4.2-15.8 11-20.2l42.2-27.1c36.6-23.6 58.8-64.1 58.8-107.7l0-3.6c0-70.7-57.3-128-128-128l-32 0C73.3 32 16 89.3 16 160c0 17.7 14.3 32 32 32s32-14.3 32-32zm80 320a40 40 0 1 0 0-80 40 40 0 1 0 0 80z"/></svg></div>
+    <div class="bottom-property-container top-board-border" id="chanceBotId">
+        <div class=" bottom-name-padding">Chance</div>
+        <div class="bottom-svg-padding"><svg class="chance-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M80 160c0-35.3 28.7-64 64-64l32 0c35.3 0 64 28.7 64 64l0 3.6c0 21.8-11.1 42.1-29.4 53.8l-42.2 27.1c-25.2 16.2-40.4 44.1-40.4 74l0 1.4c0 17.7 14.3 32 32 32s32-14.3 32-32l0-1.4c0-8.2 4.2-15.8 11-20.2l42.2-27.1c36.6-23.6 58.8-64.1 58.8-107.7l0-3.6c0-70.7-57.3-128-128-128l-32 0C73.3 32 16 89.3 16 160c0 17.7 14.3 32 32 32s32-14.3 32-32zm80 320a40 40 0 1 0 0-80 40 40 0 1 0 0 80z"/></svg></div>
     </div>  
-    <div class="square-top-bottom top-board-border can-be-mortgaged" id="orientalAvId">
-        <div class="bottom-name-alignment light-blue-property">Oriental Avenue</div>
-        <div class="top-contents bottom-property-description">$100</div>
+    <div class="bottom-property-container top-board-border can-be-mortgaged" id="orientalAvId">
+        <div class="light-blue-property">Oriental Avenue</div>
+        <div class="bottom-price-padding">$100</div>
     </div>
-    <div class="square-top-bottom-three top-board-border" id="readingRailroadId">
-        <div class="bottom-name-alignment bottom-name-padding">Reading Railroad</div>
+    <div class="bottom-property-container top-board-border" id="readingRailroadId">
+        <div class="bottom-name-padding">Reading Railroad</div>
         <div><svg class="top-train-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M96 0C43 0 0 43 0 96L0 352c0 48 35.2 87.7 81.1 94.9l-46 46C28.1 499.9 33.1 512 43 512l39.7 0c8.5 0 16.6-3.4 22.6-9.4L160 448l128 0 54.6 54.6c6 6 14.1 9.4 22.6 9.4l39.7 0c10 0 15-12.1 7.9-19.1l-46-46c46-7.1 81.1-46.9 81.1-94.9l0-256c0-53-43-96-96-96L96 0zM64 96c0-17.7 14.3-32 32-32l256 0c17.7 0 32 14.3 32 32l0 96c0 17.7-14.3 32-32 32L96 224c-17.7 0-32-14.3-32-32l0-96zM224 288a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"/></svg></div>
-        <div class="top-contents bottom-property-description">$200</div>
+        <div class="bottom-price-padding">$200</div>
     </div>
-    <div class="square-top-bottom-three top-board-border" id="incomeTaxId">
-        <div class="bottom-name-alignment bottom-name-padding">Income Tax</div>
+    <div class="bottom-property-container top-board-border" id="incomeTaxId">
+        <div class="bottom-name-padding">Income Tax</div>
         <div class="diamond-center"><svg class="diamond-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M284.3 11.7c-15.6-15.6-40.9-15.6-56.6 0l-216 216c-15.6 15.6-15.6 40.9 0 56.6l216 216c15.6 15.6 40.9 15.6 56.6 0l216-216c15.6-15.6 15.6-40.9 0-56.6l-216-216z"/></svg></div>
-        <div class="top-contents bottom-property-description">Pay $200<br>or 10%</div>
+        <div class="bottom-price-padding">Pay $200<br>or 10%</div>
     </div>
-    <div class="square-top-bottom top-board-border" id="balticAvId">
-        <div class="bottom-name-alignment brown-property">Baltic Avenue</div>
-        <div class="top-contents bottom-property-description">$60</div>
+    <div class="bottom-property-container top-board-border" id="balticAvId">
+        <div class="brown-property">Baltic Avenue</div>
+        <div class="bottom-price-padding">$60</div>
     </div>
-    <div class="square-top-bottom top-board-border" id="commChestBotId">
-        <div class="bottom-name-alignment bottom-name-padding">Community Chest</div>
-        <div class="top-contents bottom-property-description"><svg class="community-chest-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M176 88l0 40 160 0 0-40c0-4.4-3.6-8-8-8L184 80c-4.4 0-8 3.6-8 8zm-48 40l0-40c0-30.9 25.1-56 56-56l144 0c30.9 0 56 25.1 56 56l0 40 28.1 0c12.7 0 24.9 5.1 33.9 14.1l51.9 51.9c9 9 14.1 21.2 14.1 33.9l0 92.1-128 0 0-32c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 32-128 0 0-32c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 32L0 320l0-92.1c0-12.7 5.1-24.9 14.1-33.9l51.9-51.9c9-9 21.2-14.1 33.9-14.1l28.1 0zM0 416l0-64 128 0c0 17.7 14.3 32 32 32s32-14.3 32-32l128 0c0 17.7 14.3 32 32 32s32-14.3 32-32l128 0 0 64c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64z"/></svg></div>
+    <div class="bottom-property-container top-board-border" id="commChestBotId">
+        <div class="bottom-name-padding">Community Chest</div>
+        <div class="bottom-svg-padding"><svg class="community-chest-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M176 88l0 40 160 0 0-40c0-4.4-3.6-8-8-8L184 80c-4.4 0-8 3.6-8 8zm-48 40l0-40c0-30.9 25.1-56 56-56l144 0c30.9 0 56 25.1 56 56l0 40 28.1 0c12.7 0 24.9 5.1 33.9 14.1l51.9 51.9c9 9 14.1 21.2 14.1 33.9l0 92.1-128 0 0-32c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 32-128 0 0-32c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 32L0 320l0-92.1c0-12.7 5.1-24.9 14.1-33.9l51.9-51.9c9-9 21.2-14.1 33.9-14.1l28.1 0zM0 416l0-64 128 0c0 17.7 14.3 32 32 32s32-14.3 32-32l128 0c0 17.7 14.3 32 32 32s32-14.3 32-32l128 0 0 64c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64z"/></svg></div>
     </div>
-    <div class="square-top-bottom top-board-border" id="mediterranianId">
-        <div class="bottom-name-alignment brown-property">Mediterranian Avenue</div>
-        <div class="top-contents bottom-property-description">$60</div>
+    <div class="bottom-property-container top-board-border" id="mediterraneanId">
+        <div class="brown-property">Mediter-<br>ranean Avenue</div>
+        <div class="bottom-price-padding">$60</div>
     </div>
     <div id="startId">
-        <div class="start-span">Collect $200 If You Pass<span class="go-span">GO</span></div>
-        <div class="arrow-container">
+        <div class="start-span"><span class="go-span">GO</span></div>
             <div class="arrow-line"></div>
             <div class="arrow-top"></div>
             <div class="arrow-bottom"></div>
-        </div>
     </div>
  
     </container>
+
+</container>
+
+
     <script src="gamepieces.js"></script>
     <script src="myscript.js"></script>
 

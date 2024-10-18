@@ -1,3 +1,62 @@
+//Display
+document.addEventListener('DOMContentLoaded', function(){
+    getScreenWidth()
+
+    if (getScreenWidth() >= 1024){
+        isScreenOverMaxWidth = true
+        console.log('its over 1223')
+    }
+    else{
+        isScreenOverMaxWidth = false
+        console.log('its not over 1223')
+    }
+})
+
+document.addEventListener('resize', function(){
+    getScreenWidth()
+    setScreenWidThTrueOrFalse()
+
+})
+
+function setScreenWidThTrueOrFalse(){
+    if (getScreenWidth() >= 1024){
+        isScreenOverMaxWidth = true
+        console.log('its over 1223')
+    }
+    else{
+        isScreenOverMaxWidth = false
+        addPositionClassesForVWUnits()
+        console.log('its not over 1223')
+    }
+}
+
+function updatePlayerScreenView(){
+    if (isScreenOverMaxWidth === false){
+        if (currentPlayerTurn.position > 35 || currentPlayerTurn.position < 15){
+            root.style.setProperty('--position-utility-screen', '16vh') 
+        }
+        else if (currentPlayerTurn.position === 15 || currentPlayerTurn.position === 35){
+            root.style.setProperty('--position-utility-screen', '0vh') 
+        }
+        else{
+            root.style.setProperty('--position-utility-screen', '-16vh') 
+            }
+        
+    }
+    else{
+        root.style.setProperty('--position-utility-screen', '0vh') 
+    }  
+
+
+}
+
+function addPositionClassesForVWUnits(){
+
+}
+
+
+
+
 //Game Setup
 //Game Setup
 //Game Setup
@@ -104,14 +163,14 @@ function generatePlayerPieces(){
 }
 
 function displayPlayerCash(){
-    document.getElementById(currentPlayerTurn.cashDisplayId).innerText = `${currentPlayerTurn.name} Cash: ${currentPlayerTurn.cash}`
+    document.getElementById(currentPlayerTurn.cashDisplayId).innerText = `${currentPlayerTurn.name}: $${currentPlayerTurn.cash}`
     document.getElementById(currentPlayerTurn.cashDisplayId).style.color = currentPlayerTurn.colorDark
 
 }
 
 function updatePlayerCashTotalDisplay(){
     for (let i = 0; i < totalPlayers; i++){
-        document.getElementById(activePlayers[i].cashDisplayId).innerText = `${activePlayers[i].name} Cash: ${activePlayers[i].cash}`
+        document.getElementById(activePlayers[i].cashDisplayId).innerText = `${activePlayers[i].name}: $${activePlayers[i].cash}`
         if (activePlayers[i].isBankrupt === true){
             document.getElementById(activePlayers[i].cashDisplayId).style.opacity = .4
             document.getElementById(activePlayers[i].cashDisplayId).innerText = `${activePlayers[i].name}: Bankrupt`
@@ -140,7 +199,6 @@ function startGame (){
 function updateMiddleScreenPlayerTurn (){
     document.getElementById('playerTurnNameId').innerHTML = `${currentPlayerTurn.name}`
     document.getElementById('playerTurnNameId').style.color = currentPlayerTurn.colorDark
-    document.getElementById('playerTurnNameId').style.fontSize = "2em"
 }
 
 function updateMiddleScreenPlayerLocation (){
@@ -878,7 +936,7 @@ function removePropertyCard (locationId){
 function addColorPropertyCard(locationId){
     document.getElementById(locationId).innerHTML = colorPropertyCard;
     document.getElementById('colorPropertyName').innerHTML = `${spaceLandedOn().name}`
-    document.getElementById('colorPropertyName').style.borderTop = `20px solid ${spaceLandedOn().color}`
+    document.getElementById('colorPropertyName').style.borderTop = `1.75vh solid ${spaceLandedOn().color}`
     document.getElementById('colorPropertyRent').innerHTML = `Rent: $${spaceLandedOn().startingRent}`
     document.getElementById('colorPropertyOneHouse').innerHTML = `One House Rent: $${spaceLandedOn().oneHouseRent}`
     document.getElementById('colorPropertyTwoHouse').innerHTML = `Two Houses Rent: $${spaceLandedOn().twoHouseRent}`
@@ -888,7 +946,7 @@ function addColorPropertyCard(locationId){
     document.getElementById('colorPropertyHouseCost').innerHTML = `Cost to build house: $${spaceLandedOn().buildingCost}`
     document.getElementById('colorPropertyHotelCost').innerHTML = `Cost to build hotel: $${spaceLandedOn().buildingCost}`
     document.getElementById('colorPropertyMortgage').innerHTML = `Mortgage Value: $${spaceLandedOn().mortgage}`
-    document.getElementById(locationId).classList.add('color-property-card')
+    //document.getElementById(locationId).classList.add('color-property-card')
     document.getElementById(locationId).classList.remove('hidden')
 }
 
@@ -2549,7 +2607,7 @@ function addTradeItem(propertyName, screenAdded){
     tradeCard.append(tradeContents)
 
     if (selectedTradeProperty.type === 'color'){
-        tradeContents.style.borderTop =  `10px solid ${selectedTradeProperty.color}`
+        tradeContents.style.borderTop =  `1.75vh solid ${selectedTradeProperty.color}`
     }
 
     screenAdded.append(tradeCard)
