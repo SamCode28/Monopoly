@@ -946,7 +946,7 @@ function addColorPropertyCard(locationId){
     document.getElementById('colorPropertyHouseCost').innerHTML = `Cost to build house: $${spaceLandedOn().buildingCost}`
     document.getElementById('colorPropertyHotelCost').innerHTML = `Cost to build hotel: $${spaceLandedOn().buildingCost}`
     document.getElementById('colorPropertyMortgage').innerHTML = `Mortgage Value: $${spaceLandedOn().mortgage}`
-    document.getElementById(locationId).classList.add('color-property-card')
+    //document.getElementById(locationId).classList.add('color-property-card')
     document.getElementById(locationId).classList.remove('hidden')
 }
 
@@ -2607,7 +2607,7 @@ function addTradeItem(propertyName, screenAdded){
     tradeCard.append(tradeContents)
 
     if (selectedTradeProperty.type === 'color'){
-        tradeContents.style.borderTop =  `10px solid ${selectedTradeProperty.color}`
+        tradeContents.style.borderTop =  `1.75vh solid ${selectedTradeProperty.color}`
     }
 
     screenAdded.append(tradeCard)
