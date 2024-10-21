@@ -468,8 +468,8 @@ let tradeeCashOffer = 0
 //Trade Screen Animations
 const declineCashOfferMovement = [{ transform: "translateX(0px)" }, {transform: "translateX(-5px)"}, { transform: "translateX(5px)" }]
 const declineCashOfferMovementTiming = {duration: 100, iterations: 3}
-const declineCashOfferColor = {boxShadow: "0 0 10px rgb(255, 0, 0)"}
-const acceptCashOfferColor = {boxShadow: "0 0 10px rgb(5, 255, 76)"}
+const declineCashOfferColor = {boxShadow: "0 0 1vh rgb(255, 0, 0)"}
+const acceptCashOfferColor = {boxShadow: "0 0 1vh rgb(5, 255, 76)"}
 const cashOfferColorTiming = {duration: 300}
 
 //Potential Trade Prospects
@@ -481,8 +481,8 @@ const playerTradeButtons = [
 ]
 
 //Function Variables
-//let rollDiceOne = () => {return 3}
-//let rollDiceTwo = () => {return 1}
+//let rollDiceOne = () => {return 30}
+//let rollDiceTwo = () => {return 0}
 const rollDiceOne = () =>{return(Math.floor(Math.random() * 6) + 1)}
 const rollDiceTwo = () =>{return(Math.floor(Math.random() * 6) + 1)}
 let diceOneValue;

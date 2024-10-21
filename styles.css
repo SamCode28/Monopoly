@@ -39,6 +39,7 @@ div {
 }
 
 button {
+    font-family: 'roboto';
     text-align: center;
     cursor: pointer;
     border-top-right-radius: 1vh;
@@ -302,16 +303,13 @@ button:active
 }
 
 #inJailId{
-    display: flex;
-    width: 5.9vh;
-    height: 5.9vh;
     position: relative;
 }
 
 #justVisitingId{
     display: grid;
-    grid-template-rows: 3fr 1fr;
-    grid-template-columns: 1fr 3fr;
+    grid-template-rows: 2.75fr 1.25fr;
+    grid-template-columns: 1.25fr 2.75fr;
     border-top: var(--boardgame-single-border);
     border-bottom: var(--boardgame-double-border);
     border-left: var(--boardgame-double-border);
@@ -354,7 +352,6 @@ button:active
     border-right: var(--boardgame-double-border);
     position: relative;
     background-color: white;
-    position: relative;
 }
 
 .start-span{
@@ -466,16 +463,12 @@ svg{
 
 .game-pieces{
     position: absolute;
-    opacity: 1;
     z-index: 1;
-    justify-self: flex-start;
-    align-self: flex-start;
-    width: 4vh;
-    height: 4vh;
 }
 
 .svg-game-pieces{
-    height: 4vh;
+    width: 3.5vh;
+    height: 3.5vh;
 }
 
 #hotelPieceId{
@@ -483,17 +476,14 @@ svg{
     z-index: 1;
     justify-self: flex-start;
     align-self: flex-start;
-    width: 40px;
-    height: 20px;
+    width: 1.7vh;
 }
 
 #housePieceId{
     position: absolute;
     z-index: 1;
-    justify-self: flex-start;
-    align-self: flex-start;
-    width: 20px;
-    height: 20px;
+    width: 1.75vh;
+    height: 1.75vh;
 }
 
 /* Floating Screen Classes*/
@@ -1017,7 +1007,6 @@ padding-top: 1.5vh;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto auto 1fr auto;
     align-items: center;
-    height: 73vh;
     row-gap: 1.5vh;
     column-gap: 2vh;
     margin: 1vh;
