@@ -13,8 +13,7 @@ body, html{
     width: 100%;
     align-content: center;
     justify-content: center;
-    align-items:  center;
-    justify-items: center;
+    overflow-x: hidden;
 }
 
 :root{
@@ -1131,6 +1130,11 @@ input::placeholder{
 }
 
 @media (max-aspect-ratio: 1/1) {
+    body, html{
+        align-items: center;
+        justify-items: center;
+    }
+    
     div {
         font-size: 1.3vw;
     }
