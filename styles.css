@@ -13,18 +13,18 @@ body, html{
     width: 100%;
     align-content: center;
     justify-content: center;
-
+    align-items:  center;
+    justify-items: center;
 }
 
 :root{
     --auction-leader-color: black;
-    --grid-height: 40vh;
-    --grid-width: 70vh;
-    --top-margin: 14vh;
-    --bottom-margin: 16vh;
-    --grid-margin-left: calc(100vh - 100%);
-    --position-utility-screen: 0px;
-    --property-card-top-border-width: calc(var(--grid-width)/3.5 - 3px);
+    --grid-height-vh: 40vh;
+    --grid-width-vh: 70vh;
+
+    --grid-height-vw: 70vw;
+    --grid-width-vw: 40vw;
+
     --boardgame-single-border: 1px solid black;
     --boardgame-double-border: 2px solid black;
 }
@@ -64,7 +64,6 @@ button:active
 
 #gameboard{
     background-color: black;
-
 }
 
 /* Top Grid */
@@ -72,9 +71,8 @@ button:active
 .top-grid{
     display: grid;
     grid-template-rows: 12.5vh;
-    grid-template-columns: 12.5vh 8.33333vh 8.33333vh 8.33333vh 8.33333vh 8.33333vh 8.33333vh 8.33333vh 8.33333vh 8.33333vh 12.5vh;
+    grid-template-columns: 12.5vh repeat(9, 8.33333vh) 12.5vh;
     rotate: 180deg;
-    
 }
 .middle-grid{
     display: grid;
@@ -86,7 +84,7 @@ button:active
 .bottom-grid{
     display: grid;
     grid-template-rows: 12.5vh;
-    grid-template-columns: 12.5vh 8.33333vh 8.33333vh 8.33333vh 8.33333vh 8.33333vh 8.33333vh 8.33333vh 8.33333vh 8.33333vh 12.5vh;
+    grid-template-columns: 12.5vh repeat(9, 8.33333vh) 12.5vh;
 
 }
 
@@ -117,30 +115,20 @@ button:active
 
 /* Middle Left Grid */
 
-.left-middle-square-two{
+.left-middle-square{
     display: flex;
-    justify-content: space-between;
-    background-color: white;
-    position: relative;
-}
-
-.left-middle-square-three {
-    display: flex;
-    justify-content: space-between;
-    background-color: white;
-    position: relative;
-}
-
-.left-middle-property{
+    flex-direction: column-reverse;
     writing-mode: vertical-rl;
+    justify-content: space-between;
+    background-color: white;
+    position: relative;
 }
 
-.left-middle-description{
-    writing-mode: vertical-lr;
+.left-price-padding{
     padding-left: 1vh;
 }
 
-.left-name-utility-padding{
+.left-name-padding{
     padding-right: 1vh;
 }
 
@@ -166,7 +154,6 @@ button:active
     gap: 1px;
     position: relative;
 }
-
 
 .right-price-padding{
     padding-left: 1vh;
@@ -490,10 +477,6 @@ svg{
 /* Floating Screen Classes*/
 /* Floating Screen Classes*/
 
-.hidden {
-    display: none;
-}
-
 .action-display-screen{
     display: flex;
     grid-column: 2/8;
@@ -504,13 +487,14 @@ svg{
     justify-items: center;
     align-items: center;
     background-color: white;
-    height: 75vh;
-    width: 75vh;
+    height: 100%;
+    width: 100%;
+    padding: 2vh;
 }
 
 .float-screen-title {
     margin: auto;
-    width: var(--grid-width);
+
 }
 
 #playBtnId{
@@ -523,15 +507,11 @@ svg{
 
 .float-screen-players{
     display: grid;
-    justify-self: center;
-    align-self: center;
     justify-items: center;
     align-items: center;
-    width: var(--grid-width);
-    height: var(--grid-height);
     flex-direction: column;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr 3fr;
+    grid-template-rows: 1fr 1fr;
 }
 
 .amount-players-prompt{
@@ -542,9 +522,8 @@ svg{
 
 .float-screen-piece-selection{
     display: grid;
-    justify-content: center;
-    align-content: center;
-    width: var(--grid-width);
+    justify-items: center;
+    align-items: center;
     gap: 3vh;
 }
 
@@ -572,10 +551,6 @@ svg{
 
 .float-screen-game{
     display: grid;
-    align-content: center;
-    justify-content: center;
-    width: var(--grid-width);
-    max-height: 75vh;
     grid-template-columns: 1fr 1fr 1fr;
 }
 
@@ -584,7 +559,6 @@ svg{
     display: flex;
     flex-direction: column;
     row-gap: 2vh;
-
 }
 
 .float-screen-game-left-top{
@@ -595,13 +569,11 @@ svg{
 }
 
 .player-total-cash{
-    font-size: 2.6vh;
+    font-size: 2.4vh;
 }
 
 .float-screen-game-left-bottom{
     display: flex;
-    justify-content: center;
-    align-content: center;
 }
 
 .house-hotel-mortgage-screen{
@@ -609,7 +581,7 @@ svg{
     grid-template-rows: auto auto auto auto 1fr;
     grid-template-columns: 1fr 1fr;
     justify-items: center;
-    gap:.25vh;
+    gap: .25vh;
 }
 
 #houseHotelBtnLabelId, #mortgageBtnLabelId, .property-button-label{
@@ -631,7 +603,6 @@ svg{
     height: 5.5vh;
     width: 10vh;
     grid-column: 1/3;
-    justify-self: center;
     font-size: 2.5vh;
 }
 
@@ -678,19 +649,20 @@ svg{
 
 .float-screen-game-middle-bottom-contents{
     display: flex;
-    width: calc(var(--grid-width)/3);
+    flex-direction: column;
+    align-items: center;
+    align-items: center;
+    justify-items: center;
     justify-content: center;
 }
 
 .property-for-purchase-grid{
-    width: calc(var(--grid-width)/3);
     justify-content: center;
     align-items: center;
 }
 
 .purchase-property-container{
     display: flex;
-
 }
 
 .purchase-property-button{
@@ -713,7 +685,6 @@ svg{
     display: inline-block;
     align-self:center;
     justify-self: center;
-    width: calc(var(--grid-width)/3);
     font-size: 3vh;
 }
 
@@ -728,19 +699,17 @@ svg{
     justify-content: center;
     align-items: center;
     font-size: 2vh;
-    width: calc(var(--grid-width)/3);
 }
 
 .right-bottom-screen{
     display: flex;
     justify-content: center;
     align-items: center;
-    width: calc(var(--grid-width)/3);
+
 }
 
 .pay-rent-container{
     display: grid;
-    width: calc(var(--grid-width)/3);
     justify-items: center;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto auto auto;
@@ -791,13 +760,13 @@ svg{
 }
 
 #goodbyeTextId{
-    font-size: 1.25em;
-    padding-bottom: 15px;
+    font-size: 2.5vh;
+    padding-bottom: .5vh;
 }
 
 #goodbyeBtnId{
-    width: 110px;
-    height: 70px;
+    width: 14vh;
+    height: 8vh;
 }
 
 .roll-button{
@@ -1009,12 +978,11 @@ padding-top: 1.5vh;
     align-items: center;
     row-gap: 1.5vh;
     column-gap: 2vh;
-    margin: 1vh;
 }
 
 #tradeScreenTutorialId{
     grid-column: 1/3;
-    font-size: 2.1vh;
+    font-size: 2vh;
 }
 
 .trade-screen-players-trading{
@@ -1042,7 +1010,7 @@ padding-top: 1.5vh;
     grid-template-columns: repeat(3, 10vh);
     grid-template-rows: repeat(3, 12.5vh);
     column-gap: .5vh;
-
+    row-gap: .5vh;
 }
 
 .dollar-sign{
@@ -1111,13 +1079,11 @@ input::placeholder{
 
 .trade-property-card{
     border: 1px solid black;
-
-
 }
 
 .trade-property-name{
     padding-top: .5vh;
-    border-top: 1.75vh solid black;
+    border-top: .75rem solid black;
     font-size: 1.55vh;
     
 }
@@ -1126,7 +1092,7 @@ input::placeholder{
    margin: 0 auto;
    width: 16vh;
    height: 12vh;
-   font-size: 3.5vh;
+   font-size: 3.7vh;
 }
 
 .trade-offer-decline-container{
@@ -1155,26 +1121,6 @@ input::placeholder{
     column-gap: 5px;
 }
 
-#traderContentsId, #tradeeContentsId{
-
-}
-
-
-.roll-placement-bottom-bottom{
-    transform: translateY(16vh);
-}
-
-.roll-placement-middle-bottom{
-    transform: translateY(21vh);
-}
-
-.roll-placement-top-top{
-    transform: translateY(-16vh)
-}
-
-.roll-placement-middle-top{
-    transform: translateY(-12vh)
-}
 
 #gameOverText{
     font-size: 5vh;
@@ -1182,4 +1128,578 @@ input::placeholder{
 
 .game-over-screen{
     margin: auto;
+}
+
+@media (max-aspect-ratio: 1/1) {
+    div {
+        font-size: 1.3vw;
+    }
+    
+    button {
+        border-top-right-radius: 1vw;
+        border-bottom-right-radius: 1vw;
+        border-top-left-radius: 1vw;
+        border-bottom-left-radius: 1vw;
+        font-size: 3vw;
+    }
+
+    
+    /* Top Grid */
+    /* Top Grid */
+    .top-grid{
+        grid-template-rows: 12.5vw;
+        grid-template-columns: 12.5vw repeat(9, 8.33333vw) 12.5vw;
+    }
+    .middle-grid{
+        grid-template-columns: repeat(8, 12.5vw);
+        grid-template-rows: repeat(9, 8.33333vw);
+    }
+    .bottom-grid{
+        grid-template-rows: 12.5vw;
+        grid-template-columns: 12.5vw repeat(9, 8.33333vw) 12.5vw;
+    }
+    
+    .top-price-padding{
+        padding-bottom: 1vw;
+    }
+    
+    .top-name-padding{
+        padding-top: 1vw;
+    }
+    
+    .top-chance-margin{
+        margin-top: .5vw;
+    }
+    
+    /* Middle Grid */
+    /* Middle Grid */
+    
+    
+    /* Middle Left Grid */
+    
+    
+    .left-price-padding{
+        padding-left: 1vw;
+    }
+    
+    .left-name-padding{
+        padding-right: 1vw;
+    }
+    
+
+    /* Middle Right Grid */
+        
+    .right-price-padding{
+        padding-left: 1vw;
+    }
+    
+    .right-name-padding{
+        padding-right: 1vw;
+    }
+    
+    
+    .right-chance-padding{
+        padding-left: 2vw;
+    }
+    
+    .right-chest-padding{
+        padding-left: .7vw;
+    }
+    
+    /* Bottom Grid */
+    /* Bottom Grid */
+    
+    .bottom-name-padding{
+        padding-top: 1vw;
+    }
+    
+    .bottom-price-padding{
+        padding-bottom: 1vw;
+    }
+    
+    .bottom-svg-padding{
+        padding-bottom: .5vw;
+    }
+    
+    /* Board Spaces By Color */
+    .brown-property{
+        border-top: 1.75vw solid #5f2256;
+    }
+    
+    .light-blue-property{
+        border-top: 1.75vw solid #add8e6;
+    }
+    
+    .purple-property{
+        border-right: 1.75vw solid #b420b4;
+    }
+    .orange-property {
+        border-right: 1.75vw solid #ffa500;
+    }
+    
+    .red-property {
+        border-top: 1.75vw solid #f76969;
+    }
+    
+    .yellow-property {
+        border-top: 1.75vw solid #ffff00;
+    }
+    
+    .green-property {
+        border-right: 1.75vw solid #4a6f4a;
+    }
+    
+    .dark-blue-property{
+        border-right: 1.75vw solid #232388;
+    }
+    
+    
+    /* Corner Square ID's */
+    
+    .free-parking-span{
+        font-size: 2vw;
+        margin: 0 .5vw 1.25vw 0;
+    }
+    
+    .go-jail-span{
+        font-size: 2vw;
+    }
+    
+    
+    #justVisitingId{
+        grid-template-rows: 2.75fr 1.25fr;
+        grid-template-columns: 1.25fr 2.75fr;
+    
+    }
+    
+    .just-space{
+        font-size: 2.1vw; 
+    }
+    
+    
+    .visiting-space{
+        font-size: 2.1vw;
+    }
+    
+
+    .start-span{
+        margin-bottom: 3vw;
+        width: 12vw;
+        height: 12vw;
+    }
+    
+    .go-span{
+        font-size: 6vw;
+    }
+    
+    
+    /* SVG Classes*/    
+    .free-parking-svg{
+        height: 6vw;
+    }
+    
+    .chance-svg{
+        height: 7vw;
+    }
+    
+    .top-train-svg{
+        height: 3vw;
+    }
+    
+    .middle-train-svg{
+        height: 3vw;
+    }
+    
+    .faucet-svg{
+        height: 4vw;
+    }
+    
+    .go-jail-svg{
+        height: 7vw;
+    }
+    
+    .light-svg{
+        height: 3.5vw;
+    }
+    
+    .community-chest-svg{
+        width: 5vw;
+    }
+    
+    .jewel-svg{
+        width: 4vw;
+    }
+    
+    .diamond-svg{
+        width: 2.5vw;
+    }
+    
+    .prisoner-svg{
+        width: 5.9vw;
+        height: 5.9vw;
+    }
+    
+    .arrow-line{
+        width: 8.75vw;
+        bottom: 1.5vw;
+        left: 1.45vw;
+        border-top: .5vw solid red;
+        border-top-right-radius: .5vw;
+        border-bottom-right-radius: .5vw;
+        border-top-left-radius: .5vw;
+        border-bottom-left-radius: .5vw;
+    }
+    
+    .arrow-line::before{
+        background-color: red;
+        width: 1.65vw;
+        height: .5vw;
+        left: -.35vw;
+        bottom: .4vw;
+        border-top-right-radius: 1vw;
+        border-top-left-radius: .5vw;
+        border-bottom-left-radius: .5vw;
+    }
+    
+    .arrow-line::after{
+        width: 1.65vw;
+        height: .5vw;
+        left: -.35vw;
+        bottom: -.4vw;
+        border-top-left-radius: 1vw;
+        border-bottom-right-radius: .5vw;
+        border-top-right-radius: .5vw;
+    }
+
+    .svg-game-pieces{
+        width: 3.5vw;
+        height: 3.5vw;
+    }
+    
+    #hotelPieceId{
+        width: 1.7vw;
+    }
+    
+    #housePieceId{
+        width: 1.75vw;
+        height: 1.75vw;
+    }
+    
+    /* Floating Screen Classes*/
+    /* Floating Screen Classes*/
+    /* Floating Screen Classes*/
+    
+    .action-display-screen{
+        padding: 2vw;
+    }
+    
+    #playBtnId{
+        width: 60vw;
+        height: 20vw;   
+        font-size: 10vw;
+    }
+
+    
+    .amount-players-prompt{
+        font-size: 9vw;
+    }
+    
+    
+    .float-screen-piece-selection{
+        gap: 3vw;
+    }
+    
+    .choose-piece-h1{
+        font-size: 6.5vw;
+    }
+    
+    .piece-selection-svg{
+        height: 75%;
+        width: 75%;
+    }
+    
+    .choose-player-amount-buttons{
+        width: 16vw;
+        height: 12vw;
+        font-size: 6.5vw;
+    }
+    
+    .choose-piece-button{
+        width: 12vw;
+        height: 12vw;;
+    }
+    
+    
+    .float-screen-game-left, .float-screen-game-middle, .float-screen-game-right{
+        row-gap: 2vw;
+    }
+    
+    .float-screen-game-left-top{
+        row-gap: .25vw;
+    }
+    
+    .player-total-cash{
+        font-size: 2.4vw;
+    }
+    
+    
+    .house-hotel-mortgage-screen{
+        gap: .25vw;
+    }
+    
+    #houseHotelBtnLabelId, #mortgageBtnLabelId, .property-button-label{
+        font-size: 3vw;
+    }
+    
+    .house-hotel-mortgage-btns-label{
+        padding-bottom: 1.5vw;
+    }
+    
+    .house-hotel-mortgage-btns{
+        width: 8vw;
+        height: 5.5vw;
+        font-size: 2.5vw;
+    }
+    
+    .trade-button{
+        height: 5.5vw;
+        width: 10vw;
+        font-size: 2.5vw;
+    }
+    
+    .house-hotel-mortgage-btns-label{
+        font-size: 3vw;
+    }
+    
+    #colorPropertyName, #railroadPropertyName, #utilityPropertyName{
+        font-size: 2.6vw;
+    }
+    
+    #colorPropertyRent, #colorPropertyOneHouse, #colorPropertyTwoHouse, #colorPropertyThreeHouse, #colorPropertyFourHouse,
+     #colorPropertyHotelRent, #colorPropertyHouseCost, #colorPropertyHotelCost, #colorPropertyMortgage{
+        font-size: 1.9vw;
+    }
+    
+    .railroad-inner-text, .utility-inner-text{
+        font-size: 2.2vw;
+    }
+    
+    .float-screen-game-middle-top-contents{
+        font-size: 1.9vw;
+    }
+    
+    #playerTurnNameId{
+        font-size: 4vw;
+        margin-bottom: .5vw;
+    }
+    
+    .purchase-property-button{
+        width: 10vw;
+        height: 6vw;
+        font-size: 2.6vw;
+    }
+    
+    #buyPropertyYesBtn{
+        width: 8vw;
+    }
+    
+    #wouldYouLikeToBuyId{
+        font-size: 2.5vw;
+        padding-bottom: 1vw;
+    }
+    
+    .turn-interaction-description{
+        font-size: 3vw;
+    }
+    
+    
+    .right-top-screen{
+        font-size: 2vw;
+    }
+    
+    .pay-rent-container{
+        row-gap: 1vw;
+        column-gap: 1vw;
+    }
+    
+    .pay-rent-tutorial{
+        font-size: 3vw;
+    }
+    
+    #payRentLabelId{
+        font-size: 2.6vw;
+    }
+    
+    #bankruptBtnId{
+        font-size: 2.4vw;
+        width: 17vw;
+        height: 5vw;
+    }
+    
+    
+    .bankrupt-warning-text{
+        font-size: 2.3vw;
+        padding-bottom: 1vw;
+    }
+    
+    
+    #goodbyeTextId{
+        font-size: 2.5vw;
+        padding-bottom: .5vw;
+    }
+    
+    #goodbyeBtnId{
+        width: 14vw;
+        height: 8vw;
+    }
+    
+    .roll-button{
+        width: 14vw;
+        height: 8vw;
+        font-size: 3.5vw;
+    }
+    
+    .in-jail-options-screen{
+        row-gap: 1vw;
+    }
+    
+    .jail-buttons{
+        height: 8vw;
+    }
+    
+    .end-turn-button{
+        width: 14vw;
+        height: 6vw;
+        font-size: 3vw;
+    }
+    
+    .enlarge-font-span{
+        font-size: 1.25em ;
+    }
+    
+    
+    .mortgaged{
+        background: repeating-linear-gradient(
+            45deg,
+            #d3d3d3,
+            transparent 2vw,
+            #d3d3d3 2vw,
+            transparent 2vw
+        );
+    }
+    
+    
+    #auctionOriginalPriceId, #auctionBidPriceId{
+        font-size: 3.5vw;
+    }
+    
+    #auctioneerTextId{
+        font-size: 3vw;
+    }
+    
+    #auctionBidPriceId{
+        padding-top: 1.5vw;
+    }
+    
+    #auctionOriginalPriceId, #auctionBidPriceId{
+        padding-bottom: 1.5vw;
+    }
+    
+    .player-auction-nameplate{
+        font-size: 3.5vw;
+        padding-top: .5vw;
+    }
+    
+    .player-auction-btns{
+        padding-top: .5vw;
+    }
+    
+    .auction-btn{
+        width: 7vw;
+        height: 5vw;
+        margin: .5vw;
+        font-size: 2.5vw;
+    }
+    
+    .player-auction-cash{
+        font-size: 2.5vw;
+    }
+    
+    #currentBidSpanId{
+        font-size: 4vw
+    }
+    
+    .trade-screen-container{
+        row-gap: 1.5vw;
+        column-gap: 2vw;
+    }
+    
+    #tradeScreenTutorialId{
+        font-size: 2vw;
+    }
+    
+    .trade-screen-players-trading{
+        margin: 1vw;
+    }
+    
+    .players-trading-names{
+        font-size: 3.5vw;
+    }
+    
+    .property-dropoff-container{
+        grid-template-columns: repeat(3, 10vw);
+        grid-template-rows: repeat(3, 12.5vw);
+        column-gap: .5vw;
+        row-gap: .5vw;
+    }
+    
+    .dollar-sign{
+        font-size: 3vw;
+    }
+    
+    .cash-offer{
+        font-size: 3vw;
+    }
+    
+    input {
+        padding: 1vw;
+        font-size: 3vw;
+    }
+    
+    input::placeholder{
+        font-size: 2.5vw;
+    }
+    
+    .cash-add-button{
+        font-size: 2vw;
+        width: 5vw;
+    }
+
+    
+    .trade-property-name{
+        padding-top: .5vw;
+        font-size: 1.55vw;        
+    }
+    
+    .trade-partner-button{
+       width: 16vw;
+       height: 12vw;
+       font-size: 3.7vw;
+    }
+    
+    .trade-cancel-button, .trade-offer-decline-buttons{
+        height: 8vw;
+        width: 12vw;
+        font-size: 3vw;
+    }
+
+    #gameOverText{
+        font-size: 5vw;
+    }
+    
+    
+}
+
+.hidden {
+    display: none;
 }

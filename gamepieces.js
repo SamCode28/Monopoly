@@ -314,12 +314,6 @@ const pieceSelectionButton = [
     {button: document.getElementById('musicNoteIdBtn'), gamePiece: musicNotePiece, gamePieceId: 'musicNoteId', colorLight: '#ecb363', colorDark: '#f4991a'},
 ]
 
-//Display
-const getScreenWidth = () => {return screen.width}
-console.log('Screen width: ', getScreenWidth());
-let isScreenOverMaxWidth;
-const root = document.documentElement;
-
 //Game Setup Variables
 let currentPlayerTurn = activePlayers[0];
 let currentLocation;
@@ -426,6 +420,7 @@ let trader
 let tradee
 let tradeDecision
 const tradeBtn = document.getElementById('tradeBtnId')
+const propertyLabel = document.getElementById('propertyLabelId')
 const traderNametag = document.getElementById('traderNameId')
 const tradeeNametag = document.getElementById('tradeeNameId')
 const potentailTradeButtons = document.getElementById('potentailTradeButtonsId')
@@ -481,8 +476,8 @@ const playerTradeButtons = [
 ]
 
 //Function Variables
-//let rollDiceOne = () => {return 30}
-//let rollDiceTwo = () => {return 0}
+//let rollDiceOne = () => {return 8}
+//let rollDiceTwo = () => {return 1}
 const rollDiceOne = () =>{return(Math.floor(Math.random() * 6) + 1)}
 const rollDiceTwo = () =>{return(Math.floor(Math.random() * 6) + 1)}
 let diceOneValue;

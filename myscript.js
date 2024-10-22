@@ -1,62 +1,3 @@
-//Display
-document.addEventListener('DOMContentLoaded', function(){
-    getScreenWidth()
-
-    if (getScreenWidth() >= 1024){
-        isScreenOverMaxWidth = true
-        console.log('its over 1223')
-    }
-    else{
-        isScreenOverMaxWidth = false
-        console.log('its not over 1223')
-    }
-})
-
-document.addEventListener('resize', function(){
-    getScreenWidth()
-    setScreenWidThTrueOrFalse()
-
-})
-
-function setScreenWidThTrueOrFalse(){
-    if (getScreenWidth() >= 1024){
-        isScreenOverMaxWidth = true
-        console.log('its over 1223')
-    }
-    else{
-        isScreenOverMaxWidth = false
-        addPositionClassesForVWUnits()
-        console.log('its not over 1223')
-    }
-}
-
-function updatePlayerScreenView(){
-    if (isScreenOverMaxWidth === false){
-        if (currentPlayerTurn.position > 35 || currentPlayerTurn.position < 15){
-            root.style.setProperty('--position-utility-screen', '16vh') 
-        }
-        else if (currentPlayerTurn.position === 15 || currentPlayerTurn.position === 35){
-            root.style.setProperty('--position-utility-screen', '0vh') 
-        }
-        else{
-            root.style.setProperty('--position-utility-screen', '-16vh') 
-            }
-        
-    }
-    else{
-        root.style.setProperty('--position-utility-screen', '0vh') 
-    }  
-
-
-}
-
-function addPositionClassesForVWUnits(){
-
-}
-
-
-
-
 //Game Setup
 //Game Setup
 //Game Setup
@@ -706,7 +647,7 @@ function placePiece(pieceBeingPlaced){
         else if(currentLocation.currentOccupants === 1)
             {
             document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece)
-            document.getElementById(pieceBeingPlaced.pieceId).style.top = "4vh";
+            document.getElementById(pieceBeingPlaced.pieceId).style.top = "33.333%";
             document.getElementById(pieceBeingPlaced.pieceId).style.left = "0px";
         }
         else if (currentLocation.currentOccupants === 2){
@@ -718,7 +659,7 @@ function placePiece(pieceBeingPlaced){
         else if (currentLocation.currentOccupants === 3){
             document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece)
             document.getElementById(pieceBeingPlaced.pieceId).style.bottom = "0px";
-            document.getElementById(pieceBeingPlaced.pieceId).style.left = "4vh";
+            document.getElementById(pieceBeingPlaced.pieceId).style.left = "33.333%";
     
         }  
     }
@@ -752,8 +693,7 @@ function placePiece(pieceBeingPlaced){
         else if (currentLocation.currentOccupants === 3){
             document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece)
             document.getElementById(pieceBeingPlaced.pieceId).style.bottom = "0px";
-            document.getElementById(pieceBeingPlaced.pieceId).style.right = "0px";
-    
+            document.getElementById(pieceBeingPlaced.pieceId).style.right = "0px"; 
         }
     }
     
@@ -784,25 +724,25 @@ function placePiece(pieceBeingPlaced){
     currentLocation = propertyArray[(pieceBeingPlaced.position)]
     if (currentLocation.currentOccupants === 0){
         document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece);
-        document.getElementById(pieceBeingPlaced.pieceId).style.top = "1.75vh";
-        document.getElementById(pieceBeingPlaced.pieceId).style.left = ".25vh";
+        document.getElementById(pieceBeingPlaced.pieceId).style.top = "14%";
+        document.getElementById(pieceBeingPlaced.pieceId).style.left = "5%";
     }
     else if(currentLocation.currentOccupants === 1)
         {
         document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece)
-        document.getElementById(pieceBeingPlaced.pieceId).style.top = "1.75vh";
-        document.getElementById(pieceBeingPlaced.pieceId).style.right = ".25vh";
+        document.getElementById(pieceBeingPlaced.pieceId).style.top = "14%";
+        document.getElementById(pieceBeingPlaced.pieceId).style.right = "5%";
     }
     else if (currentLocation.currentOccupants === 2){
         document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece)
-        document.getElementById(pieceBeingPlaced.pieceId).style.bottom = ".5vh";
-        document.getElementById(pieceBeingPlaced.pieceId).style.left = ".25vh";
+        document.getElementById(pieceBeingPlaced.pieceId).style.bottom = "14%";
+        document.getElementById(pieceBeingPlaced.pieceId).style.left = "5%";
 
     }
     else if (currentLocation.currentOccupants === 3){
         document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece)
-        document.getElementById(pieceBeingPlaced.pieceId).style.bottom = ".5vh";
-        document.getElementById(pieceBeingPlaced.pieceId).style.right = ".25vh";
+        document.getElementById(pieceBeingPlaced.pieceId).style.bottom = "14%";
+        document.getElementById(pieceBeingPlaced.pieceId).style.right = "5%";
 
     }  
 
@@ -812,27 +752,27 @@ function placePieceLeft(pieceBeingPlaced){
     currentLocation = propertyArray[(pieceBeingPlaced.position)]
     if (currentLocation.currentOccupants === 0){
         document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece);
-        document.getElementById(pieceBeingPlaced.pieceId).style.right = "1.75vh"
-        document.getElementById(pieceBeingPlaced.pieceId).style.top = ".25vh";
+        document.getElementById(pieceBeingPlaced.pieceId).style.right = "14%"
+        document.getElementById(pieceBeingPlaced.pieceId).style.top = "5%";
         document.getElementById(pieceBeingPlaced.pieceId).style.transform = "rotate(90deg)";
     }
     else if(currentLocation.currentOccupants === 1)
         {
         document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece)
-        document.getElementById(pieceBeingPlaced.pieceId).style.right = "1.75vh";
-        document.getElementById(pieceBeingPlaced.pieceId).style.bottom = ".25vh";
+        document.getElementById(pieceBeingPlaced.pieceId).style.right = "14%";
+        document.getElementById(pieceBeingPlaced.pieceId).style.bottom = "5%";
         document.getElementById(pieceBeingPlaced.pieceId).style.transform = "rotate(90deg)";
     }
     else if (currentLocation.currentOccupants === 2){
         document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece)
-        document.getElementById(pieceBeingPlaced.pieceId).style.left = ".25vh";
-        document.getElementById(pieceBeingPlaced.pieceId).style.top = ".25vh";
+        document.getElementById(pieceBeingPlaced.pieceId).style.left = "14%";
+        document.getElementById(pieceBeingPlaced.pieceId).style.top = "5%";
         document.getElementById(pieceBeingPlaced.pieceId).style.transform = "rotate(90deg)";
     }
     else if (currentLocation.currentOccupants === 3){
         document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece)
-        document.getElementById(pieceBeingPlaced.pieceId).style.left = ".25vh";
-        document.getElementById(pieceBeingPlaced.pieceId).style.bottom = ".25vh";
+        document.getElementById(pieceBeingPlaced.pieceId).style.left = "14%";
+        document.getElementById(pieceBeingPlaced.pieceId).style.bottom = "5%";
         document.getElementById(pieceBeingPlaced.pieceId).style.transform = "rotate(90deg)";
     }
 
@@ -842,23 +782,23 @@ function placePieceTop(pieceBeingPlaced){
     currentLocation = propertyArray[(pieceBeingPlaced.position)]
     if (currentLocation.currentOccupants === 0){
         document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece)
-        document.getElementById(pieceBeingPlaced.pieceId).style.top = "1.75vh"
-        document.getElementById(pieceBeingPlaced.pieceId).style.left = ".25vh";    }
+        document.getElementById(pieceBeingPlaced.pieceId).style.top = "14%"
+        document.getElementById(pieceBeingPlaced.pieceId).style.left = "5%";    }
     else if(currentLocation.currentOccupants === 1)
         {
         document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece)
-        document.getElementById(pieceBeingPlaced.pieceId).style.top = "1.75vh";
-        document.getElementById(pieceBeingPlaced.pieceId).style.right = ".25vh";
+        document.getElementById(pieceBeingPlaced.pieceId).style.top = "14%";
+        document.getElementById(pieceBeingPlaced.pieceId).style.right = "5%";
     }
     else if (currentLocation.currentOccupants === 2){
         document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece)
-        document.getElementById(pieceBeingPlaced.pieceId).style.bottom = ".25vh";
-        document.getElementById(pieceBeingPlaced.pieceId).style.left = ".25vh";
+        document.getElementById(pieceBeingPlaced.pieceId).style.bottom = "14%";
+        document.getElementById(pieceBeingPlaced.pieceId).style.left = "5%";
     }
     else if (currentLocation.currentOccupants === 3){
         document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece)
-        document.getElementById(pieceBeingPlaced.pieceId).style.bottom = ".25vh";
-        document.getElementById(pieceBeingPlaced.pieceId).style.right = ".25vh";
+        document.getElementById(pieceBeingPlaced.pieceId).style.bottom = "14%";
+        document.getElementById(pieceBeingPlaced.pieceId).style.right = "5%";
     }
 
 }
@@ -867,27 +807,27 @@ function placePieceRight(pieceBeingPlaced){
     currentLocation = propertyArray[(pieceBeingPlaced.position)]
     if (currentLocation.currentOccupants === 0){
         document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece);
-        document.getElementById(pieceBeingPlaced.pieceId).style.bottom = ".25vh"
-        document.getElementById(pieceBeingPlaced.pieceId).style.right = "1.75vh";
+        document.getElementById(pieceBeingPlaced.pieceId).style.top = "5%"
+        document.getElementById(pieceBeingPlaced.pieceId).style.right = "14%";
         document.getElementById(pieceBeingPlaced.pieceId).style.transform = "rotate(90deg)";
     }
     else if(currentLocation.currentOccupants === 1)
         {
         document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece)
-        document.getElementById(pieceBeingPlaced.pieceId).style.top = ".25vh";
-        document.getElementById(pieceBeingPlaced.pieceId).style.right = "1.75vh";
+        document.getElementById(pieceBeingPlaced.pieceId).style.bottom = "5%";
+        document.getElementById(pieceBeingPlaced.pieceId).style.right = "14%";
         document.getElementById(pieceBeingPlaced.pieceId).style.transform = "rotate(90deg)";
     }
     else if (currentLocation.currentOccupants === 2){
         document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece)
-        document.getElementById(pieceBeingPlaced.pieceId).style.bottom = ".25vh";
-        document.getElementById(pieceBeingPlaced.pieceId).style.left = ".25vh";
+        document.getElementById(pieceBeingPlaced.pieceId).style.top = "5%";
+        document.getElementById(pieceBeingPlaced.pieceId).style.left = "14%";
         document.getElementById(pieceBeingPlaced.pieceId).style.transform = "rotate(90deg)";
     }
     else if (currentLocation.currentOccupants === 3){
         document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece)
-        document.getElementById(pieceBeingPlaced.pieceId).style.top = ".25vh";
-        document.getElementById(pieceBeingPlaced.pieceId).style.left = ".25vh";
+        document.getElementById(pieceBeingPlaced.pieceId).style.bottom = "5%";
+        document.getElementById(pieceBeingPlaced.pieceId).style.left = "14%";
         document.getElementById(pieceBeingPlaced.pieceId).style.transform = "rotate(90deg)";
     }
 
@@ -931,7 +871,7 @@ function removePropertyCard (locationId){
 function addColorPropertyCard(locationId){
     document.getElementById(locationId).innerHTML = colorPropertyCard;
     document.getElementById('colorPropertyName').innerHTML = `${spaceLandedOn().name}`
-    document.getElementById('colorPropertyName').style.borderTop = `1.75vh solid ${spaceLandedOn().color}`
+    document.getElementById('colorPropertyName').style.borderTop = `.75rem solid ${spaceLandedOn().color}`
     document.getElementById('colorPropertyRent').innerHTML = `Rent: $${spaceLandedOn().startingRent}`
     document.getElementById('colorPropertyOneHouse').innerHTML = `One House Rent: $${spaceLandedOn().oneHouseRent}`
     document.getElementById('colorPropertyTwoHouse').innerHTML = `Two Houses Rent: $${spaceLandedOn().twoHouseRent}`
@@ -941,7 +881,6 @@ function addColorPropertyCard(locationId){
     document.getElementById('colorPropertyHouseCost').innerHTML = `Cost to build house: $${spaceLandedOn().buildingCost}`
     document.getElementById('colorPropertyHotelCost').innerHTML = `Cost to build hotel: $${spaceLandedOn().buildingCost}`
     document.getElementById('colorPropertyMortgage').innerHTML = `Mortgage Value: $${spaceLandedOn().mortgage}`
-    //document.getElementById(locationId).classList.add('color-property-card')
     document.getElementById(locationId).classList.remove('hidden')
 }
 
@@ -1197,7 +1136,7 @@ function addPayRentContainer(){
     if ((currentPlayerTurn.cash - spaceLandedOn().rent) < 0){
         payRentBtn.classList.add('button-inactive')
         payRentBtn.disabled = true
-        document.getElementById('payRentTutorialId').innerHTML = `You do not have enough cash to pay rent.  Click the "Sell" button to sell houses, mortgage property, or click "Bankrupt" to quit game.`
+        document.getElementById('payRentTutorialId').innerHTML = `You do not have enough cash to pay rent.  Click the "Sell" button to sell assets or click "Bankrupt" to quit game.`
         sellToPayRentBtn.classList.remove('button-inactive')
         sellToPayRentBtn.disabled = false
     }
@@ -1822,17 +1761,14 @@ function placeHouseHotel(property){
         if(property.totalHouses === 1){
             document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
             document.getElementById(property.id).firstChild.style.left = "0px"
-
         }
         else if(property.totalHouses === 2){
             document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
-            document.getElementById(property.id).firstChild.style.left = "2.1944vh"
-
+            document.getElementById(property.id).firstChild.style.left = "26.04125%"
         }
         else if (property.totalHouses === 3){
             document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
-            document.getElementById(property.id).firstChild.style.right = "2.1944vh"
-    
+            document.getElementById(property.id).firstChild.style.right = "26.04125%"
         }
         else if (property.totalHouses === 4){
             document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
@@ -1844,7 +1780,7 @@ function placeHouseHotel(property){
             document.getElementById(property.id).firstChild.remove()
             document.getElementById(property.id).firstChild.remove()
             document.getElementById(property.id).insertAdjacentHTML('afterbegin', hotelPiece);
-            document.getElementById(property.id).firstChild.style.left = "3.31665vh"
+            document.getElementById(property.id).firstChild.style.left = "39.375%"
         }
 
     }
@@ -1859,14 +1795,14 @@ function placeHouseHotel(property){
         else if(property.totalHouses === 2){
             document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
             document.getElementById(property.id).firstChild.style.right = "0px"
-            document.getElementById(property.id).firstChild.style.top = "2.1944vh"
+            document.getElementById(property.id).firstChild.style.top = "26.04125%"
             document.getElementById(property.id).firstChild.style.transform = "rotate(90deg)"
 
         }
         else if (property.totalHouses === 3){
             document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
             document.getElementById(property.id).firstChild.style.right = "0px"
-            document.getElementById(property.id).firstChild.style.bottom = "2.1944vh"
+            document.getElementById(property.id).firstChild.style.bottom = "26.04125%"
             document.getElementById(property.id).firstChild.style.transform = "rotate(90deg)"   
         }
         else if (property.totalHouses === 4){
@@ -1883,7 +1819,7 @@ function placeHouseHotel(property){
             document.getElementById(property.id).insertAdjacentHTML('afterbegin', hotelPiece);
             document.getElementById(property.id).firstChild.style.transform = "rotate(90deg)"
             document.getElementById(property.id).firstChild.style.right = "0px"
-            document.getElementById(property.id).firstChild.style.top = "3.31665vh"
+            document.getElementById(property.id).firstChild.style.top = "39.375%"
         }
 
     }
@@ -1898,13 +1834,13 @@ function placeHouseHotel(property){
         else if(property.totalHouses === 2){
             document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
             document.getElementById(property.id).firstChild.style.top = "0px"
-            document.getElementById(property.id).firstChild.style.left = "2.1944vh"
+            document.getElementById(property.id).firstChild.style.left = "26.04125%"
 
         }
         else if (property.totalHouses === 3){
             document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
             document.getElementById(property.id).firstChild.style.top = "0px"
-            document.getElementById(property.id).firstChild.style.right = "2.1944vh"  
+            document.getElementById(property.id).firstChild.style.right = "26.04125%"  
         }
         else if (property.totalHouses === 4){
             document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
@@ -1919,7 +1855,7 @@ function placeHouseHotel(property){
             document.getElementById(property.id).firstChild.remove()
             document.getElementById(property.id).insertAdjacentHTML('afterbegin', hotelPiece);
             document.getElementById(property.id).firstChild.style.top = "0px"
-            document.getElementById(property.id).firstChild.style.right = "3.31665vh"
+            document.getElementById(property.id).firstChild.style.right = "39.375%"
         }
 
     }
@@ -1927,24 +1863,24 @@ function placeHouseHotel(property){
     function placeHouseHotelRight(property){
         if(property.totalHouses === 1){
             document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
-            document.getElementById(property.id).firstChild.style.bottom = "0px"
+            document.getElementById(property.id).firstChild.style.top = "0px"
             document.getElementById(property.id).firstChild.style.transform = "rotate(90deg)"
 
         }
         else if(property.totalHouses === 2){
             document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
-            document.getElementById(property.id).firstChild.style.bottom = "2.1944vh"
+            document.getElementById(property.id).firstChild.style.top = "26.04125%"
             document.getElementById(property.id).firstChild.style.transform = "rotate(90deg)"
 
         }
         else if (property.totalHouses === 3){
             document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
-            document.getElementById(property.id).firstChild.style.top = "2.1944vh"
+            document.getElementById(property.id).firstChild.style.bottom = "26.04125%"
             document.getElementById(property.id).firstChild.style.transform = "rotate(90deg)"   
         }
         else if (property.totalHouses === 4){
             document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
-            document.getElementById(property.id).firstChild.style.top = "0px"
+            document.getElementById(property.id).firstChild.style.bottom = "0px"
             document.getElementById(property.id).firstChild.style.transform = "rotate(90deg)"
         }
         else if(property.totalHouses === 5){
@@ -1954,7 +1890,7 @@ function placeHouseHotel(property){
             document.getElementById(property.id).firstChild.remove()
             document.getElementById(property.id).insertAdjacentHTML('afterbegin', hotelPiece);
             document.getElementById(property.id).firstChild.style.transform = "rotate(90deg)"
-            document.getElementById(property.id).firstChild.style.bottom = "3.31665vh"
+            document.getElementById(property.id).firstChild.style.bottom = "39.375%"
         }
 
     }
@@ -1992,11 +1928,13 @@ function removeFinishBuyHouseHotelBtn (){
 function removeTradeButton(){
     tradeBtn.classList.add('hidden')
     tradeBtn.classList.remove('trade-button')
+    propertyLabel.classList.add('hidden')
 }
 
 function addTradeButton(){
     tradeBtn.classList.add('trade-button')
     tradeBtn.classList.remove('hidden')
+    propertyLabel.classList.remove('hidden')
 }
 
 //Sell House Functions
@@ -2520,6 +2458,7 @@ function acceptTradeLogic(){
     }
     removeTradedPropertiesTrader()
     trader.cash += tradeeCashOffer
+    trader.cash -= traderCashOffer
 
     //Transfer Property and Ownership from Trader to Tradee
     for (let i = 0; i < traderOfferedPropertyList.length; i++){
@@ -2531,8 +2470,11 @@ function acceptTradeLogic(){
     }
     removeTradedPropertiesTradee()
     tradee.cash += traderCashOffer
+    tradee.cash -= tradeeCashOffer
 
     updatePlayerCashTotalDisplay()
+    traderCashOffer = 0
+    tradeeCashOffer = 0
 }
 
 function clickTradeDeclineBtn(){
@@ -2595,7 +2537,7 @@ function addTradeItem(propertyName, screenAdded){
     tradeCard.append(tradeContents)
 
     if (selectedTradeProperty.type === 'color'){
-        tradeContents.style.borderTop =  `1.75vh solid ${selectedTradeProperty.color}`
+        tradeContents.style.borderTop =  `.75rem solid ${selectedTradeProperty.color}`
     }
 
     screenAdded.append(tradeCard)
@@ -2950,3 +2892,4 @@ function removeTradedPropertiesTradee(){
 
 //Add logic to bakrupt player if they land on non-owned property square but don't have assets to pay for it
 //Add cpu
+//Jail previousLocation not applicable
