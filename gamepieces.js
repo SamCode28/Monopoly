@@ -323,6 +323,7 @@ let playerTurnTicker = 1;
 let turnInteractionDescription = document.getElementById('turnInteractionDescriptionId')
 let hasRolled = false
 let gameWinner
+let propertyClickedOn
 
 //Game Setup Total Player Buttons
 const playerTotalButtons = [
@@ -333,8 +334,8 @@ const playerTotalButtons = [
 
 //Property Variables
 let colorPropertyCard = '<container class="color-property-card" id="colorPropertyCardId"><div id="colorPropertyName"></div><div id="colorPropertyRent"></div><div id="colorPropertyOneHouse"></div><div id="colorPropertyTwoHouse"></div><div id="colorPropertyThreeHouse"></div><div id="colorPropertyFourHouse"></div><div id="colorPropertyHotelRent"></div><div id="colorPropertyHouseCost"></div><div id="colorPropertyHotelCost"></div><div id="colorPropertyMortgage"></div></container>'
-let railroadPropertyCard = '<container class="railroad-property-card" id="railroadPropertyCardId"><div id="railroadPropertyName"></div><div id="railroadPropertyOne">One Railroad Owned: $25</div><div id="railroadPropertyTwoRailroad">Two Railroads Owned: $50</div><div id="railroadPropertyThreeRailroad">Three Railroads Owned: $100</div><div id="railroadPropertyFourRailRoad">Four Railroads Owned: $200</div><div id="railroadPropertyMortgage">Mortgage Value: $100</div></container>'
-let utilityPropertyCard = '<container class="utility-property-card" id="utilityPropertyCardId"><div id="utilityPropertyName"></div><div id="utilityPropertyOneOwned">If one utility property  owned; rent is 4x the cost of roll value.</div><div id="utilityPropertyTwoOwned">If two utility properties onwed; rent is 10x the cost of roll value.</div><div id="utilityPropertyMortgage">Mortgage Value: $75</div></container>'
+let railroadPropertyCard = '<container class="railroad-property-card" id="railroadPropertyCardId"><div id="railroadPropertyName"></div><div class="railroad-inner-text">One Railroad: $25</div><div class="railroad-inner-text">Two Railroads: $50</div><div class="railroad-inner-text">Three Railroads: $100</div><div class="railroad-inner-text">Four Railroads: $200</div><div class="railroad-inner-text">Mortgage Value: $100</div></container>'
+let utilityPropertyCard = '<container class="utility-property-card" id="utilityPropertyCardId"><div id="utilityPropertyName"></div><div class="utility-inner-text">If one utility property  owned; rent is 4x the cost of roll value.</div><div class="utility-inner-text">If two utility properties onwed; rent is 10x the cost of roll value.</div><div class="utility-inner-text">Mortgage Value: $75</div></container>'
 //Game Interactions Buttons
 const playBtn = document.getElementById('playBtnId');
 const rollBtn = document.getElementById('rollBtnId');
@@ -386,9 +387,9 @@ let auctionLeaderColor
 
 //Buy House / Hotel
 const buyHouseHotelBtn = document.getElementById('buyHouseHotelBtnId')
-const buyHouseYesBtn = document.getElementById('buyHouseYesBtnId')
-const buyHouseNoBtn = document.getElementById('buyHouseNoBtnId')
-const finishBuyHouseBtn = document.getElementById('finishBuyHouseBtnId')
+const buyHouseHotelYesBtn = document.getElementById('buyHouseHotelYesBtnId')
+const buyHouseHotelNoBtn = document.getElementById('buyHouseHotelNoBtnId')
+const finishBuyHouseHotelBtn = document.getElementById('finishBuyHouseHotelBtnId')
 let canBuyHouseHotelArray = []
 
 
@@ -413,10 +414,69 @@ const closeMortgageNoBtn = document.getElementById('closeMortgageNoBtnId')
 const finishCloseMortgageBtn = document.getElementById('finishCloseMortgageBtnId')
 let canCloseMortgageArray = []
 
+//Trade
+//Trade
+let trader
+let tradee
+let tradeDecision
+const tradeBtn = document.getElementById('tradeBtnId')
+const propertyLabel = document.getElementById('propertyLabelId')
+const traderNametag = document.getElementById('traderNameId')
+const tradeeNametag = document.getElementById('tradeeNameId')
+const potentailTradeButtons = document.getElementById('potentailTradeButtonsId')
+const tradeScreenTutorial = document.getElementById('tradeScreenTutorialId')
 
+//Trade Screen Contents
+const traderContents = document.getElementById('traderContentsId')
+const traderPropertyDropoffContainer = document.getElementById('traderPropertyDropoffContainerId')
+const traderCashInputContainer = document.getElementById('traderCashInputContainerId')
+const traderCashInputField = document.getElementById('traderCashInputFieldId')
+const traderCashOfferDisplay = document.getElementById('traderCashOfferDisplayId')
+const traderCashSubmitBtn = document.getElementById('traderCashSubmitBtnId')
+
+const tradeeContents = document.getElementById('tradeeContentsId')
+const tradeePropertyDropoffContainer = document.getElementById('tradeePropertyDropoffContainerId')
+const tradeeCashInputContainer = document.getElementById('tradeeCashInputContainerId')
+const tradeeCashInputField = document.getElementById('tradeeCashInputFieldId')
+const tradeeCashOfferDisplay = document.getElementById('tradeeCashOfferDisplayId')
+const tradeeCashSubmitBtn = document.getElementById('tradeeCashSubmitBtnId')
+
+//Trade Screen Buttons
+const tradeOfferBtn = document.getElementById('tradeOfferBtnId')
+const tradeCancelBtn = document.getElementById('tradeCancelBtnId')
+const tradeAcceptBtn = document.getElementById('tradeAcceptBtnId')
+const tradeDeclineBtn = document.getElementById('tradeDeclineBtnId')
+const acceptDeclineButtonsContainer = document.getElementById('acceptDeclineButtonsContainerId')
+
+//Trader Offered Items
+let traderProperty;
+let traderEligibleTradeProperties = []
+let traderOfferedPropertyList = []
+let traderCashOffer = 0
+
+//Tradee Offered Items
+let tradeeProperty;
+let tradeeEligibleTradeProperties = []
+let tradeeOfferedPropertyList = []
+let tradeeCashOffer = 0
+
+//Trade Screen Animations
+const declineCashOfferMovement = [{ transform: "translateX(0px)" }, {transform: "translateX(-5px)"}, { transform: "translateX(5px)" }]
+const declineCashOfferMovementTiming = {duration: 100, iterations: 3}
+const declineCashOfferColor = {boxShadow: "0 0 1vh rgb(255, 0, 0)"}
+const acceptCashOfferColor = {boxShadow: "0 0 1vh rgb(5, 255, 76)"}
+const cashOfferColorTiming = {duration: 300}
+
+//Potential Trade Prospects
+const playerTradeButtons = [
+ document.getElementById('playerOneTradeButtonId'),
+ document.getElementById('playerTwoTradeButtonId'),
+ document.getElementById('playerThreeTradeButtonId'),
+ document.getElementById('playerFourTradeButtonId'),
+]
 
 //Function Variables
-//let rollDiceOne = () => {return 3}
+//let rollDiceOne = () => {return 8}
 //let rollDiceTwo = () => {return 1}
 const rollDiceOne = () =>{return(Math.floor(Math.random() * 6) + 1)}
 const rollDiceTwo = () =>{return(Math.floor(Math.random() * 6) + 1)}
@@ -439,8 +499,8 @@ let propertyArray = [
 
    },
    {
-       name: "Medditerranian Avenue",
-       id: "mediterranianId",
+       name: "Mediterranean Avenue",
+       id: "mediterraneanId",
        number: 1,
        currentOccupants: 0,
        isProperty: true,
@@ -453,6 +513,7 @@ let propertyArray = [
        mortgageOpen: false,
        buildingCost: 50,
        totalHouses: 0,
+       propertySetTotalHouses: 0,
        oneHouseRent: 10,
        twoHouseRent: 30,
        threeHouseRent: 90,
@@ -478,7 +539,7 @@ let propertyArray = [
        currentOccupants: 0,
        isProperty: true,
        hasOwner: false,
-       owner:  "",
+       owner: "",
        price: 60,
        rent: 4,
        startingRent: 4,
@@ -486,6 +547,7 @@ let propertyArray = [
        mortgageOpen: false,
        buildingCost: 50,
        totalHouses: 0,
+       propertySetTotalHouses: 0,
        oneHouseRent: 20,
        twoHouseRent: 60,
        threeHouseRent: 80,
@@ -533,6 +595,7 @@ let propertyArray = [
        mortgageOpen: false,
        buildingCost: 50,
        totalHouses: 0,
+       propertySetTotalHouses: 0,
        oneHouseRent: 30,
        twoHouseRent: 90,
        threeHouseRent: 270,
@@ -556,7 +619,7 @@ let propertyArray = [
        currentOccupants: 0,
        isProperty: true,
        hasOwner: false,
-       owner:  "",
+       owner: "",
        price: 100,
        rent: 6,
        startingRent: 6,
@@ -564,6 +627,7 @@ let propertyArray = [
        mortgageOpen: false,
        buildingCost: 50,
        totalHouses: 0,
+       propertySetTotalHouses: 0,
        oneHouseRent: 30,
        twoHouseRent: 90,
        threeHouseRent: 270,
@@ -580,7 +644,7 @@ let propertyArray = [
        currentOccupants: 0,
        isProperty: true,
        hasOwner: false,
-       owner:  "",
+       owner: "",
        price: 120,
        rent: 8, 
        startingRent: 8,
@@ -588,6 +652,7 @@ let propertyArray = [
        mortgageOpen: false,
        buildingCost: 50,
        totalHouses: 0,
+       propertySetTotalHouses: 0,
        oneHouseRent: 40,
        twoHouseRent: 100,
        threeHouseRent: 300,
@@ -618,6 +683,7 @@ let propertyArray = [
        mortgageOpen: false,
        buildingCost: 100,
        totalHouses: 0,
+       propertySetTotalHouses: 0,
        oneHouseRent: 50,
        twoHouseRent: 150,
        threeHouseRent: 450,
@@ -658,6 +724,7 @@ let propertyArray = [
        mortgageOpen: false,
        buildingCost: 100,
        totalHouses: 0,
+       propertySetTotalHouses: 0,
        oneHouseRent: 50,
        twoHouseRent: 150,
        threeHouseRent: 450,
@@ -682,6 +749,7 @@ let propertyArray = [
        mortgageOpen: false,
        buildingCost: 100,
        totalHouses: 0,
+       propertySetTotalHouses: 0,
        oneHouseRent: 60,
        twoHouseRent: 180,
        threeHouseRent: 500,
@@ -721,6 +789,7 @@ let propertyArray = [
        mortgageOpen: false,
        buildingCost: 100,
        totalHouses: 0,
+       propertySetTotalHouses: 0,
        oneHouseRent: 70,
        twoHouseRent: 200,
        threeHouseRent: 550,
@@ -751,6 +820,7 @@ let propertyArray = [
        mortgageOpen: false,
        buildingCost: 100,
        totalHouses: 0,
+       propertySetTotalHouses: 0,
        oneHouseRent: 70,
        twoHouseRent: 200,
        threeHouseRent: 550,
@@ -775,6 +845,7 @@ let propertyArray = [
        mortgageOpen: false,
        buildingCost: 100,
        totalHouses: 0,
+       propertySetTotalHouses: 0,
        oneHouseRent: 80,
        twoHouseRent: 220,
        threeHouseRent: 600,
@@ -805,6 +876,7 @@ let propertyArray = [
        mortgageOpen: false,
        buildingCost: 150,
        totalHouses: 0,
+       propertySetTotalHouses: 0,
        oneHouseRent: 90,
        twoHouseRent: 250,
        threeHouseRent: 700,
@@ -835,6 +907,7 @@ let propertyArray = [
        mortgageOpen: false,
        buildingCost: 150,
        totalHouses: 0,
+       propertySetTotalHouses: 0,
        oneHouseRent: 90,
        twoHouseRent: 250,
        threeHouseRent: 700,
@@ -859,6 +932,7 @@ let propertyArray = [
        mortgageOpen: false,
        buildingCost: 150,
        totalHouses: 0,
+       propertySetTotalHouses: 0,
        oneHouseRent: 100,
        twoHouseRent: 300,
        threeHouseRent: 750,
@@ -898,6 +972,7 @@ let propertyArray = [
        mortgageOpen: false,
        buildingCost: 150,
        totalHouses: 0,
+       propertySetTotalHouses: 0,
        oneHouseRent: 110,
        twoHouseRent: 330,
        threeHouseRent: 800,
@@ -922,6 +997,7 @@ let propertyArray = [
        mortgageOpen: false,
        buildingCost: 150,
        totalHouses: 0,
+       propertySetTotalHouses: 0,
        oneHouseRent: 110,
        twoHouseRent: 330,
        threeHouseRent: 800,
@@ -962,6 +1038,7 @@ let propertyArray = [
        mortgageOpen: false,
        buildingCost: 150,
        totalHouses: 0,
+       propertySetTotalHouses: 0,
        oneHouseRent: 120,
        twoHouseRent: 360,
        threeHouseRent: 850,
@@ -992,6 +1069,7 @@ let propertyArray = [
        mortgageOpen: false,
        buildingCost: 200,
        totalHouses: 0,
+       propertySetTotalHouses: 0,
        oneHouseRent: 130,
        twoHouseRent: 390,
        threeHouseRent: 900,
@@ -1016,6 +1094,7 @@ let propertyArray = [
        mortgageOpen: false,
        buildingCost: 200,
        totalHouses: 0,
+       propertySetTotalHouses: 0,
        oneHouseRent: 130,
        twoHouseRent: 390,
        threeHouseRent: 900,
@@ -1046,6 +1125,7 @@ let propertyArray = [
        mortgageOpen: false,
        buildingCost: 200,
        totalHouses: 0,
+       propertySetTotalHouses: 0,
        oneHouseRent: 150,
        twoHouseRent: 450,
        threeHouseRent: 1000,
@@ -1091,6 +1171,7 @@ let propertyArray = [
        mortgageOpen: false,
        buildingCost: 200,
        totalHouses: 0,
+       propertySetTotalHouses: 0,
        oneHouseRent: 175,
        twoHouseRent: 500,
        threeHouseRent: 1100,
@@ -1121,6 +1202,7 @@ let propertyArray = [
        mortgageOpen: false,
        buildingCost: 200,
        totalHouses: 0,
+       propertySetTotalHouses: 0,
        oneHouseRent: 200,
        twoHouseRent: 600,
        threeHouseRent: 1400,

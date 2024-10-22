@@ -11,7 +11,6 @@ playBtn.addEventListener('click', function (e){
     document.getElementById('floatScreenPlayersId').classList.remove('hidden')
 })
 
-
 //set player total
 //Transition from # player screen to select piece screen
 playerTotalButtons.forEach(item =>{
@@ -96,7 +95,7 @@ function whosTurnSetup (){
 
 function generatePlayerPieces(){
     for (let i = 0; i < totalPlayers ; i++ ){
-        placePiece();
+        placePiece(currentPlayerTurn);
         whosTurnSetup();
         displayPlayerCash()
     }
@@ -105,14 +104,14 @@ function generatePlayerPieces(){
 }
 
 function displayPlayerCash(){
-    document.getElementById(currentPlayerTurn.cashDisplayId).innerText = `${currentPlayerTurn.name} Cash: ${currentPlayerTurn.cash}`
+    document.getElementById(currentPlayerTurn.cashDisplayId).innerText = `${currentPlayerTurn.name}: $${currentPlayerTurn.cash}`
     document.getElementById(currentPlayerTurn.cashDisplayId).style.color = currentPlayerTurn.colorDark
 
 }
 
 function updatePlayerCashTotalDisplay(){
     for (let i = 0; i < totalPlayers; i++){
-        document.getElementById(activePlayers[i].cashDisplayId).innerText = `${activePlayers[i].name} Cash: ${activePlayers[i].cash}`
+        document.getElementById(activePlayers[i].cashDisplayId).innerText = `${activePlayers[i].name}: $${activePlayers[i].cash}`
         if (activePlayers[i].isBankrupt === true){
             document.getElementById(activePlayers[i].cashDisplayId).style.opacity = .4
             document.getElementById(activePlayers[i].cashDisplayId).innerText = `${activePlayers[i].name}: Bankrupt`
@@ -141,7 +140,6 @@ function startGame (){
 function updateMiddleScreenPlayerTurn (){
     document.getElementById('playerTurnNameId').innerHTML = `${currentPlayerTurn.name}`
     document.getElementById('playerTurnNameId').style.color = currentPlayerTurn.colorDark
-    document.getElementById('playerTurnNameId').style.fontSize = "2em"
 }
 
 function updateMiddleScreenPlayerLocation (){
@@ -193,21 +191,22 @@ rollBtn.addEventListener('click', function (e){
        }
        displayDiceRollOutput(diceOneValue, diceTwoValue);
        playerPiece().remove();
-       placePiece()
-       removeDice()
+       placePiece(currentPlayerTurn)
        removeHouseHotelMortgageScreen()
        currentLocationInteraction()
  })
 
 //Logic for space landed on
  function currentLocationInteraction (){
+    clearBottomRightScreenContents()
+
     if (spaceLandedOn().isProperty === true){
         if (spaceLandedOn().hasOwner === true){
             if (spaceLandedOn().owner.name != currentPlayerTurn.name){
                 //Pay rent
                 if(spaceLandedOn().owner.isInJail === false && spaceLandedOn().mortgageOpen === false){
                     if(spaceLandedOn().type === 'utility'){
-                        spaceLandedOn().updateRent(spaceLandedOn().owner)
+                        spaceLandedOn().updateRent(spaceLandedOn().owner, spaceLandedOn())
                     }
                     updatePlayerTotalAssets()
                     if (currentPlayerTurn.totalAssets < spaceLandedOn().rent){
@@ -261,7 +260,7 @@ rollBtn.addEventListener('click', function (e){
     else if (spaceLandedOn().name === "Income Tax"){
         addturnInteractionDescriptionDisplay()
         currentPlayerTurn.updateIncomeTax()
-        let tenPercentIncomeTax = (currentPlayerTurn.incomeTax / 10)
+        let tenPercentIncomeTax = (Math.floor(currentPlayerTurn.incomeTax / 10))
         if (tenPercentIncomeTax < 200)
         {
             turnInteractionDescription.innerText = `Pay 10% Income Tax ($${tenPercentIncomeTax})`
@@ -391,51 +390,49 @@ function addEndTurnButton (){
     document.getElementById('endTurnBtnId').classList.remove('hidden')
 }
 
+function chanceDelayInteraction(){
+    setTimeout(currentLocationInteraction, 2000)
+    setTimeout(function(){playerPiece().remove()}, 2000)
+    setTimeout(placePiece, 2000, currentPlayerTurn)
+    setTimeout(updateMiddleScreenPlayerLocation, 2000)
+}
+
 function chance (){
     let chanceRoll = chanceDice()
     if (chanceRoll === 1){
-        currentLocation.currentOccupants--
+        spaceLandedOn().currentOccupants--
         turnInteractionDescription.innerHTML = `<span class="bold-font-span">Chance:</span><br>Advance to Boardwalk.`
-        playerPiece().remove()
         currentPlayerTurn.position = 39
-        placePiece()
-        currentLocationInteraction()  
+        chanceDelayInteraction()
     }
     else if (chanceRoll === 2){
-        currentLocation.currentOccupants--
+        spaceLandedOn().currentOccupants--
         turnInteractionDescription.innerHTML =`<span class="bold-font-span">Chance:</span><br>Advance to Go (Collect $200).`
-        playerPiece().remove()
         currentPlayerTurn.position = 0
-        placePiece()
         currentPlayerTurn.cash += 200
-        currentLocationInteraction()    
+        chanceDelayInteraction()
     }
     else if (chanceRoll === 3){
-        currentLocation.currentOccupants--
+        spaceLandedOn().currentOccupants--
         turnInteractionDescription.innerHTML = `<span class="bold-font-span">Chance:</span><br>Advance to Illinois Avenue. If you pass Go, collect $200.`
         if (currentPlayerTurn.position > 23){
             currentPlayerTurn.cash += 200
         }
-        playerPiece().remove()
         currentPlayerTurn.position = 24
-        placePiece()
-        currentLocationInteraction()
+        chanceDelayInteraction()
     }
     else if (chanceRoll === 4){
-        currentLocation.currentOccupants--
+        spaceLandedOn().currentOccupants--
         turnInteractionDescription.innerHTML = `<span class="bold-font-span">Chance:</span><br>Advance to St. Charles Place. If you pass Go, collect $200.`
         if (currentPlayerTurn.position > 10){
             currentPlayerTurn.cash += 200
         }
-        playerPiece().remove()
         currentPlayerTurn.position = 11
-        placePiece()
-        currentLocationInteraction()
+        chanceDelayInteraction()
     }
-    else if (chanceRoll === 5){
-        currentLocation.currentOccupants--
+    else if (chanceRoll === 5 || chanceRoll === 6 || chanceRoll === 7){
+        spaceLandedOn().currentOccupants--
         turnInteractionDescription.innerHTML = `<span class="bold-font-span">Chance:</span><br>Advance to the nearest Railroad.`
-        playerPiece().remove()
         if (currentPlayerTurn.position === 7){
             currentPlayerTurn.position = 5
         }
@@ -445,24 +442,7 @@ function chance (){
         if (currentPlayerTurn.position === 36){
             currentPlayerTurn.position = 35
         } 
-        placePiece()
-        currentLocationInteraction()  
-    }
-    else if (chanceRoll === 6 || chanceRoll === 7){
-        currentLocation.currentOccupants--
-        turnInteractionDescription.innerHTML = `<span class="bold-font-span">Chance:</span><br>Advance to the nearest Railroad.`
-        playerPiece().remove()
-        if (currentPlayerTurn.position === 7){
-            currentPlayerTurn.position = 5
-        }
-        if (currentPlayerTurn.position === 22){
-            currentPlayerTurn.position = 15
-        }
-        if (currentPlayerTurn.position === 36){
-            currentPlayerTurn.position = 35
-        } 
-        placePiece()
-        currentLocationInteraction()  
+        chanceDelayInteraction()
     }
 
     else if (chanceRoll === 8){
@@ -478,20 +458,18 @@ function chance (){
         addHouseHotelMortgageScreen()     
     }
     else if (chanceRoll === 10){
-        currentLocation.currentOccupants--
+        spaceLandedOn().currentOccupants--
         turnInteractionDescription.innerHTML = `<span class="bold-font-span">Chance:</span><br>Go Back 3 Spaces.`
-        playerPiece().remove()
         currentPlayerTurn.position -= 3
         if (currentPlayerTurn.position < 0){
             currentPlayerTurn.position += 40
         }
-        placePiece()
-        currentLocationInteraction()
+        chanceDelayInteraction()
 
     }
     else if (chanceRoll === 11){
         turnInteractionDescription.innerHTML = `<span class='bold-font-span'>Chance:</span><br>Go to Jail. Go directly to Jail, do not pass Go, do not collect $200.`
-        goToJail()
+        setTimeout(goToJail, 2000)
     }
     else if (chanceRoll === 12){
         turnInteractionDescription.innerHTML = `<span class="bold-font-span">Chance:</span><br>Make general repairs on all your property. For each house(${currentPlayerTurn.housesOwned}) pay $25. For each hotel(${currentPlayerTurn.hotelsOwned}) pay $100. Total = $${(currentPlayerTurn.housesOwned * 50) + (currentPlayerTurn.hotelsOwned * 50)}`
@@ -506,9 +484,8 @@ function chance (){
         addHouseHotelMortgageScreen()
     }
     else if (chanceRoll === 14){
-        currentLocation.currentOccupants--
+        spaceLandedOn().currentOccupants--
         turnInteractionDescription.innerHTML = `<span class="bold-font-span">Chance:</span><br>Take a trip to Reading Railroad. If you pass Go, collect $200.`
-        playerPiece().remove()
         if (currentPlayerTurn.position === 7){
             currentPlayerTurn.position = 5
             currentPlayerTurn.cash += 200
@@ -521,8 +498,7 @@ function chance (){
             currentPlayerTurn.position = 5
             currentPlayerTurn.cash += 200
         } 
-        placePiece()
-        currentLocationInteraction()  
+        chanceDelayInteraction()
         
     }
     else if (chanceRoll === 15){
@@ -551,12 +527,12 @@ function communityChest(){
     let communityChestRoll = communityChestDice()
     if (communityChestRoll === 1){
         //This needs to be edited.  Remove Current location...  Make this the current location ineraction
-        currentLocation.currentOccupants--
+        spaceLandedOn().currentOccupants--
         turnInteractionDescription.innerHTML = `<span class="bold-font-span">Community Chest:</span><br>Advance to Go (Collect $200).`
-        playerPiece().remove()
         currentPlayerTurn.position = 0
-        placePiece()
         currentPlayerTurn.cash += 200  
+        chanceDelayInteraction()
+        return
     }
     else if (communityChestRoll === 2){
         turnInteractionDescription.innerHTML = `<span class="bold-font-span">Community Chest:</span><br>Bank error in your favor. Collect $200.`
@@ -576,7 +552,8 @@ function communityChest(){
     }
     else if (communityChestRoll === 6){
         turnInteractionDescription.innerHTML = `<span class="bold-font-span">Community Chest:</span><br>Go to Jail. Go directly to Jail, do not pass Go, do not collect $200.`
-        goToJail()
+        setTimeout(goToJail, 2000)
+        return
     }
     else if (communityChestRoll === 7){
         turnInteractionDescription.innerHTML = `<span class="bold-font-span">Community Chest:</span><br>Holiday fund matures. Receive $100.`
@@ -646,199 +623,212 @@ function clearBottomRightScreenContents(){
 
 //Place Piece
 //Place Piece
-function placePiece(){
-    if (currentPlayerTurn.position >= 0 && currentPlayerTurn.position <= 9){
-        placePieceBottom()
+function placePiece(pieceBeingPlaced){
+    if (pieceBeingPlaced.position >= 0 && pieceBeingPlaced.position <= 9){
+        placePieceBottom(pieceBeingPlaced)
     }
-    else if(currentPlayerTurn.position >= 11 && currentPlayerTurn.position <= 19){
-        placePieceLeft()
+    else if(pieceBeingPlaced.position >= 11 && pieceBeingPlaced.position <= 19){
+        placePieceLeft(pieceBeingPlaced)
     }
-    else if (currentPlayerTurn.position >= 20 && currentPlayerTurn.position <= 29){
-        placePieceTop()
+    else if (pieceBeingPlaced.position >= 20 && pieceBeingPlaced.position <= 29){
+        placePieceTop(pieceBeingPlaced)
     }
-    else if (currentPlayerTurn.position >= 31 && currentPlayerTurn.position <= 39){
-        placePieceRight()
+    else if (pieceBeingPlaced.position >= 31 && pieceBeingPlaced.position <= 39){
+        placePieceRight(pieceBeingPlaced)
     }
     //Place Piece "Just Visiting"
-    else if (currentPlayerTurn.position === 10){
-        currentLocation = propertyArray[(currentPlayerTurn.position)]
+    else if (pieceBeingPlaced.position === 10){
+        currentLocation = propertyArray[(pieceBeingPlaced.position)]
         if (currentLocation.currentOccupants === 0){
-            document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece);
-            document.getElementById(currentPlayerTurn.pieceId).style.top = "5px";
-            document.getElementById(currentPlayerTurn.pieceId).style.left = "5.5px";
+            document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece);
+            document.getElementById(pieceBeingPlaced.pieceId).style.top = "0px";
+            document.getElementById(pieceBeingPlaced.pieceId).style.left = "0px";
         }
         else if(currentLocation.currentOccupants === 1)
             {
-            document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece)
-            document.getElementById(currentPlayerTurn.pieceId).style.top = "50px";
-            document.getElementById(currentPlayerTurn.pieceId).style.left = "5.5px";
+            document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece)
+            document.getElementById(pieceBeingPlaced.pieceId).style.top = "33.333%";
+            document.getElementById(pieceBeingPlaced.pieceId).style.left = "0px";
         }
         else if (currentLocation.currentOccupants === 2){
-            document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece)
-            document.getElementById(currentPlayerTurn.pieceId).style.bottom = "5px";
-            document.getElementById(currentPlayerTurn.pieceId).style.left = "5.5px";
+            document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece)
+            document.getElementById(pieceBeingPlaced.pieceId).style.bottom = "0px";
+            document.getElementById(pieceBeingPlaced.pieceId).style.left = "0px";
     
         }
         else if (currentLocation.currentOccupants === 3){
-            document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece)
-            document.getElementById(currentPlayerTurn.pieceId).style.bottom = "5px";
-            document.getElementById(currentPlayerTurn.pieceId).style.left = "50px";
+            document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece)
+            document.getElementById(pieceBeingPlaced.pieceId).style.bottom = "0px";
+            document.getElementById(pieceBeingPlaced.pieceId).style.left = "33.333%";
     
         }  
     }
     //Place Piece "Go To Jail"
-    else if (currentPlayerTurn.position === 30){
+    else if (pieceBeingPlaced.position === 30){
         addturnInteractionDescriptionDisplay()
         turnInteractionDescription.innerText = `You landed on "Go To Jail" space`
-        currentLocation = propertyArray[(currentPlayerTurn.position)]
-        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece);
+        currentLocation = propertyArray[(pieceBeingPlaced.position)]
+        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece);
     }
     //Place Piece "In Jail"
-    else if (currentPlayerTurn.position === 40){
-        currentLocation = propertyArray[(currentPlayerTurn.position)]
+    else if (pieceBeingPlaced.position === 40){
+        currentLocation = propertyArray[(pieceBeingPlaced.position)]
         if (currentLocation.currentOccupants === 0){
-            document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece);
-            document.getElementById(currentPlayerTurn.pieceId).style.top = "5px";
-            document.getElementById(currentPlayerTurn.pieceId).style.left = "5x";
+            document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece);
+            document.getElementById(pieceBeingPlaced.pieceId).style.top = "0px";
+            document.getElementById(pieceBeingPlaced.pieceId).style.left = "0px";
         }
         else if(currentLocation.currentOccupants === 1)
             {
-            document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece)
-            document.getElementById(currentPlayerTurn.pieceId).style.top = "5px";
-            document.getElementById(currentPlayerTurn.pieceId).style.right = "5px";
+            document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece)
+            document.getElementById(pieceBeingPlaced.pieceId).style.top = "0px";
+            document.getElementById(pieceBeingPlaced.pieceId).style.right = "0px";
         }
         else if (currentLocation.currentOccupants === 2){
-            document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece)
-            document.getElementById(currentPlayerTurn.pieceId).style.bottom = "5px";
-            document.getElementById(currentPlayerTurn.pieceId).style.left = "5px";
+            document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece)
+            document.getElementById(pieceBeingPlaced.pieceId).style.bottom = "0px";
+            document.getElementById(pieceBeingPlaced.pieceId).style.left = "0px";
     
         }
         else if (currentLocation.currentOccupants === 3){
-            document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece)
-            document.getElementById(currentPlayerTurn.pieceId).style.bottom = "5px";
-            document.getElementById(currentPlayerTurn.pieceId).style.right = "5px";
-    
+            document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece)
+            document.getElementById(pieceBeingPlaced.pieceId).style.bottom = "0px";
+            document.getElementById(pieceBeingPlaced.pieceId).style.right = "0px"; 
         }
     }
-
-    updateMiddleScreenPlayerLocation();
+    
     currentLocation.currentOccupants++
+
+    //If space left had other occupants, move occupants up one position in previous property container
+    if (pieceBeingPlaced === currentPlayerTurn && hasRolled === true){
+        updateMiddleScreenPlayerLocation()
+        let previousLocation = (currentPlayerTurn.position - diceOneValue - diceTwoValue)
+        if (previousLocation < 0){
+            previousLocation += 40
+        }
+
+        if (propertyArray[previousLocation].currentOccupants > 0){
+            propertyArray[previousLocation].currentOccupants = 0
+            for (let i = 0; i < totalPlayers; i++){
+                if (activePlayers[i].position === previousLocation){
+                    let playerToBeRemoved = document.getElementById(activePlayers[i].pieceId)
+                    playerToBeRemoved.remove()
+                    placePiece(activePlayers[i])
+                }
+            }
+        }
+    }
 }
 
- function placePieceBottom(){
-    currentLocation = propertyArray[(currentPlayerTurn.position)]
+ function placePieceBottom(pieceBeingPlaced){
+    currentLocation = propertyArray[(pieceBeingPlaced.position)]
     if (currentLocation.currentOccupants === 0){
-        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece);
-        document.getElementById(currentPlayerTurn.pieceId).style.top = "15%";
-        document.getElementById(currentPlayerTurn.pieceId).style.left = "5%";
+        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece);
+        document.getElementById(pieceBeingPlaced.pieceId).style.top = "14%";
+        document.getElementById(pieceBeingPlaced.pieceId).style.left = "5%";
     }
     else if(currentLocation.currentOccupants === 1)
         {
-        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece)
-        document.getElementById(currentPlayerTurn.pieceId).style.top = "45%";
-        document.getElementById(currentPlayerTurn.pieceId).style.left = "5%";
+        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece)
+        document.getElementById(pieceBeingPlaced.pieceId).style.top = "14%";
+        document.getElementById(pieceBeingPlaced.pieceId).style.right = "5%";
     }
     else if (currentLocation.currentOccupants === 2){
-        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece)
-        document.getElementById(currentPlayerTurn.pieceId).style.top = "15%";
-        document.getElementById(currentPlayerTurn.pieceId).style.right = "5%";
+        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece)
+        document.getElementById(pieceBeingPlaced.pieceId).style.bottom = "14%";
+        document.getElementById(pieceBeingPlaced.pieceId).style.left = "5%";
 
     }
     else if (currentLocation.currentOccupants === 3){
-        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece)
-        document.getElementById(currentPlayerTurn.pieceId).style.top = "45%";
-        document.getElementById(currentPlayerTurn.pieceId).style.right = "5%";
+        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece)
+        document.getElementById(pieceBeingPlaced.pieceId).style.bottom = "14%";
+        document.getElementById(pieceBeingPlaced.pieceId).style.right = "5%";
 
-    }
+    }  
 
 }
 
-function placePieceLeft(){
-    currentLocation = propertyArray[(currentPlayerTurn.position)]
+function placePieceLeft(pieceBeingPlaced){
+    currentLocation = propertyArray[(pieceBeingPlaced.position)]
     if (currentLocation.currentOccupants === 0){
-        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece);
-        document.getElementById(currentPlayerTurn.pieceId).style.right = "15%"
-        document.getElementById(currentPlayerTurn.pieceId).style.top = "5%";
-        document.getElementById(currentPlayerTurn.pieceId).style.transform = "rotate(90deg)";
+        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece);
+        document.getElementById(pieceBeingPlaced.pieceId).style.right = "14%"
+        document.getElementById(pieceBeingPlaced.pieceId).style.top = "5%";
+        document.getElementById(pieceBeingPlaced.pieceId).style.transform = "rotate(90deg)";
     }
     else if(currentLocation.currentOccupants === 1)
         {
-        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece)
-        document.getElementById(currentPlayerTurn.pieceId).style.right = "45%";
-        document.getElementById(currentPlayerTurn.pieceId).style.top = "5%";
-        document.getElementById(currentPlayerTurn.pieceId).style.transform = "rotate(90deg)";
+        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece)
+        document.getElementById(pieceBeingPlaced.pieceId).style.right = "14%";
+        document.getElementById(pieceBeingPlaced.pieceId).style.bottom = "5%";
+        document.getElementById(pieceBeingPlaced.pieceId).style.transform = "rotate(90deg)";
     }
     else if (currentLocation.currentOccupants === 2){
-        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece)
-        document.getElementById(currentPlayerTurn.pieceId).style.right = "15%";
-        document.getElementById(currentPlayerTurn.pieceId).style.bottom = "5%";
-        document.getElementById(currentPlayerTurn.pieceId).style.transform = "rotate(90deg)";
+        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece)
+        document.getElementById(pieceBeingPlaced.pieceId).style.left = "14%";
+        document.getElementById(pieceBeingPlaced.pieceId).style.top = "5%";
+        document.getElementById(pieceBeingPlaced.pieceId).style.transform = "rotate(90deg)";
     }
     else if (currentLocation.currentOccupants === 3){
-        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece)
-        document.getElementById(currentPlayerTurn.pieceId).style.right = "45%";
-        document.getElementById(currentPlayerTurn.pieceId).style.bottom = "5%";
-        document.getElementById(currentPlayerTurn.pieceId).style.transform = "rotate(90deg)";
-    }
-
-}
-
-function placePieceTop(){
-    currentLocation = propertyArray[(currentPlayerTurn.position)]
-    if (currentLocation.currentOccupants === 0){
-        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece)
-        document.getElementById(currentPlayerTurn.pieceId).style.bottom = "15%"
-        document.getElementById(currentPlayerTurn.pieceId).style.right = "5%";
-        document.getElementById(currentPlayerTurn.pieceId).style.transform = "rotate(180deg)";
-    }
-    else if(currentLocation.currentOccupants === 1)
-        {
-        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece)
-        document.getElementById(currentPlayerTurn.pieceId).style.bottom = "45%";
-        document.getElementById(currentPlayerTurn.pieceId).style.right = "5%";
-        document.getElementById(currentPlayerTurn.pieceId).style.transform = "rotate(180deg)";
-    }
-    else if (currentLocation.currentOccupants === 2){
-        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece)
-        document.getElementById(currentPlayerTurn.pieceId).style.bottom = "15%";
-        document.getElementById(currentPlayerTurn.pieceId).style.left = "5%";
-        document.getElementById(currentPlayerTurn.pieceId).style.transform = "rotate(180deg)";
-    }
-    else if (currentLocation.currentOccupants === 3){
-        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece)
-        document.getElementById(currentPlayerTurn.pieceId).style.bottom = "45%";
-        document.getElementById(currentPlayerTurn.pieceId).style.left = "5%";
-        document.getElementById(currentPlayerTurn.pieceId).style.transform = "rotate(180deg)";
+        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece)
+        document.getElementById(pieceBeingPlaced.pieceId).style.left = "14%";
+        document.getElementById(pieceBeingPlaced.pieceId).style.bottom = "5%";
+        document.getElementById(pieceBeingPlaced.pieceId).style.transform = "rotate(90deg)";
     }
 
 }
 
-function placePieceRight(){
-    currentLocation = propertyArray[(currentPlayerTurn.position)]
+function placePieceTop(pieceBeingPlaced){
+    currentLocation = propertyArray[(pieceBeingPlaced.position)]
     if (currentLocation.currentOccupants === 0){
-        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece);
-        document.getElementById(currentPlayerTurn.pieceId).style.bottom = "5%"
-        document.getElementById(currentPlayerTurn.pieceId).style.left = "15%";
-        document.getElementById(currentPlayerTurn.pieceId).style.transform = "rotate(270deg)";
+        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece)
+        document.getElementById(pieceBeingPlaced.pieceId).style.top = "14%"
+        document.getElementById(pieceBeingPlaced.pieceId).style.left = "5%";    }
+    else if(currentLocation.currentOccupants === 1)
+        {
+        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece)
+        document.getElementById(pieceBeingPlaced.pieceId).style.top = "14%";
+        document.getElementById(pieceBeingPlaced.pieceId).style.right = "5%";
+    }
+    else if (currentLocation.currentOccupants === 2){
+        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece)
+        document.getElementById(pieceBeingPlaced.pieceId).style.bottom = "14%";
+        document.getElementById(pieceBeingPlaced.pieceId).style.left = "5%";
+    }
+    else if (currentLocation.currentOccupants === 3){
+        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece)
+        document.getElementById(pieceBeingPlaced.pieceId).style.bottom = "14%";
+        document.getElementById(pieceBeingPlaced.pieceId).style.right = "5%";
+    }
+
+}
+
+function placePieceRight(pieceBeingPlaced){
+    currentLocation = propertyArray[(pieceBeingPlaced.position)]
+    if (currentLocation.currentOccupants === 0){
+        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece);
+        document.getElementById(pieceBeingPlaced.pieceId).style.top = "5%"
+        document.getElementById(pieceBeingPlaced.pieceId).style.right = "14%";
+        document.getElementById(pieceBeingPlaced.pieceId).style.transform = "rotate(90deg)";
     }
     else if(currentLocation.currentOccupants === 1)
         {
-        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece)
-        document.getElementById(currentPlayerTurn.pieceId).style.bottom = "5%";
-        document.getElementById(currentPlayerTurn.pieceId).style.left = "45%";
-        document.getElementById(currentPlayerTurn.pieceId).style.transform = "rotate(270deg)";
+        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece)
+        document.getElementById(pieceBeingPlaced.pieceId).style.bottom = "5%";
+        document.getElementById(pieceBeingPlaced.pieceId).style.right = "14%";
+        document.getElementById(pieceBeingPlaced.pieceId).style.transform = "rotate(90deg)";
     }
     else if (currentLocation.currentOccupants === 2){
-        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece)
-        document.getElementById(currentPlayerTurn.pieceId).style.top = "5%";
-        document.getElementById(currentPlayerTurn.pieceId).style.left = "15%";
-        document.getElementById(currentPlayerTurn.pieceId).style.transform = "rotate(270deg)";
+        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece)
+        document.getElementById(pieceBeingPlaced.pieceId).style.top = "5%";
+        document.getElementById(pieceBeingPlaced.pieceId).style.left = "14%";
+        document.getElementById(pieceBeingPlaced.pieceId).style.transform = "rotate(90deg)";
     }
     else if (currentLocation.currentOccupants === 3){
-        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', currentPlayerTurn.gamePiece)
-        document.getElementById(currentPlayerTurn.pieceId).style.top = "5%";
-        document.getElementById(currentPlayerTurn.pieceId).style.left = "45%";
-        document.getElementById(currentPlayerTurn.pieceId).style.transform = "rotate(270deg)";
+        document.getElementById(currentLocation.id).insertAdjacentHTML('afterbegin', pieceBeingPlaced.gamePiece)
+        document.getElementById(pieceBeingPlaced.pieceId).style.bottom = "5%";
+        document.getElementById(pieceBeingPlaced.pieceId).style.left = "14%";
+        document.getElementById(pieceBeingPlaced.pieceId).style.transform = "rotate(90deg)";
     }
 
 }
@@ -847,13 +837,13 @@ function placePieceRight(){
 //Property Cards
 
 function addPropertyCard (locationId){
-    if (currentLocation.type === "color"){
+    if (spaceLandedOn().type === "color"){
         addColorPropertyCard(locationId)
     }
-    else if (currentLocation.type === "railroad"){
+    else if (spaceLandedOn().type === "railroad"){
         addRailroadPropertyCard(locationId)
     }
-    else if (currentLocation.type === "utility" ){
+    else if (spaceLandedOn().type === "utility" ){
         addUtilityCard(locationId)
     }
     else {
@@ -863,13 +853,13 @@ function addPropertyCard (locationId){
 }
 
 function removePropertyCard (locationId){
-    if (currentLocation.type === "color"){
+    if (spaceLandedOn().type === "color"){
         removeColorPropertyCard(locationId)
     }
-    else if (currentLocation.type === "railroad"){
+    else if (spaceLandedOn().type === "railroad"){
         removeRailroadPropertyCard(locationId)
     }
-    else if (currentLocation.type === "utility" ){
+    else if (spaceLandedOn().type === "utility" ){
         removeUtilityCard(locationId)
     }
     else {
@@ -880,18 +870,17 @@ function removePropertyCard (locationId){
 
 function addColorPropertyCard(locationId){
     document.getElementById(locationId).innerHTML = colorPropertyCard;
-    document.getElementById('colorPropertyName').innerHTML = `${currentLocation.name}`
-    document.getElementById('colorPropertyName').style.borderTop = `20px solid ${currentLocation.color}`
-    document.getElementById('colorPropertyRent').innerHTML = `Rent: $${currentLocation.startingRent}`
-    document.getElementById('colorPropertyOneHouse').innerHTML = `One House Rent: $${currentLocation.oneHouseRent}`
-    document.getElementById('colorPropertyTwoHouse').innerHTML = `Two Houses Rent: $${currentLocation.twoHouseRent}`
-    document.getElementById('colorPropertyThreeHouse').innerHTML = `Three Houses Rent: $${currentLocation.threeHouseRent}`
-    document.getElementById('colorPropertyFourHouse').innerHTML = `Four Houses Rent: $${currentLocation.fourHouseRent}`
-    document.getElementById('colorPropertyHotelRent').innerHTML = `Hotel Rent: $${currentLocation.hotelRent}`
-    document.getElementById('colorPropertyHouseCost').innerHTML = `Cost to build house: $${currentLocation.buildingCost}`
-    document.getElementById('colorPropertyHotelCost').innerHTML = `Cost to build hotel: $${currentLocation.buildingCost}`
-    document.getElementById('colorPropertyMortgage').innerHTML = `Mortgage Value: $${currentLocation.mortgage}`
-    document.getElementById(locationId).classList.add('color-property-card')
+    document.getElementById('colorPropertyName').innerHTML = `${spaceLandedOn().name}`
+    document.getElementById('colorPropertyName').style.borderTop = `.75rem solid ${spaceLandedOn().color}`
+    document.getElementById('colorPropertyRent').innerHTML = `Rent: $${spaceLandedOn().startingRent}`
+    document.getElementById('colorPropertyOneHouse').innerHTML = `One House Rent: $${spaceLandedOn().oneHouseRent}`
+    document.getElementById('colorPropertyTwoHouse').innerHTML = `Two Houses Rent: $${spaceLandedOn().twoHouseRent}`
+    document.getElementById('colorPropertyThreeHouse').innerHTML = `Three Houses Rent: $${spaceLandedOn().threeHouseRent}`
+    document.getElementById('colorPropertyFourHouse').innerHTML = `Four Houses Rent: $${spaceLandedOn().fourHouseRent}`
+    document.getElementById('colorPropertyHotelRent').innerHTML = `Hotel Rent: $${spaceLandedOn().hotelRent}`
+    document.getElementById('colorPropertyHouseCost').innerHTML = `Cost to build house: $${spaceLandedOn().buildingCost}`
+    document.getElementById('colorPropertyHotelCost').innerHTML = `Cost to build hotel: $${spaceLandedOn().buildingCost}`
+    document.getElementById('colorPropertyMortgage').innerHTML = `Mortgage Value: $${spaceLandedOn().mortgage}`
     document.getElementById(locationId).classList.remove('hidden')
 }
 
@@ -903,7 +892,7 @@ function removeColorPropertyCard(locationId){
 
 function addRailroadPropertyCard(locationId){
     document.getElementById(locationId).innerHTML = railroadPropertyCard;
-    document.getElementById('railroadPropertyName').innerHTML = `${currentLocation.name}`
+    document.getElementById('railroadPropertyName').innerHTML = `${spaceLandedOn().name}`
     document.getElementById(locationId).classList.add('railroad-property-card')
     document.getElementById(locationId).classList.remove('hidden')
 }
@@ -916,7 +905,7 @@ function removeRailroadPropertyCard(locationId){
 
 function addUtilityCard(locationId){
     document.getElementById(locationId).innerHTML = utilityPropertyCard;
-    document.getElementById('utilityPropertyName').innerHTML = `${currentLocation.name}`
+    document.getElementById('utilityPropertyName').innerHTML = `${spaceLandedOn().name}`
     document.getElementById(locationId).classList.add('utility-property-card')
     document.getElementById(locationId).classList.remove('hidden')
 }
@@ -934,7 +923,7 @@ buyPropertyYesBtn.addEventListener('click', function(e){
     spaceLandedOn().hasOwner = true
     currentPlayerTurn.cash -= spaceLandedOn().price
     currentPlayerTurn.updateTotalAssets()
-    updateRent(currentPlayerTurn)
+    updateRent(currentPlayerTurn, spaceLandedOn())
     updatePlayerCashTotalDisplay()
     document.getElementById(spaceLandedOn().id).style.backgroundColor = currentPlayerTurn.colorLight;
     removePropertyBuySellAuctionButtons()
@@ -958,6 +947,7 @@ buyPropertyAuctionBtn.addEventListener('click', function(e){
 
 buyPropertySellBtn.addEventListener('click', function(e){
     removeBuyPropertyYesBtn()
+    removeTradeButton()
     removePropertyBuySellAuctionButtons()
     removePropertyCard('propertyCardId')
     addHouseHotelMortgageScreen()
@@ -974,12 +964,12 @@ function addPropertyBuySellAuctionButtons(){
         removeBuyPropertySellBtn()    
     }
     else if (currentPlayerTurn.totalAssets > spaceLandedOn().price){
-        document.getElementById('wouldYouLikeToBuyId').innerHTML = `You need $${currentLocation.price} to buy ${currentLocation.name}. Open a mortgage, sell houses or auction this property`
+        document.getElementById('wouldYouLikeToBuyId').innerHTML = `You need $${spaceLandedOn().price} to buy ${spaceLandedOn().name}. Open a mortgage, sell houses or auction this property`
         addBuyPropertySellBtn()
         removeBuyPropertyYesBtn()
     }
     else{
-        document.getElementById('wouldYouLikeToBuyId').innerHTML = `You do not have enough assets to sell to afford ${currentLocation.name}`
+        document.getElementById('wouldYouLikeToBuyId').innerHTML = `You do not have enough assets to sell to afford ${spaceLandedOn().name}`
     }
  }
 
@@ -1011,7 +1001,7 @@ function removeBuyPropertySellBtn(){
 //Auction Property
 //Auction Property
 function generateAuctionScreen(){
-    document.getElementById('auctionOriginalPriceId').innerText = `Original Price: $${currentLocation.price}`
+    document.getElementById('auctionOriginalPriceId').innerText = `Original Price: $${spaceLandedOn().price}`
         //Update Auction screen with active players
     for (let i = 0; i < totalPlayers; i++){
         if (activePlayers[i].isBankrupt === false){
@@ -1069,12 +1059,12 @@ function bidOnProperty(){
 }
 
 function goingOnceBidOnProperty(){
-    auctioneerText.innerHTML = `<span class="auction-leader-color-span">${bidLeader}</span> buying ${currentLocation.name} for <span class="auction-leader-color-span">$${currentAuctionBid}</span> going once!`
+    auctioneerText.innerHTML = `<span class="auction-leader-color-span">${bidLeader}</span> buying ${spaceLandedOn().name} for <span class="auction-leader-color-span">$${currentAuctionBid}</span> going once!`
     noBidsGoingTwice = setTimeout(goingTwiceBidOnProperty, 3000)
 }
 
 function goingTwiceBidOnProperty(){
-    auctioneerText.innerHTML = `<span class="auction-leader-color-span">${bidLeader}</span> buying ${currentLocation.name} for <span class="auction-leader-color-span">$${currentAuctionBid}</span> going twice!!`
+    auctioneerText.innerHTML = `<span class="auction-leader-color-span">${bidLeader}</span> buying ${spaceLandedOn().name} for <span class="auction-leader-color-span">$${currentAuctionBid}</span> going twice!!`
     noBidsFinal = setTimeout(auctionPropertySoldMessage, 4000)
 }
 
@@ -1085,7 +1075,7 @@ function auctionPropertySoldMessage(){
             playerAuctionContainers[i].buttonId.innerHTML = ""
         }
     }
-    auctioneerText.innerHTML = `${currentLocation.name} sold to <span class="auction-leader-color-span">${bidLeader}</span> for <span class="auction-leader-color-span">$${currentAuctionBid}</span>!`
+    auctioneerText.innerHTML = `${spaceLandedOn().name} sold to <span class="auction-leader-color-span">${bidLeader}</span> for <span class="auction-leader-color-span">$${currentAuctionBid}</span>!`
     auctionResult = setTimeout(auctionWonResult, 4000)
 }
 
@@ -1104,7 +1094,7 @@ function auctionWonResult(){
             activePlayers[i].cash -= currentAuctionBid
             updatePlayerCashTotalDisplay()
             document.getElementById(spaceLandedOn().id).style.backgroundColor = activePlayers[i].colorLight;
-            updateRent(activePlayers[i])
+            updateRent(activePlayers[i], spaceLandedOn())
         }
     }
     currentAuctionBid = 0
@@ -1146,7 +1136,7 @@ function addPayRentContainer(){
     if ((currentPlayerTurn.cash - spaceLandedOn().rent) < 0){
         payRentBtn.classList.add('button-inactive')
         payRentBtn.disabled = true
-        document.getElementById('payRentTutorialId').innerHTML = `You do not have enough cash to pay rent.  Click the "Sell" button to sell houses, mortgage property, or click "Bankrupt" to quit game.`
+        document.getElementById('payRentTutorialId').innerHTML = `You do not have enough cash to pay rent.  Click the "Sell" button to sell assets or click "Bankrupt" to quit game.`
         sellToPayRentBtn.classList.remove('button-inactive')
         sellToPayRentBtn.disabled = false
     }
@@ -1185,6 +1175,7 @@ sellToPayRentBtn.addEventListener('click', function(e){
     removePropertyCard('propertyCardId')
     addHouseHotelMortgageScreen()
     removePayRentContainer()
+    removeTradeButton()
     document.getElementById('payRentTutorialId').innerHTML = `Sell houses or open mortgage to pay rent.  Click "finish" to pay rent.`
 })
 
@@ -1230,9 +1221,9 @@ function removeBankruptWarning(){
 function bankrupt(){
     removeInformBankruptScreen()
     removeBankruptWarning()
-    currentLocation.currentOccupants--
+    spaceLandedOn().currentOccupants--
     playerPiece().remove()
-    let playerOwed = currentLocation.owner
+    let playerOwed = spaceLandedOn().owner
     let playerBankrupt = currentPlayerTurn
     playerBankrupt.isBankrupt = true
     playerOwed.cash += playerBankrupt.cash
@@ -1301,11 +1292,11 @@ function removeInformBankruptScreen(){
 
 function goToJail (){
     removeHouseHotelMortgageScreen()
-    currentLocation.currentOccupants--
+    spaceLandedOn().currentOccupants--
     currentPlayerTurn.doublesCounter = 0
     playerPiece().remove()
     currentPlayerTurn.position = 40
-    placePiece()
+    placePiece(currentPlayerTurn)
     currentPlayerTurn.isInJail = true
     updateMiddleScreenPlayerLocation()
     addEndTurnButton()
@@ -1339,20 +1330,18 @@ attemptDoublesBtn.addEventListener('click', function (e){
         currentPlayerTurn.jailRollAttempts = 3
         currentPlayerTurn.isInJail = false
         playerPiece().remove()
-        currentLocation = (propertyArray[currentPlayerTurn.position])
-        currentLocation.currentOccupants--
+        spaceLandedOn().currentOccupants--
         currentPlayerTurn.position = (diceOneValue + diceTwoValue + 10)
-        placePiece()
+        placePiece(currentPlayerTurn)
         removeHouseHotelMortgageScreen()
         currentLocationInteraction()
-        
     }
     else{
         currentPlayerTurn.jailRollAttempts--
         addEndTurnButton()
+        addHouseHotelMortgageScreen()
     }
     removeJailOptions()
-    addHouseHotelMortgageScreen()
 })
 
 payJailFeeBtn.addEventListener('click', function (e){
@@ -1369,11 +1358,10 @@ getOutJailCardBtn.addEventListener('click', function (e){
 function getOutOfJail (){
     currentPlayerTurn.jailRollAttempts = 3
     currentPlayerTurn.isInJail = false
-    currentLocation = propertyArray[(currentPlayerTurn.position)]
-    currentLocation.currentOccupants--
+    spaceLandedOn().currentOccupants--
     playerPiece().remove()
     currentPlayerTurn.position = 10
-    placePiece()
+    placePiece(currentPlayerTurn)
     updateMiddleScreenPlayerLocation()
     removeJailOptions()
     addDice()
@@ -1395,24 +1383,23 @@ function removeJailOptions (){
 //Buy Sell House Hotel Mortgage Functions
 //Buy Sell House Hotel Mortgage Functions
 
-function updateRent(player){
-    if (currentLocation.type === "color"){
-        updateRentColor(player)
+function updateRent(player, property){
+    if (property.type === "color"){
+        updateRentColor(player, property)
     }
-    else if (currentLocation.type === "railroad"){
+    else if (property.type === "railroad"){
         updateRentRailroad(player)
     }
-    else if (currentLocation.type === "utility" ){
+    else if (property.type === "utility" ){
         updateRentUtility(player)
     }
 }
 
-function updateRentColor(player){
-    ownedPropertyArray = []
-    generatePlayerPropertyArray(player)
+function updateRentColor(player, property){
+    generatePlayerColorPropertyArray(player)
     let sameColorProperties = []
     //Filter for same color properties as last bought property
-    sameColorProperties = ownedPropertyArray.filter(function(property){return property.color === currentLocation.color})
+    sameColorProperties = ownedColorPropertyArray.filter(function(propertyFiltered){return propertyFiltered.color === property.color})
     for (let i = 0; i < sameColorProperties.length;){
         if (sameColorProperties[i].setTotal === 2 && sameColorProperties.length === 2){
                 sameColorProperties[i].rent = (sameColorProperties[i].startingRent * 2)
@@ -1453,11 +1440,10 @@ function updateRentHouseHotel(property){
 }
 
 function updateRentRailroad(player){
-    ownedPropertyArray = []
     generatePlayerPropertyArray(player)
     let railroadProperties = []
     //Filter for railroads
-    railroadProperties = ownedPropertyArray.filter(function(property){return property.type === currentLocation.type})
+    railroadProperties = ownedPropertyArray.filter(function(propertyFiltered){return propertyFiltered.type === 'railroad'})
     railroadProperties.forEach(railroad =>{
         if (railroadProperties.length === 1){
             railroad.rent = 25
@@ -1475,11 +1461,10 @@ function updateRentRailroad(player){
 }
 
 function updateRentUtility(player){
-    ownedPropertyArray = []
     generatePlayerPropertyArray(player)
     let utilityProperties = []
     //Filter for utilities
-    utilityProperties = ownedPropertyArray.filter(function(property){return property.type === currentLocation.type})
+    utilityProperties = ownedPropertyArray.filter(function(propertyFiltered){return propertyFiltered.type === 'utility'})
     utilityProperties.forEach(utility =>{
         if (utilityProperties.length === 1){
             utility.updateRent = function() {
@@ -1527,124 +1512,235 @@ function addHouseHotelMortgageScreen (){
     document.getElementById('houseHotelMortgageScreenId').classList.remove('house-hotel-mortgage-screen');
  }
 
+ function addCanSelectClassesToPropertyArray(array){
+    for (let i = 0; i < array.length; i++){
+        let clickableProperty = document.getElementById(array[i].id)
+
+            if(array[i].number > 0 && array[i].number < 10){
+               clickableProperty.classList.add(`can-select-property-bottom`)
+            }
+            else if(array[i].number > 10 && array[i].number < 20){
+                clickableProperty.classList.add('can-select-property-left')
+            }
+            else if(array[i].number > 20 && array[i].number < 30){
+                clickableProperty.classList.add('can-select-property-top')
+            }
+            else if(array[i].number > 30 && array[i].number < 40){
+                clickableProperty.classList.add('can-select-property-right')
+            }
+            clickableProperty.classList.add('can-select-property')
+    }
+
+}
+
+function removeCanSelectClassesToPropertyArray(array){
+    for (let i = 0; i < array.length; i++){
+        let clickableProperty = document.getElementById(array[i].id)
+
+        if(array[i].number > 0 && array[i].number < 10){
+            clickableProperty.classList.remove('can-select-property-bottom')
+        }
+        else if(array[i].number > 10 && array[i].number < 20){
+            clickableProperty.classList.remove('can-select-property-left')
+        }
+        else if(array[i].number > 20 && array[i].number < 30){
+            clickableProperty.classList.remove('can-select-property-top')
+        }
+        else if(array[i].number > 30 && array[i].number < 40){
+            clickableProperty.classList.remove('can-select-property-right')
+        }
+        clickableProperty.classList.remove('can-select-property')
+    }
+}
+
+function addEventLisentersToArray(array, listener){
+    array.forEach((property) =>{
+        let clickableProperty = document.getElementById(property.id)
+        clickableProperty.addEventListener('click', listener)
+    })
+}
+
+function removeEventListenersFromArray(array, listener){
+    array.forEach((property) =>{
+        let clickableProperty = document.getElementById(property.id)
+        clickableProperty.removeEventListener('click', listener)
+    })
+}
+
 //Buy House Functions
 //Buy House Functions
-buyHouseHotelBtn.addEventListener('click', function(e){
+buyHouseHotelBtn.addEventListener('click', function(){
     removeDice()
     generatePlayerColorPropertyArray()
     removeHouseHotelMortgageScreen()
     removeEndTurnButton()
-    addFinishBuyHouseBtn()
-    addBuyHouseTutorial()
-    canBuyHouseHotelArray = []
+    addFinishBuyHouseHotelBtn()
+    addBuyHouseHotelTutorial()
+    updateCanBuyHouseHotelArray()
+    addCanSelectClassesToPropertyArray(canBuyHouseHotelArray)
+    addEventLisentersToArray(canBuyHouseHotelArray, buyHouseHotelPropertySpace)
+})
 
-    //Sort owned property into array of full color set matches
-    for (let i = 0; i < ownedColorPropertyArray.length;){
-        if (ownedColorPropertyArray[i].type === 'color' && ownedColorPropertyArray[i].setTotal === 2 && (i + 1) < ownedColorPropertyArray.length){
-                if(ownedColorPropertyArray[i].color === ownedColorPropertyArray[i+1].color){
-                    canBuyHouseHotelArray.push(ownedColorPropertyArray[i])
-                    canBuyHouseHotelArray.push(ownedColorPropertyArray[i+1])
-                    i += 2
-                } 
+    //Create Clickable Property To Buy Houses
+    function buyHouseHotelPropertySpace (){
+        for (let i = 0; i < canBuyHouseHotelArray.length; i++){
+            if (canBuyHouseHotelArray[i].id == this.id){
+                propertyClickedOn = canBuyHouseHotelArray[i]
+
+                if(propertyClickedOn.totalHouses < 4){
+                    document.getElementById('buyHouseHotelLabel').innerHTML = `Would you like to buy a house on ${propertyClickedOn.name} for $${propertyClickedOn.buildingCost}?`        
+                }
+                else if (propertyClickedOn.totalHouses === 4){
+                    document.getElementById('buyHouseHotelLabel').innerHTML = `Would you like to buy a hotel on ${propertyClickedOn.name} for $${propertyClickedOn.buildingCost}?`  
+                }
+                removeBuyHouseHotelTutorial()
+                addBuyHouseHotelYesNoButtons()
+                buyHouseHotelYesBtn.addEventListener('click', buyHouseHotelYesBtnOutcome)
+                buyHouseHotelNoBtn.addEventListener('click', buyHouseHotelNoBtnOutcome) 
+                removeFinishBuyHouseHotelBtn()
+                //Prevent user from clicking multiple properties at once
+                removeCanSelectClassesToPropertyArray(canBuyHouseHotelArray)
+                removeEventListenersFromArray(canBuyHouseHotelArray, buyHouseHotelPropertySpace)
+                return
+            }
+        }        
+    }
+
+    //Yes Button Function
+    function buyHouseHotelYesBtnOutcome(){
+        if(propertyClickedOn.totalHouses < 4){
+            currentPlayerTurn.housesOwned++
+        }
+        else{
+            currentPlayerTurn.hotelsOwned++
+            currentPlayerTurn.housesOwned -= 4
+        }
+        propertyClickedOn.totalHouses++
+        currentPlayerTurn.cash -= propertyClickedOn.buildingCost
+        updatePropertySetTotalHousesAdd()
+        updateCanBuyHouseHotelArray()
+        updateRentHouseHotel(propertyClickedOn)
+        placeHouseHotel(propertyClickedOn)
+        updatePlayerCashTotalDisplay()
+        removeBuyHouseHotelYesNoButtons()
+        addBuyHouseHotelTutorial()
+        addFinishBuyHouseHotelBtn()            
+        //Restore function and class indicators to add houses to eligible properties
+        addCanSelectClassesToPropertyArray(canBuyHouseHotelArray)
+        addEventLisentersToArray(canBuyHouseHotelArray, buyHouseHotelPropertySpace)       
+        buyHouseHotelYesBtn.removeEventListener('click', buyHouseHotelYesBtnOutcome)
+        buyHouseHotelNoBtn.removeEventListener('click', buyHouseHotelNoBtnOutcome)
+    }
+
+    //No Button Function
+    function buyHouseHotelNoBtnOutcome(){
+        removeBuyHouseHotelYesNoButtons()
+        addBuyHouseHotelTutorial()
+        addFinishBuyHouseHotelBtn()
+        //Restore function and class indicators to add houses to eligible properties
+        addCanSelectClassesToPropertyArray(canBuyHouseHotelArray)
+        addEventLisentersToArray(canBuyHouseHotelArray, buyHouseHotelPropertySpace)
+        buyHouseHotelYesBtn.removeEventListener('click', buyHouseHotelYesBtnOutcome)
+        buyHouseHotelNoBtn.removeEventListener('click', buyHouseHotelNoBtnOutcome)
+    }
+
+    //Finish Button Function
+    finishBuyHouseHotelBtn.addEventListener('click', function(e){ 
+        addHouseHotelMortgageScreen()
+        removeBuyHouseHotelTutorial()
+        removeFinishBuyHouseHotelBtn()
+        addEndTurnButton()
+        removeCanSelectClassesToPropertyArray(canBuyHouseHotelArray)
+        removeEventListenersFromArray(canBuyHouseHotelArray, buyHouseHotelPropertySpace)
+    
+            //Prevent user from skipping turn
+            if (hasRolled === false){
+                removeEndTurnButton()
+                addDice()
+            }
+            //Prevent user from ending turn before paying rent
+            if(document.getElementById('payRentTutorialId').classList.contains('hidden') === false){
+                removeEndTurnButton()
+            }
+            checkRentPaid()
+            checkIfBuyingProperty()
+    })
+
+        function checkRentPaid(){
+            //Return user to pay rent screen
+            if (document.getElementById('payRentTutorialId').classList.contains('hidden') === false){
+                addPayRentContainer()
+                removeHouseHotelMortgageScreen()
+                addTradeButton()
+            }
+        }
+        
+        function checkIfBuyingProperty(){
+            if (!buyPropertySellBtn.classList.contains('hidden')){
+                removeEndTurnButton()
+                removeHouseHotelMortgageScreen()
+                addPropertyBuySellAuctionButtons()
+                addPropertyCard('propertyCardId')
+                addTradeButton()
+            }
+        }
+
+    function updateCanBuyHouseHotelArray(){
+        canBuyHouseHotelArray = []
+    
+        for (let i = 0; i < ownedColorPropertyArray.length;){
+            //Check if player owns enough properties for set of two
+            if (ownedColorPropertyArray[i].setTotal === 2 && (i + 1) < ownedColorPropertyArray.length){
+                    //Check if player owns all properties if two properties in set
+                    if(ownedColorPropertyArray[i].color === ownedColorPropertyArray[i+1].color){
+                        for (let j = i ; j < i+2; j++){
+                            //Check if total houses on property is same or less than other properties in set, Check if property alread has max houses
+                            if(ownedColorPropertyArray[j].totalHouses < 5
+                               && ownedColorPropertyArray[j].totalHouses <= (ownedColorPropertyArray[j].propertySetTotalHouses / ownedColorPropertyArray[j].setTotal) 
+                               && ownedColorPropertyArray[j].mortgageOpen === false
+                               && ownedColorPropertyArray[i].buildingCost <= currentPlayerTurn.cash){
+                                    canBuyHouseHotelArray.push(ownedColorPropertyArray[j])
+                            }
+                        }
+                        i += 2
+                    } 
+                    else{
+                        i++
+                    }        
+            }
+    
+            //Check if player owns enough properties for set of 3
+            else if(ownedColorPropertyArray[i].setTotal === 3 && (i + 2) < ownedColorPropertyArray.length){
+                //Check if player owns all properties in set
+                if (ownedColorPropertyArray[i].color === ownedColorPropertyArray[i+1].color && ownedColorPropertyArray[i].color === ownedColorPropertyArray[i+2].color){
+                    for (let j = i; j < i+3; j++){
+                        //Check if total houses on property is same or less than other properties in set, Check if property alread has max houses
+                        if(ownedColorPropertyArray[j].totalHouses < 5 
+                           && ownedColorPropertyArray[j].totalHouses <= (ownedColorPropertyArray[j].propertySetTotalHouses / ownedColorPropertyArray[j].setTotal)
+                           && ownedColorPropertyArray[j].mortgageOpen === false
+                           && ownedColorPropertyArray[j].buildingCost <= currentPlayerTurn.cash){
+                                canBuyHouseHotelArray.push(ownedColorPropertyArray[j])
+                        }
+                    }
+                    i += 3
+                }
                 else{
                     i++
-                }        
-        }
-        else if(ownedColorPropertyArray[i].type === 'color' && ownedColorPropertyArray[i].setTotal === 3 && (i + 2) < ownedColorPropertyArray.length){
-            if (ownedColorPropertyArray[i].color === ownedColorPropertyArray[i+1].color && ownedColorPropertyArray[i].color === ownedColorPropertyArray[i+2].color){
-                canBuyHouseHotelArray.push(ownedColorPropertyArray[i])
-                canBuyHouseHotelArray.push(ownedColorPropertyArray[i+1])
-                canBuyHouseHotelArray.push(ownedColorPropertyArray[i+2])
-                i += 3
+                }
             }
             else{
                 i++
             }
         }
-        else{
-            i++
-        }
-       
     }
-    //Create clickable property to build houses on
-    canBuyHouseHotelArray.forEach(property =>{
-        let clickableProperty = document.getElementById(property.id)
-        clickableProperty.classList.add('can-buy-house')
-        clickableProperty.addEventListener('click', buyHousePropertySpace) 
 
-        //Create clickable property to buy
-        function buyHousePropertySpace (){
-            if(property.totalHouses < 4){
-                document.getElementById('buyHouseLabel').innerHTML = `Would you like to buy a house on ${property.name} for $${property.buildingCost}?`        
-            }
-            else if (property.totalHouses === 4){
-                document.getElementById('buyHouseLabel').innerHTML = `Would you like to buy a hotel on ${property.name} for $${property.buildingCost}?`  
-            }
-            else{
-                return
-            }
-            removeBuyHouseTutorial()
-            addBuyHouseYesNoButtons()
-            buyHouseYesBtn.addEventListener('click', buyHouseYesBtnOutcome)
-            buyHouseNoBtn.addEventListener('click', buyHouseNoBtnOutcome) 
-            removeFinishBuyHouseBtn()
-            //Prevent user from clicking multiple properties at once
-            for (let i = 0; i < canBuyHouseHotelArray.length; i++){
-                document.getElementById(canBuyHouseHotelArray[i].id).classList.add('disable-clicks')
-                document.getElementById(canBuyHouseHotelArray[i].id).classList.remove('can-buy-house')
+    function updatePropertySetTotalHousesAdd(){
+        for (let i = 0; i < ownedColorPropertyArray.length; i++){
+            if (ownedColorPropertyArray[i].color === propertyClickedOn.color){
+                ownedColorPropertyArray[i].propertySetTotalHouses++
             }
         }
-
-        //Yes button function
-        function buyHouseYesBtnOutcome(){
-            //Restore function and class indicators to add houses to eligible properties
-            for (let i = 0; i < canBuyHouseHotelArray.length; i++){
-                document.getElementById(canBuyHouseHotelArray[i].id).classList.remove('disable-clicks')
-                document.getElementById(canBuyHouseHotelArray[i].id).classList.add('can-buy-house')
-            }
-            if(property.totalHouses < 4){
-                currentPlayerTurn.housesOwned++
-            }
-            else{
-                currentPlayerTurn.hotelsOwned++
-                currentPlayerTurn.housesOwned -= 4
-                clickableProperty.removeEventListener('click', buyHousePropertySpace)
-            }
-            property.totalHouses++
-            currentPlayerTurn.cash -= property.buildingCost
-            updateRentHouseHotel(property)
-            placeHouseHotel(property)
-            updatePlayerCashTotalDisplay()
-            removeBuyHouseYesNoButtons()
-            addBuyHouseTutorial()
-            buyHouseYesBtn.removeEventListener('click', buyHouseYesBtnOutcome)
-            buyHouseNoBtn.removeEventListener('click', buyHouseNoBtnOutcome)
-            addFinishBuyHouseBtn()
-        }
-        
-        //No Button Function
-        function buyHouseNoBtnOutcome(){
-            //Restore function and class indicators to add houses to eligible properties
-            for (let i = 0; i < canBuyHouseHotelArray.length; i++){
-                document.getElementById(canBuyHouseHotelArray[i].id).classList.remove('disable-clicks')
-                document.getElementById(canBuyHouseHotelArray[i].id).classList.add('can-buy-house')
-            }
-            buyHouseYesBtn.removeEventListener('click', buyHouseYesBtnOutcome)
-            buyHouseNoBtn.removeEventListener('click', buyHouseNoBtnOutcome)
-            removeBuyHouseYesNoButtons()
-            addBuyHouseTutorial()
-            addFinishBuyHouseBtn()
-        } 
-
-        //Finish Button Function
-        finishBuyHouseBtn.addEventListener('click', finishBuyHouseBtnOutcome)
-        function finishBuyHouseBtnOutcome (){
-            clickableProperty.classList.remove('can-buy-house')
-            clickableProperty.removeEventListener('click', buyHousePropertySpace)
-            finishBuyHouseBtn.removeEventListener('click', finishBuyHouseBtnOutcome)     
-        }
-    }) 
-})
+    }
 
 function placeHouseHotel(property){
     if (property.number < 10 && property.number > 0){
@@ -1661,248 +1757,327 @@ function placeHouseHotel(property){
     }
 }
 
-function placeHouseHotelBottom(property){
-    if(property.totalHouses === 1){
-        document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
-        document.getElementById(property.id).firstChild.style.left = "0px"
+    function placeHouseHotelBottom(property){
+        if(property.totalHouses === 1){
+            document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
+            document.getElementById(property.id).firstChild.style.left = "0px"
+        }
+        else if(property.totalHouses === 2){
+            document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
+            document.getElementById(property.id).firstChild.style.left = "26.04125%"
+        }
+        else if (property.totalHouses === 3){
+            document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
+            document.getElementById(property.id).firstChild.style.right = "26.04125%"
+        }
+        else if (property.totalHouses === 4){
+            document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
+            document.getElementById(property.id).firstChild.style.right = "0px"
+        }
+        else if(property.totalHouses === 5){
+            document.getElementById(property.id).firstChild.remove()
+            document.getElementById(property.id).firstChild.remove()
+            document.getElementById(property.id).firstChild.remove()
+            document.getElementById(property.id).firstChild.remove()
+            document.getElementById(property.id).insertAdjacentHTML('afterbegin', hotelPiece);
+            document.getElementById(property.id).firstChild.style.left = "39.375%"
+        }
 
     }
-    else if(property.totalHouses === 2){
-        document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
-        document.getElementById(property.id).firstChild.style.left = "26.7px"
+
+    function placeHouseHotelLeft(property){
+        if(property.totalHouses === 1){
+            document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
+            document.getElementById(property.id).firstChild.style.right = "0px"
+            document.getElementById(property.id).firstChild.style.transform = "rotate(90deg)"
+
+        }
+        else if(property.totalHouses === 2){
+            document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
+            document.getElementById(property.id).firstChild.style.right = "0px"
+            document.getElementById(property.id).firstChild.style.top = "26.04125%"
+            document.getElementById(property.id).firstChild.style.transform = "rotate(90deg)"
+
+        }
+        else if (property.totalHouses === 3){
+            document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
+            document.getElementById(property.id).firstChild.style.right = "0px"
+            document.getElementById(property.id).firstChild.style.bottom = "26.04125%"
+            document.getElementById(property.id).firstChild.style.transform = "rotate(90deg)"   
+        }
+        else if (property.totalHouses === 4){
+            document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
+            document.getElementById(property.id).firstChild.style.right = "0px"
+            document.getElementById(property.id).firstChild.style.bottom = "0px"
+            document.getElementById(property.id).firstChild.style.transform = "rotate(90deg)"
+        }
+        else if(property.totalHouses === 5){
+            document.getElementById(property.id).firstChild.remove()
+            document.getElementById(property.id).firstChild.remove()
+            document.getElementById(property.id).firstChild.remove()
+            document.getElementById(property.id).firstChild.remove()
+            document.getElementById(property.id).insertAdjacentHTML('afterbegin', hotelPiece);
+            document.getElementById(property.id).firstChild.style.transform = "rotate(90deg)"
+            document.getElementById(property.id).firstChild.style.right = "0px"
+            document.getElementById(property.id).firstChild.style.top = "39.375%"
+        }
 
     }
-    else if (property.totalHouses === 3){
-        document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
-        document.getElementById(property.id).firstChild.style.right = "26.7px"
-   
-    }
-    else if (property.totalHouses === 4){
-        document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
-        document.getElementById(property.id).firstChild.style.right = "0px"
-        document.getElementById(property.id).firstChild.style.top = "0px"
-    }
-    else if(property.totalHouses === 5){
-        document.getElementById(property.id).firstChild.remove()
-        document.getElementById(property.id).firstChild.remove()
-        document.getElementById(property.id).firstChild.remove()
-        document.getElementById(property.id).firstChild.remove()
-        document.getElementById(property.id).insertAdjacentHTML('afterbegin', hotelPiece);
-        document.getElementById(property.id).firstChild.style.left = "50%"
-        document.getElementById(property.id).firstChild.style.marginLeft = "-20px"
+
+    function placeHouseHotelTop(property){
+        if(property.totalHouses === 1){
+            document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
+            document.getElementById(property.id).firstChild.style.top = "0px"
+            document.getElementById(property.id).firstChild.style.left = "0px"
+
+        }
+        else if(property.totalHouses === 2){
+            document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
+            document.getElementById(property.id).firstChild.style.top = "0px"
+            document.getElementById(property.id).firstChild.style.left = "26.04125%"
+
+        }
+        else if (property.totalHouses === 3){
+            document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
+            document.getElementById(property.id).firstChild.style.top = "0px"
+            document.getElementById(property.id).firstChild.style.right = "26.04125%"  
+        }
+        else if (property.totalHouses === 4){
+            document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
+            document.getElementById(property.id).firstChild.style.top = "0px"
+            document.getElementById(property.id).firstChild.style.right = "0px"
+
+        }
+        else if(property.totalHouses === 5){
+            document.getElementById(property.id).firstChild.remove()
+            document.getElementById(property.id).firstChild.remove()
+            document.getElementById(property.id).firstChild.remove()
+            document.getElementById(property.id).firstChild.remove()
+            document.getElementById(property.id).insertAdjacentHTML('afterbegin', hotelPiece);
+            document.getElementById(property.id).firstChild.style.top = "0px"
+            document.getElementById(property.id).firstChild.style.right = "39.375%"
+        }
+
     }
 
+    function placeHouseHotelRight(property){
+        if(property.totalHouses === 1){
+            document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
+            document.getElementById(property.id).firstChild.style.top = "0px"
+            document.getElementById(property.id).firstChild.style.transform = "rotate(90deg)"
+
+        }
+        else if(property.totalHouses === 2){
+            document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
+            document.getElementById(property.id).firstChild.style.top = "26.04125%"
+            document.getElementById(property.id).firstChild.style.transform = "rotate(90deg)"
+
+        }
+        else if (property.totalHouses === 3){
+            document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
+            document.getElementById(property.id).firstChild.style.bottom = "26.04125%"
+            document.getElementById(property.id).firstChild.style.transform = "rotate(90deg)"   
+        }
+        else if (property.totalHouses === 4){
+            document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
+            document.getElementById(property.id).firstChild.style.bottom = "0px"
+            document.getElementById(property.id).firstChild.style.transform = "rotate(90deg)"
+        }
+        else if(property.totalHouses === 5){
+            document.getElementById(property.id).firstChild.remove()
+            document.getElementById(property.id).firstChild.remove()
+            document.getElementById(property.id).firstChild.remove()
+            document.getElementById(property.id).firstChild.remove()
+            document.getElementById(property.id).insertAdjacentHTML('afterbegin', hotelPiece);
+            document.getElementById(property.id).firstChild.style.transform = "rotate(90deg)"
+            document.getElementById(property.id).firstChild.style.bottom = "39.375%"
+        }
+
+    }
+
+function addBuyHouseHotelYesNoButtons (){
+    document.getElementById('buyHouseHotelBtnsId').classList.add('house-hotel-mortgage-btns-container')
+    document.getElementById('buyHouseHotelBtnsId').classList.remove('hidden')
 }
 
-function placeHouseHotelLeft(property){
-    if(property.totalHouses === 1){
-        document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
-        document.getElementById(property.id).firstChild.style.right = "0px"
-        document.getElementById(property.id).firstChild.style.transform = "rotate(90deg)"
-
-    }
-    else if(property.totalHouses === 2){
-        document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
-        document.getElementById(property.id).firstChild.style.right = "0px"
-        document.getElementById(property.id).firstChild.style.top = "26.7px"
-        document.getElementById(property.id).firstChild.style.transform = "rotate(90deg)"
-
-    }
-    else if (property.totalHouses === 3){
-        document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
-        document.getElementById(property.id).firstChild.style.right = "0px"
-        document.getElementById(property.id).firstChild.style.bottom = "26.7px"
-        document.getElementById(property.id).firstChild.style.transform = "rotate(90deg)"   
-    }
-    else if (property.totalHouses === 4){
-        document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
-        document.getElementById(property.id).firstChild.style.right = "0px"
-        document.getElementById(property.id).firstChild.style.bottom = "0px"
-        document.getElementById(property.id).firstChild.style.transform = "rotate(90deg)"
-    }
-    else if(property.totalHouses === 5){
-        document.getElementById(property.id).firstChild.remove()
-        document.getElementById(property.id).firstChild.remove()
-        document.getElementById(property.id).firstChild.remove()
-        document.getElementById(property.id).firstChild.remove()
-        document.getElementById(property.id).insertAdjacentHTML('afterbegin', hotelPiece);
-        document.getElementById(property.id).firstChild.style.transform = "rotate(90deg)"
-        document.getElementById(property.id).firstChild.style.right = "-10px"
-        document.getElementById(property.id).firstChild.style.top = "40%"
-    }
-
+function removeBuyHouseHotelYesNoButtons (){
+    document.getElementById('buyHouseHotelBtnsId').classList.add('hidden')
+    document.getElementById('buyHouseHotelBtnsId').classList.remove('house-hotel-mortgage-btns-container')
 }
 
-function placeHouseHotelTop(property){
-    if(property.totalHouses === 1){
-        document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
-        document.getElementById(property.id).firstChild.style.bottom = "0px"
-        document.getElementById(property.id).firstChild.style.right = "0px"
-        document.getElementById(property.id).firstChild.style.transform = "rotate(180deg)"
-
-    }
-    else if(property.totalHouses === 2){
-        document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
-        document.getElementById(property.id).firstChild.style.bottom = "0px"
-        document.getElementById(property.id).firstChild.style.right = "26.7px"
-        document.getElementById(property.id).firstChild.style.transform = "rotate(180deg)"
-
-    }
-    else if (property.totalHouses === 3){
-        document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
-        document.getElementById(property.id).firstChild.style.bottom = "0px"
-        document.getElementById(property.id).firstChild.style.left = "26.7px"
-        document.getElementById(property.id).firstChild.style.transform = "rotate(180deg)"   
-    }
-    else if (property.totalHouses === 4){
-        document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
-        document.getElementById(property.id).firstChild.style.bottom = "0px"
-        document.getElementById(property.id).firstChild.style.left = "0px"
-        document.getElementById(property.id).firstChild.style.transform = "rotate(180deg)"
-    }
-    else if(property.totalHouses === 5){
-        document.getElementById(property.id).firstChild.remove()
-        document.getElementById(property.id).firstChild.remove()
-        document.getElementById(property.id).firstChild.remove()
-        document.getElementById(property.id).firstChild.remove()
-        document.getElementById(property.id).insertAdjacentHTML('afterbegin', hotelPiece);
-        document.getElementById(property.id).firstChild.style.transform = "rotate(180deg)"
-        document.getElementById(property.id).firstChild.style.bottom = "0px"
-        document.getElementById(property.id).firstChild.style.right = "50%"
-        document.getElementById(property.id).firstChild.style.marginRight = "-20px"
-    }
-
+function addBuyHouseHotelTutorial (){
+    document.getElementById('buyHouseHotelTutorialId').classList.add('turn-interaction-description')
+    document.getElementById('buyHouseHotelTutorialId').classList.remove('hidden')
 }
 
-function placeHouseHotelRight(property){
-    if(property.totalHouses === 1){
-        document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
-        document.getElementById(property.id).firstChild.style.bottom = "0px"
-        document.getElementById(property.id).firstChild.style.transform = "rotate(270deg)"
-
-    }
-    else if(property.totalHouses === 2){
-        document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
-        document.getElementById(property.id).firstChild.style.bottom = "26.7px"
-        document.getElementById(property.id).firstChild.style.transform = "rotate(270deg)"
-
-    }
-    else if (property.totalHouses === 3){
-        document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
-        document.getElementById(property.id).firstChild.style.top = "26.7px"
-        document.getElementById(property.id).firstChild.style.transform = "rotate(270deg)"   
-    }
-    else if (property.totalHouses === 4){
-        document.getElementById(property.id).insertAdjacentHTML('afterbegin', housePiece);
-        document.getElementById(property.id).firstChild.style.transform = "rotate(270deg)"
-    }
-    else if(property.totalHouses === 5){
-        document.getElementById(property.id).firstChild.remove()
-        document.getElementById(property.id).firstChild.remove()
-        document.getElementById(property.id).firstChild.remove()
-        document.getElementById(property.id).firstChild.remove()
-        document.getElementById(property.id).insertAdjacentHTML('afterbegin', hotelPiece);
-        document.getElementById(property.id).firstChild.style.transform = "rotate(270deg)"
-        document.getElementById(property.id).firstChild.style.top = "40%"
-        document.getElementById(property.id).firstChild.style.marginLeft = "-10px"
-    }
-
+function removeBuyHouseHotelTutorial (){
+    document.getElementById('buyHouseHotelTutorialId').classList.add('hidden')
+    document.getElementById('buyHouseHotelTutorialId').classList.remove('turn-interaction-description')
 }
 
-function checkRentPaid(){
-    //Return user to pay rent screen
-    if (document.getElementById('payRentTutorialId').classList.contains('hidden') === false){
-        addPayRentContainer()
-        removeHouseHotelMortgageScreen()
-    }
+function addFinishBuyHouseHotelBtn (){
+    finishBuyHouseHotelBtn.classList.add('end-turn-button')
+    finishBuyHouseHotelBtn.classList.remove('hidden')
 }
 
-function checkIfBuyingProperty(){
-    if (!buyPropertySellBtn.classList.contains('hidden')){
-        removeEndTurnButton()
-        removeHouseHotelMortgageScreen()
-        addPropertyBuySellAuctionButtons()
-        addPropertyCard('propertyCardId')
-    }
+function removeFinishBuyHouseHotelBtn (){
+    finishBuyHouseHotelBtn.classList.add('hidden')
+    finishBuyHouseHotelBtn.classList.remove('end-turn-button')
 }
 
-finishBuyHouseBtn.addEventListener('click', function(e){ 
-    addHouseHotelMortgageScreen()
-    removeBuyHouseTutorial()
-    removeFinishBuyHouseBtn()
-    addEndTurnButton()
-        //Prevent user from skipping turn
+function removeTradeButton(){
+    tradeBtn.classList.add('hidden')
+    tradeBtn.classList.remove('trade-button')
+    propertyLabel.classList.add('hidden')
+}
+
+function addTradeButton(){
+    tradeBtn.classList.add('trade-button')
+    tradeBtn.classList.remove('hidden')
+    propertyLabel.classList.remove('hidden')
+}
+
+//Sell House Functions
+//Sell House Functions
+sellHouseHotelBtn.addEventListener('click', function(){
+    removeDice()
+    generatePlayerColorPropertyArray()
+    removeHouseHotelMortgageScreen()
+    removeEndTurnButton()
+    addFinishSellHouseHotelBtn()
+    addSellHouseHotelTutorial()
+    updateCanSellHouseHotelArray()
+    addCanSelectClassesToPropertyArray(canSellHouseHotelArray)
+    addEventLisentersToArray(canSellHouseHotelArray, sellHouseHotelPropertySpace)  
+})
+
+    //Create clickable property to sell houses
+    function sellHouseHotelPropertySpace (){
+        for (let i = 0; i < canSellHouseHotelArray.length; i++){
+            if (canSellHouseHotelArray[i].id === this.id){
+                propertyClickedOn = canSellHouseHotelArray[i]
+
+                if(propertyClickedOn.totalHouses <= 4 && propertyClickedOn.totalHouses > 0){
+                    document.getElementById('sellHouseHotelLabel').innerHTML = `Would you like to sell a house on ${propertyClickedOn.name} for $${(Math.floor(propertyClickedOn.buildingCost / 2))}?`        
+                }
+                else if (propertyClickedOn.totalHouses === 5){
+                    document.getElementById('sellHouseHotelLabel').innerHTML = `Would you like to sell a hotel on ${propertyClickedOn.name} for $${Math.floor((propertyClickedOn.buildingCost / 2))}?`  
+                }
+                removeSellHouseHotelTutorial()
+                addSellHouseHotelYesNoButtons()
+                sellHouseHotelYesBtn.addEventListener('click', sellHouseHotelYesBtnOutcome)
+                sellHouseHotelNoBtn.addEventListener('click', sellHouseHotelNoBtnOutcome) 
+                removeFinishSellHouseHotelBtn()
+                //Prevent user from clicking multiple properties at once
+                removeCanSelectClassesToPropertyArray(canSellHouseHotelArray)
+                removeEventListenersFromArray(canSellHouseHotelArray, sellHouseHotelPropertySpace)
+                return
+            }
+        }
+    }
+
+    //Yes button function
+    function sellHouseHotelYesBtnOutcome(){
+        removeHouseHotel(propertyClickedOn)
+        if(propertyClickedOn.totalHouses < 4){
+            currentPlayerTurn.housesOwned--
+            propertyClickedOn.totalHouses--
+        }
+
+        else{
+            currentPlayerTurn.housesOwned += 4
+            currentPlayerTurn.hotelsOwned--
+            propertyClickedOn.totalHouses--
+        }
+        updatePropertySetTotalHousesSubtract()
+        updateCanSellHouseHotelArray()
+        currentPlayerTurn.cash += (Math.floor(propertyClickedOn.buildingCost / 2))
+        updateRentHouseHotel(propertyClickedOn)
+        updatePlayerCashTotalDisplay()
+        removeSellHouseHotelYesNoButtons()
+        addSellHouseHotelTutorial()
+        addFinishSellHouseHotelBtn()
+        //Restore function and class indicators to add houses to eligible properties
+        addCanSelectClassesToPropertyArray(canSellHouseHotelArray)
+        addEventLisentersToArray(canSellHouseHotelArray, sellHouseHotelPropertySpace)       
+        sellHouseHotelYesBtn.removeEventListener('click', sellHouseHotelYesBtnOutcome)
+        sellHouseHotelNoBtn.removeEventListener('click', sellHouseHotelNoBtnOutcome)
+    }
+
+    //No Button Function
+    function sellHouseHotelNoBtnOutcome(){
+        removeSellHouseHotelYesNoButtons()
+        addSellHouseHotelTutorial()
+        addFinishSellHouseHotelBtn()
+        //Restore function and class indicators to sell houses to eligible properties
+        addCanSelectClassesToPropertyArray(canSellHouseHotelArray)
+        addEventLisentersToArray(canSellHouseHotelArray, sellHouseHotelPropertySpace)       
+        sellHouseHotelYesBtn.removeEventListener('click', sellHouseHotelYesBtnOutcome)
+        sellHouseHotelNoBtn.removeEventListener('click', sellHouseHotelNoBtnOutcome)
+    } 
+
+    //Finish Button Function
+    finishSellHouseHotelBtn.addEventListener('click', function(e){ 
+        addHouseHotelMortgageScreen()
+        removeSellHouseHotelTutorial()
+        removeFinishSellHouseHotelBtn()
+        addEndTurnButton()
+        removeCanSelectClassesToPropertyArray(canSellHouseHotelArray)
+        removeEventListenersFromArray(canSellHouseHotelArray, sellHouseHotelPropertySpace)
+        
+        //Prevent User From Skipping Turn
         if (hasRolled === false){
             removeEndTurnButton()
             addDice()
-        }
+        }    
         //Prevent user from ending turn before paying rent
         if(document.getElementById('payRentTutorialId').classList.contains('hidden') === false){
             removeEndTurnButton()
         }
         checkRentPaid()
         checkIfBuyingProperty()
-})
+    })
 
-function addBuyHouseYesNoButtons (){
-    document.getElementById('buyHouseBtnsId').classList.add('house-hotel-mortgage-btns-container')
-    document.getElementById('buyHouseBtnsId').classList.remove('hidden')
-}
+    function updatePropertySetTotalHousesSubtract(){
+        for (let i = 0; i < ownedColorPropertyArray.length; i++){
+            if (ownedColorPropertyArray[i].color === propertyClickedOn.color){
+                ownedColorPropertyArray[i].propertySetTotalHouses--
+            }
+        }
+    }
 
-function removeBuyHouseYesNoButtons (){
-    document.getElementById('buyHouseBtnsId').classList.add('hidden')
-    document.getElementById('buyHouseBtnsId').classList.remove('house-hotel-mortgage-btns-container')
-}
-
-function addBuyHouseTutorial (){
-    document.getElementById('buyHouseTutorialId').classList.add('turn-interaction-description')
-    document.getElementById('buyHouseTutorialId').classList.remove('hidden')
-}
-
-function removeBuyHouseTutorial (){
-    document.getElementById('buyHouseTutorialId').classList.add('hidden')
-    document.getElementById('buyHouseTutorialId').classList.remove('turn-interaction-description')
-}
-
-function addFinishBuyHouseBtn (){
-    finishBuyHouseBtn.classList.add('end-turn-button')
-    finishBuyHouseBtn.classList.remove('hidden')
-}
-
-function removeFinishBuyHouseBtn (){
-    finishBuyHouseBtn.classList.add('hidden')
-    finishBuyHouseBtn.classList.remove('end-turn-button')
-}
-
-
-//Sell House Functions
-//Sell House Functions
-sellHouseHotelBtn.addEventListener('click', function(e){
-    removeDice()
-    generatePlayerPropertyArray(currentPlayerTurn)
-    removeHouseHotelMortgageScreen()
-    removeEndTurnButton()
-    addFinishSellHouseHotelBtn()
-    addSellHouseHotelTutorial()
+function updateCanSellHouseHotelArray(){
     canSellHouseHotelArray = []
-
-    //Sort owned property into array of full color set matches
+    
     for (let i = 0; i < ownedColorPropertyArray.length;){
-        if (ownedColorPropertyArray[i].type === 'color' && ownedColorPropertyArray[i].setTotal === 2 && (i + 1) < ownedColorPropertyArray.length){
+        //Check if player owns enough properties for set of two
+        if (ownedColorPropertyArray[i].setTotal === 2 && (i + 1) < ownedColorPropertyArray.length){
+                //Check if player owns all properties if two properties in set
                 if(ownedColorPropertyArray[i].color === ownedColorPropertyArray[i+1].color){
-                    canSellHouseHotelArray.push(ownedColorPropertyArray[i])
-                    canSellHouseHotelArray.push(ownedColorPropertyArray[i+1])
+                    for (let j = i ; j < i+2; j++){
+                        // Check if property has houses to sell, Check if total houses on property is same or more than other properties in set
+                        if(ownedColorPropertyArray[j].totalHouses > 0
+                        && ownedColorPropertyArray[j].totalHouses >= (ownedColorPropertyArray[j].propertySetTotalHouses / ownedColorPropertyArray[j].setTotal)){
+                                canSellHouseHotelArray.push(ownedColorPropertyArray[j])
+                        }
+                    }
                     i += 2
                 } 
                 else{
                     i++
                 }        
         }
-        else if(ownedColorPropertyArray[i].type === 'color' && ownedColorPropertyArray[i].setTotal === 3 && (i + 2) < ownedColorPropertyArray.length){
+        //Check if player owns enough properties for set of 3
+        else if(ownedColorPropertyArray[i].setTotal === 3 && (i + 2) < ownedColorPropertyArray.length){
+            //Check if player owns all properties in set
             if (ownedColorPropertyArray[i].color === ownedColorPropertyArray[i+1].color && ownedColorPropertyArray[i].color === ownedColorPropertyArray[i+2].color){
-                canSellHouseHotelArray.push(ownedColorPropertyArray[i])
-                canSellHouseHotelArray.push(ownedColorPropertyArray[i+1])
-                canSellHouseHotelArray.push(ownedColorPropertyArray[i+2])
+                for (let j = i; j < i+3; j++){
+                        // Check if property has houses to sell, Check if total houses on property is same or more than other properties in set
+                        if(ownedColorPropertyArray[j].totalHouses > 0 
+                        && ownedColorPropertyArray[j].totalHouses >= (ownedColorPropertyArray[j].propertySetTotalHouses / ownedColorPropertyArray[j].setTotal)){
+                            canSellHouseHotelArray.push(ownedColorPropertyArray[j])
+                    }
+                }
                 i += 3
             }
             else{
@@ -1912,106 +2087,8 @@ sellHouseHotelBtn.addEventListener('click', function(e){
         else{
             i++
         }
-       
     }
-    //Create clickable property to sell houses
-    canSellHouseHotelArray.forEach(property =>{
-        let clickableProperty = document.getElementById(property.id)
-        clickableProperty.classList.add('can-sell-house')
-        clickableProperty.addEventListener('click', sellHouseHotelPropertySpace) 
-
-        //Create clickable property to sell houses
-        function sellHouseHotelPropertySpace (){
-            if(property.totalHouses <= 4 && property.totalHouses > 0){
-                document.getElementById('sellHouseHotelLabel').innerHTML = `Would you like to sell a house on ${property.name} for $${(Math.floor(property.buildingCost / 2))}?`        
-            }
-            else if (property.totalHouses === 5){
-                document.getElementById('sellHouseHotelLabel').innerHTML = `Would you like to sell a hotel on ${property.name} for $${Math.floor((property.buildingCost / 2))}?`  
-            }
-            else{
-                return
-            }
-            removeSellHouseHotelTutorial()
-            addSellHouseHotelYesNoButtons()
-            sellHouseHotelYesBtn.addEventListener('click', sellHouseHotelYesBtnOutcome)
-            sellHouseHotelNoBtn.addEventListener('click', sellHouseHotelNoBtnOutcome) 
-            removeFinishSellHouseHotelBtn()
-            //Prevent user from clicking multiple properties at once
-            for (let i = 0; i < canSellHouseHotelArray.length; i++){
-                document.getElementById(canSellHouseHotelArray[i].id).classList.add('disable-clicks')
-                document.getElementById(canSellHouseHotelArray[i].id).classList.remove('can-sell-house')
-            }
-        }
-
-        //Yes button function
-        function sellHouseHotelYesBtnOutcome(){
-            //Restore function and class indicators to add houses to eligible properties
-            for (let i = 0; i < canSellHouseHotelArray.length; i++){
-                document.getElementById(canSellHouseHotelArray[i].id).classList.remove('disable-clicks')
-                document.getElementById(canSellHouseHotelArray[i].id).classList.add('can-sell-house')
-            }
-            removeHouseHotel(property)
-            if(property.totalHouses < 4){
-                currentPlayerTurn.housesOwned--
-            }
-            else{
-                currentPlayerTurn.housesOwned += 4
-                currentPlayerTurn.hotelsOwned--
-                clickableProperty.removeEventListener('click', sellHouseHotelPropertySpace)
-            }
-            property.totalHouses--
-            currentPlayerTurn.cash += (Math.floor(property.buildingCost / 2))
-            updateRentHouseHotel(property)
-            //change placeHouse
-            updatePlayerCashTotalDisplay()
-            removeSellHouseHotelYesNoButtons()
-            addSellHouseHotelTutorial()
-            sellHouseHotelYesBtn.removeEventListener('click', sellHouseHotelYesBtnOutcome)
-            sellHouseHotelNoBtn.removeEventListener('click', sellHouseHotelNoBtnOutcome)
-            addFinishSellHouseHotelBtn()
-        }
-        
-        //No Button Function
-        function sellHouseHotelNoBtnOutcome(){
-            //Restore function and class indicators to sell houses to eligible properties
-            for (let i = 0; i < canSellHouseHotelArray.length; i++){
-                document.getElementById(canSellHouseHotelArray[i].id).classList.remove('disable-clicks')
-                document.getElementById(canSellHouseHotelArray[i].id).classList.add('can-sell-house')
-            }
-            sellHouseHotelYesBtn.removeEventListener('click', sellHouseHotelYesBtnOutcome)
-            sellHouseHotelNoBtn.removeEventListener('click', sellHouseHotelNoBtnOutcome)
-            removeSellHouseHotelYesNoButtons()
-            addSellHouseHotelTutorial()
-            addFinishSellHouseHotelBtn()
-        } 
-
-        //Finish Button Function
-        finishSellHouseHotelBtn.addEventListener('click', finishSellHouseHotelBtnOutcome)
-        function finishSellHouseHotelBtnOutcome (){
-            clickableProperty.classList.remove('can-sell-house')
-            clickableProperty.removeEventListener('click', sellHouseHotelPropertySpace)
-            finishSellHouseHotelBtn.removeEventListener('click', finishSellHouseHotelBtnOutcome)     
-        }
-    }) 
-})
-
-finishSellHouseHotelBtn.addEventListener('click', function(e){ 
-    addHouseHotelMortgageScreen()
-    removeSellHouseHotelTutorial()
-    removeFinishSellHouseHotelBtn()
-    addEndTurnButton()
-    //Prevent User From Skipping Turn
-    if (hasRolled === false){
-        removeEndTurnButton()
-        addDice()
-    }    
-    //Prevent user from ending turn before paying rent
-    if(document.getElementById('payRentTutorialId').classList.contains('hidden') === false){
-        removeEndTurnButton()
-    }
-    checkRentPaid()
-    checkIfBuyingProperty()
-})
+}
 
 function removeHouseHotel(property){
     if(property.totalHouses === 1){
@@ -2066,6 +2143,7 @@ function removeSellHouseHotelTutorial (){
     document.getElementById('sellHouseHotelTutorialId').classList.remove('turn-interaction-description')
 }
 
+
 //Open Mortgage Functions
 //Open Mortgage Functions
 openMortgageBtn.addEventListener('click', function (){
@@ -2075,119 +2153,90 @@ openMortgageBtn.addEventListener('click', function (){
     removeEndTurnButton()
     addFinishOpenMortgageBtn()
     addOpenMortgageTutorial()
-    canOpenMortgageArray = []
+    updateCanOpenMortgageArray()
+    addCanSelectClassesToPropertyArray(canOpenMortgageArray)
+    addEventLisentersToArray(canOpenMortgageArray, openMortgagePropertySpace)
+})
 
-    //Sort owned property into array of only mortgageable properties
-    for (let i = 0; i < ownedPropertyArray.length; i++){
-        if (ownedPropertyArray[i].mortgageOpen === false){
-            canOpenMortgageArray.push(ownedPropertyArray[i])
-            //Add indicator to mortgagable properties
-            document.getElementById(ownedPropertyArray[i].id).classList.add('can-open-mortgage')
+    //Choose property to open mortgage
+    function openMortgagePropertySpace (){
+        for (let i = 0; i < canOpenMortgageArray.length; i++){
+            if (canOpenMortgageArray[i].id === this.id){
+                propertyClickedOn = canOpenMortgageArray[i]
+                document.getElementById('openMortgageLabel').innerHTML = `Would you like to open mortgage for ${propertyClickedOn.name} for $${propertyClickedOn.mortgage}?`
+                removeOpenMortgageTutorial()
+                addOpenMortgageYesNoButtons()
+                openMortgageYesBtn.addEventListener('click', openMortgageYesBtnOutcome)
+                openMortgageNoBtn.addEventListener('click', openMortgageNoBtnOutcome) 
+                removeFinishOpenMortgageBtn()
+                //Prevent user from clicking multiple properties at once
+                removeCanSelectClassesToPropertyArray(canOpenMortgageArray)
+                removeEventListenersFromArray(canOpenMortgageArray, openMortgagePropertySpace)
+                return   
+            }
         }
     }
 
-     //Create clickable property to open mortgage
-    canOpenMortgageArray.forEach(property =>{
-        let clickableProperty = document.getElementById(property.id)
-        clickableProperty.addEventListener('click', openMortgagePropertySpace) 
+    //Yes button function
+    function openMortgageYesBtnOutcome(){
+        propertyClickedOn.mortgageOpen = true
+        document.getElementById(propertyClickedOn.id).classList.add('mortgaged')
+        currentPlayerTurn.cash += propertyClickedOn.mortgage
+        updatePlayerCashTotalDisplay()
+        removeOpenMortgageYesNoButtons()
+        addOpenMortgageTutorial()
+        updateCanOpenMortgageArray()
+        addCanSelectClassesToPropertyArray(canOpenMortgageArray)
+        addEventLisentersToArray(canOpenMortgageArray, openMortgagePropertySpace)
+        openMortgageYesBtn.removeEventListener('click', openMortgageYesBtnOutcome)
+        openMortgageNoBtn.removeEventListener('click', openMortgageNoBtnOutcome)
+        addFinishOpenMortgageBtn()
+    }
+    
+    //No Button Function
+    function openMortgageNoBtnOutcome(){
+        removeOpenMortgageYesNoButtons()
+        addOpenMortgageTutorial()
+        addFinishOpenMortgageBtn()
+        addCanSelectClassesToPropertyArray(canOpenMortgageArray)
+        addEventLisentersToArray(canOpenMortgageArray, openMortgagePropertySpace)
+        openMortgageYesBtn.removeEventListener('click', openMortgageYesBtnOutcome)
+        openMortgageNoBtn.removeEventListener('click', openMortgageNoBtnOutcome)
+    } 
 
-        //Choose property to open mortgage
-        function openMortgagePropertySpace (){
-            document.getElementById('openMortgageLabel').innerHTML = `Would you like to open mortgage for ${property.name} for $${property.mortgage}?`
-            removeOpenMortgageTutorial()
-            addOpenMortgageYesNoButtons()
-            openMortgageYesBtn.addEventListener('click', openMortgageYesBtnOutcome)
-            openMortgageNoBtn.addEventListener('click', openMortgageNoBtnOutcome) 
-            removeFinishOpenMortgageBtn()
-            //Prevent user from clicking multiple properties at once
-            for (let i = 0; i < canOpenMortgageArray.length; i++){
-                document.getElementById(canOpenMortgageArray[i].id).classList.add('disable-clicks')
-                document.getElementById(canOpenMortgageArray[i].id).classList.remove('can-open-mortgage')
-            }
+    finishOpenMortgageBtn.addEventListener('click', function(){ 
+        addHouseHotelMortgageScreen()
+        removeOpenMortgageTutorial()
+        removeFinishOpenMortgageBtn()
+        addEndTurnButton()
+        removeCanSelectClassesToPropertyArray(canOpenMortgageArray)
+        removeEventListenersFromArray(canOpenMortgageArray, openMortgagePropertySpace)
+
+        //Prevent User From Skipping Turn
+        if (hasRolled === false){
+            removeEndTurnButton()
+            addDice()
         }
-
-        //Yes button function
-        function openMortgageYesBtnOutcome(){
-            property.mortgageOpen = true
-            //Restore function and class indicators to remaining mortgagebale propterties
-            for (let i = 0; i < canOpenMortgageArray.length;){
-                if(canOpenMortgageArray[i].mortgageOpen === false){
-                    document.getElementById(canOpenMortgageArray[i].id).classList.remove('disable-clicks')
-                    document.getElementById(canOpenMortgageArray[i].id).classList.add('can-open-mortgage')
-                    i++
-                }
-                else{
-                    i++
-                }
-
-            }
-            currentPlayerTurn.cash += property.mortgage
-            updatePlayerCashTotalDisplay()
-            removeOpenMortgageYesNoButtons()
-            addOpenMortgageTutorial()
-            clickableProperty.classList.add('mortgaged')
-            clickableProperty.classList.remove('can-open-mortgage')
-            clickableProperty.classList.remove('disable-clicks')
-            clickableProperty.removeEventListener('click', openMortgagePropertySpace)
-            openMortgageYesBtn.removeEventListener('click', openMortgageYesBtnOutcome)
-            openMortgageNoBtn.removeEventListener('click', openMortgageNoBtnOutcome)
-            addFinishOpenMortgageBtn()
+        //Prevent user from ending turn before paying rent
+        if(document.getElementById('payRentTutorialId').classList.contains('hidden') === false){
+            removeEndTurnButton()
         }
-        
-        //No Button Function
-        function openMortgageNoBtnOutcome(){
-        //Restore function and class indicators to remaining mortgagebale propterties
-        for (let i = 0; i < canOpenMortgageArray.length;){
-            if (canOpenMortgageArray[i].mortgageOpen === false){
-                document.getElementById(canOpenMortgageArray[i].id).classList.remove('disable-clicks')
-                document.getElementById(canOpenMortgageArray[i].id).classList.add('can-open-mortgage')
-                i++
-            }
-            else{
-                i++
-            }
-
-        }
-            openMortgageYesBtn.removeEventListener('click', openMortgageYesBtnOutcome)
-            openMortgageNoBtn.removeEventListener('click', openMortgageNoBtnOutcome)
-            removeOpenMortgageYesNoButtons()
-            addOpenMortgageTutorial()
-            addFinishOpenMortgageBtn()
-        } 
-
-        //Finish Button Function
-        finishOpenMortgageBtn.addEventListener('click', finishOpenMortgageBtnOutcome)
-        function finishOpenMortgageBtnOutcome (){
-            let remainingUnmortgagedProperties = []
-            remainingUnmortgagedProperties = canOpenMortgageArray.filter(function(remainingProperty){return remainingProperty.mortgageOpen === false})
-            //Find reamining unmortgaged properties and remove event listener and class indicators
-            remainingUnmortgagedProperties.forEach(remaining =>{
-                let notMortgagable = document.getElementById(remaining.id)
-                notMortgagable.classList.remove('can-open-mortgage')
-                notMortgagable.removeEventListener('click', openMortgagePropertySpace)
-                finishOpenMortgageBtn.removeEventListener('click', finishOpenMortgageBtnOutcome)
-            })
-        }
+        checkRentPaid()
+        checkIfBuyingProperty()
     })
-})
 
-finishOpenMortgageBtn.addEventListener('click', function(e){ 
-    addHouseHotelMortgageScreen()
-    removeOpenMortgageTutorial()
-    removeFinishOpenMortgageBtn()
-    addEndTurnButton()
-    //Prevent User From Skipping Turn
-    if (hasRolled === false){
-        removeEndTurnButton()
-        addDice()
+    function updateCanOpenMortgageArray(){
+        canOpenMortgageArray = []
+        //Sort owned property into array of mortgageable properties
+        for (let i = 0; i < ownedPropertyArray.length; i++){
+            if (ownedPropertyArray[i].type != 'color' && !ownedPropertyArray[i].mortgageOpen){
+                canOpenMortgageArray.push(ownedPropertyArray[i])
+            }
+            else if(!ownedPropertyArray[i].mortgageOpen && ownedPropertyArray[i].totalHouses < 1){
+                canOpenMortgageArray.push(ownedPropertyArray[i])
+            }
+        }
     }
-     //Prevent user from ending turn before paying rent
-     if(document.getElementById('payRentTutorialId').classList.contains('hidden') === false){
-         removeEndTurnButton()
-     }
-     checkRentPaid()
-     checkIfBuyingProperty()
-})
 
 function addOpenMortgageYesNoButtons (){
     document.getElementById('openMortgageBtnsId').classList.add('house-hotel-mortgage-btns-container')
@@ -2221,6 +2270,7 @@ function removeFinishOpenMortgageBtn (){
 
 //Close Mortgage Functions
 //Close Mortgage Functions
+
 closeMortgageBtn.addEventListener('click', function (e){
     removeDice()
     generatePlayerPropertyArray(currentPlayerTurn)
@@ -2228,118 +2278,87 @@ closeMortgageBtn.addEventListener('click', function (e){
     removeEndTurnButton()
     addFinishCloseMortgageBtn()
     addCloseMortgageTutorial()
-    canCloseMortgageArray = []
+    updateCanCloseMortgageArray()
+    addCanSelectClassesToPropertyArray(canCloseMortgageArray)
+    addEventLisentersToArray(canCloseMortgageArray, closeMortgagePropertySpace)
+})
 
-    //Sort owned property into array of only mortgageable properties
-    for (let i = 0; i < ownedPropertyArray.length; i++){
-        if (ownedPropertyArray[i].mortgageOpen === true){
-            canCloseMortgageArray.push(ownedPropertyArray[i])
-            //Add indicator to mortgagable properties
-            document.getElementById(ownedPropertyArray[i].id).classList.add('can-close-mortgage')
+    //Choose property to close mortgage
+    function closeMortgagePropertySpace (){
+        for (let i = 0; i < canCloseMortgageArray.length; i++){
+            if (canCloseMortgageArray[i].id === this.id){
+                propertyClickedOn = canCloseMortgageArray[i]
+                document.getElementById('closeMortgageLabel').innerHTML = `Would you like to close mortgage for ${propertyClickedOn.name} for $${Math.floor((propertyClickedOn.mortgage * 1.1))}?`
+                removeCloseMortgageTutorial()
+                addCloseMortgageYesNoButtons()
+                closeMortgageYesBtn.addEventListener('click', closeMortgageYesBtnOutcome)
+                closeMortgageNoBtn.addEventListener('click', closeMortgageNoBtnOutcome) 
+                removeFinishCloseMortgageBtn()
+                //Prevent user from clicking multiple properties
+                removeCanSelectClassesToPropertyArray(canCloseMortgageArray)
+                removeEventListenersFromArray(canCloseMortgageArray, closeMortgagePropertySpace)
+                return
+            }
         }
     }
-        //Create clickable property to close mortgage
-        canCloseMortgageArray.forEach(property =>{
-        let clickableProperty = document.getElementById(property.id)
-        clickableProperty.addEventListener('click', closeMortgagePropertySpace) 
-
-        //Choose property to close mortgage
-        function closeMortgagePropertySpace (){
-            document.getElementById('closeMortgageLabel').innerHTML = `Would you like to close mortgage for ${property.name} for $${Math.floor((property.mortgage * 1.1))}?`
-            removeCloseMortgageTutorial()
-            addCloseMortgageYesNoButtons()
-            closeMortgageYesBtn.addEventListener('click', closeMortgageYesBtnOutcome)
-            closeMortgageNoBtn.addEventListener('click', closeMortgageNoBtnOutcome) 
-            removeFinishCloseMortgageBtn()
-            //Prevent user from clicking multiple properties
-            for (let i = 0; i < canCloseMortgageArray.length; i++){
-                document.getElementById(canCloseMortgageArray[i].id).classList.add('disable-clicks')
-                document.getElementById(canCloseMortgageArray[i].id).classList.remove('can-close-mortgage')
-            }
-        }
-
-        //Yes button function
-        function closeMortgageYesBtnOutcome(){
-            property.mortgageOpen = false
-            //Restore function and class indicators to remaining mortgagebale propterties
-            for (let i = 0; i < canCloseMortgageArray.length;){
-                if (canCloseMortgageArray[i].mortgageOpen === true){
-                    document.getElementById(canCloseMortgageArray[i].id).classList.remove('disable-clicks')
-                    document.getElementById(canCloseMortgageArray[i].id).classList.add('can-close-mortgage')
-                    i++
-                }
-                else{
-                    i++
-                }
-
-            }
-            currentPlayerTurn.cash -= (Math.floor(property.mortgage * 1.1)) 
-            updatePlayerCashTotalDisplay()
-            removeCloseMortgageYesNoButtons()
-            addCloseMortgageTutorial()
-            clickableProperty.classList.remove('mortgaged')
-            clickableProperty.classList.remove('can-close-mortgage')
-            clickableProperty.classList.remove('disable-clicks')
-            clickableProperty.removeEventListener('click', closeMortgagePropertySpace)
-            closeMortgageYesBtn.removeEventListener('click', closeMortgageYesBtnOutcome)
-            closeMortgageNoBtn.removeEventListener('click', closeMortgageNoBtnOutcome)
-            addFinishCloseMortgageBtn()
-        }
-        
-        //No Button Function
-        function closeMortgageNoBtnOutcome(){
-        //Restore function and class indicators to remaining mortgagebale propterties
-        for (let i = 0; i < canCloseMortgageArray.length;){
-            if(canCloseMortgageArray[i].mortgageOpen === true){
-                document.getElementById(canCloseMortgageArray[i].id).classList.remove('disable-clicks')
-                document.getElementById(canCloseMortgageArray[i].id).classList.add('can-close-mortgage')
-                i++
-            }
-            else{
-                i++
-            }
-
-        }
-            closeMortgageYesBtn.removeEventListener('click', closeMortgageYesBtnOutcome)
-            closeMortgageNoBtn.removeEventListener('click', closeMortgageNoBtnOutcome)
+    //Yes button function
+    function closeMortgageYesBtnOutcome(){
+        propertyClickedOn.mortgageOpen = false
+        document.getElementById(propertyClickedOn.id).classList.remove('mortgaged')
+        currentPlayerTurn.cash -= (Math.floor(propertyClickedOn.mortgage * 1.1)) 
+        updatePlayerCashTotalDisplay()
+        removeCloseMortgageYesNoButtons()
+        addCloseMortgageTutorial()
+        updateCanCloseMortgageArray()
+        addCanSelectClassesToPropertyArray(canCloseMortgageArray)
+        addEventLisentersToArray(canCloseMortgageArray, closeMortgagePropertySpace)
+        closeMortgageYesBtn.removeEventListener('click', closeMortgageYesBtnOutcome)
+        closeMortgageNoBtn.removeEventListener('click', closeMortgageNoBtnOutcome)
+        addFinishCloseMortgageBtn()
+    }
+            
+    //No Button Function
+    function closeMortgageNoBtnOutcome(){
             removeCloseMortgageYesNoButtons()
             addCloseMortgageTutorial()
             addFinishCloseMortgageBtn()
+            addCanSelectClassesToPropertyArray(canCloseMortgageArray)
+            addEventLisentersToArray(canCloseMortgageArray, closeMortgagePropertySpace)
+            closeMortgageYesBtn.removeEventListener('click', closeMortgageYesBtnOutcome)
+            closeMortgageNoBtn.removeEventListener('click', closeMortgageNoBtnOutcome)
         } 
 
-        //Finish Button Function
-        finishCloseMortgageBtn.addEventListener('click', finishCloseMortgageBtnOutcome)
-        function finishCloseMortgageBtnOutcome (){
-         let remainingMortgagedProperties = []
-         remainingMortgagedProperties = canCloseMortgageArray.filter(function(remainingProperty){return remainingProperty.mortgageOpen === true})
-         //Find reamining mortgaged properties and remove event listener and class indicators
-         remainingMortgagedProperties.forEach(remaining =>{
-             let canMortgage = document.getElementById(remaining.id)
-             canMortgage.classList.remove('can-close-mortgage')
-             canMortgage.removeEventListener('click', closeMortgagePropertySpace)
-             finishCloseMortgageBtn.removeEventListener('click', finishCloseMortgageBtnOutcome)
-         })
-        }
-    }) 
-})
+    //Finish Close Mortgage Button
+    finishCloseMortgageBtn.addEventListener('click', function(e){ 
+        addHouseHotelMortgageScreen()
+        removeCloseMortgageTutorial()
+        removeFinishCloseMortgageBtn()
+        addEndTurnButton()
+        removeCanSelectClassesToPropertyArray(canCloseMortgageArray)
+        removeEventListenersFromArray(canCloseMortgageArray, closeMortgagePropertySpace)
 
-finishCloseMortgageBtn.addEventListener('click', function(e){ 
-    addHouseHotelMortgageScreen()
-    removeCloseMortgageTutorial()
-    removeFinishCloseMortgageBtn()
-    addEndTurnButton()
-    //Prevent User From Skipping Turn
-    if (hasRolled === false){
-        removeEndTurnButton()
-        addDice()
+        //Prevent User From Skipping Turn
+        if (hasRolled === false){
+            removeEndTurnButton()
+            addDice()
+        }
+        //Prevent user from ending turn before paying rent
+        if(document.getElementById('payRentTutorialId').classList.contains('hidden') === false){
+            removeEndTurnButton()
+        }
+        checkRentPaid()
+        checkIfBuyingProperty()
+    })
+
+function updateCanCloseMortgageArray(){
+canCloseMortgageArray = []
+    //Sort owned property into array of opened mortgage properties
+    for (let i = 0; i < ownedPropertyArray.length; i++){
+        if (ownedPropertyArray[i].mortgageOpen === true && (ownedPropertyArray[i].mortgage * 1.1) < currentPlayerTurn.cash){
+            canCloseMortgageArray.push(ownedPropertyArray[i])
+        }
     }
-    //Prevent user from ending turn before paying rent
-    if(document.getElementById('payRentTutorialId').classList.contains('hidden') === false){
-        removeEndTurnButton()
-    }
-    checkRentPaid()
-    checkIfBuyingProperty()
-})
+}
 
 function addCloseMortgageTutorial (){
     document.getElementById('closeMortgageTutorialId').classList.add('turn-interaction-description')
@@ -2371,11 +2390,506 @@ function addFinishCloseMortgageBtn (){
     finishCloseMortgageBtn.classList.remove('hidden')
 }
 
+// Trade
+// Trade
+// Trade
+// Trade
+
+tradeBtn.addEventListener('click', clickTradeBtn)
+tradeOfferBtn.addEventListener('click', clickTradeOfferBtn)
+tradeCancelBtn.addEventListener('click', clickTradeCancelBtn)
+tradeAcceptBtn.addEventListener('click', clickTradeAcceptBtn)
+tradeDeclineBtn.addEventListener('click', clickTradeDeclineBtn)
+traderCashSubmitBtn.addEventListener('click', clickTraderCashSubmitBtn)
+tradeeCashSubmitBtn.addEventListener('click', clickTradeeCashSubmitBtn)
+
+function clickTradeBtn(){
+    trader = currentPlayerTurn
+    addTradeScreen()
+    addPotentialTradeParterButtons()
+    traderNametag.innerText = `${trader.name} - $${trader.cash}`
+    traderNametag.style.color = `${trader.colorDark}`
+    tradeScreenTutorial.innerText = "Who Would You Like to Trade With?"
+}
+
+function clickTradeOfferBtn(){
+    addAcceptDeclineButtonsContainer()
+    removeTraderOfferButton()
+    removeEventListenersAndClassesTraderAllProperties()
+    removeEventListenersAndClassesTradeeAllProperties()
+    traderContents.classList.add('green-border')
+    tradeScreenTutorial.innerText = `${tradee.name}, Click "Accept" Button To Accept Trade Or Click "Decline" To Reject Trade`
+}
+
+function clickTradeCancelBtn(){
+    removeTradeScreen()
+    resetPotentialTradeParterButtons()
+    addPotentialTradeButtons()
+    removePlayerTradeContents()
+    removeCashInputContainers()
+    removeAcceptDeclineButtonsContainer()
+    removeTraderOfferButton()
+    removeEventListenersAndClassesTraderAllProperties()
+    removeEventListenersAndClassesTradeeAllProperties()
+    resetPlayerCashTradeVariables()
+    traderContents.classList.remove('green-border')
+    tradeeContents.classList.remove('green-border')
+    tradeeContents.classList.remove('red-border')
+    tradeeNametag.innerText = ""
+    traderPropertyDropoffContainer.innerHTML = ""
+    tradeePropertyDropoffContainer.innerHTML = ""
+}
+
+function clickTradeAcceptBtn(){
+    tradeeContents.classList.add('green-border')
+    removeAcceptDeclineButtonsContainer()
+    acceptTradeLogic()
+    tradeDecision = setTimeout(clickTradeCancelBtn, 2000)
+}
+
+function acceptTradeLogic(){
+    //Transfer Property and Ownership from Tradee to Trader
+    for (let i = 0; i < tradeeOfferedPropertyList.length; i++){
+        let tradedProperty = tradeeOfferedPropertyList[i]
+        trader.properties.push(tradedProperty)
+        tradedProperty.owner = trader
+        document.getElementById(tradedProperty.id).style.backgroundColor = trader.colorLight;
+        updateRent(trader, tradedProperty)
+    }
+    removeTradedPropertiesTrader()
+    trader.cash += tradeeCashOffer
+    trader.cash -= traderCashOffer
+
+    //Transfer Property and Ownership from Trader to Tradee
+    for (let i = 0; i < traderOfferedPropertyList.length; i++){
+        let tradedProperty = traderOfferedPropertyList[i]
+        tradee.properties.push(tradedProperty)
+        tradedProperty.owner = tradee
+        document.getElementById(tradedProperty.id).style.backgroundColor = tradee.colorLight
+        updateRent(trader, tradedProperty)
+    }
+    removeTradedPropertiesTradee()
+    tradee.cash += traderCashOffer
+    tradee.cash -= tradeeCashOffer
+
+    updatePlayerCashTotalDisplay()
+    traderCashOffer = 0
+    tradeeCashOffer = 0
+}
+
+function clickTradeDeclineBtn(){
+    tradeeContents.classList.add('red-border')
+    tradeDecision = setTimeout(clickTradeCancelBtn, 2000)
+}
+
+function clickTraderCashSubmitBtn(){
+    let pendingTraderCashOffer = parseInt(traderCashInputField.value)
+    if(pendingTraderCashOffer <= trader.cash && pendingTraderCashOffer > 0){
+        traderCashOffer = pendingTraderCashOffer
+        traderCashOfferDisplay.innerText = `$${pendingTraderCashOffer}`
+        traderCashInputField.value = ""
+        traderCashInputContainer.animate(acceptCashOfferColor, cashOfferColorTiming)
+
+    }
+    else{
+        traderCashInputField.value = ""
+        traderCashInputContainer.animate(declineCashOfferMovement, declineCashOfferMovementTiming)
+        traderCashInputContainer.animate(declineCashOfferColor, cashOfferColorTiming)
+        traderCashOfferDisplay.innerText ="$0"
+    }
+}
+
+function clickTradeeCashSubmitBtn(){
+    let pendingTradeeCashOffer = parseInt(tradeeCashInputField.value)
+    if(pendingTradeeCashOffer <= tradee.cash && pendingTradeeCashOffer > 0){
+        tradeeCashOffer = pendingTradeeCashOffer
+        tradeeCashOfferDisplay.innerText = `$${pendingTradeeCashOffer}`
+        tradeeCashInputField.value = ""
+        tradeeCashInputContainer.animate(acceptCashOfferColor, cashOfferColorTiming)
+
+    }
+    else{
+        tradeeCashInputField.value = ""
+        tradeeCashInputContainer.animate(declineCashOfferMovement, declineCashOfferMovementTiming)
+        tradeeCashInputContainer.animate(declineCashOfferColor, cashOfferColorTiming)
+        tradeeCashOfferDisplay.innerText ="$0"
+    }
+}
+
+function resetPlayerCashTradeVariables(){
+    traderCashOffer = 0
+    traderCashOfferDisplay.innerText = "$0"
+    traderCashInputField.value = ""
+
+    tradeeCashOffer = 0
+    tradeeCashOfferDisplay.innerText = "$0"
+    tradeeCashInputField.value = ""
+}
+
+function addTradeItem(propertyName, screenAdded){
+    let tradeCard = document.createElement('div')
+    let tradeContents = document.createElement('div')
+
+    tradeCard.classList.add('trade-property-card')
+    tradeContents.classList.add('trade-property-name')
+    tradeContents.innerHTML = `${propertyName}`
+
+    tradeCard.append(tradeContents)
+
+    if (selectedTradeProperty.type === 'color'){
+        tradeContents.style.borderTop =  `.75rem solid ${selectedTradeProperty.color}`
+    }
+
+    screenAdded.append(tradeCard)
+
+
+} 
+
+function addPotentialTradeParterButtons(){
+    for (let i = 0; i < totalPlayers; i++){
+        
+        if (activePlayers[i] != trader){
+            playerTradeButtons[i].classList.add('trade-partner-button')
+            playerTradeButtons[i].classList.remove('hidden')
+            playerTradeButtons[i].style.backgroundColor = activePlayers[i].colorDark
+        }
+    }
+}
+
+function resetPotentialTradeParterButtons(){
+    for (let i = 0; i < totalPlayers; i++){   
+        playerTradeButtons[i].classList.add('hidden')
+        playerTradeButtons[i].classList.remove('trade-partner-button')
+    }
+}
+
+function addTradeScreen(){
+    document.getElementById('floatScreenGameId').classList.remove('float-screen-game')
+    document.getElementById('floatScreenGameId').classList.add('hidden')
+    document.getElementById('tradeScreenContainerId').classList.add('trade-screen-container')
+    document.getElementById('tradeScreenContainerId').classList.remove('hidden')
+}
+
+function removeTradeScreen(){
+    document.getElementById('tradeScreenContainerId').classList.add('hidden')
+    document.getElementById('tradeScreenContainerId').classList.remove('trade-screen-container')
+    document.getElementById('floatScreenGameId').classList.remove('hidden')
+    document.getElementById('floatScreenGameId').classList.add('float-screen-game')
+}
+
+playerTradeButtons.forEach((button) => {
+    button.addEventListener('click', function(){
+        tradeeNametag.innerText = `${this.innerText}`
+        tradeScreenTutorial.innerText = `Drag And Drop Properties In Container To Add Them To Trade.  To Add Cash, Enter Cash Amount And Click "Add" Button To Update Cash Offer`
+        setTradeeVariable()
+        removePotentialTradeButtons()
+        addPlayerTradeContentsScreen()
+        addTraderOfferButton()
+        addCashInputContainers()
+        tradeOfferBtn.addEventListener('click', clickTradeOfferBtn)
+    })
+}) 
+
+function addPotentialTradeButtons(){
+    potentailTradeButtons.classList.add('trade-screen-player-options')
+    potentailTradeButtons.classList.remove('hidden')
+}
+
+function removePotentialTradeButtons(){
+    potentailTradeButtons.classList.add('hidden')
+    potentailTradeButtons.classList.remove('trade-screen-player-options')
+}
+
+function addPlayerTradeContentsScreen(){
+    tradeeContents.classList.add('trade-screen-contents')
+    tradeeContents.classList.remove('hidden')
+    traderContents.classList.add('trade-screen-contents')
+    traderContents.classList.remove('hidden')
+}
+
+function removePlayerTradeContents(){
+    tradeeContents.classList.add('hidden')
+    tradeeContents.classList.remove('trade-screen-contents')
+    traderContents.classList.add('hidden')
+    traderContents.classList.remove('trade-screen-contents')
+}
+
+function addEventsForPotentialTradeItems(){
+    updateEligiblePropertiesForTraderArray()
+    updateEligiblPropertiesForTradeeArray()
+
+        traderEligibleTradeProperties.forEach((property) =>{
+            let clickableProperty = document.getElementById(property.id)
+            clickableProperty.draggable = true
+            addClassToTradeProperty(property)
+            clickableProperty.addEventListener('dragstart', setSelectedPropertyForTrader)
+            clickableProperty.addEventListener('mouseover', addBorderForTraderContainer)
+            clickableProperty.addEventListener('mouseout', removeBorderForTraderContainer)
+        })
+    
+        tradeeEligibleTradeProperties.forEach((property) =>{
+            let clickableProperty = document.getElementById(property.id)
+            clickableProperty.draggable = true
+            addClassToTradeProperty(property)
+            clickableProperty.addEventListener('dragstart', setSelectedPropertyForTradee)
+            clickableProperty.addEventListener('mouseover', addBorderForTradeeContainer)
+            clickableProperty.addEventListener('mouseout', removeBorderForTradeeContainer)
+        })   
+        
+    
+}
+
+tradeePropertyDropoffContainer.addEventListener('dragover', function(event){
+    if (selectedTradeProperty.owner === tradee){
+        event.preventDefault()
+    }
+})
+
+tradeePropertyDropoffContainer.addEventListener('drop', function(event){
+    if (selectedTradeProperty.owner === tradee)
+    tradeeOfferedPropertyList.push(selectedTradeProperty)
+    addTradeItem(selectedTradeProperty.name, tradeePropertyDropoffContainer)
+    removeEventListenersAndClassesTradeeSingleProperty(selectedTradeProperty)
+    removeBorderForTradeeContainer()
+
+})
+
+traderPropertyDropoffContainer.addEventListener('dragover', function(event){
+    if (selectedTradeProperty.owner === trader){
+        event.preventDefault()
+    }
+})
+
+traderPropertyDropoffContainer.addEventListener('drop', function(event){
+    if (selectedTradeProperty.owner === trader)
+    traderOfferedPropertyList.push(selectedTradeProperty)
+    addTradeItem(selectedTradeProperty.name, traderPropertyDropoffContainer)
+    removeEventListenersAndClassesTraderSingleProperty(selectedTradeProperty)
+    removeBorderForTraderContainer()
+})
+
+function addBorderForTraderContainer(){
+    traderPropertyDropoffContainer.classList.add('green-border')
+}
+
+function removeBorderForTraderContainer(){
+    traderPropertyDropoffContainer.classList.remove('green-border')
+}
+
+function addBorderForTradeeContainer(){
+    tradeePropertyDropoffContainer.classList.add('green-border')
+}
+
+function removeBorderForTradeeContainer(){
+    tradeePropertyDropoffContainer.classList.remove('green-border')
+}
+
+function setSelectedPropertyForTrader(event){
+    for (let i = 0; i < trader.properties.length; i++){
+        if (trader.properties[i].id === event.target.id){
+            selectedTradeProperty = trader.properties[i]
+        }
+    }
+}
+
+function setSelectedPropertyForTradee(event){
+    for (let i = 0; i < tradee.properties.length; i++){
+        if (tradee.properties[i].id === event.target.id){
+            selectedTradeProperty = tradee.properties[i]
+        }
+    }
+}
+
+function setTradeeVariable(){
+    for (let i = 0; i < totalPlayers; i++){
+        if (tradeeNametag.innerText === activePlayers[i].name){
+            tradee = activePlayers[i]
+        }
+    }
+        tradeeNametag.style.color = `${tradee.colorDark}`
+        tradeeNametag.innerText = `${tradee.name} - $${tradee.cash}`
+        addEventsForPotentialTradeItems()
+}
+
+function addTraderOfferButton(){
+    tradeOfferBtn.classList.add('trade-offer-decline-buttons')
+    tradeOfferBtn.classList.remove('hidden')
+}
+
+function removeTraderOfferButton(){
+    tradeOfferBtn.classList.add('hidden')
+    tradeOfferBtn.classList.remove('trade-offer-decline-buttons')
+}
+
+function addAcceptDeclineButtonsContainer(){
+    acceptDeclineButtonsContainer.classList.add('accept-decline-trade-container')
+    acceptDeclineButtonsContainer.classList.remove('hidden')
+}
+
+function removeAcceptDeclineButtonsContainer(){
+    acceptDeclineButtonsContainer.classList.add('hidden')
+    acceptDeclineButtonsContainer.classList.remove('accept-decline-trade-container')
+}
+
+function addCashInputContainers(){
+    traderCashInputContainer.classList.add('cash-input-container')
+    traderCashInputContainer.classList.remove('hidden')
+    traderCashInputField.max = `${trader.cash}`
+    traderCashInputField.placeholder = `Max $${trader.cash}`
+
+    tradeeCashInputContainer.classList.add('cash-input-container')
+    tradeeCashInputContainer.classList.remove('hidden')
+    tradeeCashInputField.max = `${tradee.cash}`
+    tradeeCashInputField.placeholder = `Max $${tradee.cash}`
+}
+
+function removeCashInputContainers(){
+    traderCashInputContainer.classList.add('hidden')
+    traderCashInputContainer.classList.remove('cash-input-container')
+
+    tradeeCashInputContainer.classList.add('hidden')
+    tradeeCashInputContainer.classList.remove('cash-input-container')
+}
+
+function removeEventListenersAndClassesTraderAllProperties(){
+    traderEligibleTradeProperties.forEach((property) => {
+        let clickableProperty = document.getElementById(property.id)
+        clickableProperty.removeEventListener('dragstart', setSelectedPropertyForTrader)
+        clickableProperty.removeEventListener('mouseover', addBorderForTraderContainer)
+        clickableProperty.removeEventListener('mouseout', removeBorderForTraderContainer)
+        clickableProperty.draggable = false
+        removeClassToTradeProperty(property)
+
+    })
+}
+
+function removeEventListenersAndClassesTraderSingleProperty(singleProperty){
+    let property = document.getElementById(singleProperty.id)
+    property.removeEventListener('dragstart', setSelectedPropertyForTrader)
+    property.removeEventListener('mouseover', addBorderForTraderContainer)
+    property.removeEventListener('mouseout', removeBorderForTraderContainer)
+    property.draggable = false
+    removeClassToTradeProperty(singleProperty)
+}
+
+function removeEventListenersAndClassesTradeeAllProperties(){
+    tradeeEligibleTradeProperties.forEach((property) =>{
+        let clickableProperty = document.getElementById(property.id)
+        clickableProperty.removeEventListener('dragstart', setSelectedPropertyForTradee)
+        clickableProperty.removeEventListener('mouseover', addBorderForTradeeContainer)
+        clickableProperty.removeEventListener('mouseout', removeBorderForTradeeContainer)
+        clickableProperty.draggable = false
+        removeClassToTradeProperty(property)
+    })
+}
+
+function removeEventListenersAndClassesTradeeSingleProperty(singleProperty){
+    property = document.getElementById(singleProperty.id)
+    property.removeEventListener('dragstart', setSelectedPropertyForTradee)
+    property.removeEventListener('mouseover', addBorderForTradeeContainer)
+    property.removeEventListener('mouseout', removeBorderForTradeeContainer)
+    property.draggable = false
+    removeClassToTradeProperty(singleProperty)
+}
+
+function addClassToTradeProperty(propertyToAddClass){
+    if(propertyToAddClass.number > 0 && propertyToAddClass.number < 10){
+        document.getElementById(propertyToAddClass.id).classList.add('can-select-property-bottom')
+    }
+    else if(propertyToAddClass.number > 10 && propertyToAddClass.number < 20){
+        document.getElementById(propertyToAddClass.id).classList.add('can-select-property-left')
+    }
+    else if(propertyToAddClass.number > 20 && propertyToAddClass.number < 30){
+        document.getElementById(propertyToAddClass.id).classList.add('can-select-property-top')
+    }
+    else if(propertyToAddClass.number > 30 && propertyToAddClass.number < 40){
+        document.getElementById(propertyToAddClass.id).classList.add('can-select-property-right')
+    }
+}
+
+function removeClassToTradeProperty(propertyToAddClass){
+    if(propertyToAddClass.number > 0 && propertyToAddClass.number < 10){
+        document.getElementById(propertyToAddClass.id).classList.remove('can-select-property-bottom')
+    }
+    else if(propertyToAddClass.number > 10 && propertyToAddClass.number < 20){
+        document.getElementById(propertyToAddClass.id).classList.remove('can-select-property-left')
+    }
+    else if(propertyToAddClass.number > 20 && propertyToAddClass.number < 30){
+        document.getElementById(propertyToAddClass.id).classList.remove('can-select-property-top')
+    }
+    else if(propertyToAddClass.number > 30 && propertyToAddClass.number < 40){
+        document.getElementById(propertyToAddClass.id).classList.remove('can-select-property-right')
+    }
+}
+
+function sortPlayerPropertyArray(player){
+    player.properties.sort((a, b) => a.number - b.number)
+    console.log(array.properties)
+}
+
+function updateEligiblePropertiesForTraderArray(){
+    //Reset arrays for next trade
+    traderEligibleTradeProperties = []
+    traderOfferedPropertyList = []
+
+    for (let i = 0; i < trader.properties.length; i++){
+        if (trader.properties[i].type != "color"){
+            traderEligibleTradeProperties.push(trader.properties[i])
+        }
+        //Properties with houses cannot be traded
+        else if(trader.properties[i].propertySetTotalHouses === 0){
+            traderEligibleTradeProperties.push(trader.properties[i])
+        }
+        else{
+
+        }
+    }
+}
+
+function updateEligiblPropertiesForTradeeArray(){
+    //Reset arrays for next trade
+    tradeeEligibleTradeProperties = []
+    tradeeOfferedPropertyList = []
+
+    for (let i = 0; i < tradee.properties.length; i++){
+        if (tradee.properties[i].type != "color"){
+            tradeeEligibleTradeProperties.push(tradee.properties[i])
+        }
+        //Properties with houses cannot be traded
+        else if(tradee.properties[i].propertySetTotalHouses === 0){
+            tradeeEligibleTradeProperties.push(tradee.properties[i])
+        }
+        else{
+
+        }
+    }
+}
+
+
+function removeTradedPropertiesTrader(){
+    traderOfferedPropertyList.forEach((property) =>{
+        for (let i = 0; i < trader.properties.length; i++){
+            if (property === trader.properties[i]){
+                let index = trader.properties.indexOf(trader.properties[i])
+                trader.properties.splice(index, 1)
+                i--
+            }
+        }
+    })
+}
+
+function removeTradedPropertiesTradee(){
+    tradeeOfferedPropertyList.forEach((property) =>{
+        for (let i = 0; i < tradee.properties.length; i++){
+            if (property === tradee.properties[i]){
+                let index = tradee.properties.indexOf(tradee.properties[i])
+                tradee.properties.splice(index, 1)
+                i--
+            }
+        }
+    })
+}
 
 //Add logic to bakrupt player if they land on non-owned property square but don't have assets to pay for it
-//Add trading window
 //Add cpu
-//Add animations to buy/sell/open/close properties
-//Add update all player locations on move
-//Houses only able to be bought 1 per property until even
-//Can only mortgage if no buildings on property
+//Jail previousLocation not applicable
