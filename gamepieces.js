@@ -449,13 +449,14 @@ const tradeDeclineBtn = document.getElementById('tradeDeclineBtnId')
 const acceptDeclineButtonsContainer = document.getElementById('acceptDeclineButtonsContainerId')
 
 //Trader Offered Items
-let traderProperty;
+let selectedTradeProperty;
+let draggablePropertyCopy;
+
 let traderEligibleTradeProperties = []
 let traderOfferedPropertyList = []
 let traderCashOffer = 0
 
 //Tradee Offered Items
-let tradeeProperty;
 let tradeeEligibleTradeProperties = []
 let tradeeOfferedPropertyList = []
 let tradeeCashOffer = 0
