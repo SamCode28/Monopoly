@@ -847,7 +847,6 @@ function addPropertyCard (locationId){
         addUtilityCard(locationId)
     }
     else {
-        console.log('missing property type add')
         return
     }
 }
@@ -863,7 +862,6 @@ function removePropertyCard (locationId){
         removeUtilityCard(locationId)
     }
     else {
-        console.log('missing property type remove')
         return
     }
 }
@@ -2623,6 +2621,7 @@ function addEventsForPotentialTradeItems(){
             addClassToTradeProperty(property)
             clickableProperty.style.touchAction = "none"
             clickableProperty.addEventListener('pointerdown', setSelectedPropertyForTrader)
+            clickableProperty.addEventListener('pointercancel', cancelPointerEvent)
         })
     
         tradeeEligibleTradeProperties.forEach((property) =>{
@@ -2630,6 +2629,7 @@ function addEventsForPotentialTradeItems(){
             addClassToTradeProperty(property)
             clickableProperty.style.touchAction = "none"
             clickableProperty.addEventListener('pointerdown', setSelectedPropertyForTradee)
+            clickableProperty.addEventListener('pointercancel', cancelPointerEvent)
         })   
 }
 
@@ -2646,7 +2646,6 @@ function setSelectedPropertyForTrader(event){
 
     //Create property clone to keep origonal property in grid
     draggablePropertyCopy = this.cloneNode(true)
-    console.log(draggablePropertyCopy)
     draggablePropertyCopy.style.position = 'absolute'
     document.body.appendChild(draggablePropertyCopy)
     draggablePropertyCopy.style.left = `${event.pageX - draggablePropertyCopy.offsetWidth / 2}px`;
@@ -2676,7 +2675,6 @@ function setSelectedPropertyForTradee(event){
 
     //Create property clone to keep origonal property in grid
     draggablePropertyCopy = this.cloneNode(true)
-    console.log(draggablePropertyCopy)
     removeClassToTradeProperty(draggablePropertyCopy)
     draggablePropertyCopy.style.position = 'absolute'
     document.body.appendChild(draggablePropertyCopy)
@@ -2705,7 +2703,7 @@ function addPropertyToTraderContainer(event){
         event.clientY > traderContainerDimensions.top &&
         event.clientY < traderContainerDimensions.bottom
         ){
-            tradeeOfferedPropertyList.push(selectedTradeProperty)
+            traderOfferedPropertyList.push(selectedTradeProperty)
             addTradeItem(selectedTradeProperty.name, traderPropertyDropoffContainer)
             removeEventListenersAndClassesSingleProperty(selectedTradeProperty)
         }
@@ -2741,6 +2739,13 @@ function addPropertyToTradeeContainer(event){
 function movePropertyWithPointer(event){
     draggablePropertyCopy.style.left = `${event.pageX - draggablePropertyCopy.offsetWidth / 2}px`;
     draggablePropertyCopy.style.top = `${event.pageY - draggablePropertyCopy.offsetHeight / 2}px`;
+}
+
+function cancelPointerEvent(){
+    console.log("cancelled")
+    document.removeEventListener('pointerup', addPropertyToTraderContainer)
+    document.removeEventListener('pointermove', movePropertyWithPointer)
+    document.body.removeChild(draggablePropertyCopy)
 }
 
 function addBorderForTraderContainer(){
@@ -2820,6 +2825,7 @@ function removeEventListenersAndClassesSingleProperty(singleProperty){
     let clickableProperty = document.getElementById(singleProperty.id)
     clickableProperty.removeEventListener('pointerdown', setSelectedPropertyForTrader)
     clickableProperty.removeEventListener('pointerdown', setSelectedPropertyForTradee)
+    clickableProperty.removeEventListener('pointercancel', cancelPointerEvent)
     clickableProperty.style.touchAction = "default"
     removeClassToTradeProperty(singleProperty)
 }
@@ -2863,7 +2869,6 @@ function removeClassToTradeProperty(propertyToAddClass){
 
 function sortPlayerPropertyArray(player){
     player.properties.sort((a, b) => a.number - b.number)
-    console.log(array.properties)
 }
 
 function updateEligiblePropertiesForTraderArray(){
@@ -2931,3 +2936,4 @@ function removeTradedPropertiesTradee(){
 //Add logic to bakrupt player if they land on non-owned property square but don't have assets to pay for it
 //Add cpu
 //Jail previousLocation not applicable
+//Remove cash offer buttons after hitting "offer"
