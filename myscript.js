@@ -2415,8 +2415,8 @@ function clickTradeBtn(){
 function clickTradeOfferBtn(){
     addAcceptDeclineButtonsContainer()
     removeTraderOfferButton()
-    removeEventListenersAndClassesTraderAllProperties()
-    removeEventListenersAndClassesTradeeAllProperties()
+    removeEventListenersAndClassesAllProperties(traderEligibleTradeProperties)
+    removeEventListenersAndClassesAllProperties(tradeeEligibleTradeProperties)
     traderContents.classList.add('green-border')
     tradeScreenTutorial.innerText = `${tradee.name}, Click "Accept" Button To Accept Trade Or Click "Decline" To Reject Trade`
 }
@@ -2429,8 +2429,8 @@ function clickTradeCancelBtn(){
     removeCashInputContainers()
     removeAcceptDeclineButtonsContainer()
     removeTraderOfferButton()
-    removeEventListenersAndClassesTraderAllProperties()
-    removeEventListenersAndClassesTradeeAllProperties()
+    removeEventListenersAndClassesAllProperties(traderEligibleTradeProperties)
+    removeEventListenersAndClassesAllProperties(tradeeEligibleTradeProperties)
     resetPlayerCashTradeVariables()
     traderContents.classList.remove('green-border')
     tradeeContents.classList.remove('green-border')
@@ -2526,7 +2526,7 @@ function resetPlayerCashTradeVariables(){
     tradeeCashInputField.value = ""
 }
 
-function addTradeItem(propertyName, screenAdded){
+function addTradeItem(propertyName, screenAddedTo){
     let tradeCard = document.createElement('div')
     let tradeContents = document.createElement('div')
 
@@ -2540,9 +2540,7 @@ function addTradeItem(propertyName, screenAdded){
         tradeContents.style.borderTop =  `.75rem solid ${selectedTradeProperty.color}`
     }
 
-    screenAdded.append(tradeCard)
-
-
+    screenAddedTo.append(tradeCard)
 } 
 
 function addPotentialTradeParterButtons(){
@@ -2614,59 +2612,136 @@ function removePlayerTradeContents(){
     traderContents.classList.remove('trade-screen-contents')
 }
 
+//Event Listeners For Trading
+
 function addEventsForPotentialTradeItems(){
     updateEligiblePropertiesForTraderArray()
     updateEligiblPropertiesForTradeeArray()
 
         traderEligibleTradeProperties.forEach((property) =>{
             let clickableProperty = document.getElementById(property.id)
-            clickableProperty.draggable = true
             addClassToTradeProperty(property)
-            clickableProperty.addEventListener('dragstart', setSelectedPropertyForTrader)
-            clickableProperty.addEventListener('mouseover', addBorderForTraderContainer)
-            clickableProperty.addEventListener('mouseout', removeBorderForTraderContainer)
+            clickableProperty.style.touchAction = "none"
+            clickableProperty.addEventListener('pointerdown', setSelectedPropertyForTrader)
         })
     
         tradeeEligibleTradeProperties.forEach((property) =>{
             let clickableProperty = document.getElementById(property.id)
-            clickableProperty.draggable = true
             addClassToTradeProperty(property)
-            clickableProperty.addEventListener('dragstart', setSelectedPropertyForTradee)
-            clickableProperty.addEventListener('mouseover', addBorderForTradeeContainer)
-            clickableProperty.addEventListener('mouseout', removeBorderForTradeeContainer)
+            clickableProperty.style.touchAction = "none"
+            clickableProperty.addEventListener('pointerdown', setSelectedPropertyForTradee)
         })   
-        
-    
 }
 
-tradeePropertyDropoffContainer.addEventListener('dragover', function(event){
-    if (selectedTradeProperty.owner === tradee){
-        event.preventDefault()
+function setSelectedPropertyForTrader(event){
+    //Set property clicked on to selectedTradeProperty
+    for (let i = 0; i < trader.properties.length; i++){
+        if (trader.properties[i].id === this.id){
+            selectedTradeProperty = trader.properties[i]         
+        }
     }
-})
 
-tradeePropertyDropoffContainer.addEventListener('drop', function(event){
-    if (selectedTradeProperty.owner === tradee)
-    tradeeOfferedPropertyList.push(selectedTradeProperty)
-    addTradeItem(selectedTradeProperty.name, tradeePropertyDropoffContainer)
-    removeEventListenersAndClassesTradeeSingleProperty(selectedTradeProperty)
-    removeBorderForTradeeContainer()
+    //Direct all touch events to selected property
+    this.setPointerCapture(event.pointerId)
 
-})
+    //Create property clone to keep origonal property in grid
+    draggablePropertyCopy = this.cloneNode(true)
+    console.log(draggablePropertyCopy)
+    draggablePropertyCopy.style.position = 'absolute'
+    document.body.appendChild(draggablePropertyCopy)
+    draggablePropertyCopy.style.left = `${event.pageX - draggablePropertyCopy.offsetWidth / 2}px`;
+    draggablePropertyCopy.style.top = `${event.pageY - draggablePropertyCopy.offsetHeight / 2}px`;
 
-traderPropertyDropoffContainer.addEventListener('dragover', function(event){
-    if (selectedTradeProperty.owner === trader){
-        event.preventDefault()
+    //Remove Game Piece if possible
+    if (draggablePropertyCopy.firstElementChild.classList.contains('game-pieces') === true){
+        draggablePropertyCopy.removeChild(draggablePropertyCopy.firstElementChild)
     }
-})
+    //Provide visual feedback for where to drag property to
+    traderPropertyDropoffContainer.classList.add('green-border')
 
-traderPropertyDropoffContainer.addEventListener('drop', function(event){
-    if (selectedTradeProperty.owner === trader)
-    traderOfferedPropertyList.push(selectedTradeProperty)
-    addTradeItem(selectedTradeProperty.name, traderPropertyDropoffContainer)
-    removeEventListenersAndClassesTraderSingleProperty(selectedTradeProperty)
+    //Add Event Listeners to document to allow property to move
+    document.addEventListener('pointermove', movePropertyWithPointer)
+    document.addEventListener('pointerup', addPropertyToTraderContainer)
+}
+
+function setSelectedPropertyForTradee(event){
+    //Set property clicked on to selectedTradeProperty
+    for (let i = 0; i < tradee.properties.length; i++){
+        if (tradee.properties[i].id === this.id){
+            selectedTradeProperty = tradee.properties[i]
+        }
+    }
+    //Direct all touch events to selected property
+    this.setPointerCapture(event.pointerId)
+
+    //Create property clone to keep origonal property in grid
+    draggablePropertyCopy = this.cloneNode(true)
+    console.log(draggablePropertyCopy)
+    removeClassToTradeProperty(draggablePropertyCopy)
+    draggablePropertyCopy.style.position = 'absolute'
+    document.body.appendChild(draggablePropertyCopy)
+    draggablePropertyCopy.style.left = `${event.pageX - draggablePropertyCopy.offsetWidth / 2}px`;
+    draggablePropertyCopy.style.top = `${event.pageY - draggablePropertyCopy.offsetHeight / 2}px`;
+
+
+    //Remove Game Piece if possible
+    if (draggablePropertyCopy.firstElementChild.classList.contains('game-pieces') === true){
+        draggablePropertyCopy.removeChild(draggablePropertyCopy.firstElementChild)
+    }
+    //Provide visual feedback for where to drag property to
+    tradeePropertyDropoffContainer.classList.add('green-border')
+
+    //Add Event Listeners to document to allow property to move
+    document.addEventListener('pointermove', movePropertyWithPointer)
+    document.addEventListener('pointerup', addPropertyToTradeeContainer)
+}
+
+function addPropertyToTraderContainer(event){
+    //Get Dimensions of trader container
+    const traderContainerDimensions = traderPropertyDropoffContainer.getBoundingClientRect()
+    //Check if copy of property is inside container
+    if (event.clientX > traderContainerDimensions.left &&
+        event.clientX < traderContainerDimensions.right &&
+        event.clientY > traderContainerDimensions.top &&
+        event.clientY < traderContainerDimensions.bottom
+        ){
+            tradeeOfferedPropertyList.push(selectedTradeProperty)
+            addTradeItem(selectedTradeProperty.name, traderPropertyDropoffContainer)
+            removeEventListenersAndClassesSingleProperty(selectedTradeProperty)
+        }
+
+    //Remove click events on document to allow additional properties to be moved
+    document.removeEventListener('pointerup', addPropertyToTraderContainer)
+    document.removeEventListener('pointermove', movePropertyWithPointer)
+    document.body.removeChild(draggablePropertyCopy)
     removeBorderForTraderContainer()
-})
+}
+
+function addPropertyToTradeeContainer(event){
+    //Get Dimensions of tradee container
+    const tradeeContainerDimensions = tradeePropertyDropoffContainer.getBoundingClientRect()
+    //Check if copy of property is inside tradee container
+    if (event.clientX > tradeeContainerDimensions.left &&
+        event.clientX < tradeeContainerDimensions.right &&
+        event.clientY > tradeeContainerDimensions.top &&
+        event.clientY < tradeeContainerDimensions.bottom
+        ){            
+            tradeeOfferedPropertyList.push(selectedTradeProperty)
+            //Add property visual to tradee container
+            addTradeItem(selectedTradeProperty.name, tradeePropertyDropoffContainer)
+            removeEventListenersAndClassesSingleProperty(selectedTradeProperty)
+        }
+    //Remove click events on document to allow additional properties to be moved
+    document.removeEventListener('pointerup', addPropertyToTradeeContainer)
+    document.removeEventListener('pointermove', movePropertyWithPointer)
+    document.body.removeChild(draggablePropertyCopy)
+    removeBorderForTradeeContainer()
+}
+
+function movePropertyWithPointer(event){
+    draggablePropertyCopy.style.left = `${event.pageX - draggablePropertyCopy.offsetWidth / 2}px`;
+    draggablePropertyCopy.style.top = `${event.pageY - draggablePropertyCopy.offsetHeight / 2}px`;
+}
 
 function addBorderForTraderContainer(){
     traderPropertyDropoffContainer.classList.add('green-border')
@@ -2682,22 +2757,6 @@ function addBorderForTradeeContainer(){
 
 function removeBorderForTradeeContainer(){
     tradeePropertyDropoffContainer.classList.remove('green-border')
-}
-
-function setSelectedPropertyForTrader(event){
-    for (let i = 0; i < trader.properties.length; i++){
-        if (trader.properties[i].id === event.target.id){
-            selectedTradeProperty = trader.properties[i]
-        }
-    }
-}
-
-function setSelectedPropertyForTradee(event){
-    for (let i = 0; i < tradee.properties.length; i++){
-        if (tradee.properties[i].id === event.target.id){
-            selectedTradeProperty = tradee.properties[i]
-        }
-    }
 }
 
 function setTradeeVariable(){
@@ -2751,75 +2810,55 @@ function removeCashInputContainers(){
     tradeeCashInputContainer.classList.remove('cash-input-container')
 }
 
-function removeEventListenersAndClassesTraderAllProperties(){
-    traderEligibleTradeProperties.forEach((property) => {
-        let clickableProperty = document.getElementById(property.id)
-        clickableProperty.removeEventListener('dragstart', setSelectedPropertyForTrader)
-        clickableProperty.removeEventListener('mouseover', addBorderForTraderContainer)
-        clickableProperty.removeEventListener('mouseout', removeBorderForTraderContainer)
-        clickableProperty.draggable = false
-        removeClassToTradeProperty(property)
-
+function removeEventListenersAndClassesAllProperties(propertyArray){
+    propertyArray.forEach((property) => {
+        removeEventListenersAndClassesSingleProperty(property)
     })
 }
 
-function removeEventListenersAndClassesTraderSingleProperty(singleProperty){
-    let property = document.getElementById(singleProperty.id)
-    property.removeEventListener('dragstart', setSelectedPropertyForTrader)
-    property.removeEventListener('mouseover', addBorderForTraderContainer)
-    property.removeEventListener('mouseout', removeBorderForTraderContainer)
-    property.draggable = false
-    removeClassToTradeProperty(singleProperty)
-}
-
-function removeEventListenersAndClassesTradeeAllProperties(){
-    tradeeEligibleTradeProperties.forEach((property) =>{
-        let clickableProperty = document.getElementById(property.id)
-        clickableProperty.removeEventListener('dragstart', setSelectedPropertyForTradee)
-        clickableProperty.removeEventListener('mouseover', addBorderForTradeeContainer)
-        clickableProperty.removeEventListener('mouseout', removeBorderForTradeeContainer)
-        clickableProperty.draggable = false
-        removeClassToTradeProperty(property)
-    })
-}
-
-function removeEventListenersAndClassesTradeeSingleProperty(singleProperty){
-    property = document.getElementById(singleProperty.id)
-    property.removeEventListener('dragstart', setSelectedPropertyForTradee)
-    property.removeEventListener('mouseover', addBorderForTradeeContainer)
-    property.removeEventListener('mouseout', removeBorderForTradeeContainer)
-    property.draggable = false
+function removeEventListenersAndClassesSingleProperty(singleProperty){
+    let clickableProperty = document.getElementById(singleProperty.id)
+    clickableProperty.removeEventListener('pointerdown', setSelectedPropertyForTrader)
+    clickableProperty.removeEventListener('pointerdown', setSelectedPropertyForTradee)
+    clickableProperty.style.touchAction = "default"
     removeClassToTradeProperty(singleProperty)
 }
 
 function addClassToTradeProperty(propertyToAddClass){
+    let clickableProperty = document.getElementById(propertyToAddClass.id)
     if(propertyToAddClass.number > 0 && propertyToAddClass.number < 10){
-        document.getElementById(propertyToAddClass.id).classList.add('can-select-property-bottom')
+        clickableProperty.classList.add('can-select-property-bottom')
     }
     else if(propertyToAddClass.number > 10 && propertyToAddClass.number < 20){
-        document.getElementById(propertyToAddClass.id).classList.add('can-select-property-left')
+        clickableProperty.classList.add('can-select-property-left')
     }
     else if(propertyToAddClass.number > 20 && propertyToAddClass.number < 30){
-        document.getElementById(propertyToAddClass.id).classList.add('can-select-property-top')
+        clickableProperty.classList.add('can-select-property-top')
     }
     else if(propertyToAddClass.number > 30 && propertyToAddClass.number < 40){
-        document.getElementById(propertyToAddClass.id).classList.add('can-select-property-right')
+        clickableProperty.classList.add('can-select-property-right')
     }
+
+    clickableProperty.classList.add('can-select-property')
+    
 }
 
 function removeClassToTradeProperty(propertyToAddClass){
+    let clickableProperty = document.getElementById(propertyToAddClass.id)
     if(propertyToAddClass.number > 0 && propertyToAddClass.number < 10){
-        document.getElementById(propertyToAddClass.id).classList.remove('can-select-property-bottom')
+        clickableProperty.classList.remove('can-select-property-bottom')
     }
     else if(propertyToAddClass.number > 10 && propertyToAddClass.number < 20){
-        document.getElementById(propertyToAddClass.id).classList.remove('can-select-property-left')
+        clickableProperty.classList.remove('can-select-property-left')
     }
     else if(propertyToAddClass.number > 20 && propertyToAddClass.number < 30){
-        document.getElementById(propertyToAddClass.id).classList.remove('can-select-property-top')
+        clickableProperty.classList.remove('can-select-property-top')
     }
     else if(propertyToAddClass.number > 30 && propertyToAddClass.number < 40){
-        document.getElementById(propertyToAddClass.id).classList.remove('can-select-property-right')
+        clickableProperty.classList.remove('can-select-property-right')
     }
+
+    clickableProperty.classList.remove('can-select-property')
 }
 
 function sortPlayerPropertyArray(player){
@@ -2864,7 +2903,6 @@ function updateEligiblPropertiesForTradeeArray(){
         }
     }
 }
-
 
 function removeTradedPropertiesTrader(){
     traderOfferedPropertyList.forEach((property) =>{
