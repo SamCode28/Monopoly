@@ -206,7 +206,8 @@ rollBtn.addEventListener('click', function (e){
                 //Pay rent
                 if(spaceLandedOn().owner.isInJail === false && spaceLandedOn().mortgageOpen === false){
                     if(spaceLandedOn().type === 'utility'){
-                        spaceLandedOn().updateRent(spaceLandedOn().owner, spaceLandedOn())
+                        updateRent(spaceLandedOn().owner, spaceLandedOn())
+                        spaceLandedOn().updateRent()
                     }
                     updatePlayerTotalAssets()
                     if (currentPlayerTurn.totalAssets < spaceLandedOn().rent){
@@ -398,7 +399,7 @@ function chanceDelayInteraction(){
 }
 
 function chance (){
-    let chanceRoll = chanceDice()
+    let chanceRoll = 2//chanceDice()
     if (chanceRoll === 1){
         spaceLandedOn().currentOccupants--
         turnInteractionDescription.innerHTML = `<span class="bold-font-span">Chance:</span><br>Advance to Boardwalk.`
@@ -1398,7 +1399,7 @@ function updateRentColor(player, property){
     let sameColorProperties = []
     //Filter for same color properties as last bought property
     sameColorProperties = ownedColorPropertyArray.filter(function(propertyFiltered){return propertyFiltered.color === property.color})
-    for (let i = 0; i < sameColorProperties.length;){
+    for (let i = 0; i < sameColorProperties.length; i++){
         if (sameColorProperties[i].setTotal === 2 && sameColorProperties.length === 2){
                 sameColorProperties[i].rent = (sameColorProperties[i].startingRent * 2)
                 sameColorProperties[i+1].rent = (sameColorProperties[i+1].startingRent * 2)
@@ -2464,7 +2465,7 @@ function acceptTradeLogic(){
         tradee.properties.push(tradedProperty)
         tradedProperty.owner = tradee
         document.getElementById(tradedProperty.id).style.backgroundColor = tradee.colorLight
-        updateRent(trader, tradedProperty)
+        updateRent(tradee, tradedProperty)
     }
     removeTradedPropertiesTradee()
     tradee.cash += traderCashOffer
