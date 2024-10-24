@@ -206,7 +206,8 @@ rollBtn.addEventListener('click', function (e){
                 //Pay rent
                 if(spaceLandedOn().owner.isInJail === false && spaceLandedOn().mortgageOpen === false){
                     if(spaceLandedOn().type === 'utility'){
-                        spaceLandedOn().updateRent(spaceLandedOn().owner, spaceLandedOn())
+                        updateRent(spaceLandedOn().owner, spaceLandedOn())
+                        spaceLandedOn().updateRent()
                     }
                     updatePlayerTotalAssets()
                     if (currentPlayerTurn.totalAssets < spaceLandedOn().rent){
@@ -2464,7 +2465,7 @@ function acceptTradeLogic(){
         tradee.properties.push(tradedProperty)
         tradedProperty.owner = tradee
         document.getElementById(tradedProperty.id).style.backgroundColor = tradee.colorLight
-        updateRent(trader, tradedProperty)
+        updateRent(tradee, tradedProperty)
     }
     removeTradedPropertiesTradee()
     tradee.cash += traderCashOffer
