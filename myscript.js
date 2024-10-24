@@ -1399,7 +1399,7 @@ function updateRentColor(player, property){
     let sameColorProperties = []
     //Filter for same color properties as last bought property
     sameColorProperties = ownedColorPropertyArray.filter(function(propertyFiltered){return propertyFiltered.color === property.color})
-    for (let i = 0; i < sameColorProperties.length; i++){
+    for (let i = 0; i < sameColorProperties.length;){
         if (sameColorProperties[i].setTotal === 2 && sameColorProperties.length === 2){
                 sameColorProperties[i].rent = (sameColorProperties[i].startingRent * 2)
                 sameColorProperties[i+1].rent = (sameColorProperties[i+1].startingRent * 2)
