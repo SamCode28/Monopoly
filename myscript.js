@@ -399,7 +399,7 @@ function chanceDelayInteraction(){
 }
 
 function chance (){
-    let chanceRoll = 2//chanceDice()
+    let chanceRoll = chanceDice()
     if (chanceRoll === 1){
         spaceLandedOn().currentOccupants--
         turnInteractionDescription.innerHTML = `<span class="bold-font-span">Chance:</span><br>Advance to Boardwalk.`
