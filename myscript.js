@@ -474,7 +474,7 @@ function chance (){
     }
     else if (chanceRoll === 12){
         turnInteractionDescription.innerHTML = `<span class="bold-font-span">Chance:</span><br>Make general repairs on all your property. For each house(${currentPlayerTurn.housesOwned}) pay $25. For each hotel(${currentPlayerTurn.hotelsOwned}) pay $100. Total = $${(currentPlayerTurn.housesOwned * 50) + (currentPlayerTurn.hotelsOwned * 50)}`
-        currentPlayerTurn.cash -= (currentPlayerTurn.housesOwned * 25) + (currentPlayerTurn.hotelsOwned * 50)
+        currentPlayerTurn.cash -= (currentPlayerTurn.housesOwned * 25) + (currentPlayerTurn.hotelsOwned * 100)
         addEndTurnButton()
         addHouseHotelMortgageScreen()
     }
