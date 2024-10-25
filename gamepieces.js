@@ -37,8 +37,8 @@ let activePlayers = [
                 if (this.properties[i].mortgageOpen === false){
                     this.mortgageAssets += (this.properties[i].mortgage * .9)
                 }
-        }
-            },
+            }
+        },
 
         houseAssets: 0,
         updateHouseAssets: function(){
@@ -53,17 +53,25 @@ let activePlayers = [
         },
 
         incomeTax: 0,
-
         updateIncomeTax: function (){
             this.incomeTax = 0
-            this.updateMortgageAssets()
-            this.updateHouseAssets()
-            this.incomeTax += (this.mortgageAssets + this.houseAssetsIncomeTax + this.cash)
+            this.updatePropertyAssetsIncomeTax()
+            this.updateHouseAssetsIncomeTax()
+            this.incomeTax += (this.propertyAssetsIncomeTax + this.houseAssetsIncomeTax + this.cash)
+        },
+
+        propertyAssetsIncomeTax: 0,
+        updatePropertyAssetsIncomeTax: function(){
+            this.propertyAssetsIncomeTax = 0
+            for (let i = 0; i < this.properties.length; i++){
+                this.propertyAssetsIncomeTax += (this.properties[i].price)       
+            }
         },
         
+        houseAssetsIncomeTax: 0,
         updateHouseAssetsIncomeTax: function(){
          this.houseAssetsIncomeTax = 0
-        for (let i = 0; i < this.properties.length;){
+         for (let i = 0; i < this.properties.length;){
             if(this.properties[i].type === 'color'){
                 this.updateHouseAssetsIncomeTax += (this.properties[i].totalHouses * (this.properties[i].buildingCost))
             }
@@ -71,8 +79,7 @@ let activePlayers = [
             
             }
         },
-
-        houseAssetsIncomeTax: 0,
+        
         properties: [],
         auctionButtons: [],
         housesOwned: 0,
@@ -108,8 +115,8 @@ let activePlayers = [
                 if (this.properties[i].mortgageOpen === false){
                     this.mortgageAssets += (this.properties[i].mortgage * .9)
                 }
-        }
-            },
+            }
+        },
 
         houseAssets: 0,
         updateHouseAssets: function(){
@@ -124,17 +131,25 @@ let activePlayers = [
         },
 
         incomeTax: 0,
-
         updateIncomeTax: function (){
             this.incomeTax = 0
-            this.updateMortgageAssets()
-            this.updateHouseAssets()
-            this.incomeTax += (this.mortgageAssets + this.houseAssetsIncomeTax + this.cash)
+            this.updatePropertyAssetsIncomeTax()
+            this.updateHouseAssetsIncomeTax()
+            this.incomeTax += (this.propertyAssetsIncomeTax + this.houseAssetsIncomeTax + this.cash)
+        },
+
+        propertyAssetsIncomeTax: 0,
+        updatePropertyAssetsIncomeTax: function(){
+            this.propertyAssetsIncomeTax = 0
+            for (let i = 0; i < this.properties.length; i++){
+                this.propertyAssetsIncomeTax += (this.properties[i].price)       
+            }
         },
         
+        houseAssetsIncomeTax: 0,
         updateHouseAssetsIncomeTax: function(){
          this.houseAssetsIncomeTax = 0
-        for (let i = 0; i < this.properties.length;){
+         for (let i = 0; i < this.properties.length;){
             if(this.properties[i].type === 'color'){
                 this.updateHouseAssetsIncomeTax += (this.properties[i].totalHouses * (this.properties[i].buildingCost))
             }
@@ -142,7 +157,7 @@ let activePlayers = [
             
             }
         },
-        houseAssetsIncomeTax: 0,
+        
         properties: [],
         auctionButtons: [],
         housesOwned: 0,
@@ -171,6 +186,7 @@ let activePlayers = [
             this.updateHouseAssets()
             this.totalAssets += (this.mortgageAssets + this.houseAssets + this.cash)
         },
+
         mortgageAssets: 0,
         updateMortgageAssets: function(){
             this.mortgageAssets = 0
@@ -178,8 +194,9 @@ let activePlayers = [
                 if (this.properties[i].mortgageOpen === false){
                     this.mortgageAssets += (this.properties[i].mortgage * .9)
                 }
-        }
-            },
+            }
+        },
+
         houseAssets: 0,
         updateHouseAssets: function(){
             this.houseAssets = 0
@@ -193,17 +210,25 @@ let activePlayers = [
         },
 
         incomeTax: 0,
-
         updateIncomeTax: function (){
             this.incomeTax = 0
-            this.updateMortgageAssets()
-            this.updateHouseAssets()
-            this.incomeTax += (this.mortgageAssets + this.houseAssetsIncomeTax + this.cash)
+            this.updatePropertyAssetsIncomeTax()
+            this.updateHouseAssetsIncomeTax()
+            this.incomeTax += (this.propertyAssetsIncomeTax + this.houseAssetsIncomeTax + this.cash)
+        },
+
+        propertyAssetsIncomeTax: 0,
+        updatePropertyAssetsIncomeTax: function(){
+            this.propertyAssetsIncomeTax = 0
+            for (let i = 0; i < this.properties.length; i++){
+                this.propertyAssetsIncomeTax += (this.properties[i].price)       
+            }
         },
         
+        houseAssetsIncomeTax: 0,
         updateHouseAssetsIncomeTax: function(){
          this.houseAssetsIncomeTax = 0
-        for (let i = 0; i < this.properties.length;){
+         for (let i = 0; i < this.properties.length;){
             if(this.properties[i].type === 'color'){
                 this.updateHouseAssetsIncomeTax += (this.properties[i].totalHouses * (this.properties[i].buildingCost))
             }
@@ -211,8 +236,7 @@ let activePlayers = [
             
             }
         },
-
-        houseAssetsIncomeTax: 0,
+        
         properties: [],
         auctionButtons: [],
         housesOwned: 0,
@@ -240,6 +264,7 @@ let activePlayers = [
             this.updateHouseAssets()
             this.totalAssets += (this.mortgageAssets + this.houseAssets + this.cash)
         },
+
         mortgageAssets: 0,
         updateMortgageAssets: function(){
             this.mortgageAssets = 0
@@ -247,8 +272,9 @@ let activePlayers = [
                 if (this.properties[i].mortgageOpen === false){
                     this.mortgageAssets += (this.properties[i].mortgage * .9)
                 }
-        }
-            },
+            }
+        },
+
         houseAssets: 0,
         updateHouseAssets: function(){
             this.houseAssets = 0
@@ -262,17 +288,25 @@ let activePlayers = [
         },
 
         incomeTax: 0,
-
         updateIncomeTax: function (){
             this.incomeTax = 0
-            this.updateMortgageAssets()
-            this.updateHouseAssets()
-            this.incomeTax += (this.mortgageAssets + this.houseAssetsIncomeTax + this.cash)
+            this.updatePropertyAssetsIncomeTax()
+            this.updateHouseAssetsIncomeTax()
+            this.incomeTax += (this.propertyAssetsIncomeTax + this.houseAssetsIncomeTax + this.cash)
+        },
+
+        propertyAssetsIncomeTax: 0,
+        updatePropertyAssetsIncomeTax: function(){
+            this.propertyAssetsIncomeTax = 0
+            for (let i = 0; i < this.properties.length; i++){
+                this.propertyAssetsIncomeTax += (this.properties[i].price)       
+            }
         },
         
+        houseAssetsIncomeTax: 0,
         updateHouseAssetsIncomeTax: function(){
          this.houseAssetsIncomeTax = 0
-        for (let i = 0; i < this.properties.length;){
+         for (let i = 0; i < this.properties.length;){
             if(this.properties[i].type === 'color'){
                 this.updateHouseAssetsIncomeTax += (this.properties[i].totalHouses * (this.properties[i].buildingCost))
             }
@@ -280,8 +314,6 @@ let activePlayers = [
             
             }
         },
-
-        houseAssetsIncomeTax: 0,
 
         properties: [],
         auctionButtons: [],
